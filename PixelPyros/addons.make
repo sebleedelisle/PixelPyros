@@ -1,0 +1,8 @@
+ofxOpenCv
+ofxOsc
+ofxXmlSettings
+ofxCanon
+ofxGui
+ofxIlda
+ofxMSAInteractiveObject
+ofxSimpleGuiToo
