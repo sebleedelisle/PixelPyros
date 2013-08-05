@@ -1,5 +1,5 @@
-PixelPyros2
-===========
+PixelPyros
+==========
 
 Version 2.0 of the digital fireworks display
 
