@@ -5,6 +5,12 @@
 //  Created by Seb Lee-Delisle on 08/08/2012.
 //  Copyright (c) 2012 seb.ly. All rights reserved.
 //
+//  The primary purpose of the warper is to project the camera
+//  image into screen space. It has 4 source points (usually the
+//  4 corners of the where the projection appears in the camera)
+//  and 4 destination points (usually the 4 corners of the screen
+//  space). 
+
 
 #include "Warper.h"
 
@@ -58,17 +64,11 @@ bool Warper :: init (float srcwidth, float srcheight, float dstwidth, float dsth
 }
 
 
-bool Warper :: update(ofPixels& pix) { 
+bool Warper :: update(ofPixels& sourcePixels) {
 	
 	
 	if(changed) { 
-		
-        // update points
-        //cout << "updating warper points" << endl;
-		
-        
-       
-
+	
 		vector<Point2f> srcPoints, dstPoints;
 		for(int i = 0; i < srcVecs.size(); i++) {
 			srcPoints.push_back(Point2f(srcVecs[i].x *srcWidth/dstWidth, srcVecs[i].y * srcHeight/dstHeight));
@@ -76,17 +76,17 @@ bool Warper :: update(ofPixels& pix) {
 		}			
 		
 		homography = findHomography(Mat(srcPoints), Mat(dstPoints));
-		inverseHomography = homography.inv(); //findHomography(Mat(dstPoints), Mat(srcPoints));
-	
-		if(autoSave) saveSettings(); 
+		inverseHomography = homography.inv();
+		
+		if(autoSave) saveSettings();
 	
 	}
 	
 	
 	if(guiVisible) { 
 		
-		if(pix.getImageType()!=warpedImage.getPixelsRef().getImageType()){
-			warpedImage.allocate(dstWidth* dstPreviewScale, dstHeight* dstPreviewScale, pix.getImageType());
+		if(sourcePixels.getImageType()!=warpedImage.getPixelsRef().getImageType()){
+			warpedImage.allocate(dstWidth* dstPreviewScale, dstHeight* dstPreviewScale, sourcePixels.getImageType());
 		}
 		vector<Point2f> srcPoints, dstPoints;
 		
@@ -96,7 +96,10 @@ bool Warper :: update(ofPixels& pix) {
 		}		
 		Mat previewHomography = findHomography(Mat(srcPoints), Mat(dstPoints)); 
 		
-		warpPerspective(pix, warpedImage, previewHomography, CV_INTER_NN);
+		// I guess for a moving image we need to warp the pixels every time.
+		// but we could do it with a similar function to "apply" in QuadWarper
+		
+		warpPerspective(sourcePixels, warpedImage, previewHomography, CV_INTER_NN);
 		warpedImage.update();
 		
 	}
@@ -153,7 +156,7 @@ void Warper :: draw(ofPixels& pix) {
 	
 	//ofImage img(pix);
 	//img.draw(0,0, dstWidth, dstHeight);
-	cout << dstWidth << " " << dstHeight << endl; 
+	//cout << dstWidth << " " << dstHeight << endl;
 	drawPoints(srcVecs, ofColor::cyan);
 
 	ofPopMatrix(); 

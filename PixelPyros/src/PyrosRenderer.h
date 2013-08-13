@@ -45,9 +45,9 @@ public:
 	// two projectors
 	
     //void draw(ofFbo &fbo, vector<ofVec3f> & warpPoints1, vector<ofVec3f> & warpPoints2 ) {
+	
 	void draw(ofFbo &fbo, QuadWarp& warp1, QuadWarp& warp2 ) {
 
-		
 		if(resetFlag) resetDefaults();
 		
 		float w = fbo.getWidth(), h = fbo.getHeight();
@@ -62,7 +62,10 @@ public:
         setUniformTexture("baseTexture", fbo.getTextureReference(), 0);
         setShaderParameters();
 		
-		
+		// I think the warp rendering can be moved into
+		// QuadWarp, right? The co-ordinates are the
+		// QuadWarp's source co-ordinates as far as I can
+		// tell. 
 		
 		warp1.apply(ofRectangle(0,0,hw, h));
 		
@@ -107,16 +110,20 @@ public:
 		glBegin(GL_QUADS);
 		
 		glTexCoord2f(hw, 0);
-		glVertex2f(0,0);
+		glVertex2f(hw,0);
+		//glVertex2f(0,0);
 		
 		glTexCoord2f(w, 0);
-		glVertex2f(hw,0);
+		glVertex2f(w,0);
+		//glVertex2f(hw,0);
 		
 		glTexCoord2f(w, h);
-		glVertex2f(hw,h);
+		glVertex2f(w,h);
+		//glVertex2f(hw,h);
 		
 		glTexCoord2f(hw, h);
-		glVertex2f(0,h);
+		glVertex2f(hw,h);
+		//glVertex2f(0,h);
 		
 		
 		glEnd();
