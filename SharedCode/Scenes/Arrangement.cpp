@@ -100,7 +100,7 @@ void Arrangement :: updateMotion(MotionManager& motionManager, cv::Mat homograph
 		
 		if(!trigger->active) continue;
 		
-		float motion = motionManager.getMotionAtPosition(trigger->pos, trigger->radius*2, homography);
+		float motion = motionManager.getMotionAtPosition(trigger->pos, trigger->radius*3, homography);
 		trigger->registerMotion(motion/255);
 		
 		//cout << motion << endl;

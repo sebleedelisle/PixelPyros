@@ -33,7 +33,7 @@ void SettingsManager::update() {
 		
 		resendAllValues = true;
 		lastUpdate = ofGetElapsedTimef(); 
-		oscManager->sendOSCMessage("/PixelPyros/Monitor/value", ofGetFrameRate() ) ;
+		oscManager->sendOscMessage("/PixelPyros/Framerate/content", "100" ) ;
 	}
 	
 	

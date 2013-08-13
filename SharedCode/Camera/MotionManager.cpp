@@ -78,7 +78,6 @@ void MotionManager :: draw() {
 float MotionManager :: getMotionAtPosition(ofVec2f pos, int width, Mat& homography){
 	
 
-	width*=1.5; 
 	vector<cv::Point2f> pre, post;
 
 	pre.push_back(cv::Point2f(pos.x - (width/2), pos.y - (width/2)));

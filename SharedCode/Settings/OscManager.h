@@ -26,44 +26,20 @@ class OscManager {
 	void setup () ;
 	void update () ;
 	
-	void sendOSCMessage(string message, float arg );
-    void sendOSCMessage(string address, string arg );
+	void addOscDevice(string address);
 	
-	bool sendNewValue(SettingFloat& settingFloat) {
-		//cout << "sending new value " << settingFloat.oscLabel << " " << settingFloat.getUnitValue()<< endl;
-		sendOSCMessage(settingFloat.oscLabel, settingFloat.getUnitValue());
-		
-		
-	}
+	void sendOscMessage(string message, float arg );
+    void sendOscMessage(string address, string arg );
 	
-	bool sendNewValue(SettingBool& settingBool) {
-		//cout << "sending new value " << settingBool.oscLabel << " " << settingBool.getValue()<< endl;
-		sendOSCMessage(settingBool.oscLabel, settingBool.getValue());
-		
-		
-	}
+	bool sendNewValue(SettingFloat& settingFloat);
+	bool sendNewValue(SettingBool& settingBool);
 	
-	bool sendNewValue(SettingString& settingString) {
-		//cout << "sending new value " << settingBool.oscLabel << " " << settingBool.getValue()<< endl;
-		sendOSCMessage(settingString.oscLabel, settingString.value);
-		
-		
-	}
-
-	void addSettingFloat(SettingFloat & setting) {
-		settingFloats.push_back(&setting);
-		
-	}
-	void addSettingBool(SettingBool & setting) {
-		settingBools.push_back(&setting);
-		
-	}
-	void addSettingString(SettingString & setting) {
-		settingStrings.push_back(&setting);
-	}
+	bool sendNewValue(SettingString& settingString);
+	void addSettingFloat(SettingFloat & setting);
+	void addSettingBool(SettingBool & setting);
+	void addSettingString(SettingString & setting);
 	
-	
-    void handleOSCMessage(ofxOscMessage);
+    void handleOscMessage(ofxOscMessage);
     static const int OSC_RECEIVER_PORT = 1234;
     static const int OSC_SENDER_PORT = 8000;
 	

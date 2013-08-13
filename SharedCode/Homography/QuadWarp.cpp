@@ -4,7 +4,11 @@
 //
 //  Created by Seb Lee-Delisle on 30/08/2012.
 //
-//
+//  The QuadWarp object is used to calculate homography between two quads.
+//  Its functionality overlaps Warper, except that Warper owns a bitmap, whereas
+//  this doesn't. In many ways this method is better as it doesn't actually do any
+//  pixel manipulation. It's primarily used to warp the projector images to map onto
+//  the screen, but it's also used to warp the laser output to match the screen. 
 
 #include "QuadWarp.h"
 
@@ -15,11 +19,19 @@ QuadWarp :: QuadWarp (string saveLabel) {
 	ofAddListener(ofEvents().mousePressed, this, &QuadWarp::mousePressed);
 	ofAddListener(ofEvents().mouseDragged, this, &QuadWarp::mouseDragged);
 	ofAddListener(ofEvents().mouseReleased, this, &QuadWarp::mouseReleased);
-
+	label = saveLabel;
 
 	pointColour = ofColor :: white;
 	dstPoints.resize(4);
-	defaultDstPoints.resize(4); 
+	srcPoints.resize(4);
+	for(int i = 0; i<4;i++) {
+		srcPoints[i].set( (i%2)*100, floor(i/2)*100);
+		dstPoints[i].set( (i%2)*100, floor(i/2)*100);
+	}
+	updateHomography();
+	
+	
+	//defaultDstPoints.resize(4);
 	visible = false;
 	pointRadius = 10;
 	curPointIndex = -1;
@@ -35,7 +47,7 @@ void QuadWarp :: draw(bool lockAxis) {
 		
 		ofVec3f diff(ofGetMouseX(), ofGetMouseY());
 		diff-=dragStartPoint;
-		diff*=0.1;
+		diff*=dragSpeed;
 		
 		if(lockAxis) {
 			if(abs(diff.x)-abs(diff.y)>1) diff.y = 0;
@@ -44,11 +56,13 @@ void QuadWarp :: draw(bool lockAxis) {
 
 		ofVec3f& curPoint = dstPoints[curPointIndex];
 		
-		
 		curPoint = dragStartPoint+diff+clickOffset;
 		
 		curPoint.x = round(curPoint.x*10)/10;
 		curPoint.y = round(curPoint.y*10)/10;
+		saveSettings();
+		
+		updateHomography();
 				
 	}
 
@@ -91,11 +105,20 @@ void QuadWarp :: draw(bool lockAxis) {
 }
 
 
-void QuadWarp ::setDstPoint(int index, ofVec3f point, bool setAsDefault ){
+void QuadWarp ::setDstPoint(int index, ofVec3f point){
 	
 
 	dstPoints[index] = point;
-	if(setAsDefault) defaultDstPoints[index] = point;
+	updateHomography();
+	
+	
+}
+
+void QuadWarp ::setSrcPoint(int index, ofVec3f point){
+	
+	
+	srcPoints[index] = point;
+	updateHomography();
 	
 	
 }
@@ -118,14 +141,24 @@ void QuadWarp ::apply(ofRectangle sourceRect){
 	
 	// we set the warp coordinates
 	// source coordinates as the dimensions of our window
-	src[0][0] = sourceRect.x;
-	src[0][1] = sourceRect.y;
-	src[1][0] = sourceRect.width;
-	src[1][1] = sourceRect.y;
-	src[2][0] = sourceRect.width;
-	src[2][1] = sourceRect.height;
-	src[3][0] = sourceRect.x;
-	src[3][1] = sourceRect.height;
+//	src[0][0] = sourceRect.x;
+//	src[0][1] = sourceRect.y;
+//	src[1][0] = sourceRect.width;
+//	src[1][1] = sourceRect.y;
+//	src[2][0] = sourceRect.width;
+//	src[2][1] = sourceRect.height;
+//	src[3][0] = sourceRect.x;
+//	src[3][1] = sourceRect.height;
+	
+	src[0][0] = srcPoints[0].x;
+	src[0][1] = srcPoints[0].y;
+	src[1][0] = srcPoints[1].x; // should this be the width?
+	src[1][1] = srcPoints[1].y;
+	src[2][0] = srcPoints[2].x; // width?
+	src[2][1] = srcPoints[2].y; // height?
+	src[3][0] = srcPoints[3].x;
+	src[3][1] = srcPoints[3].y; // height?
+	
 	
 	// corners are in 0.0 - 1.0 range
 	// so we scale up so that they are at the render scale
@@ -157,6 +190,62 @@ void QuadWarp ::apply(ofRectangle sourceRect){
 	
 	
 }; 
+
+void QuadWarp::updateHomography() {
+	
+	
+	vector<Point2f> srcCVPoints, dstCVPoints;
+	for(int i = 0; i < srcPoints.size(); i++) {
+		srcCVPoints.push_back(Point2f(srcPoints[i].x , srcPoints[i].y));
+		dstCVPoints.push_back(Point2f(dstPoints[i].x, dstPoints[i].y));
+	}
+
+	
+	//cout << srcPoints[3] << " " << dstPoints[3] << endl;
+	homography = cv::findHomography(cv::Mat(srcCVPoints), cv::Mat(dstCVPoints));
+	inverseHomography = homography.inv();
+}
+
+ofVec3f QuadWarp::getWarpedPoint(ofVec3f point){
+	
+	vector<cv::Point2f> pre, post;
+	
+	
+	pre.push_back(cv::Point2f(point.x, point.y));
+	post.push_back(cv::Point2f());
+	
+	//cout << "getWarpedPoint" << pre[0] << endl;
+	
+	cv::perspectiveTransform(pre, post, homography);
+	//cout << "warped" << post[0] << endl;
+
+	return ofxCv::toOf(post[0]);
+//	return ofxCv::toOf(pre[0]);
+	
+//	return point;
+
+}
+
+
+ofVec3f QuadWarp::getUnWarpedPoint(ofVec3f point){
+	
+	vector<cv::Point2f> pre, post;
+	
+	
+	pre.push_back(cv::Point2f(point.x, point.y));
+	post.push_back(cv::Point2f());
+	
+	//cout << "getWarpedPoint" << pre[0] << endl;
+	
+	cv::perspectiveTransform(pre, post, inverseHomography);
+	//cout << "warped" << post[0] << endl;
+	
+	return ofxCv::toOf(post[0]);
+	//	return ofxCv::toOf(pre[0]);
+	
+	//	return point;
+	
+}
 
 
 void QuadWarp :: mousePressed(ofMouseEventArgs &e) {
@@ -195,13 +284,14 @@ void QuadWarp :: mouseReleased(ofMouseEventArgs &e) {
 	if(curPointIndex>=0) {
 		
 		if(ofGetElapsedTimef() - lastMousePress < 0.4) {
-			dstPoints[curPointIndex] = defaultDstPoints[curPointIndex]; 
+			dstPoints[curPointIndex] = srcPoints[curPointIndex];
 			
 			
 		}
 
 		
 		curPointIndex = -1;
+		updateHomography();
 		saveSettings(); 
 	}
 	
@@ -216,9 +306,12 @@ bool QuadWarp::loadSettings() {
 	
 	string filename = "warpdata/"+label+".xml";
 	ofxXmlSettings xml;
-	if(!xml.loadFile(filename))
+	if(!xml.loadFile(filename)) {
+		ofLog(OF_LOG_ERROR, "QuadWarp::loadSettings - file not found : "+filename);
 		return false;
-	
+		
+	}
+		
 	dstPoints[0].x	= xml.getValue("quad:upperLeft:x", 0.0);
 	dstPoints[0].y	= xml.getValue("quad:upperLeft:y", 0.0);
 	

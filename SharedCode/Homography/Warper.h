@@ -23,7 +23,7 @@ class Warper {
 	
 	bool init(float srcwidth, float srcheight, float dstwidth, float dstheight, string label="defaultWarp");
 	
-	bool update(ofPixels& pix);
+	bool update(ofPixels& sourcePixels);
 	
 	
 	//void setSourceImage(ofImage& img) ;

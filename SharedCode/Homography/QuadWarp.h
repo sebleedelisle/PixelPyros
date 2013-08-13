@@ -6,6 +6,10 @@
 #include "ofMain.h"
 #include "glut/glut.h"
 #include "ofxXMLSettings.h"
+#include "ofxCv.h"
+
+using namespace ofxCv;
+using namespace cv;
 
 class QuadWarp {
 	
@@ -18,12 +22,18 @@ class QuadWarp {
 	void mousePressed(ofMouseEventArgs &e);
 	void mouseDragged(ofMouseEventArgs &e);
 	void mouseReleased(ofMouseEventArgs &e);
+	float dragSpeed = 0.1;
 	
 	bool hitTestPoints(vector<ofVec2f>& points, ofVec2f& point);
 	void drawPoints(vector<ofVec2f>& points, ofColor colour = ofColor::white);
 
 	
-	void setDstPoint(int index, ofVec3f point, bool setAsDefault = true);
+	void setDstPoint(int index, ofVec3f point);
+	void setSrcPoint(int index, ofVec3f point);
+	
+	ofVec3f getWarpedPoint(ofVec3f point);
+	ofVec3f getUnWarpedPoint(ofVec3f point);
+	void updateHomography();
 	
 	// applies the distortion matrix to the current draw state
 	void apply(ofRectangle sourceRect);
@@ -36,8 +46,12 @@ class QuadWarp {
 	bool visible;
 	float lastMousePress; 
 	
+	vector <ofVec3f> srcPoints;
 	vector <ofVec3f> dstPoints;
-	vector <ofVec3f> defaultDstPoints;
+	//vector <ofVec3f> defaultDstPoints;
+	
+	cv::Mat homography;
+	cv::Mat inverseHomography;
 	
 	ofColor pointColour;
 	
