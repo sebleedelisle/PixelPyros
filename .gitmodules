@@ -6,4 +6,4 @@
 	url = git@github.com:kylemcdonald/ofxCv.git
 [submodule "addons/ofxLibdc"]
 	path = addons/ofxLibdc
-	url = git@github.com:kylemcdonald/ofxLibdc.git
+	url = git@github.com:sebleedelisle/ofxLibdc.git
