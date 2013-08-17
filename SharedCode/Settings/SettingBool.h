@@ -12,6 +12,9 @@ class SettingBool {
 	
 	
 	public :
+	
+	// trying to figure out what ignoreFalse is for.
+	
 	SettingBool(bool * targetvalue = NULL, string xmllabel = "", string osclabel = "", bool ignorefalse = false ) {
 		
 		target = targetvalue;

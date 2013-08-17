@@ -468,7 +468,7 @@ void ofApp::setupControlPanel() {
 	
 	settingsManager.addSettingBool(&renderer.resetFlag, "", "/PixelPyros/Setup/ResetDefault/x", true);
 
-	settingsManager.addSettingBool(&sceneManager.nextFlag, "", "/PixelPyros/SceneNext/x", true, true);
+	settingsManager.addSettingBool(&sceneManager.nextFlag, "", "/PixelPyros/SceneNext/x", true, false);
 	settingsManager.addSettingBool(&sceneManager.previousFlag, "", "/PixelPyros/ScenePrevious/x", true, true);
 	settingsManager.addSettingBool(&sceneManager.nextArrangementFlag, "", "/PixelPyros/ArrNext/x", true, true);
 	settingsManager.addSettingBool(&sceneManager.previousArrangementFlag, "", "/PixelPyros/ArrPrevious/x", true, true);
