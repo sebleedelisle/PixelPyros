@@ -38,17 +38,17 @@
     <val_0>0.847276270</val_0>
 </TRIGGER_AREA_Y>
 <TRIGGER_SPACING>
-    <val_0>48.287113190</val_0>
+    <val_0>106.625915527</val_0>
 </TRIGGER_SPACING>
 <SHADER_BLACK>
-    <val_0>0.000000000</val_0>
+    <val_0>0.002359863</val_0>
 </SHADER_BLACK>
 <SHADER_GAMMA>
-    <val_0>1.200000048</val_0>
+    <val_0>1.946869373</val_0>
 </SHADER_GAMMA>
 <SHADER_WHITE>
-    <val_0>1.000000000</val_0>
+    <val_0>0.998779118</val_0>
 </SHADER_WHITE>
 <SHADER_BLOOM>
-    <val_0>0.611111104</val_0>
+    <val_0>0.189365268</val_0>
 </SHADER_BLOOM>

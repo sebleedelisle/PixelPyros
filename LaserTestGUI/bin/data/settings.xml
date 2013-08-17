@@ -1,0 +1,30 @@
+<group>
+    <fill>1</fill>
+    <radius>140</radius>
+    <center>512, 689.633</center>
+    <color>100, 100, 140, 255</color>
+    <circle_res>5</circle_res>
+    <screen_size/>
+<group/>
+	<showParticles>1</showParticles>
+<numParticles>40</numParticles>
+<LaserTestGUI>
+		<showParticles>1</showParticles>
+		<numParticles>63</numParticles>
+		<center>888.163, 384</center>
+		<color>255, 255, 255, 255</color>
+		<circle_res>5</circle_res>
+		<screen_size/>
+	<dot_pre_blank>1</dot_pre_blank>
+	<dot_post_blank>1</dot_post_blank>
+		<dot_max_points>18</dot_max_points>
+	<flicker>1</flicker>
+	<show_move_points>0</show_move_points>
+	<speed>0</speed>
+	<move_speed>4.05595</move_speed>
+	<brightness>1</brightness>
+		<move_points_padding>0</move_points_padding>
+	<intensity>1</intensity>
+	<colour_change_offset>-7</colour_change_offset>
+	</LaserTestGUI>
+</group>

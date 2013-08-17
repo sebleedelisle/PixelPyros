@@ -99,6 +99,8 @@ void SettingsManager::addSettingFloat(float * valuePointer, string xmlname, stri
 }
 
 
+// sendCurrent makes sure that the current value is broadcast
+// ignorefalse is for one-hit triggers.
 void SettingsManager::addSettingBool(bool * valuePointer, string xmlname, string osclabel, bool sendCurrent, bool ignorefalse) {
 	
 	SettingBool* setting = new SettingBool(valuePointer, xmlname, osclabel, ignorefalse);

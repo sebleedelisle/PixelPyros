@@ -1,2 +1,0 @@
-ofxEtherDream
-ofxIlda
