@@ -10,3 +10,6 @@
 [submodule "addons/ofxEtherdream"]
 	path = addons/ofxEtherdream
 	url = git@github.com:memo/ofxEtherdream.git
+[submodule "addons/ofxIlda"]
+	path = addons/ofxIlda
+	url = git@github.com:memo/ofxIlda.git
