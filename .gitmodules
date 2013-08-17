@@ -7,3 +7,6 @@
 [submodule "addons/ofxLibdc"]
 	path = addons/ofxLibdc
 	url = git@github.com:sebleedelisle/ofxLibdc.git
+[submodule "addons/ofxEtherdream"]
+	path = addons/ofxEtherdream
+	url = git@github.com:memo/ofxEtherdream.git
