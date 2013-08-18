@@ -27,7 +27,7 @@
 	<intensity>1</intensity>
 	<colour_change_offset>-7</colour_change_offset>
 	<Laser_Manager>
-			<intensity>0.984694</intensity>
+			<intensity>0.915</intensity>
 			<colour_change_offset>-6</colour_change_offset>
 			<show_move_points>1</show_move_points>
 			<move_speed>3.78173</move_speed>
@@ -55,10 +55,10 @@
 		<status/>
 			<group/>
 		</Laser_Manager>
-	<Show_Particles>0</Show_Particles>
+	<Show_Particles>1</Show_Particles>
 		<Num_Particles>45</Num_Particles>
 		<Speed>0.475</Speed>
-		<Particle_Colour>246, 240, 154, 255</Particle_Colour>
+		<Particle_Colour>80, 66, 154, 255</Particle_Colour>
 		<Flicker>0.5</Flicker>
 	</LaserTestGUI>
 </group>
