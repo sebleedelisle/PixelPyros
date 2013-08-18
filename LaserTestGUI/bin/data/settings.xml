@@ -9,22 +9,56 @@
 	<showParticles>1</showParticles>
 <numParticles>40</numParticles>
 <LaserTestGUI>
-		<showParticles>1</showParticles>
-		<numParticles>63</numParticles>
+		<showParticles>0</showParticles>
+		<numParticles>27</numParticles>
 		<center>888.163, 384</center>
-		<color>255, 255, 255, 255</color>
+		<color>255, 149, 192, 255</color>
 		<circle_res>5</circle_res>
 		<screen_size/>
 	<dot_pre_blank>1</dot_pre_blank>
 	<dot_post_blank>1</dot_post_blank>
-		<dot_max_points>18</dot_max_points>
+		<dot_max_points>4</dot_max_points>
 	<flicker>1</flicker>
-	<show_move_points>0</show_move_points>
-	<speed>0</speed>
-	<move_speed>4.05595</move_speed>
+	<show_move_points>1</show_move_points>
+	<speed>1.775</speed>
+	<move_speed>1.55845</move_speed>
 	<brightness>1</brightness>
 		<move_points_padding>0</move_points_padding>
 	<intensity>1</intensity>
 	<colour_change_offset>-7</colour_change_offset>
+	<Laser_Manager>
+			<intensity>0.984694</intensity>
+			<colour_change_offset>-6</colour_change_offset>
+			<show_move_points>1</show_move_points>
+			<move_speed>3.78173</move_speed>
+			<move_points_padding>0</move_points_padding>
+			<dot_pre_blank>3</dot_pre_blank>
+			<dot_post_blank>3</dot_post_blank>
+			<dot_max_points>7</dot_max_points>
+		<Etherdream_connect>0</Etherdream_connect>
+		<Etherdream>
+				<Etherdream_connect>0</Etherdream_connect>
+				<status/>
+			</Etherdream>
+			<laser>
+				<intensity>1</intensity>
+				<colour_change_offset>-3</colour_change_offset>
+				<show_move_points>0</show_move_points>
+			</laser>
+			<laser_graphics>
+				<move_speed>3</move_speed>
+				<move_points_padding>0</move_points_padding>
+				<dot_pre_blank>3</dot_pre_blank>
+				<dot_post_blank>3</dot_post_blank>
+				<dot_max_points>7</dot_max_points>
+			</laser_graphics>
+		<status/>
+			<group/>
+		</Laser_Manager>
+	<Show_Particles>0</Show_Particles>
+		<Num_Particles>45</Num_Particles>
+		<Speed>0.475</Speed>
+		<Particle_Colour>246, 240, 154, 255</Particle_Colour>
+		<Flicker>0.5</Flicker>
 	</LaserTestGUI>
 </group>
