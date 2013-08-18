@@ -19,6 +19,7 @@
 #include "LaserDot.h"
 #include "ofxGui.h"
 
+
 class LaserManager {
 
 	public:
@@ -47,6 +48,9 @@ class LaserManager {
 	ofxIlda::Point ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour);
 	ofPoint ildaPointToOfPoint(const ofxIlda::Point& ildapoint);
 	
+	
+	void connectToEtherdream();
+	void disconnectFromEtherdream();
 	bool toggleRegistration(); 
 	
 	
@@ -88,7 +92,13 @@ class LaserManager {
 	// the speed for movement and 
 	ofParameter<float> moveSpeed;
 	ofParameter<float> movePointsPadding;
+	ofParameter<bool> connectButton;
+	ofParameter<string> etherdreamStatus; 
 	
+	ofParameterGroup p1, p2, p3;
+	ofParameterGroup parameters;
+	
+	bool isConnected; 
 
 	
 	QuadWarp warp; 

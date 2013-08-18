@@ -37,7 +37,7 @@ public:
 
 	int particlesCreated ; 
 
-	ofxIntSlider numParticles;
+	ofParameter<int> numParticles;
 	ofxColorSlider color;
 	ofParameter<float> particleFlicker;
 	ofParameter<float> speed;

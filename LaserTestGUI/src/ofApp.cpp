@@ -6,36 +6,32 @@ void ofApp::setup(){
 	ofSetVerticalSync(true);
 
 	// we add this listener before setting up so the initial circle resolution is correct
-	//circleResolution.addListener(this, &ofApp::circleResolutionChanged);
-	//ringButton.addListener(this,&ofApp::ringButtonPressed);
 
+	gui.setDefaultHeight(26);
+	gui.setDefaultWidth(400);
+	gui.setDefaultTextPadding(10);
+	gui.setDefaultSpacing(2);
+	gui.setDefaultElementSpacing(5);
+	gui.setDefaultElementIndentation(1);
+	//gui.setSpacing
+	//gui.loadFont("Andale Mono.ttf", 10);
+	//ofDrawBitmapString("HELLO", 0,0);
+	
+	
 	gui.setup("LaserTestGUI"); // most of the time you don't need a name
 	
-	gui.add(showParticles.setup("showParticles", true));
-	gui.add(numParticles.setup( "numParticles", 40, 1, 300 ));
-	gui.add(speed.set( "speed", 1, 0, 5 ));
-
-	gui.add(laserManager.intensity.set("intensity", 1, 0, 1));
-	gui.add(laserManager.colourChangeDelay.set("colour change offset", -6, -15, 15));
+	//gui.setSize(500,30);
+	//gui.setUseTTF(true);
+	gui.add(showParticles.setup("Show Particles", true));
+	gui.add(speed.set( "Speed", 1, 0, 5 ));
+	gui.add(numParticles.set( "Num Particles", 40, 1, 300 ));
 	
 	
-	gui.add(laserManager.showMovePoints.set("show move points", false));
-	gui.add(laserManager.moveSpeed.set("move speed", 3,0.01,10));
-	gui.add(laserManager.movePointsPadding.set("move points padding", 0,0,20));
-
-	gui.add(laserManager.dotPreBlank.set("dot pre blank", 3, 0, 20));
-	gui.add(laserManager.dotPostBlank.set("dot post blank", 3, 0, 20));
-	gui.add(laserManager.dotMaxPoints.set("dot max points", 7, 0, 100));
+	gui.add(color.setup("Particle Colour",ofColor(100,100,140),ofColor(0,0),ofColor(255,255)));
+	gui.add(particleFlicker.set("Flicker",0.5,0,1));
+	gui.setPosition(200,0);
+	gui.add(laserManager.parameters);
 	
-	//gui.add(center.setup("center",ofVec2f(ofGetWidth()*.5,ofGetHeight()*.5),ofVec2f(0,0),ofVec2f(ofGetWidth(),ofGetHeight())));
-	
-	gui.add(color.setup("color",ofColor(100,100,140),ofColor(0,0),ofColor(255,255)));
-	gui.add(particleFlicker.set("flicker",0.5,0,1));
-	
-	//gui.add(circleResolution.setup("circle res", 5, 3, 90));
-	//gui.add(twoCircles.setup("two circles"));
-	//gui.add(ringButton.setup("ring"));
-	//gui.add(screenSize.setup("screen size", ""));
 
 	bHide = true;
 	elapsedTime = 0; 

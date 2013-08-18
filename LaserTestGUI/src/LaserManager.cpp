@@ -11,8 +11,9 @@
 
 LaserManager:: LaserManager() {
 
-	etherdream.setup();
-    etherdream.setPPS(50000);
+	
+	isConnected = false;
+	
 	minPoints = 600;
 
 	acceleration = 0.5;
@@ -59,7 +60,34 @@ LaserManager:: LaserManager() {
 	dotPreBlank = 3;
 	dotPostBlank = 3;
 	dotMaxPoints = 10;
+	parameters.setName("Laser Manager");
+	
+	
+	
+	//p1.setName("Etherdream");
+	parameters.add(connectButton.set("Etherdream connect", false));
+	parameters.add(etherdreamStatus.set("status", ""));
+	
+	
+	//p2.setName("laser");
 
+	parameters.add(intensity.set("intensity", 1, 0, 1));
+	parameters.add(colourChangeDelay.set("colour change offset", -6, -15, 15));
+	parameters.add(showMovePoints.set("show move points", false));
+	
+	//p3.setName("laser graphics");
+	
+	
+	parameters.add(moveSpeed.set("move speed", 3,0.01,10));
+	parameters.add(movePointsPadding.set("move points padding", 0,0,20));
+	
+	parameters.add(dotPreBlank.set("dot pre blank", 3, 0, 20));
+	parameters.add(dotPostBlank.set("dot post blank", 3, 0, 20));
+	parameters.add(dotMaxPoints.set("dot max points", 7, 0, 100));
+	
+		//	parameters.add(p1);
+//	parameters.add(p2);
+//	parameters.add(p3);
 
 	
 	colourChangeDelay = -6;
@@ -71,9 +99,31 @@ LaserManager:: LaserManager() {
 }
 
 
+void LaserManager:: connectToEtherdream() {
+
+	etherdream.setup();
+    etherdream.setPPS(50000);
+	isConnected = true;
+	
+}
+void LaserManager:: disconnectFromEtherdream() {
+	
+	etherdream.stop();
+	isConnected = false;
+	
+}
+
 void LaserManager:: update() {
 	
-	
+	if(connectButton!=isConnected) {
+		if(connectButton) {
+			connectToEtherdream();
+		} else {
+			disconnectFromEtherdream();
+		}
+		
+		
+	}
 	
 	if(showRegistration) {
 		
@@ -116,11 +166,11 @@ void LaserManager:: update() {
 		
 	}
 	
-	
-	etherdream.setPoints(adjustedPoints);
-	etherdream.checkConnection(true);
-	etherdream.setPPS(50000);
-	
+	if(isConnected) {
+		etherdream.setPoints(adjustedPoints);
+		etherdream.checkConnection(true);
+		//etherdream.setPPS(50000);
+	}
     
 	ofNoFill();
 	
