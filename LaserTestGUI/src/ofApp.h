@@ -33,8 +33,9 @@ public:
 	void circleResolutionChanged(int & circleResolution);
 	void ringButtonPressed();
 
-	bool bHide;
-
+	bool guiVisible;
+	bool guiDirty;
+	
 	int particlesCreated ; 
 
 	ofParameter<int> numParticles;
@@ -55,6 +56,7 @@ public:
 	//ofxLabel screenSize;
 
 	ofxPanel gui;
+	ofFbo guiFbo;
 
 	//ofSoundPlayer ring;
 };

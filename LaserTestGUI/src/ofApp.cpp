@@ -7,14 +7,21 @@ void ofApp::setup(){
 
 	// we add this listener before setting up so the initial circle resolution is correct
 
-	gui.setDefaultHeight(26);
+	guiFbo.allocate(400, 800); 
+	
+	gui.setDefaultHeight(32);
 	gui.setDefaultWidth(400);
 	gui.setDefaultTextPadding(10);
+	
+	
 	gui.setDefaultSpacing(2);
 	gui.setDefaultElementSpacing(5);
 	gui.setDefaultElementIndentation(1);
+
+	
 	//gui.setSpacing
-	//gui.loadFont("Andale Mono.ttf", 10);
+	gui.loadFont("Verdana.ttf", 12, false);
+	
 	//ofDrawBitmapString("HELLO", 0,0);
 	
 	
@@ -33,7 +40,8 @@ void ofApp::setup(){
 	gui.add(laserManager.parameters);
 	
 
-	bHide = true;
+	guiVisible = true;
+	guiDirty = true;
 	elapsedTime = 0; 
 
 	gui.loadFromFile("settings.xml");
@@ -102,18 +110,25 @@ void ofApp::draw(){
  	laserManager.update();
 
 	
-	
+	//guiDirty = true;
 	// auto draw?
 	// should the gui control hiding?
-	if( bHide ){
-		gui.draw();
-	}
+	if(guiDirty) ofDrawBitmapString("DIRTY", 600,100);
+	//if( guiVisible ){
+		if(guiDirty) {
+			guiFbo.begin();
+			gui.draw();
+			guiFbo.end();
+			//guiDirty = false;
+		}
+		guiFbo.draw(0,0);
+	//}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	if( key == 'h' ){
-		bHide = !bHide;
+		guiVisible = !guiVisible;
 	}
 	if(key == 's') {
 		gui.saveToFile("settings.xml");
@@ -135,20 +150,23 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
 	
+	
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
+	guiDirty = true;
+	ofLog(OF_LOG_NOTICE, "mouseDragged");
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	
+	guiDirty = true;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-	
+	guiDirty = true;
 }
 
 //--------------------------------------------------------------
