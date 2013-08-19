@@ -8,7 +8,6 @@ class ofApp : public ofBaseApp{
 	public:
     
         ofxPanel gui;
-        ofFbo guiFbo;
         ofxToggle toggleDemo;
 
     

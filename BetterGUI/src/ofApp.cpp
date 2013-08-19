@@ -3,8 +3,6 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetVerticalSync(true);
-
-    guiFbo.allocate(400, 800);
     
     gui.setDefaultHeight(32);
 	gui.setDefaultWidth(400);
