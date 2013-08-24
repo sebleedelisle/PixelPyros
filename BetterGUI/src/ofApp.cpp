@@ -7,7 +7,7 @@ void ofApp::setup(){
     gui.setDefaultHeight(32);
 	gui.setDefaultWidth(400);
 	gui.setDefaultTextPadding(10);
-    gui.useFrameBuffer(true);
+    gui.useFrameBuffer(false);
 	
 	gui.setDefaultSpacing(2);
 	gui.setDefaultElementSpacing(5);
@@ -21,7 +21,10 @@ void ofApp::setup(){
 	gui.add(intSliderDemo.setup("Integer Slider Demo", 0, 128, 255));
     gui.add(colorSliderDemo.setup("Color Demo", ofColor::black, ofColor::black, ofColor::white));
     gui.add(buttonDemo.setup("Butto Demo"));
+    gui.add(labelDemo.setup("Label Demo","label text"));
+    
 }
+
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -55,7 +58,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
 }
 
 //--------------------------------------------------------------
