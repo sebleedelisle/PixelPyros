@@ -27,6 +27,7 @@ public:
     ofxSlider<int> intSliderDemo;
     ofxColorSlider colorSliderDemo;
     ofxButton buttonDemo;
+    ofxLabel labelDemo;
     
     
 };
