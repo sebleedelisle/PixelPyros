@@ -7,7 +7,7 @@ void ofApp::setup(){
     gui.setDefaultHeight(32);
 	gui.setDefaultWidth(400);
 	gui.setDefaultTextPadding(10);
-	
+    gui.useFrameBuffer(true);
 	
 	gui.setDefaultSpacing(2);
 	gui.setDefaultElementSpacing(5);
@@ -17,7 +17,10 @@ void ofApp::setup(){
     gui.setup("BetterGUI Test"); // most of the time you don't need a name
 
     gui.add(toggleDemo.setup("Toggle Button", true));
-	
+    gui.add(sliderDemo.setup("Slider Demo",0.5,0,1));
+	gui.add(intSliderDemo.setup("Integer Slider Demo", 0, 128, 255));
+    gui.add(colorSliderDemo.setup("Color Demo", ofColor::black, ofColor::black, ofColor::white));
+    gui.add(buttonDemo.setup("Butto Demo"));
 }
 
 //--------------------------------------------------------------
