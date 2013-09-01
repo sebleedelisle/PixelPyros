@@ -8,10 +8,10 @@
 
 #include "SceneTron.h"
 
-SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) : Scene(scenename, psm, triggerarea){
+SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm) : Scene(scenename, psm){
 	
 	TriggerPattern empty;
-	addArrangement(empty);
+	addTriggerPattern(empty);
 	
 	
 	RocketTronFountain rocketFountainBlue(130,10);
@@ -71,7 +71,7 @@ SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm, ofRectang
 	glitchFountainPattern.addTrigger(fountainTriggerPink);
 	
 	
-	addArrangement(glitchFountainPattern);
+	addTriggerPattern(glitchFountainPattern);
 
 
 
@@ -121,7 +121,7 @@ SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm, ofRectang
 		
 	glitchFountainPattern.addTrigger(glitchRocketTrigger);
 	
-	addArrangement(glitchFountainPattern);
+	addTriggerPattern(glitchFountainPattern);
 	
 	
 	
@@ -133,7 +133,7 @@ SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm, ofRectang
 	glitchFountainPatternHigh.addTrigger(fountainTriggerPinkHigh);
 	glitchFountainPatternHigh.addTrigger(fountainTriggerPink);
 	
-	addArrangement(glitchFountainPatternHigh);
+	addTriggerPattern(glitchFountainPatternHigh);
 	
 	
 	
@@ -145,7 +145,7 @@ SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm, ofRectang
 	TriggerRocket rocketTronTrigger(particleSystemManager);
 	rocketTronTrigger.addRocketSettings(rocketTron);
 	// makes one shot type
-	rocketTronTrigger.type = TRIGGER_TYPE_FIRE_ON_MOTION;
+	//rocketTronTrigger.type = TRIGGER_TYPE_FIRE_ON_MOTION;
 	rocketTronTrigger.triggerLevel = 1;
 	rocketTronTrigger.restoreSpeed = 2;
 	rocketTronTrigger.triggerPower = 0.99;
@@ -155,7 +155,7 @@ SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm, ofRectang
 	rocketsAndFountainsPattern.addTrigger(fountainTriggerBlue);
 
 	
-	addArrangement(rocketsAndFountainsPattern);
+	addTriggerPattern(rocketsAndFountainsPattern);
 	
 	
 	
@@ -170,7 +170,7 @@ SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm, ofRectang
 	crazyPattern.addTrigger(crazyTrigger,0,0,0.3);
 	//pattern.addTrigger(trigger2);
 	
-	addArrangement(crazyPattern);
+	addTriggerPattern(crazyPattern);
 	
 	
 	
@@ -242,7 +242,7 @@ SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm, ofRectang
 	bigPattern.addTrigger(fountainTriggerPink);
 	bigPattern.addTrigger(rocketTronTrigger);
 	
-	addArrangement(bigPattern);
+	addTriggerPattern(bigPattern);
 	
 	
 	TriggerPattern endPattern;
@@ -254,7 +254,7 @@ SceneTron :: SceneTron  (string scenename, ParticleSystemManager& psm, ofRectang
 //	endPattern.addTrigger(circleFountainTrigger);
 	endPattern.addTrigger(glitchRocketTriggerMore);
 	
-	addArrangement(endPattern);
+	addTriggerPattern(endPattern);
 
 	
 	

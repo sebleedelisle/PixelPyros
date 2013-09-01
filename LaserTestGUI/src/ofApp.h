@@ -34,7 +34,7 @@ public:
 	void ringButtonPressed();
 
 	bool guiVisible;
-	bool guiDirty;
+	//bool guiDirty;
 	
 	int particlesCreated ; 
 
@@ -49,6 +49,7 @@ public:
 	//ofxVec2Slider center;
 	//ofxIntSlider circleResolution;
 	ofxToggle showParticles;
+	ofxToggle showRectangle;
 	
 	
 	//ofxButton twoCircles;
@@ -56,8 +57,7 @@ public:
 	//ofxLabel screenSize;
 
 	ofxPanel gui;
-	ofFbo guiFbo;
-
+	
 	//ofSoundPlayer ring;
 };
 

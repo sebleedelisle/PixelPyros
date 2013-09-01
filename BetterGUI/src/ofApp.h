@@ -21,6 +21,8 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+	bool guiHide;
+	
     ofxPanel gui;
     ofxToggle toggleDemo;
     ofxSlider<float> sliderDemo;

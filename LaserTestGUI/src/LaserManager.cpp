@@ -13,11 +13,11 @@ LaserManager:: LaserManager() {
 
 	
 	isConnected = false;
+	showSyncTest = false;
+	
 	
 	minPoints = 600;
 
-	acceleration = 0.5;
-	maxSpeed = 20;
 
 	white.set(1,1,1);
 	black.set(0,0,0);
@@ -29,7 +29,8 @@ LaserManager:: LaserManager() {
 	pmax.set(ofGetWidth(), ofGetHeight());
 	
 	showRegistration = true;
-	showMovePoints = false; 
+	showMovePoints = false;
+	renderLaserPath = true;
 	intensity = 1; 
 
 	float x1 = APP_WIDTH*0.2;
@@ -73,7 +74,12 @@ LaserManager:: LaserManager() {
 
 	parameters.add(intensity.set("intensity", 1, 0, 1));
 	parameters.add(colourChangeDelay.set("colour change offset", -6, -15, 15));
+	
+	parameters.add(showRegistration.set("show registration", false));
+	
 	parameters.add(showMovePoints.set("show move points", false));
+	parameters.add(showSyncTest.set("show sync test", false));
+	parameters.add(renderLaserPath.set("render laser path", true));
 	
 	//p3.setName("laser graphics");
 	
@@ -84,6 +90,11 @@ LaserManager:: LaserManager() {
 	parameters.add(dotPreBlank.set("dot pre blank", 3, 0, 20));
 	parameters.add(dotPostBlank.set("dot post blank", 3, 0, 20));
 	parameters.add(dotMaxPoints.set("dot max points", 7, 0, 100));
+	
+	parameters.add(acceleration.set("acceleration", 0.5, 0.001, 20));
+	parameters.add(maxSpeed.set("max speed", 20,0.1, 100));
+	 
+
 	
 		//	parameters.add(p1);
 //	parameters.add(p2);
@@ -125,9 +136,16 @@ void LaserManager:: update() {
 		
 	}
 	
+	if(showSyncTest) {
+		addDelayTest();
+		
+		
+	}
+	
+	
 	if(showRegistration) {
 		
-		addLaserRect(pmin, pmax, white);
+		addLaserRectEased(pmin, pmax, white);
 		addLaserLineEased(pmin, pmax, white);
 		addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
 		
@@ -172,17 +190,19 @@ void LaserManager:: update() {
 		//etherdream.setPPS(50000);
 	}
     
-	ofNoFill();
-	
-	ofSetColor(50,0,0);
-	previewMesh.setMode(OF_PRIMITIVE_LINE_LOOP);
-	previewMesh.draw();
-	ofSetColor(255,255,255);
-	previewMesh.setMode(OF_PRIMITIVE_POINTS);
-	previewMesh.draw();
-	
-	
-	ofDrawBitmapString("POINTS : "+ofToString(ildaPoints.size())+" "+ofToString(colourChangeDelay), ofPoint(10,10));
+	if(renderLaserPath) {
+		
+		ofNoFill();
+		
+		ofSetColor(50,0,0);
+		previewMesh.setMode(OF_PRIMITIVE_LINE_LOOP);
+		previewMesh.draw();
+		ofSetColor(255,255,255);
+		previewMesh.setMode(OF_PRIMITIVE_POINTS);
+		previewMesh.draw();
+		
+	}
+	//ofDrawBitmapString("POINTS : "+ofToString(ildaPoints.size())+" "+ofToString(colourChangeDelay), ofPoint(10,10));
 
 	
 	resetIldaPoints();
@@ -474,14 +494,22 @@ void LaserManager:: addLaserLine(const ofPoint&startpoint, const ofPoint&endpoin
 
 void LaserManager::addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour){
 	
+	addLaserLine(topLeft, ofPoint(topLeft.x+dimensions.x,topLeft.y), colour);
+	addLaserLine(ofPoint(topLeft.x+dimensions.x,topLeft.y), topLeft+dimensions, colour);
+	addLaserLine(topLeft+dimensions, ofPoint(topLeft.x,topLeft.y+dimensions.y), colour);
+	addLaserLine(ofPoint(topLeft.x,topLeft.y+dimensions.y), topLeft, colour);
+
+}
+
+void LaserManager::addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour){
+	
 	addLaserLineEased(topLeft, ofPoint(topLeft.x+dimensions.x,topLeft.y), colour);
 	addLaserLineEased(ofPoint(topLeft.x+dimensions.x,topLeft.y), topLeft+dimensions, colour);
 	addLaserLineEased(topLeft+dimensions, ofPoint(topLeft.x,topLeft.y+dimensions.y), colour);
 	addLaserLineEased(ofPoint(topLeft.x,topLeft.y+dimensions.y), topLeft, colour);
-
+	
 }
 
-								 
 ofxIlda::Point LaserManager::ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour){
 	
 	
@@ -506,7 +534,7 @@ void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c){
 	
 	ofPoints.push_back(warpedpoint);
 
-	previewMesh.addVertex(warpedpoint);
+	previewMesh.addVertex(warp.getUnWarpedPoint(warpedpoint));
 	//previewMesh.addColor(c);
 	c.r*=intensity;
 	c.g*=intensity;
@@ -545,30 +573,36 @@ void LaserManager::addDelayTest() {
 		pos.y+=ofGetHeight()/2;
 		//pointcolour.setHsb(ofMap(x,0,pointcount, 0,1), 1, 1);
 		//pointcolour.setHsb(0, 1, 1);
-		if(x==0) {
-			startVel.set(0,10,0);
-			startPosition = pos;
-		}
+		
 		//cout << pointcolour.r << " " << pointcolour.g << " " << pointcolour.b << "\n";
+		pos = warp.getWarpedPoint(pos);
+		
+//		if(x==0) {
+//			startVel.set(0,10,0);
+//			startPosition = pos;
+//		}
+		
 		if((angle>=360) && (angle<=(360+180)) && fmod(x,2)==0) addIldaPoint(pos, white);
 		else addIldaPoint(pos, ofFloatColor(0,1,0));
 		
 	}
-	pos.set(500,350);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addIldaPoint(pos, black);
-	addLaserLine(pos, ofPoint(200,350), ofFloatColor(1,0,0));
+	//pos.set(500,350);
+	pos = warp.getWarpedPoint(ofPoint(500,350));
+//
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+//	addIldaPoint(pos, black);
+	addLaserLine(ofPoint(650,ofGetHeight()/2),(ofPoint(350,ofGetHeight()/2)), ofFloatColor(1,0,0));
 	//closeLaserLoop();
 	
 }

@@ -9,6 +9,7 @@
 #pragma once 
 #include "ParticleRendererLine.h"
 #include "ParticleRendererStar.h"
+#include "TriggerRocket.h"
 #include "RocketBasic.h"
 #include "ParticleSystemManager.h"
 #include "ofMain.h"
@@ -19,15 +20,9 @@ class LetterWritingPatternMaker {
 	public : 
 	
 	TriggerPattern getPattern(ParticleSystemManager & psm, string text, float letterscale, float spacing, float verticalPosition, float horizontalCentre, float sparklerspacing, float fusetime, float sparktime, float triggerspacing, float triggercentre, ofMesh & backgroundMesh) {
-		
-		
-		
-		
-		
-		
+
 		VectorFont font;
-		
-		
+
 		vector <Letter> letters;
 
 		text = ofToUpper(text); 

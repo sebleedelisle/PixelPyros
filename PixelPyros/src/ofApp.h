@@ -13,15 +13,18 @@
 #include "CameraManagerWarped.h"
 #include "SoundPlayer.h"
 #include "MotionManager.h"
+#include "TriggerManager.h"
 #include "ofxAutoControlPanel.h"
-#include "SceneSpace.h"
-#include "SceneTron.h"
-#include "SceneLaunch.h"
+//
+//#include "SceneSpace.h"
+//#include "SceneTron.h"
+//#include "SceneLaunch.h"
 #include "SceneIntro.h"
-#include "SceneRetro.h"
-#include "SceneRealistic.h"
+//#include "SceneRetro.h"
+//#include "SceneRealistic.h"
 #include "SceneCalibration.h"
 #include "SceneSlideshow.h"
+
 #include "PyrosRenderer.h"
 
 #include "QuadWarp.h"
@@ -38,7 +41,7 @@ class ofApp : public ofBaseApp{
 	
 public:
 	
-	ofApp():particleSystemManager(soundPlayer), sceneManager(particleSystemManager) {
+	ofApp(): particleSystemManager(soundPlayer), sceneManager(particleSystemManager, triggerManager) {
 		
 	};
 	
@@ -59,14 +62,15 @@ public:
 	
 	
   	ParticleSystemManager particleSystemManager;
-	SceneManager		sceneManager; 
-	OscManager			oscManager;
-    SettingsManager     settingsManager;
-	CameraManagerWarped cameraManager; 
-	MotionManager		motionManager;
-	SoundPlayer			soundPlayer;
+	SceneManager sceneManager;
+	TriggerManager triggerManager;
+	OscManager oscManager;
+    SettingsManager settingsManager;
+	CameraManagerWarped cameraManager;
+	MotionManager motionManager;
+	SoundPlayer soundPlayer;
 	
-	ofFbo	fbo; 
+	ofFbo fbo; 
 	bool useFbo; 
 	
 	ofxAutoControlPanel gui; 

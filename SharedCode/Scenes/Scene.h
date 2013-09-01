@@ -10,7 +10,7 @@
 
 
 #include "constants.h"
-#include "Arrangement.h"
+#include "TriggerPattern.h"
 #include "ParticleSystemManager.h"
 #include "MotionManager.h"
 #include "ofxCV.h"
@@ -21,7 +21,7 @@ class Scene {
 
 	public : 
 	
-	Scene(string scenename, ParticleSystemManager& psm, ofRectangle triggerarea);
+	Scene(string scenename, ParticleSystemManager& psm);
 	
 	virtual void start();
 	virtual void stop();
@@ -31,13 +31,15 @@ class Scene {
 	
 	virtual void updateMotion(MotionManager& motionManager, cv::Mat homography);
    
-	virtual bool changeArrangement(int num);
+	virtual bool changeTriggerPattern(int num);
 	
-	Arrangement& addArrangement(TriggerPattern& pattern, bool fixedPosition = false);
+	void addTriggerPattern(TriggerPattern& pattern);
 	
-	void updateTriggerSettings(ofRectangle triggerarea, float spacing);
-	void setShowTriggerDebug(bool);
-	void  setTriggersDisabled(bool disabled);
+	TriggerPattern getCurrentTriggerPattern();
+	
+//	void updateTriggerSettings(ofRectangle triggerarea, float spacing);
+//	void setShowTriggerDebug(bool);
+//	void setTriggersDisabled(bool disabled);
 
 	string name; 
  
@@ -47,19 +49,19 @@ class Scene {
 	bool active; 
 	bool stopping;
 	
-	vector <Arrangement*> arrangements;
-	int currentArrangementIndex;
-	int activeArrangements; 
+	vector <TriggerPattern> triggerPatterns;
+	int currentTriggerPatternIndex;
+	int activeTriggerPatterns; 
 	
 	ParticleSystemManager& particleSystemManager; 
 	
-	ofRectangle triggerArea; 
-	bool triggerDebug;
-	bool triggersDisabled;
+//	ofRectangle triggerArea; 
+//	bool triggerDebug;
+//	bool triggersDisabled;
 	
-	vector <bool *> arrangementTriggers; 
+	// AN ARRAY OF TRIGGERS TO CHANGE ARRANGEMENT
+	// FROM THE GUI / OSC
+	vector <bool *> triggerPatternChangeTriggers;
     
-private:
-        
-    void init(ofRectangle triggerarea);
+
 };

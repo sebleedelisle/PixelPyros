@@ -3,14 +3,12 @@
 #include "SceneManager.h"
 
 
-SceneManager :: SceneManager(ParticleSystemManager& psm) : particleSystemManager(psm) {
+SceneManager :: SceneManager(ParticleSystemManager& psm, TriggerManager &tm) : particleSystemManager(psm), triggerManager(tm) {
 	nextFlag = false;
 	previousFlag = false;
 
 	nextArrangementFlag = false;
 	previousArrangementFlag = false;
-	
-
 }
 
 void SceneManager::addScene(Scene *scene) {
@@ -20,9 +18,7 @@ void SceneManager::addScene(Scene *scene) {
 	if(scenes.size() ==1) {
 		changeScene(0);
 	}
-	
 }
-
 
 bool SceneManager ::update(float deltaTime){
 
@@ -39,7 +35,7 @@ bool SceneManager ::update(float deltaTime){
 		if(nextArrangementFlag) nextArrangement();
 		if(previousArrangementFlag) previousArrangement();
 		
-		currentSceneArrangement = ofToString ( currentScene->currentArrangementIndex + 1 ) ;
+		currentSceneArrangement = ofToString ( currentScene->currentTriggerPatternIndex + 1 ) ;
 	}
 	nextArrangementFlag = previousArrangementFlag = false;
 	
@@ -54,16 +50,16 @@ void SceneManager::draw() {
 		scenes[i]->draw();
 	}
 	
-	string activeSceneMap = "";
-	string activeSceneArrangements = "";
-	string activeArrangementNumbers = "";
-	for(int i = 0; i<scenes.size(); i++) {
-		Scene* scene = scenes[i];
-
-		activeSceneMap += (scene->active ? "1 " : "0 ");
-		activeSceneArrangements += ofToString(scene->activeArrangements)+" ";
-		activeArrangementNumbers += ofToString(scene->currentArrangementIndex)+" ";
-	}
+//	string activeSceneMap = "";
+//	string activeScenetriggerPatterns = "";
+//	string activeArrangementNumbers = "";
+//	for(int i = 0; i<scenes.size(); i++) {
+//		Scene* scene = scenes[i];
+//
+//		//activeSceneMap += (scene->active ? "1 " : "0 ");
+//		//activeScenetriggerPatterns += ofToString(scene->activetriggerPatterns)+" ";
+//		//activeArrangementNumbers += ofToString(scene->currentArrangementIndex)+" ";
+//	}
 //	ofDrawBitmapString(ofToString(currentSceneIndex), 20,85);
 //	ofDrawBitmapString(activeSceneMap,20,100);
 //	ofDrawBitmapString(activeArrangementNumbers,20,115); ;
@@ -77,7 +73,7 @@ void SceneManager ::updateMotion(MotionManager& motionManager, cv::Mat homograph
 	if(currentScene!=NULL) currentScene->updateMotion(motionManager, homography); 
 
 }
-
+/*
 void SceneManager::updateTriggerSettings(ofRectangle triggerarea, float spacing) {
 	triggerSpacing = spacing;
 	for ( int i = 0; i<scenes.size(); i++ ) {
@@ -103,7 +99,7 @@ void SceneManager::setTriggersDisabled(bool disabled) {
 		scenes[i]->setTriggersDisabled (disabled) ;
 	}
 }
-
+*/
 bool SceneManager :: changeScene(int sceneIndex) {
 
 	if(sceneIndex>=scenes.size()) return false;
@@ -170,13 +166,20 @@ bool SceneManager::prevScene(){
 
 bool SceneManager::nextArrangement(){
 	if(currentScene == NULL) return false;
-	else return currentScene->next();
 	
+	currentScene->next();
+	
+	triggerManager.setPattern(currentScene->getCurrentTriggerPattern());
+		
+	return true;
 }
 
 bool SceneManager::previousArrangement(){
 	if(currentScene == NULL) return false;
-	else return currentScene->previous();
+	currentScene->previous();
+	
+	triggerManager.setPattern(currentScene->getCurrentTriggerPattern());
+	return true;
 
 	
 }
@@ -193,9 +196,9 @@ void SceneManager::initSceneControls(SettingsManager & settingsManager) {
 		Scene & scene = *scenes[i];
 		
 		
-		for(int j = 0; j<scene.arrangements.size(); j++) {
+		for(int j = 0; j<scene.triggerPatterns.size(); j++) {
 		
-			settingsManager.addSettingBool(scene.arrangementTriggers[j], "", "/PixelPyros/Scenes/"+scene.name+"Arr"+ofToString(j+1)+"/x", true, true);
+			settingsManager.addSettingBool(scene.triggerPatternChangeTriggers[j], "", "/PixelPyros/Scenes/"+scene.name+"Arr"+ofToString(j+1)+"/x", true, true);
 			cout << "adding " << "/PixelPyros/Scenes/"+scene.name+"Arr"+ofToString(j+1)+"/x control"<< endl;
 	
 		}

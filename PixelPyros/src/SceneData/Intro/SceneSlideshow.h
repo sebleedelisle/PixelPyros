@@ -249,12 +249,12 @@ class SceneSlideshow : public Scene {
 
 public:
     
-    SceneSlideshow(string scenename, ParticleSystemManager &, ofRectangle);
+    SceneSlideshow(string scenename, ParticleSystemManager &);
     
     virtual bool draw();
 	virtual bool update(float deltaTime);
 
-	virtual bool changeArrangement(int);
+	virtual bool changeTriggerPattern(int);
 	//Starfield starfield;
    
             

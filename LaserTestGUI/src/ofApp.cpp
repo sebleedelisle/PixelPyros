@@ -4,14 +4,14 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetVerticalSync(true);
-
+	//ofSetBackgroundColor(0);
 	// we add this listener before setting up so the initial circle resolution is correct
 
-	guiFbo.allocate(400, 800); 
-	
-	gui.setDefaultHeight(32);
-	gui.setDefaultWidth(400);
-	gui.setDefaultTextPadding(10);
+	//ofEnableSmoothing()
+		
+	gui.setDefaultHeight(18);
+	gui.setDefaultWidth(300);
+	gui.setDefaultTextPadding(7);
 	
 	
 	gui.setDefaultSpacing(2);
@@ -20,7 +20,7 @@ void ofApp::setup(){
 
 	
 	//gui.setSpacing
-	gui.loadFont("Verdana.ttf", 12, false);
+	gui.loadFont("Verdana.ttf", 10, false);
 	
 	//ofDrawBitmapString("HELLO", 0,0);
 	
@@ -30,18 +30,19 @@ void ofApp::setup(){
 	//gui.setSize(500,30);
 	//gui.setUseTTF(true);
 	gui.add(showParticles.setup("Show Particles", true));
+	gui.add(showRectangle.setup("Show Rectangle", false));
 	gui.add(speed.set( "Speed", 1, 0, 5 ));
 	gui.add(numParticles.set( "Num Particles", 40, 1, 300 ));
 	
 	
 	gui.add(color.setup("Particle Colour",ofColor(100,100,140),ofColor(0,0),ofColor(255,255)));
 	gui.add(particleFlicker.set("Flicker",0.5,0,1));
-	gui.setPosition(200,0);
+	gui.setPosition(0,0);
 	gui.add(laserManager.parameters);
 	
 
 	guiVisible = true;
-	guiDirty = true;
+	
 	elapsedTime = 0; 
 
 	gui.loadFromFile("settings.xml");
@@ -77,12 +78,13 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	
-    ofBackgroundGradient(ofColor::white, ofColor::gray);
-	
+    //ofBackgroundGradient(ofColor::white, ofColor::gray);
+	ofBackground(0);
 	float deltaTime = ofGetLastFrameTime() * speed;
-	elapsedTime+=deltaTime; 
 	
 	if(showParticles) {
+		elapsedTime+=deltaTime;
+		
 		float particleFrequency = 5.0f/(float)numParticles;
 		//cout << particles.size();
 		if((elapsedTime / particleFrequency > particlesCreated)) {
@@ -106,28 +108,30 @@ void ofApp::draw(){
 			ofColor c = color;
 			laserManager.addLaserDot(p, c, ofRandom(1-particleFlicker, 1) *p.brightness);
 		}
+	} else {
+		particles.clear();
+		elapsedTime = 0;
+		particlesCreated = 0;
+	}
+	
+	if(showRectangle) {
+		ofColor c = color;
+		laserManager.addLaserRect(ofPoint(100,100),ofPoint(ofGetWidth()-200, ofGetHeight()-200), c);
+		
 	}
  	laserManager.update();
 
 	
-	//guiDirty = true;
-	// auto draw?
-	// should the gui control hiding?
-	if(guiDirty) ofDrawBitmapString("DIRTY", 600,100);
-	//if( guiVisible ){
-		if(guiDirty) {
-			guiFbo.begin();
-			gui.draw();
-			guiFbo.end();
-			//guiDirty = false;
-		}
-		guiFbo.draw(0,0);
-	//}
+
+	if( guiVisible ){
+		gui.draw();
+	}
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	if( key == 'h' ){
+	if( key == ' ' ){
 		guiVisible = !guiVisible;
 	}
 	if(key == 's') {
@@ -136,9 +140,13 @@ void ofApp::keyPressed(int key){
 	if(key == 'l') {
 		gui.loadFromFile("settings.xml");
 	}
-	if(key == ' '){
+	if(key == 'r'){
 	
 		laserManager.toggleRegistration();
+	}
+	if(key == 'p'){
+		
+		showParticles = !showParticles;
 	}
 }
 
@@ -155,18 +163,14 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-	guiDirty = true;
-	ofLog(OF_LOG_NOTICE, "mouseDragged");
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	guiDirty = true;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-	guiDirty = true;
 }
 
 //--------------------------------------------------------------

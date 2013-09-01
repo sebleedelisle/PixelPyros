@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Scene.h"
-#include "TriggerTest.h"
+#include "Trigger.h"
 #include "RocketBasic.h"
 
 #include "ofMain.h"
@@ -11,22 +11,21 @@ class SceneCalibration : public Scene {
 	
 	public : 
 	
-	SceneCalibration(string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) : Scene(scenename, psm, triggerarea){
+	SceneCalibration(string scenename, ParticleSystemManager& psm) : Scene(scenename, psm){
 		RocketBasic rocketSettings(100,10, 120);
 		
-		TriggerRocket trigger(psm);
+		TriggerSettings trigger;
 		
-		trigger.addRocketSettings(rocketSettings); 
+		//trigger.addRocketSettings(rocketSettings);
 		//addTriggers(trigger, 50, 0, ofGetHeight()*0.85, ofGetWidth());
 		
-		TriggerTest trigger2(psm);
-		
+		//Trigger trigger2(psm);
 		TriggerPattern pattern;
 		
-		//pattern.addTrigger(trigger);
-		pattern.addTrigger(trigger2);
+		pattern.addTriggerSettings(trigger);
+		//pattern.addTrigger(trigger2);
 		
-		addArrangement(pattern); 
+		addTriggerPattern(pattern);
 		
 		
 	}

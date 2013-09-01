@@ -33,7 +33,7 @@ class SceneFountains : public Scene {
 		
 		TriggerPattern pattern;
 		pattern.addTrigger(trigger);
-		addArrangement(pattern); 
+		addTriggerPattern(pattern); 
 		
 		//addTriggers(trigger, 30, 20,ofGetHeight()*0.85, ofGetWidth()-160);
 		

@@ -3,7 +3,7 @@
 #include "SceneRetro.h"
 
 
-SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) : Scene(scenename, psm, triggerarea) {
+SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm ) : Scene(scenename, psm) {
 
 	pixelSize = 4;
 	
@@ -53,14 +53,14 @@ SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm, ofRectang
 	
 	
 	TriggerPattern emptyPattern;
-	addArrangement(emptyPattern);
+	addTriggerPattern(emptyPattern);
 	
 	
 	
 	TriggerPattern patternCyanChevrons;
 	patternCyanChevrons.addTrigger(triggerFountainCyan);
 	//patternCyanChevrons.addTrigger(triggerFountainCyanHigh);
-	addArrangement(patternCyanChevrons);
+	addTriggerPattern(patternCyanChevrons);
 	
 	
 	
@@ -78,14 +78,14 @@ SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm, ofRectang
 	}
 	
 	
-	addArrangement(fatRockets);
+	addTriggerPattern(fatRockets);
 
 	
 	
 	TriggerPattern patternRedChevrons;
 	patternRedChevrons.addTrigger(triggerFountainRed);
 	patternRedChevrons.addTrigger(triggerFountainRedHigh);
-	addArrangement(patternRedChevrons);
+	addTriggerPattern(patternRedChevrons);
 
 	
 	
@@ -102,21 +102,21 @@ SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm, ofRectang
 		fatRockets2.addTrigger(triggerRocketFat, 0,0,0.75);
 	}
 	
-	addArrangement(fatRockets2);
+	addTriggerPattern(fatRockets2);
 
 	
 	TriggerPattern patternCyanMix;
 	patternCyanMix.addTrigger(triggerRocketCyan);
 	patternCyanMix.addTrigger(triggerFountainCyan);
 	patternCyanMix.addTrigger(triggerFountainCyan);
-	addArrangement(patternCyanMix);
+	addTriggerPattern(patternCyanMix);
 	
 	
 	TriggerPattern patternRedMix;
 	patternRedMix.addTrigger(triggerRocketRed);
 	patternRedMix.addTrigger(triggerFountainRed);
 	patternRedMix.addTrigger(triggerFountainRed);
-	addArrangement(patternRedMix);
+	addTriggerPattern(patternRedMix);
 
 	
 	TriggerPattern patternCyanRockets;
@@ -124,7 +124,7 @@ SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm, ofRectang
 	patternCyanRockets.addTrigger(triggerRocketCyan);
 	
 	patternCyanRockets.addTrigger(triggerFountainCyan);
-	addArrangement(patternCyanRockets);
+	addTriggerPattern(patternCyanRockets);
 	
 	
 	TriggerPattern patternRedRockets;
@@ -132,7 +132,7 @@ SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm, ofRectang
 	patternRedRockets.addTrigger(triggerRocketRed);
 	patternRedRockets.addTrigger(triggerFountainRed);
 	
-	addArrangement(patternRedRockets);
+	addTriggerPattern(patternRedRockets);
 	
 	
 

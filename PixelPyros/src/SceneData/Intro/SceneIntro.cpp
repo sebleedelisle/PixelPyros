@@ -10,18 +10,67 @@
 
 
 
-SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) : Scene(scenename, psm, triggerarea) {
-	
-	
-	
-	
+SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm) : Scene(scenename, psm) {
+		
 	softWhiteImage.loadImage("img/ParticleWhite.png");
 	bangerFlashImage.loadImage("img/ParticleBangerFlash.png");
 	
+	//music.loadSound("music/02 In Motion.aif");
+
 	TriggerPattern blank;
-	addArrangement(blank);
+	addTriggerPattern(blank);
 	
+	TriggerSettings ts;
+	
+	// TODO - THIS IS BAD - should store these pointers somewhere and clear
+	// them later.
+	
+	ts.setRenderer(new TriggerRendererBase());
+	TriggerableRocket* tr = new TriggerableRocket(particleSystemManager);
+	tr->rocketSettings = getFountain(180,0);
+	
+	ts.setTriggerable(tr);
+	
+	TriggerPattern pattern;
+	
+	pattern.addTriggerSettings(ts);
+	addTriggerPattern(pattern);
+	
+	TriggerPattern multiColourFountains;
+	
+	float colours [10] = {0, 30, 60, 90, 120, 150,180,210,240 };
+	
+	for(int i = 0; i<10; i++) {
+		TriggerSettings triggerColour;
 		
+		TriggerableRocket* tr = new TriggerableRocket(particleSystemManager);
+		tr->rocketSettings = getFountain(colours[i],0);
+		
+		/*
+		RocketSettings fountain = getFountain(colours[i]);
+		fountain.startSpeedMax *=2;
+		 
+		 */
+		
+		//triggerColour.addRocketSettings(fountain);
+		//triggerRocketFountain.restoreSpeed= 4;
+		
+		// TODO - THIS IS BAD - should store these pointers somewhere and clear
+		// them later.
+		triggerColour.setRenderer(new TriggerRendererBase());
+		triggerColour.setTriggerable(tr);
+		
+		triggerColour.hue = colours[i];
+		triggerColour.saturation = 255;
+		
+		multiColourFountains.addTriggerSettings(triggerColour);
+	}
+	addTriggerPattern(multiColourFountains);
+
+	
+	
+	
+	/*
 	
 	TriggerRocket triggerFountain(psm);
 	triggerFountain.addRocketSettings(getFountain(180));
@@ -31,7 +80,7 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm, ofRectang
 	TriggerPattern patternFountain;
 	patternFountain.addTrigger(triggerFountain);
 	
-	addArrangement(patternFountain);
+	addTriggerPattern(patternFountain);
 	
 	
 	
@@ -56,12 +105,14 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm, ofRectang
 		
 		multiColourFountains.addTrigger(triggerRocketFountain, 0,0,1);
 	}
-	addArrangement(multiColourFountains);
+	addTriggerPattern(multiColourFountains);
 	
 	// fountains with added flowers
 	patternFountain.addTrigger(triggerFountain);
 	patternFountain.addTrigger(triggerFlower);
-	addArrangement(patternFountain);
+	addTriggerPattern(patternFountain);
+	
+	*/
 	
 	
 	texts.push_back("Welcome to PixelPyros");
@@ -76,6 +127,7 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm, ofRectang
 	showText = true;
 	currentText = 0;
 	timePerText = 10;
+	
 	
 	
 }
@@ -94,7 +146,8 @@ void SceneIntro :: start() {
 	Scene::start();
 	
 	
-	elapsedTime = 0; 
+	elapsedTime = 0;
+	//music.play();
 	
 }
 

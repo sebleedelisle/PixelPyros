@@ -36,6 +36,7 @@ class LaserManager {
 	void addLaserLine(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
 	void addLaserLineEased(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
 	void addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour);
+	void addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour);
 	void closeLaserLoop();
 	void moveLaser(const ofPoint & target, bool alreadyWarped = false);
 	void moveLaserToPointAndVel(const ofPoint& targetPos, const ofPoint& targetVel);
@@ -69,10 +70,10 @@ class LaserManager {
 	ofPoint currentPosition;
 	ofPoint currentVel;
 	
-	float maxSpeed;
-	float acceleration;
+	ofParameter<float> maxSpeed;
+	ofParameter<float> acceleration;
 	
-		int endCount;
+	int endCount;
 	int blankCount;
 	
 	// overall brightness applied to any laser colour
@@ -94,6 +95,10 @@ class LaserManager {
 	ofParameter<float> movePointsPadding;
 	ofParameter<bool> connectButton;
 	ofParameter<string> etherdreamStatus; 
+
+	ofParameter<bool> showRegistration;
+	ofParameter<bool> showSyncTest;
+	ofParameter<bool> renderLaserPath;
 	
 	ofParameterGroup p1, p2, p3;
 	ofParameterGroup parameters;
@@ -110,7 +115,6 @@ class LaserManager {
 	int minPoints; 
 	
 	//bool laserDirty;
-	bool showRegistration; 
 	
 	
 	vector<ofxIlda::Point> ildaPoints;

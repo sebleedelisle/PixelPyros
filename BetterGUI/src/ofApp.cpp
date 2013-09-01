@@ -7,7 +7,7 @@ void ofApp::setup(){
     gui.setDefaultHeight(32);
 	gui.setDefaultWidth(400);
 	gui.setDefaultTextPadding(10);
-    gui.useFrameBuffer(false);
+    gui.useFrameBuffer(true);
 	
 	gui.setDefaultSpacing(2);
 	gui.setDefaultElementSpacing(5);
@@ -33,12 +33,15 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    gui.draw();
+	if(!guiHide)
+		gui.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if(key==' ') {
+		guiHide = !guiHide;
+	}
 }
 
 //--------------------------------------------------------------
