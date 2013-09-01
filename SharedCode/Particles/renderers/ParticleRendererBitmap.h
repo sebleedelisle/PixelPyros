@@ -34,28 +34,23 @@ class ParticleRendererBitmap : public ParticleRendererBase {
 		texCoords.push_back(ofVec2f(0, image->height));
 		texCoords.push_back(ofVec2f(image->width, 0));
 		texCoords.push_back(ofVec2f(image->width, image->height));
-		
-		
+
 		meshMode  = OF_PRIMITIVE_TRIANGLES;
 		
+		mesh.setMode(meshMode);
 		
 	}
 	
 	void renderParticles(vector <Particle * > particles){
   
 		// BASIC TRIANGLE RENDERER
-		//		ofDisableSmoothing();
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
-		//		ofEnableAlphaBlending();
-		//
+		
+		ofPushStyle();
+		//if(image->type==OF_IMAGE_COLOR_ALPHA) ofEnableAlphaBlending();
 		
 		
-		ofMesh mesh;
-		
-		mesh.setMode(meshMode);
-		
-		//ofMatrix4x4 mat;
-		
+		mesh.clear();
+			
 		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
 			
 			Particle& p = **it; // *(particles[i]);
@@ -82,8 +77,8 @@ class ParticleRendererBitmap : public ParticleRendererBase {
 		image->bind();
 		mesh.draw();
 		image->unbind(); 
-		ofDisableBlendMode();
 		
+		ofPopStyle();
 		
         
     }
@@ -93,7 +88,8 @@ class ParticleRendererBitmap : public ParticleRendererBase {
 	vector <ofVec2f> texCoords;
 	ofPrimitiveMode meshMode;
 	ofImage * image;
-
+	ofMesh mesh;
+	
 
 
 

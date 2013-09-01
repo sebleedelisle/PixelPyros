@@ -28,27 +28,18 @@ public:
 		shape.push_back(ofVec3f( -0.5, 0, 0.5 ));
 		shape.push_back(ofVec3f( -0.5, 0, -0.5 ));
 		
-		meshMode = OF_PRIMITIVE_LINES;
-		
-		lineWidth = linewidth;
-		smooth = smoothlines;
+		mesh.setMode(OF_PRIMITIVE_LINES);
+
 
 	}
 
 	virtual void renderParticles(vector <Particle * > particles){
         
         // BASIC TRIANGLE RENDERER
-		if(smooth)	ofEnableSmoothing();
-		else ofDisableSmoothing();
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
-		
-		ofSetLineWidth(lineWidth);
-		ofMesh mesh;
-		
-        
-		mesh.setMode(meshMode);
-		
-		//ofMatrix4x4 mat;
+		/*if(smooth)	ofEnableSmoothing();
+		else ofDisableSmoothing();*/
+	
+		mesh.clear();
 		
 		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
 			
@@ -67,22 +58,19 @@ public:
 				
 			}
 			
-			//mesh.addTriangle(vertexIndex, vertexIndex+1, vertexIndex+2);
-			//mesh.addTriangle(vertexIndex+1, vertexIndex+2, vertexIndex+3);
 			
 			
 		}
 		
 		mesh.draw();
-		ofDisableBlendMode();
-		
-		
+
         
     }
 	
-
-	bool smooth;
-	float lineWidth; 
+	
+	ofMesh mesh;
+	
+	
 	
 	
 };

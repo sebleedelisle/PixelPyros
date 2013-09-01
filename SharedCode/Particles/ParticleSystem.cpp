@@ -10,15 +10,12 @@
 
 ParticleSystem::ParticleSystem (SoundPlayer& sp) : soundPlayer(sp){
 
-		
 	life.lifeTime = 10; 
 	life.delay = 0; 
 	reset();
 	
 	attachedPhysicsObject = NULL;
 	
-	
-
 }
 
 void ParticleSystem::reset(){ 
@@ -32,6 +29,7 @@ void ParticleSystem::reset(){
 
 bool ParticleSystem::update(float deltaTime) { 
 	
+	deltaTime*=settings.timeSpeed;
 	
 	life.update(deltaTime); 
 	

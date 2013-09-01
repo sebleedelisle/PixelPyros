@@ -79,9 +79,10 @@ void TextWriter::drawFixedSize(ofRectangle box, string text, float glyphScaleFac
 	if(box.width<=0) box.width = 1;
     
     ofPushStyle();
+	/*
     if(smooth) ofEnableSmoothing();
 	else ofDisableSmoothing();
-	
+	*/
     ofEnableAlphaBlending();
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     ofSetLineWidth(glyphLineWeight);
@@ -138,8 +139,9 @@ void TextWriter::draw(ofRectangle box, string text, bool centred) {
 	
 	
     ofPushStyle();
+	/*
 	if(smooth) ofEnableSmoothing();
-	else ofDisableSmoothing();
+	else ofDisableSmoothing();*/
     ofEnableAlphaBlending();
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     ofSetLineWidth(glyphLineWeight);

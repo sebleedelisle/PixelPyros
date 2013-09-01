@@ -25,25 +25,18 @@ public:
 		
 		shape.push_back(ofVec3f( 0,  0.5 ));
 		
-		meshMode  = OF_PRIMITIVE_TRIANGLES;
 		
-		lineWidth = 1; 
+		mesh.setMode(OF_PRIMITIVE_TRIANGLES);
+		
+		
 	}
     
     virtual void renderParticles(vector <Particle * > particles){
         
         // BASIC TRIANGLE RENDERER
-		//		ofDisableSmoothing();
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
-		//		ofEnableAlphaBlending();
-		//
 		
-		ofSetLineWidth(lineWidth); 
-		ofMesh mesh;
+		mesh.clear();
 		
-		mesh.setMode(meshMode);
-		
-		//ofMatrix4x4 mat;
 		
 		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
 			
@@ -69,15 +62,14 @@ public:
 		}
 		
 		mesh.draw();
-		ofDisableBlendMode();
 		
-		
-        
     }
 	
+	ofMesh mesh;
+	
 	vector <ofVec3f> shape;
-	ofPrimitiveMode meshMode;
-	float lineWidth; 
+	//ofPrimitiveMode meshMode;
+	//float lineWidth;
     
 	
 	

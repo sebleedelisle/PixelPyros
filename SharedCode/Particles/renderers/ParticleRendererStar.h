@@ -16,24 +16,21 @@ public:
 	
 	ParticleRendererStar(float len=50, float ang=45) : ParticleRendererBase(){
 		length = len;
-		angle = ang; 
+		angle = ang;
+		
+		mesh.setMode(OF_PRIMITIVE_TRIANGLES);
+		
 	}
 	
 	virtual void renderParticles(vector <Particle * > particles){
         //cout << "STAR RENDERER"<< endl;
         // BASIC TRIANGLE RENDERER
 		//		ofDisableSmoothing();
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
-		//		ofEnableAlphaBlending();
-		//
-		ofMesh mesh;
 		
-        
-		mesh.setMode(OF_PRIMITIVE_TRIANGLES);
 		
 		//ofMatrix4x4 mat;
 		
-		
+		mesh.clear();
 		
 		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
 			
@@ -64,7 +61,6 @@ public:
 				mesh.addColor(p.getColour());
 				mesh.addColor(p.getColour());
 				mesh.addColor(p.getColour());
-				//mesh.addTriangle(vertexIndex, vertexIndex+1, vertexIndex+2);
 				
 				p1.rotate(0,0,90);
 				p2.rotate(0,0,90);
@@ -74,18 +70,18 @@ public:
 				
 			}
 			
-			//mesh.addTriangle(vertexIndex, vertexIndex+1, vertexIndex+2);
-			//mesh.addTriangle(vertexIndex+1, vertexIndex+2, vertexIndex+3);
 			
 			
 		}
 		
 		mesh.draw();
-		ofDisableBlendMode();
-		
+			
 		
         
     }
+	
+	ofMesh mesh;
+	
 	
 	float length;
 	float angle;

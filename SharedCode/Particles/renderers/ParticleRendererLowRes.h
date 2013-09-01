@@ -21,7 +21,7 @@ public:
 		
 		shape.push_back(ofVec3f( -0.5, 0.5 ));
 		
-		meshMode = OF_PRIMITIVE_TRIANGLES;
+		mesh.setMode(OF_PRIMITIVE_TRIANGLES);
 		
 		bitsPerChannel = bitsperchannel;
 	
@@ -31,33 +31,18 @@ public:
     virtual void renderParticles(vector <Particle * > particles){
         
         // BASIC TRIANGLE RENDERER
-				ofDisableSmoothing();
-		ofDisableBlendMode();
-		//		ofEnableAlphaBlending();
-		//
 		
-		ofSetLineWidth(lineWidth);
-		ofMesh mesh;
-		
-		mesh.setMode(meshMode);
-		
-		//ofMatrix4x4 mat;
-		
-		
+		mesh.clear();
+
 		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
 			
-			Particle& p = **it; // *(particles[i]);
-		
+			Particle& p = **it;
+			
 			if((!p.enabled) || (p.size<pixelSize/4)) continue;
 		
 			
 			float size = round(p.size / pixelSize);
-//			float snappedPos = pos;
-//			snappedPos.x -= (size/2);
-//			snappedPos.y -= (size/2);
-//			
-			
-			
+
 			int vertexIndex = mesh.getNumVertices();
 			
 			for(int i = 0; i<shape.size(); i++) {
@@ -108,6 +93,7 @@ public:
 		
 	}
 	
+	ofMesh mesh;
 	float pixelSize;
 	unsigned int bitsPerChannel;
 	

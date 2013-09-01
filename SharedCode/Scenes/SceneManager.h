@@ -22,8 +22,8 @@ public :
 	
 	bool update(float deltaTime);
 	void draw(); 
-	void updateMotion(MotionManager& motionManager, cv::Mat homography);
-	
+//	void updateMotion(MotionManager& motionManager, cv::Mat homography);
+
 	void initSceneControls(SettingsManager & settingsManager) ;
 	
 	/*void updateTriggerSettings(ofRectangle triggerarea, float triggerSpacing);

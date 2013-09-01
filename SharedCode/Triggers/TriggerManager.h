@@ -9,6 +9,8 @@
 #pragma once
 #include "Trigger.h"
 #include "TriggerPattern.h"
+#include "ofxCv.h"
+#include "MotionManager.h"
 
 class TriggerManager {
 	
@@ -23,6 +25,8 @@ class TriggerManager {
 	void setShowTriggerDebug(bool);
 	void setTriggersDisabled(bool disabled);
 	void toggleDebug(); 
+	
+	void updateMotion(MotionManager& motionManager, cv::Mat homography);
 	
 	
 	void updateLayout();

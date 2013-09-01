@@ -50,7 +50,8 @@ class ParticleSystemSettings{
 		// if you don't want the particle to start rendering yet, use this!
 		renderDelayMin = renderDelayMax =0;
 		
-		shimmerMin = 1; 
+		shimmerMin = 1;
+		timeSpeed = 1; 
 		
 		//EMISSION LIFE CYCLE
 		emitLifeTime = 1;
@@ -138,7 +139,7 @@ class ParticleSystemSettings{
 	float renderDelayMin;
 	float renderDelayMax;
 	
-	
+	float timeSpeed;
 	
 	float shimmerMin; 
 

@@ -17,36 +17,26 @@ public:
 		lineWidth = linewidth;
 		smooth = smoothline;
 		drawDisabled = drawdisabled;
+		mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
 		
 	}
 	
 	void renderParticles(vector <Particle * > particles){
         
-        // BASIC TRIANGLE RENDERER
-		if(smooth)
-			ofEnableSmoothing();
-		else
-			ofDisableSmoothing();
+		ofPushStyle();
 		
-			
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
-		//		ofEnableAlphaBlending();
-		//
+		// TODO - reintroduce smoothing?
 		
 		ofSetLineWidth(lineWidth);
-		ofMesh mesh;
 		
-		mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
-		
-		//ofMatrix4x4 mat;
+		mesh.clear();
+
 		
 		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
 			
-			Particle& p = **it; // *(particles[i]);
+			Particle& p = **it; 
 			if((!p.enabled) && (!drawDisabled))  continue;
 			if(drawDisabled && (ofRandom(1)<0.05)) continue;
-			
-			//int vertexIndex = mesh.getNumVertices();
 			
 			mesh.addVertex(p.pos);
 			if(p.enabled)
@@ -61,11 +51,12 @@ public:
 		}
 		
 		mesh.draw();
-		ofDisableBlendMode();
 		
-		
+		ofPushStyle();
         
     }
+	
+	ofMesh mesh;
 	
 	float lineWidth;
 	bool smooth;
