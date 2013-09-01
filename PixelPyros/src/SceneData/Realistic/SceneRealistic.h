@@ -17,7 +17,7 @@ class SceneRealistic : public Scene {
 
 	public :
 		
-	SceneRealistic (string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) ;
+	SceneRealistic (string scenename, ParticleSystemManager& psm) ;
 	
 	//bool draw();
 	

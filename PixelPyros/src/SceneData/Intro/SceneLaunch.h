@@ -18,7 +18,7 @@ class SceneLaunch : public Scene {
 	
 	public :
 	
-	SceneLaunch (string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) ;
+	SceneLaunch (string scenename, ParticleSystemManager& psm) ;
 	
 	bool update(float deltaTime); 
 	bool draw(); 

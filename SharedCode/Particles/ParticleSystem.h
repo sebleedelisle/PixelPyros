@@ -14,6 +14,7 @@
 #include "ParticleRendererBase.h"
 #include "LifeCycle.h"
 #include "SoundPlayer.h"
+#include "RocketSettings.h"
 
 class ParticleSystem { 
 

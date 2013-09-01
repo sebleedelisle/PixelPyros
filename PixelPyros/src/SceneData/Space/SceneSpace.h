@@ -24,7 +24,7 @@ class SceneSpace : public Scene {
 	
 	public : 
 	
-	SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) ;
+	SceneSpace(string scenename, ParticleSystemManager& psm) ;
 	
 	bool update(float deltaTime);
 	bool draw();

@@ -8,6 +8,8 @@
 #pragma once
 
 #include "Scene.h"
+
+#include "TriggerableRocket.h"
 #include "ParticleRendererShape.h"
 #include "ParticleRendererLowRes.h"
 #include "ParticleRendererBitmap.h"
@@ -22,7 +24,7 @@ class SceneIntro : public Scene{
 	
 	public :
 	
-	SceneIntro (string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) ;
+	SceneIntro (string scenename, ParticleSystemManager& psm) ;
 	
 	
 	virtual bool update(float deltaTime); 
@@ -44,7 +46,7 @@ class SceneIntro : public Scene{
 	ofImage softWhiteImage;
 	ofImage bangerFlashImage;
 
-	
+	ofSoundPlayer music; 
 	
 	bool showText;
 	

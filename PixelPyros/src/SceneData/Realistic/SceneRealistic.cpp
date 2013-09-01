@@ -8,13 +8,13 @@
 
 #include "SceneRealistic.h"
 
-SceneRealistic :: SceneRealistic(string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) : Scene(scenename, psm, triggerarea) {
+SceneRealistic :: SceneRealistic(string scenename, ParticleSystemManager& psm) : Scene(scenename, psm) {
 
 	softWhiteImage.loadImage("img/ParticleWhite.png");
 	bangerFlashImage.loadImage("img/ParticleBangerFlash.png");
 	
 	TriggerPattern blank;
-	addArrangement(blank);
+	addTriggerPattern(blank);
 	
 	TriggerRocket triggerFluffy(psm);
 	triggerFluffy.restoreSpeed = 4;
@@ -43,17 +43,17 @@ SceneRealistic :: SceneRealistic(string scenename, ParticleSystemManager& psm, o
 	patternFluffy.addTrigger(triggerFluffy);
 	patternFluffy.addTrigger(triggerFountain);
 		
-	addArrangement(patternFluffy); 
+	addTriggerPattern(patternFluffy); 
 	
 	// fluffy with added flowers
 	patternFluffy.addTrigger(triggerFlower);
-	addArrangement(patternFluffy);
+	addTriggerPattern(patternFluffy);
 	
 	
 	// another fountain and banger
 	patternFluffy.addTrigger(triggerFountain);
 	patternFluffy.addTrigger(triggerBanger);
-	addArrangement(patternFluffy);
+	addTriggerPattern(patternFluffy);
 	
 	
 	TriggerRocket triggerFlowerPurple(psm);
@@ -81,7 +81,7 @@ SceneRealistic :: SceneRealistic(string scenename, ParticleSystemManager& psm, o
 		
 		multiColourFountains.addTrigger(triggerRocketFountain, 0,0,1);
 	}
-	addArrangement(multiColourFountains); 
+	addTriggerPattern(multiColourFountains); 
 	
 	
 	TriggerPattern patternNewColour;
@@ -89,7 +89,7 @@ SceneRealistic :: SceneRealistic(string scenename, ParticleSystemManager& psm, o
 	patternNewColour.addTrigger(triggerFountain);
 	patternNewColour.addTrigger(triggerFlowerPurple);
 	
-	addArrangement(patternNewColour);
+	addTriggerPattern(patternNewColour);
 	
 	TriggerPattern endPattern;
 	RocketSettings bigFlowerRocket = getSphereFlowerRocket(140);
@@ -104,7 +104,7 @@ SceneRealistic :: SceneRealistic(string scenename, ParticleSystemManager& psm, o
 	endPattern.addTrigger(triggerBanger);
 	endPattern.addTrigger(triggerFountain);
 	
-	addArrangement(endPattern);
+	addTriggerPattern(endPattern);
 
 	
 //	pattern.addTrigger(triggerFlower);
@@ -113,7 +113,7 @@ SceneRealistic :: SceneRealistic(string scenename, ParticleSystemManager& psm, o
 //	pattern.addTrigger(triggerFlower);
 //	pattern.addTrigger(triggerBanger);
 //
-//	addArrangement(pattern);
+//	addTriggerPattern(pattern);
 }
 
 

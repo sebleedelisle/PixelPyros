@@ -22,7 +22,7 @@ class SceneTron : public Scene {
 	
 	public : 
 	
-	SceneTron (string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) ;
+	SceneTron (string scenename, ParticleSystemManager& psm) ;
 	
 	
 	RocketSettings getCircleFountain(float hue = 120);

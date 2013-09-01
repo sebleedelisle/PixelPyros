@@ -8,17 +8,17 @@
 #include "SceneSlideshow.h"
 
 
-SceneSlideshow::SceneSlideshow(string scenename, ParticleSystemManager &psm, ofRectangle triggerarea): Scene(scenename, psm, triggerarea) {
+SceneSlideshow::SceneSlideshow(string scenename, ParticleSystemManager &psm ): Scene(scenename, psm) {
     
 	
 	
 	
-	TriggerSimple trigger(psm);
+	TriggerSettings trigger;
 	TriggerPattern pattern;
 	//pattern.addTrigger(trigger);
-	addArrangement(pattern);
-	pattern.addTrigger(trigger);
-	addArrangement(pattern);
+	addTriggerPattern(pattern);
+	pattern.addTriggerSettings(trigger);
+	addTriggerPattern(pattern);
 	
 	//starfield = Starfield(500);
 	//starfield.speed = 50;
@@ -193,8 +193,8 @@ bool SceneSlideshow::draw() {
 	
 }
 
-bool SceneSlideshow::changeArrangement(int i) {
-	Scene::changeArrangement(i);
+bool SceneSlideshow::changeTriggerPattern(int i) {
+	Scene::changeTriggerPattern(i);
     currentSlide = 0;
     return true;
 }

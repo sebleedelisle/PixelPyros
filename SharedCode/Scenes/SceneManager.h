@@ -4,13 +4,14 @@
 
 #include "Scene.h"
 #include "ParticleSystemManager.h"
+#include "TriggerManager.h"
 #include "SettingsManager.h"
 
 class SceneManager {
 
 public :
 	
-	SceneManager(ParticleSystemManager& psm);
+	SceneManager(ParticleSystemManager& psm, TriggerManager & tm);
 	
 	void addScene(Scene * scene);
     
@@ -25,9 +26,9 @@ public :
 	
 	void initSceneControls(SettingsManager & settingsManager) ;
 	
-	void updateTriggerSettings(ofRectangle triggerarea, float triggerSpacing);
+	/*void updateTriggerSettings(ofRectangle triggerarea, float triggerSpacing);
 	void updateTriggerDebug(bool debug);
-	void setTriggersDisabled(bool disabled);
+	void setTriggersDisabled(bool disabled);*/
 	
 	bool nextArrangement();
 	bool previousArrangement(); 
@@ -52,6 +53,7 @@ public :
 	bool showSlideShow;
 	
 	ParticleSystemManager & particleSystemManager;
+	TriggerManager & triggerManager;
 	
     
 };

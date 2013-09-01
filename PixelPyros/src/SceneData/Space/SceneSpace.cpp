@@ -10,7 +10,7 @@
 
 
 
-SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) : Scene(scenename, psm, triggerarea){
+SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm) : Scene(scenename, psm){
 	
 	starfield.speed = 100;
 	
@@ -19,7 +19,7 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 	bangerFlashImage.loadImage("img/ParticleBangerFlash.png");
 	
 	TriggerPattern blank;
-	addArrangement(blank);
+	addTriggerPattern(blank);
 	
 	
 	TriggerRocket planetTrigger(particleSystemManager);
@@ -60,12 +60,12 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 	fountainPattern.addTrigger(fountainTrigger);
 	fountainPattern.addTrigger(fountainTrigger);
 	
-	addArrangement(fountainPattern);
+	addTriggerPattern(fountainPattern);
 	
 	TriggerPattern starryPattern;
 	starryPattern.addTrigger(starTrigger);
 	
-	addArrangement(starryPattern);
+	addTriggerPattern(starryPattern);
 	
 	
 	TriggerPattern pattern;
@@ -73,7 +73,7 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 	pattern.addTrigger(starTrigger);
 	pattern.addTrigger(planetTrigger);
 	
-	addArrangement(pattern);
+	addTriggerPattern(pattern);
 
 	
 	
@@ -104,17 +104,17 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 	patternFluffy.addTrigger(triggerFluffy);
 	patternFluffy.addTrigger(triggerFountain);
 	
-	addArrangement(patternFluffy);
+	addTriggerPattern(patternFluffy);
 	
 	// fluffy with added flowers
 	patternFluffy.addTrigger(triggerFlower);
-	addArrangement(patternFluffy);
+	addTriggerPattern(patternFluffy);
 	
 	
 	// another fountain and banger
 	patternFluffy.addTrigger(triggerFountain);
 	patternFluffy.addTrigger(triggerBanger);
-	addArrangement(patternFluffy);
+	addTriggerPattern(patternFluffy);
 	
 	
 	TriggerRocket triggerFlowerPurple(psm);
@@ -142,7 +142,7 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 		
 		multiColourFountains.addTrigger(triggerRocketFountain, 0,0,1);
 	}
-	addArrangement(multiColourFountains);
+	addTriggerPattern(multiColourFountains);
 	
 	
 	TriggerPattern patternNewColour;
@@ -150,7 +150,7 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 	patternNewColour.addTrigger(triggerFountain);
 	patternNewColour.addTrigger(triggerFlowerPurple);
 	
-	addArrangement(patternNewColour);
+	addTriggerPattern(patternNewColour);
 	
 	TriggerPattern endPattern;
 	RocketSettings bigFlowerRocket = getSphereFlowerRocket(140);
@@ -168,7 +168,7 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 	endPattern.addTrigger(triggerFountain);
 	endPattern.addTrigger(starTrigger);
 	
-	addArrangement(endPattern);
+	addTriggerPattern(endPattern);
 	
 	ofMesh letterMesh;
 	LetterWritingPatternMaker patternMaker;
@@ -176,7 +176,7 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 	
 	//TriggerPattern textPattern2 = patternMaker.getPattern(psm, "#BDF12", 20, 0.2, 300, APP_WIDTH/2, 15, 5, 52, 0.2, APP_WIDTH*0.7, letterMesh);
 	
-	addArrangement(textPattern, true );
+	addTriggerPattern(textPattern);//, true );
 
 	
 	TriggerPattern finalPattern;
@@ -187,7 +187,7 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 	finalPattern.addTrigger(triggerFountain);
 	finalPattern.addTrigger(starTrigger);
 	
-	addArrangement(finalPattern);
+	addTriggerPattern(finalPattern);
 	
 	
 	
@@ -197,7 +197,7 @@ SceneSpace::SceneSpace(string scenename, ParticleSystemManager& psm, ofRectangle
 	//	pattern.addTrigger(triggerFlower);
 	//	pattern.addTrigger(triggerBanger);
 	//
-	//	addArrangement(pattern);
+	//	addTriggerPattern(pattern);
 
 	
 	

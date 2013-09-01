@@ -1,12 +1,12 @@
 
 #include "SceneLaunch.h"
 
-SceneLaunch :: SceneLaunch(string scenename, ParticleSystemManager& psm, ofRectangle triggerarea) : Scene(scenename, psm, triggerarea) {
+SceneLaunch :: SceneLaunch(string scenename, ParticleSystemManager& psm) : Scene(scenename, psm) {
 
 	
 	
 	TriggerPattern empty;
-	addArrangement(empty);
+	addTriggerPattern(empty);
 	
 	textWriter.glyphLineWeight = 1;
 	textWriter.colour.set(80,240,250);
@@ -16,7 +16,7 @@ SceneLaunch :: SceneLaunch(string scenename, ParticleSystemManager& psm, ofRecta
 
 	//TriggerPattern textPattern2 = patternMaker.getPattern(psm, "#BDF12", 20, 0.2, 300, APP_WIDTH/2, 15, 5, 52, 0.2, APP_WIDTH*0.7, letterMesh);
 
-	addArrangement(textPattern, true );
+	addTriggerPattern(textPattern );
 	
 
 }
@@ -47,7 +47,7 @@ bool SceneLaunch :: draw() {
 	
 }
 bool SceneLaunch :: update(float deltaTime) {
-	// disables reworking of arrangements
+	// disables reworking of triggerPatterns
 	
 	//updateTriggerArea = false;
 	

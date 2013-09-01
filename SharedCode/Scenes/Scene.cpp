@@ -9,35 +9,29 @@
 #include "Scene.h"
 
 
-Scene::Scene(string scenename, ParticleSystemManager & psm, ofRectangle triggerarea) : particleSystemManager(psm) {
-    init(triggerarea);
-	
-	name = scenename; 
-	
-	triggerDebug = false;
-	triggersDisabled = false;
-}
-
-
-void Scene::init(ofRectangle triggerarea) {
-	active = false; 
+Scene::Scene(string scenename, ParticleSystemManager & psm) : particleSystemManager(psm) {
+	active = false;
 	stopping = false;
-	triggerArea = triggerarea;
-	//setTriggerArea(triggerarea);
-	currentArrangementIndex = -1;
-	activeArrangements = 0;
+
+	currentTriggerPatternIndex = 0;
+	activeTriggerPatterns = 0;
+	
+	name = scenename;
 }
+
 
 void Scene :: start() {
 	stopping = false; 
-	if ((arrangements.size()==0)|| (changeArrangement(0))) active = true;
+	if ((triggerPatterns.size()==0)|| (changeTriggerPattern(0))) active = true;
 }
 
 void Scene :: stop() { 
 	
-	for(int i=0; i<arrangements.size(); i++) {
+	// TODO : tell triggerManager to stop the triggers
+	
+	for(int i=0; i<triggerPatterns.size(); i++) {
 
-		arrangements[i]->stop();
+		//triggerPatterns[i]->stop();
 		
 	}
 	stopping = true; 
@@ -46,38 +40,33 @@ void Scene :: stop() {
 
 bool Scene :: update(float deltaTime) {
 
-	for(int i = 0; i<arrangementTriggers.size(); i++) {
-		
-		
-		if(*arrangementTriggers[i] && currentArrangementIndex!=i) {
-			
+	
+	// check to see if a changeTriggerPattern message has come in from
+	// the external UI and if so, change to that arrangement
+	for(int i = 0; i<triggerPatternChangeTriggers.size(); i++) {
+		if(*triggerPatternChangeTriggers[i] && currentTriggerPatternIndex!=i) {
 			if(active) {
 				cout << "CHANGING ARRANGEMENT " << i << endl;
-				changeArrangement(i);
-				
+				changeTriggerPattern(i);
 			} 
-			
-			
 		} 		
-		*arrangementTriggers[i] = false;
+		*triggerPatternChangeTriggers[i] = false;
 	}
 	
 	if(!active) return false;
 	
+	activeTriggerPatterns = 0;
 	
-	
-	activeArrangements = 0;
-	
-	for(int i=0; i<arrangements.size(); i++) {
-		if( arrangements[i]->update(deltaTime)) activeArrangements++;
+	for(int i=0; i<triggerPatterns.size(); i++) {
+		//if( triggerPatterns[i]->update(deltaTime)) activeTriggerPatterns++;
 		
 		//THIS LINE MAKES IT AUTO CONTINUE - maybe a scene flag? 
-		//else if ((!stopping) && (i==currentArrangementIndex)) next();
+		//else if ((!stopping) && (i==currentTriggerPatternIndex)) next();
 		
 	}
 	
 	
-	if((stopping) && (activeArrangements==0) ) {
+	if((stopping) && (activeTriggerPatterns==0) ) {
 		active = false;
 	}
 
@@ -90,9 +79,9 @@ bool Scene :: update(float deltaTime) {
 bool Scene:: draw() {
 
 	if(!active) return false; 
-	for(int i=0; i<arrangements.size(); i++) {
+	for(int i=0; i<triggerPatterns.size(); i++) {
 		
-		arrangements[i]->draw();
+		//triggerPatterns[i]->draw();
 		
 	}
 	
@@ -101,74 +90,49 @@ bool Scene:: draw() {
 }
 void Scene :: updateMotion(MotionManager& motionManager, cv::Mat homography){
 	
-	for(int i = 0; i<arrangements.size(); i++) {
+	for(int i = 0; i<triggerPatterns.size(); i++) {
 		
-		Arrangement * arrangement = arrangements[i];
+		//Arrangement * arrangement = triggerPatterns[i];
 
-		arrangement->updateMotion(motionManager, homography);
-		
-//		float motion = motionManager.getMotionAtPosition(trigger->pos, trigger->radius*2, homography); 
-//		trigger->registerMotion(motion/255);
-		
-		//cout << motion << endl; 
-		
-		
-	}
-	
-}
-
-void Scene :: updateTriggerSettings(ofRectangle triggerarea, float spacing ){
-
-	if(spacing<=0) spacing = 0.1;
-	for(int i = 0; i<arrangements.size() ; i++) {
-		arrangements[i]->updateLayout(triggerarea, spacing, triggerDebug, triggersDisabled);
-	}
-
-}
-
-void  Scene :: setShowTriggerDebug(bool showDebug) {
-	triggerDebug = showDebug;
-	
-	for(int i = 0; i<arrangements.size() ; i++) {
-		arrangements[i]->updateDebug(triggerDebug);
-	}
-	
-}
-
-void  Scene :: setTriggersDisabled(bool disabled) {
-	triggersDisabled =disabled; 
-	for(int i = 0; i<arrangements.size() ; i++) {
-		arrangements[i]->setTriggersDisabled(disabled);
+		//arrangement->updateMotion(motionManager, homography);
 	}
 	
 }
 
 
+TriggerPattern Scene :: getCurrentTriggerPattern() {
 
-Arrangement& Scene ::addArrangement(TriggerPattern& pattern, bool fixedPosition) {
-	arrangements.push_back(new Arrangement(particleSystemManager, triggerArea, fixedPosition));
-	//arrangements.back()->setTriggerArea(triggerArea);
-	arrangements.back()->setPattern(pattern, triggerArea, 50, triggerDebug, triggersDisabled);
-	arrangementTriggers.push_back(new bool(false));
+	return triggerPatterns[currentTriggerPatternIndex];
 	
 }
 
+void Scene ::addTriggerPattern(TriggerPattern& pattern) {
+	triggerPatterns.push_back(pattern);
+	triggerPatternChangeTriggers.push_back(new bool(false));
+}
 
-bool Scene :: changeArrangement(int num) {
+bool Scene :: changeTriggerPattern(int num) {
 	
-	//if(currentArrangementIndex == num) return false;
+	//if(currentTriggerPatternIndex == num) return false;
 	
-	if((num>=arrangements.size())|| (stopping))  return false;
-
-	for(int i = 0; i< arrangements.size(); i++) { 
+	if((num>=triggerPatterns.size())|| (stopping))  return false;
+	
+	//TODO this needs to tell the triggerManager to change stuff
+	
+	
+	/*
+	for(int i = 0; i< triggerPatterns.size(); i++) { 
 		if(i!=num) {
-			arrangements[i]->stop();
-			*arrangementTriggers[i] = false;
-		} else *arrangementTriggers[i] = true;
+			triggerPatterns[i]->stop();
+			*arrangementChangeTriggers[i] = false;
+		} else *arrangementChangeTriggers[i] = true;
 	}
 	
-	arrangements[num]->start();
-	currentArrangementIndex = num; 
+	triggerPatterns[num]->start();*/
+	
+	
+	
+	currentTriggerPatternIndex = num; 
 	return true;
 	
 	
@@ -177,26 +141,26 @@ bool Scene :: changeArrangement(int num) {
 
 
 bool Scene :: next() {
-	if(arrangements.size()==0) return false;
+	if(triggerPatterns.size()==0) return false;
 	
-	int nextArrangement = currentArrangementIndex+1;
-	if(nextArrangement>=arrangements.size())
+	int nextArrangement = currentTriggerPatternIndex+1;
+	if(nextArrangement>=triggerPatterns.size())
 		nextArrangement = 0;
 	
-	changeArrangement(nextArrangement);
+	changeTriggerPattern(nextArrangement);
 	
 	
 }
 
 bool Scene :: previous() {
 
-	if(arrangements.size()==0) return false;
+	if(triggerPatterns.size()==0) return false;
 	
-	int prevArrangement = currentArrangementIndex-1;
+	int prevArrangement = currentTriggerPatternIndex-1;
 	if(prevArrangement<0)
-		prevArrangement = arrangements.size();
+		prevArrangement = triggerPatterns.size()-1;
 	
-	changeArrangement(prevArrangement);
+	changeTriggerPattern(prevArrangement);
 
 
 }

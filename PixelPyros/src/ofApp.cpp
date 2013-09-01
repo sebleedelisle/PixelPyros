@@ -50,9 +50,7 @@ void ofApp::setup(){
 	ofSetFrameRate(60);
 	//ofSetVerticalSync(true); // now on by default
 	lastUpdateTime = ofGetElapsedTimef();
-	
-	
-	    
+  
     ofBackground(0);
 
 	setupScenes(); 
@@ -60,16 +58,15 @@ void ofApp::setup(){
 	cameraManager.init();
 	cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
 
-	
 	motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 	
 	setupControlPanel();
 	
-
-	
 	gui.hide();
 	
-	fbo.allocate(APP_WIDTH, APP_HEIGHT);
+	// TODO FBO oversamples now so check performance / smoothing
+	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 8);
+	
 	fbo.begin();
 	ofClear(0,0,0);
 	fbo.end(); 
@@ -79,6 +76,14 @@ void ofApp::setup(){
     paused = false;
 	shiftPressed = false;
 
+	triggerManager.updateTriggerSettings(triggerArea, triggerSpacing);
+	/*
+	Trigger trigger;
+	TriggerPattern pattern;
+	pattern.addTrigger(trigger);
+	triggerManager.setPattern(pattern);
+	*/
+	
 	
 
 
@@ -103,6 +108,8 @@ void ofApp::update(){
 		
 	}
 	
+	
+	
 	float time = ofGetElapsedTimef(); 
 	float deltaTime =  time - lastUpdateTime;
 
@@ -111,29 +118,33 @@ void ofApp::update(){
 	if (( triggerAreaWidth*APP_WIDTH!=triggerArea.width ) ||
 		(triggerAreaHeight*APP_HEIGHT != triggerArea.height) ||
 		(triggerAreaCentreY*APP_HEIGHT != triggerArea.getCenter().y) ||
-		(triggerSpacing != sceneManager.triggerSpacing ) ) {
+		(triggerSpacing != triggerManager.minimumSpacing ) ) {
+		
 		triggerArea.width = triggerAreaWidth*APP_WIDTH;
 		triggerArea.x = (APP_WIDTH - triggerArea.width)/2;
 		triggerArea.height = (APP_HEIGHT * triggerAreaHeight);
 		triggerArea.y = (APP_HEIGHT * triggerAreaCentreY) - (triggerArea.height/2) ;
 		
-		sceneManager.updateTriggerSettings(triggerArea, triggerSpacing) ;
+		triggerManager.updateTriggerSettings(triggerArea, triggerSpacing) ;
+		// TODO - should be :
+		// triggerManager.updateTriggerSettings...
 	}
-	
-	if ( triggerShowDebug != sceneManager.triggerShowDebug ) {
-		sceneManager.updateTriggerDebug(triggerShowDebug) ;
+	/*
+	if ( triggerShowDebug != triggerManager.triggerShowDebug ) {
+		triggerManager.setShowTriggerDebug(triggerShowDebug) ;
 		
-	}
+	}*/
 	
-	if ( triggersDisabled != sceneManager.triggersDisabled ) {
-		sceneManager.setTriggersDisabled(triggersDisabled) ;
+	if ( triggersDisabled != triggerManager.triggersDisabled ) {
+		triggerManager.setTriggersDisabled(triggersDisabled) ;
 		
 	}
 	
     if( !paused ) {
 		
-        sceneManager.update(deltaTime*0.5);
-        particleSystemManager.update(deltaTime*0.5);
+		triggerManager.update(deltaTime);
+	    sceneManager.update(deltaTime);
+        particleSystemManager.update(deltaTime);
     }
 }
 
@@ -168,41 +179,29 @@ void ofApp::draw(){
 
 	ofPushMatrix();
 	
-	// change perspective so we're looking up
-	// THIS SHOULD BE MOVED INTO PARTICLE SYSTEMS I THINK
-	//ofTranslate(0,ofGetHeight()*0.9);
-	//ofRotateX(5);
-	//ofTranslate(0,ofGetHeight()*-0.9);
 
 	ofEnableAlphaBlending();
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
 
 	particleSystemManager.draw();
 	
+	triggerManager.draw();
+	
     ofPopMatrix();
     
 	// this draws all the triggers, should be outside of the rotation upwards
-    // a better solution would be to alter matrix for the particle system dependent on
-    // start position. 
+    // a better solution would be to alter matrix for the particle system 
+    // dependent on start position.
+	
 	sceneManager.draw(); 
 	
-	float rectWidth = APP_WIDTH*0.6;
-	float rectHeight = APP_HEIGHT*0.3;
-	
-	// For testing the text box!
-	if(ofGetMousePressed()) {
-		
-		rectWidth = ofGetMouseX() - APP_WIDTH*0.2;
-		rectHeight = ofGetMouseY() - APP_HEIGHT *0.1;
-		
-	}
-
-
-
+	/* 
+	//DRAWS TRIGGER RECTANGLE
+	 
 	ofSetColor(255);
-	//ofNoFill();
-	//ofRect(triggerArea);
-	
+	ofNoFill();
+	ofRect(triggerArea);
+	*/
 	
 	if(useFbo) {
 		fbo.end();
@@ -222,7 +221,7 @@ void ofApp::draw(){
 //	ofDrawBitmapString("G: " + ofToString(gui.getValueF("SHADER_GAMMA")),20,180);
 //	ofDrawBitmapString("Bloom: " + ofToString(gui.getValueF("SHADER_BLOOM")),20,195);
     
-	// DEBUG DATA FOR SCENES / ARRANGEMENTS / TRIGGERS.
+	// DEBUG DATA FOR SCENES / triggerPatterns / TRIGGERS.
 	// Should probably put this in a GUI or something... :) 
 	
 	
@@ -287,7 +286,7 @@ void ofApp::keyPressed(int key){
 	}
 	else if ( key == 'd' )
 	{
-		triggerShowDebug = !triggerShowDebug ;
+		triggerManager.toggleDebug();//triggerShowDebug = !triggerShowDebug ;
 	}
 	else if ( key == 'k' )
 	{
@@ -313,22 +312,22 @@ void ofApp:: mousePressed(int x, int y, int button ) {
 
 void ofApp:: setupScenes() { 
 	
-	sceneManager.addScene(new SceneCalibration("Calibration", particleSystemManager, triggerArea));
-	sceneManager.addScene(new SceneSlideshow("SlideShow", particleSystemManager, triggerArea));
+	//sceneManager.addScene(new SceneCalibration("Calibration", particleSystemManager));
+	//sceneManager.addScene(new SceneSlideshow("SlideShow", particleSystemManager));
 	
 	// This scene was to launch the Brighton Digital Festival
-	//sceneManager.addScene(new SceneLaunch("Launch", particleSystemManager, triggerArea));
+	//sceneManager.addScene(new SceneLaunch("Launch", particleSystemManager));
 
-	sceneManager.addScene(new SceneIntro("Intro", particleSystemManager, triggerArea));
+	sceneManager.addScene(new SceneIntro("Intro", particleSystemManager));
 	
-	sceneManager.addScene(new SceneRetro("Retro", particleSystemManager, triggerArea));
+	//sceneManager.addScene(new SceneRetro("Retro", particleSystemManager));
 	
-	sceneManager.addScene(new SceneRealistic("Lights", particleSystemManager, triggerArea));
-	sceneManager.addScene(new SceneTron("Vectorizer", particleSystemManager, triggerArea));
+	//sceneManager.addScene(new SceneRealistic("Lights", particleSystemManager));
+	//sceneManager.addScene(new SceneTron("Vectorizer", particleSystemManager));
 	
-	sceneManager.addScene(new SceneSpace("Stargazer", particleSystemManager, triggerArea));
+	//sceneManager.addScene(new SceneSpace("Stargazer", particleSystemManager));
 	
-	sceneManager.changeScene(1);
+	sceneManager.changeScene(0);
 	
 }
 
@@ -372,24 +371,29 @@ void ofApp::initSounds() {
 
 void ofApp::mouseMoved( int x, int y ){
 	
-	vector <Scene*>& scenes = sceneManager.scenes;
-	for(int j = 0 ; j<scenes.size(); j++ ) { 
-		Scene* scene1 = scenes[j];
-		vector<Arrangement*> * arrangements = &scene1->arrangements;
-		for(int k = 0; k<arrangements->size(); k++)
-		{
-			vector <TriggerBase*> triggers = arrangements->at(k)->triggers;
-			for(int i = 0; i<triggers.size(); i++) { 
-				TriggerBase * trigger = triggers[i]; 
-				float distance = trigger->pos.distance(ofVec3f(x,y));
-				if(distance<20) {
-					trigger->registerMotion(1.0f-(distance/20.0f)); 
-					
-				}
-				
-			}
-		}
-	}
+	triggerManager.mouseMoved(x, y);
+	
+	// TO DO
+	// this stuff is so we can manually trigger fireworks with the mouse.
+//	
+//	vector <Scene*>& scenes = sceneManager.scenes;
+//	for(int j = 0 ; j<scenes.size(); j++ ) { 
+//		Scene* scene1 = scenes[j];
+//		vector<Arrangement*> * triggerPatterns = &scene1->triggerPatterns;
+//		for(int k = 0; k<triggerPatterns->size(); k++)
+//		{
+//			vector <TriggerBase*> triggers = triggerPatterns->at(k)->triggers;
+//			for(int i = 0; i<triggers.size(); i++) { 
+//				TriggerBase * trigger = triggers[i]; 
+//				float distance = trigger->pos.distance(ofVec3f(x,y));
+//				if(distance<20) {
+//					trigger->registerMotion(1.0f-(distance/20.0f)); 
+//					
+//				}
+//				
+//			}
+//		}
+//	}
 }
 
 
