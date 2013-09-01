@@ -16,25 +16,22 @@ class ParticleRendererLine : public ParticleRendererBase {
 	ParticleRendererLine(float linewidth = 1, bool smoothlines = false) : ParticleRendererBase() {
 		lineWidth = linewidth;
 		smooth = smoothlines; 
-		
+		mesh.setMode(OF_PRIMITIVE_LINES);
+
 	}
 	
 	void renderParticles(vector <Particle * > particles){
         
         // BASIC TRIANGLE RENDERER
+		/*
 		if(smooth) ofEnableSmoothing();
 		else ofDisableSmoothing();
-		
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
-		
-		//		ofEnableAlphaBlending();
-		//
-		
+		*/
+			
 		ofSetLineWidth(lineWidth);
-		ofMesh mesh;
 		
-		mesh.setMode(OF_PRIMITIVE_LINES);
-		
+		mesh.clear();
+				
 		//ofMatrix4x4 mat;
 		
 		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
@@ -53,12 +50,12 @@ class ParticleRendererLine : public ParticleRendererBase {
 		}
 		
 		mesh.draw();
-		ofDisableBlendMode();
 		
 		
         
     }
 	
+	ofMesh mesh;
 	float lineWidth;
 	bool smooth; 
 };

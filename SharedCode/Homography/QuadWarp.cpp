@@ -72,7 +72,7 @@ void QuadWarp :: draw(bool lockAxis) {
 	ofNoFill();
 	
 	
-	ofEnableSmoothing();
+	//ofEnableSmoothing();
 	//ofScale(1024, 768);
 	for(int i = 0; i < dstPoints.size(); i++) {
 		ofSetColor(ofColor::black);

@@ -45,11 +45,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Triggers/TriggerManager.cpp"
-         timestampString = "399390311.532892"
+         timestampString = "399748050.854246"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "280"
-         endingLineNumber = "280"
+         startingLineNumber = "298"
+         endingLineNumber = "298"
          landmarkName = "TriggerManager :: updateLayout()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -58,11 +58,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Triggers/TriggerManager.cpp"
-         timestampString = "399390311.532892"
+         timestampString = "399748050.854246"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "128"
-         endingLineNumber = "128"
+         startingLineNumber = "146"
+         endingLineNumber = "146"
          landmarkName = "TriggerManager :: updateLayout()"
          landmarkType = "5">
       </FileBreakpoint>

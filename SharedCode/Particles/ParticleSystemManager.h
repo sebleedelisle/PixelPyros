@@ -169,7 +169,7 @@ public:
 			
 		}
 		
-		
+		rocket->timeSpeed = rs.timeSpeed;
 		rocket->pos.set(pos);
 		rocket->lastPos.set(pos);
 		rocket->life.lifeTime = rs.lifeTime;

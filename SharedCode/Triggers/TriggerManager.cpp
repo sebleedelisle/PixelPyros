@@ -40,6 +40,24 @@ bool TriggerManager :: update(float deltaTime) {
 	
 }
 
+void TriggerManager :: updateMotion(MotionManager& motionManager, cv::Mat homography){
+	
+	for(int i=0; i<triggers.size(); i++) {
+		
+		Trigger* trigger = triggers[i];
+		if(!trigger->active) continue;
+		
+		// TODO fixed motion size? 
+		float motion = motionManager.getMotionAtPosition(trigger->pos, trigger->radius*2, homography);
+		trigger->registerMotion(motion/255);
+	}
+	
+	
+}
+
+
+
+
 void TriggerManager :: draw() {
 	
 	//if(!active) return;

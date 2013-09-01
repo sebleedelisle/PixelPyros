@@ -20,101 +20,37 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm) : Scene(s
 	TriggerPattern blank;
 	addTriggerPattern(blank);
 	
-	TriggerSettings ts;
 	
-	// TODO - THIS IS BAD - should store these pointers somewhere and clear
-	// them later.
-	
-	ts.setRenderer(new TriggerRendererBase());
-	TriggerableRocket* tr = new TriggerableRocket(particleSystemManager);
-	tr->rocketSettings = getFountain(180,0);
-	
-	ts.setTriggerable(tr);
 	
 	TriggerPattern pattern;
-	
-	pattern.addTriggerSettings(ts);
+	pattern.addTriggerSettings(getFountain(180,0));
 	addTriggerPattern(pattern);
+	
+	
 	
 	TriggerPattern multiColourFountains;
 	
 	float colours [10] = {0, 30, 60, 90, 120, 150,180,210,240 };
 	
 	for(int i = 0; i<10; i++) {
-		TriggerSettings triggerColour;
-		
-		TriggerableRocket* tr = new TriggerableRocket(particleSystemManager);
-		tr->rocketSettings = getFountain(colours[i],0);
-		
-		/*
-		RocketSettings fountain = getFountain(colours[i]);
-		fountain.startSpeedMax *=2;
-		 
-		 */
-		
-		//triggerColour.addRocketSettings(fountain);
-		//triggerRocketFountain.restoreSpeed= 4;
-		
-		// TODO - THIS IS BAD - should store these pointers somewhere and clear
-		// them later.
-		triggerColour.setRenderer(new TriggerRendererBase());
-		triggerColour.setTriggerable(tr);
-		
+		TriggerSettings triggerColour = getFountain(colours[i],0);
+				
 		triggerColour.hue = colours[i];
 		triggerColour.saturation = 255;
 		
 		multiColourFountains.addTriggerSettings(triggerColour);
 	}
+	
 	addTriggerPattern(multiColourFountains);
-
+			
 	
 	
-	
-	/*
-	
-	TriggerRocket triggerFountain(psm);
-	triggerFountain.addRocketSettings(getFountain(180));
-	triggerFountain.restoreSpeed = 4;
-	
-		
 	TriggerPattern patternFountain;
-	patternFountain.addTrigger(triggerFountain);
-	
+	patternFountain.addTriggerSettings(getFountain(180,0));
+	patternFountain.addTriggerSettings(getBasicRocket(5));
 	addTriggerPattern(patternFountain);
 	
-	
-	
-	TriggerRocket triggerFlower(psm);
-	triggerFlower.addRocketSettings(getBasicRocket(5));
-	triggerFlower.radius = 8;
-	
-	TriggerPattern multiColourFountains;
-	
-	float colours [10] = {0, 30, 60, 90, 120, 150,180,210,240 };
-	
-	for(int i = 0; i<10; i++) {
-		TriggerRocket triggerRocketFountain(psm);
-		
-		RocketSettings fountain = getFountain(colours[i]);
-		fountain.startSpeedMax *=2;
-		triggerRocketFountain.addRocketSettings(fountain);
-		triggerRocketFountain.restoreSpeed= 4;
-		
-		triggerRocketFountain.hue = colours[i];
-		triggerRocketFountain.saturation = 255;
-		
-		multiColourFountains.addTrigger(triggerRocketFountain, 0,0,1);
-	}
-	addTriggerPattern(multiColourFountains);
-	
-	// fountains with added flowers
-	patternFountain.addTrigger(triggerFountain);
-	patternFountain.addTrigger(triggerFlower);
-	addTriggerPattern(patternFountain);
-	
-	*/
-	
-	
+
 	texts.push_back("Welcome to PixelPyros");
 	texts.push_back("The fireworks display that you control");
 	texts.push_back("Move your hand across the orbs of light to trigger fireworks");
@@ -181,7 +117,16 @@ bool SceneIntro:: draw() {
 }
 
 
-RocketSettings SceneIntro :: getBasicRocket(float hue , float hueChange ){
+TriggerSettings SceneIntro :: getBasicRocket(float hue , float hueChange ){
+	
+	
+	TriggerSettings ts;
+	
+	// TODO - THIS IS BAD - should store these pointers somewhere and clear
+	// them later.
+	
+	ts.setRenderer(new TriggerRendererBase());
+	TriggerableRocket* tr = new TriggerableRocket(particleSystemManager);
 	
 	RocketSettings rocketSettings;
 	
@@ -190,13 +135,14 @@ RocketSettings SceneIntro :: getBasicRocket(float hue , float hueChange ){
 	rocketSettings.direction = -90;
 	rocketSettings.directionVar = 4;
 	rocketSettings.gravity.y = 400;
+	
 	//rocketSettings.drag = 0.95;
 	
 	ParticleSystemSettings trails = getFlowerTrailParticles(hue, hueChange);
 	ParticleSystemSettings explosion = getFlowerExplosionParticles(hue, hueChange);
 	//ParticleSystemSettings explosionLines = getLineExplosionParticles(150, hueChange);
 	
-	
+	trails.timeSpeed = explosion.timeSpeed = rocketSettings.timeSpeed = 0.7;
 	
 	explosion.emitDelay = trails.emitLifeTime = 2;
 	
@@ -204,7 +150,10 @@ RocketSettings SceneIntro :: getBasicRocket(float hue , float hueChange ){
 	rocketSettings.addParticleSystemSetting(explosion);
 	//rocketSettings.addParticleSystemSetting(explosionLines);
 	
-	return rocketSettings;
+	tr->rocketSettings = rocketSettings;
+	ts.setTriggerable(tr);
+	
+	return ts;
 	
 	
 	
@@ -338,8 +287,16 @@ ParticleSystemSettings SceneIntro :: getLineExplosionParticles(float hue, float 
 	
 }
 
-RocketSettings SceneIntro :: getFountain(float hueStartOffset , float hueChange){
+TriggerSettings SceneIntro :: getFountain(float hueStartOffset , float hueChange){
 	
+	TriggerSettings ts;
+	
+	// TODO - THIS IS BAD - should store these pointers somewhere and clear
+	// them later.
+	
+	ts.setRenderer(new TriggerRendererBase());
+	TriggerableRocket* tr = new TriggerableRocket(particleSystemManager);
+
 	ParticleRendererBase* renderer = new ParticleRendererShape();
 	
 	ParticleSystemSettings ps, ps2;
@@ -477,11 +434,19 @@ RocketSettings SceneIntro :: getFountain(float hueStartOffset , float hueChange)
 	rocketSettings.gravity.y = 300;
 	rocketSettings.drag = 0.9;
 	rocketSettings.lifeTime = 1;
+	ps.timeSpeed = ps2.timeSpeed = rocketSettings.timeSpeed = 0.5;
+	
 	
 	rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(ps2);
 	
-	return rocketSettings;
+	tr->rocketSettings = rocketSettings;
+	
+	ts.setTriggerable(tr);
+
+	
+	
+	return ts;
 	
 	
 	

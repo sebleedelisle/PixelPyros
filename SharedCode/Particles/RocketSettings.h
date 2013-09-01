@@ -28,6 +28,7 @@ class RocketSettings {
 		gravity.set(0,0,0); 
 		drag = 1;
 		lifeTime = 2;
+		timeSpeed = 1;
 		mode = ROCKET_MODE_PHYSICS;
 		
 	};
@@ -51,13 +52,14 @@ class RocketSettings {
 	float startSpeedMax; 
 	float direction; 
 	float directionVar;
-	float lifeTime; 
+	float lifeTime;
+	
+	float timeSpeed; 
 	
 	ofVec3f gravity; 
 	float	drag;
 	
 	RocketMode mode; 
-	
 	
 	ofVec3f targetPos;
 	float targetSpeed;

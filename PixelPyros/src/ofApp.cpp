@@ -65,7 +65,7 @@ void ofApp::setup(){
 	gui.hide();
 	
 	// TODO FBO oversamples now so check performance / smoothing
-	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 8);
+	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 1);
 	
 	fbo.begin();
 	ofClear(0,0,0);
@@ -104,7 +104,7 @@ void ofApp::update(){
 
 		motionManager.update(cameraManager.getPixelsRef());
 		
-		sceneManager.updateMotion(motionManager, cameraManager.warper.inverseHomography );
+		triggerManager.updateMotion(motionManager, cameraManager.warper.inverseHomography );
 		
 	}
 	
@@ -177,17 +177,16 @@ void ofApp::draw(){
 		cameraManager.draw(0,0);
 	
 
-	ofPushMatrix();
+	//ofPushMatrix();
 	
-
-	ofEnableAlphaBlending();
+	//ofEnableAlphaBlending();
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
-
+	
 	particleSystemManager.draw();
 	
 	triggerManager.draw();
 	
-    ofPopMatrix();
+    //ofPopMatrix();
     
 	// this draws all the triggers, should be outside of the rotation upwards
     // a better solution would be to alter matrix for the particle system 
@@ -227,12 +226,14 @@ void ofApp::draw(){
 	
 	
 	ofDisableBlendMode();
-	ofFill();
+	ofDisableAlphaBlending();
+	
+	//ofFill();
 	
 	
 	// draw the warper UIs if necessary
-	fboWarper1.draw(ofGetKeyPressed('l'));
-	fboWarper2.draw(ofGetKeyPressed('l'));
+	fboWarper1.draw(ofGetKeyPressed(OF_KEY_SHIFT));
+	fboWarper2.draw(ofGetKeyPressed(OF_KEY_SHIFT));
 	
  
     

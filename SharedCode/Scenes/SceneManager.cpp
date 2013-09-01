@@ -67,12 +67,12 @@ void SceneManager::draw() {
 	
 	
 }
-
+/*
 void SceneManager ::updateMotion(MotionManager& motionManager, cv::Mat homography){
 	
 	if(currentScene!=NULL) currentScene->updateMotion(motionManager, homography); 
 
-}
+}*/
 /*
 void SceneManager::updateTriggerSettings(ofRectangle triggerarea, float spacing) {
 	triggerSpacing = spacing;

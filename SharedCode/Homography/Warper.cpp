@@ -119,7 +119,7 @@ void Warper :: drawPoints(vector<ofVec2f>& points, ofColor colour) {
 	ofNoFill();
 	ofPushMatrix(); 
 
-	ofEnableSmoothing(); 
+	//ofEnableSmoothing();
 	//ofScale(1024, 768); 
 	for(int i = 0; i < points.size(); i++) {
 		ofSetColor(ofColor::black); 
