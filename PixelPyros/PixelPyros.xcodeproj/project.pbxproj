@@ -108,6 +108,12 @@
 		1254565E17BF880400EF23B7 /* Grabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565417BF880400EF23B7 /* Grabber.cpp */; };
 		1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565717BF880400EF23B7 /* PointGrey.cpp */; };
 		12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AF89EE17C4F38A001995FC /* TriggerManager.cpp */; };
+		9E3371B117D8E35600EDDB96 /* ofxDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E3371A217D8E35600EDDB96 /* ofxDisplay.cpp */; };
+		9E3371B217D8E35600EDDB96 /* ofxDisplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E3371A517D8E35600EDDB96 /* ofxDisplayManager.cpp */; };
+		9E3371B317D8E35600EDDB96 /* ofxDisplayManagerMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E3371A717D8E35600EDDB96 /* ofxDisplayManagerMac.mm */; };
+		9E3371B417D8E35600EDDB96 /* ofxFenster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E3371A817D8E35600EDDB96 /* ofxFenster.cpp */; };
+		9E3371B517D8E35600EDDB96 /* ofxFensterCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E3371AA17D8E35600EDDB96 /* ofxFensterCanvas.cpp */; };
+		9E3371B617D8E35600EDDB96 /* ofxFensterManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E3371AC17D8E35600EDDB96 /* ofxFensterManager.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -524,6 +530,18 @@
 		12AF89EF17C4F38A001995FC /* TriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerManager.h; sourceTree = "<group>"; };
 		12D15FCB17CD04C7003D9024 /* TriggerRendererBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRendererBase.h; sourceTree = "<group>"; };
 		12D15FCD17CE0044003D9024 /* TriggerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
+		9E3371A217D8E35600EDDB96 /* ofxDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDisplay.cpp; sourceTree = "<group>"; };
+		9E3371A317D8E35600EDDB96 /* ofxDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDisplay.h; sourceTree = "<group>"; };
+		9E3371A417D8E35600EDDB96 /* ofxDisplayMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDisplayMac.h; sourceTree = "<group>"; };
+		9E3371A517D8E35600EDDB96 /* ofxDisplayManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDisplayManager.cpp; sourceTree = "<group>"; };
+		9E3371A617D8E35600EDDB96 /* ofxDisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDisplayManager.h; sourceTree = "<group>"; };
+		9E3371A717D8E35600EDDB96 /* ofxDisplayManagerMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxDisplayManagerMac.mm; sourceTree = "<group>"; };
+		9E3371A817D8E35600EDDB96 /* ofxFenster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFenster.cpp; sourceTree = "<group>"; };
+		9E3371A917D8E35600EDDB96 /* ofxFenster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFenster.h; sourceTree = "<group>"; };
+		9E3371AA17D8E35600EDDB96 /* ofxFensterCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFensterCanvas.cpp; sourceTree = "<group>"; };
+		9E3371AB17D8E35600EDDB96 /* ofxFensterCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFensterCanvas.h; sourceTree = "<group>"; };
+		9E3371AC17D8E35600EDDB96 /* ofxFensterManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFensterManager.cpp; sourceTree = "<group>"; };
+		9E3371AD17D8E35600EDDB96 /* ofxFensterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFensterManager.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -1493,9 +1511,38 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		9E33718A17D8E35600EDDB96 /* ofxFenster */ = {
+			isa = PBXGroup;
+			children = (
+				9E3371A117D8E35600EDDB96 /* src */,
+			);
+			name = ofxFenster;
+			path = ../addons/ofxFenster;
+			sourceTree = "<group>";
+		};
+		9E3371A117D8E35600EDDB96 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9E3371A217D8E35600EDDB96 /* ofxDisplay.cpp */,
+				9E3371A317D8E35600EDDB96 /* ofxDisplay.h */,
+				9E3371A417D8E35600EDDB96 /* ofxDisplayMac.h */,
+				9E3371A517D8E35600EDDB96 /* ofxDisplayManager.cpp */,
+				9E3371A617D8E35600EDDB96 /* ofxDisplayManager.h */,
+				9E3371A717D8E35600EDDB96 /* ofxDisplayManagerMac.mm */,
+				9E3371A817D8E35600EDDB96 /* ofxFenster.cpp */,
+				9E3371A917D8E35600EDDB96 /* ofxFenster.h */,
+				9E3371AA17D8E35600EDDB96 /* ofxFensterCanvas.cpp */,
+				9E3371AB17D8E35600EDDB96 /* ofxFensterCanvas.h */,
+				9E3371AC17D8E35600EDDB96 /* ofxFensterManager.cpp */,
+				9E3371AD17D8E35600EDDB96 /* ofxFensterManager.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				9E33718A17D8E35600EDDB96 /* ofxFenster */,
 				1254562817BF880400EF23B7 /* ofxLibdc */,
 				125455EF17BF87F200EF23B7 /* ofxOsc */,
 				125455E217BF87DA00EF23B7 /* ofxXmlSettings */,
@@ -1776,6 +1823,12 @@
 				1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */,
 				12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */,
 				120C789017D35F9C0050D25D /* TriggerableRocket.cpp in Sources */,
+				9E3371B117D8E35600EDDB96 /* ofxDisplay.cpp in Sources */,
+				9E3371B217D8E35600EDDB96 /* ofxDisplayManager.cpp in Sources */,
+				9E3371B317D8E35600EDDB96 /* ofxDisplayManagerMac.mm in Sources */,
+				9E3371B417D8E35600EDDB96 /* ofxFenster.cpp in Sources */,
+				9E3371B517D8E35600EDDB96 /* ofxFensterCanvas.cpp in Sources */,
+				9E3371B617D8E35600EDDB96 /* ofxFensterManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
