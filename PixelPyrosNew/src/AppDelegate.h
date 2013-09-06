@@ -1,6 +1,6 @@
 
 
-#include "testApp.h"
+#include "ofApp.h"
 #include "ofxNSWindower.h"
 
 #import <Cocoa/Cocoa.h>
