@@ -7,7 +7,7 @@
 - (void) applicationDidFinishLaunching: (NSNotification*) notification {
 	
 	//simple way...
-	ofxNSWindower::instance()->addWindow(new testApp());
+	ofxNSWindower::instance()->addWindow(new ofApp());
 	
 	
 	
