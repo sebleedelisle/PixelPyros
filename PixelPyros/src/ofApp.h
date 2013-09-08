@@ -37,7 +37,11 @@
 
 #include "TextWriter.h"
 
+<<<<<<< HEAD
 class ofApp : public ofBaseApp {
+=======
+class ofApp : public ofBaseApp{
+>>>>>>> 81b0fce3404c2cbe21053e06a44141560912b095
 	
 public:
 	

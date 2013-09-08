@@ -24,6 +24,7 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm) : Scene(s
 	
 	TriggerPattern pattern;
 	pattern.addTriggerSettings(getFountain(180,0));
+	pattern.addTriggerSettings(TriggerSettings::blank);
 	addTriggerPattern(pattern);
 	
 	
@@ -39,6 +40,8 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm) : Scene(s
 		triggerColour.saturation = 255;
 		
 		multiColourFountains.addTriggerSettings(triggerColour);
+		
+		multiColourFountains.addTriggerSettings(TriggerSettings::blank);
 	}
 	
 	addTriggerPattern(multiColourFountains);
@@ -47,7 +50,9 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm) : Scene(s
 	
 	TriggerPattern patternFountain;
 	patternFountain.addTriggerSettings(getFountain(180,0));
+	patternFountain.addTriggerSettings(TriggerSettings::blank);
 	patternFountain.addTriggerSettings(getBasicRocket(5));
+	patternFountain.addTriggerSettings(TriggerSettings::blank);
 	addTriggerPattern(patternFountain);
 	
 
@@ -125,7 +130,7 @@ TriggerSettings SceneIntro :: getBasicRocket(float hue , float hueChange ){
 	// TODO - THIS IS BAD - should store these pointers somewhere and clear
 	// them later.
 	
-	ts.setRenderer(new TriggerRendererBase());
+	//ts.setRenderer(new TriggerRendererBase());
 	TriggerableRocket* tr = new TriggerableRocket(particleSystemManager);
 	
 	RocketSettings rocketSettings;
@@ -294,7 +299,6 @@ TriggerSettings SceneIntro :: getFountain(float hueStartOffset , float hueChange
 	// TODO - THIS IS BAD - should store these pointers somewhere and clear
 	// them later.
 	
-	ts.setRenderer(new TriggerRendererBase());
 	TriggerableRocket* tr = new TriggerableRocket(particleSystemManager);
 
 	ParticleRendererBase* renderer = new ParticleRendererShape();

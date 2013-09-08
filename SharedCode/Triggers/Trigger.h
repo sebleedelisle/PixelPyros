@@ -3,11 +3,14 @@
 
 #include "ofMain.h"
 #include "TriggerSettings.h"
+#include "TriggerRechargeSettings.h"
 #include "TriggerRendererBase.h"
 
 class Trigger {
 	
 	public :
+	
+	//static TriggerRendererBase * defaultRenderer;
 	
 	Trigger();
 	bool update(float deltaTime);
@@ -21,13 +24,6 @@ class Trigger {
 	bool doTrigger();
 	
 	void copySettings(const TriggerSettings& settings) ;
-	
-	
-	/*
-	virtual Trigger* clone() const{
-		//cout << "clone TriggerRocket"<< endl;
-		return new Trigger( *this );
-	}*/
 	
 	float unitPower;
 	
@@ -67,49 +63,12 @@ class Trigger {
 	int motionValueCount;
 	float lastUpdate;
 	
-	TriggerRendererBase * renderer;
-	TriggerableBase * triggerable;
-	
-	TriggerRendererBase defaultRenderer;
-	TriggerableBase defaultTriggerable;
-	
-	TriggerSettings defaultSettings; 
-	
-	/*
-	// for the spinny orb
-	float rot1, rot2, rot3;
-	float vel1, vel2, vel3;
-	*/
-	
 	
 	
 	//SETTINGS
 	
-	//amount per second to take away from the accumulated motion
-	float motionDecay;
-	
-	// a scalar that multiplies the motion level to add to the
-	// unitPower
-	float motionSensitivity;
-	
-	// set restoreSpeed to 0 to make it a single shot trigger
-	float restoreSpeed;
-	
-	
-	// motionTriggerLevel is the amount of motion needed to make something happen
-	float motionTriggerLevel;
-	
-	// the amount of power taken away when it triggers
-	float triggerPower;
-	
-	// minimum time between triggers
-	float minTriggerInterval;
-		
-	//ofColor colour;
-	float hue;
-	float saturation;
-	
-
+	TriggerSettings settings;
+	TriggerRechargeSettings* rechargeSettings;
 	
 	
 };
