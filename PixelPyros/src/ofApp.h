@@ -7,6 +7,7 @@
 #include "constants.h"
 
 #include "ofMain.h"
+#include "ofxFensterManager.h"
 #include "SceneManager.h"
 #include "SettingsManager.h"
 #include "ParticleSystemManager.h"
@@ -37,7 +38,7 @@
 
 #include "TextWriter.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofxFenster{
 	
 public:
 	
