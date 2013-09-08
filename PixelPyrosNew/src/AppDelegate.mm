@@ -7,9 +7,8 @@
 - (void) applicationDidFinishLaunching: (NSNotification*) notification {
 	
 	//simple way...
-	ofxNSWindower::instance()->addWindow(new ofApp());
-    ofxNSWindower::instance()->addWindow(new testApp());
-	
+	ofxNSWindower::instance()->addWindow(new ofApp(),"Pixel Pyros Main", NSTitledWindowMask, 0);
+    ofxNSWindower::instance()->addWindow(new controlWindow(),"Pixel Pyros Control Panel", NSTitledWindowMask, 15 );
 	
 	//detailed way...
 	//ofxNSWindower::instance()->addWindow(new testApp(), "a_window", NSTitledWindowMask, 30);
