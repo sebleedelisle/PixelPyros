@@ -1,6 +1,8 @@
 
 #include "Trigger.h"
 
+
+//TriggerRendererBase * Trigger::defaultRenderer = new TriggerRendererBase();
 // Most of this code is to create the Trigger graphics, but there
 // is also stuff that works out how the triggers recharge. 
 
@@ -23,16 +25,15 @@ Trigger :: Trigger(){
 	// the power level for the trigger
 	unitPower =1;
 	
-	renderer = NULL;
-	triggerable = NULL;
-
 	
 	// SETTINGS :
 	// get defaults from the default TriggerSettings object
-	copySettings(defaultSettings);
+	copySettings(TriggerSettings::blank);
+	rechargeSettings = TriggerRechargeSettings::defaultSettings;
 	
 	motionValueCount = 20;
 	showDebugData = true;
+
 	/*
 	
 	// these values are to create the Trigger swirly circle animation
@@ -130,7 +131,7 @@ bool Trigger::update(float deltaTime) {
 	}
 
 	
-	unitPower+=restoreSpeed * deltaTime;
+	unitPower+=rechargeSettings->restoreSpeed * deltaTime;
 	if(unitPower>1) unitPower = 1;
 	
 	
@@ -138,13 +139,13 @@ bool Trigger::update(float deltaTime) {
 	// AND we need to have enough unitPower to trigger
 	if( (!stopping) &&
 		//(scale>0.99) &&
-		(motionLevel >= motionTriggerLevel) &&
-		(unitPower>=triggerPower) &&
-		(elapsedTime - lastTriggerTime > minTriggerInterval) ) {
+		(motionLevel >= rechargeSettings->motionTriggerLevel) &&
+		(unitPower>=rechargeSettings->triggerPower) &&
+		(elapsedTime - lastTriggerTime > rechargeSettings->minTriggerInterval) ) {
 		
 		if(doTrigger()) {
 			motionLevel = 0;
-			unitPower-=triggerPower;
+			unitPower-=rechargeSettings->triggerPower;
 			lastTriggerTime = elapsedTime;
 			/*
 			if(restoreSpeed==0) {
@@ -155,7 +156,7 @@ bool Trigger::update(float deltaTime) {
 		}
 	}
 	
-	motionLevel -= motionDecay*deltaTime;
+	motionLevel -= rechargeSettings->motionDecay*deltaTime;
 	if(motionLevel<0) motionLevel = 0;
 		
 	//}
@@ -194,10 +195,10 @@ void Trigger :: draw() {
 	if(!active) return;
 
 	ofColor c;
-	c.setSaturation(saturation);
-	c.setHue(hue);
+	c.setSaturation(settings.saturation);
+	c.setHue(settings.hue);
 
-	if(renderer!=NULL) renderer->draw(elapsedTime, pos, radius, c, unitPower, active);
+	if(settings.renderer!=NULL) settings.renderer->draw(elapsedTime, pos, radius, c, unitPower, active);
 	else ofLog(OF_LOG_WARNING, "No renderer for trigger");
 	
 	//ofDrawBitmapString(ofToString(motionLevel), pos);
@@ -375,17 +376,19 @@ void Trigger :: registerMotion(float unitValue) {
 }
 
 bool Trigger::doTrigger() {
-	if(triggerable!=NULL) {
-		triggerable->doTrigger(pos);
+	if(settings.triggerable!=NULL) {
+		settings.triggerable->doTrigger(pos);
 		
 	}
 	return true;//!disabled;
 }
 
 
-void Trigger::copySettings(const TriggerSettings& settings) {
+void Trigger::copySettings(const TriggerSettings& newsettings) {
 	
+	settings = newsettings;
 	
+	/*
 	motionTriggerLevel = settings.motionTriggerLevel;
 	triggerPower = settings.triggerPower;
 	minTriggerInterval = settings.minTriggerInterval;
@@ -396,13 +399,15 @@ void Trigger::copySettings(const TriggerSettings& settings) {
 	
 	hue = settings.hue;
 	saturation = settings.saturation;
+	 
+	 
 	//if(settings.renderer!=NULL)
 	renderer = settings.renderer;
 	//else renderer = &defaultRenderer;
 	//if(settings.triggerable!=NULL)
 	triggerable = settings.triggerable;
 	//else triggerable = &defaultTriggerable;
-	
+	*/
 	
 	
 }

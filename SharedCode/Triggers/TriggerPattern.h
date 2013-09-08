@@ -16,6 +16,23 @@ class TriggerPattern  {
 	
 	public :
 	
+	TriggerPattern(){
+		
+	};
+	
+	TriggerPattern(TriggerSettings trigger){
+		addTriggerSettings(trigger);
+
+	};
+	
+	TriggerPattern(vector<TriggerSettings> triggers){
+		for(int i = 0; i<triggers.size(); i++) {
+			addTriggerSettings(triggers[i]);
+		}
+		
+	};
+	
+	
 	//template <typename T>
 	void addTriggerSettings(TriggerSettings trigger){
 

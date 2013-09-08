@@ -107,7 +107,12 @@
 		1254565D17BF880400EF23B7 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565217BF880400EF23B7 /* Camera.cpp */; };
 		1254565E17BF880400EF23B7 /* Grabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565417BF880400EF23B7 /* Grabber.cpp */; };
 		1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565717BF880400EF23B7 /* PointGrey.cpp */; };
+		1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */; };
 		12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AF89EE17C4F38A001995FC /* TriggerManager.cpp */; };
+<<<<<<< HEAD
+=======
+		12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */; };
+>>>>>>> 81b0fce3404c2cbe21053e06a44141560912b095
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -520,8 +525,11 @@
 		1254565717BF880400EF23B7 /* PointGrey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointGrey.cpp; sourceTree = "<group>"; };
 		1254565817BF880400EF23B7 /* PointGrey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointGrey.h; sourceTree = "<group>"; };
 		125FB18717CBEA3A00A1CAE6 /* TriggerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerPattern.h; sourceTree = "<group>"; };
+		1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
+		1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRechargeSettings.h; sourceTree = "<group>"; };
 		12AF89EE17C4F38A001995FC /* TriggerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerManager.cpp; sourceTree = "<group>"; };
 		12AF89EF17C4F38A001995FC /* TriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerManager.h; sourceTree = "<group>"; };
+		12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettings.cpp; sourceTree = "<group>"; };
 		12D15FCB17CD04C7003D9024 /* TriggerRendererBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRendererBase.h; sourceTree = "<group>"; };
 		12D15FCD17CE0044003D9024 /* TriggerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
@@ -774,12 +782,15 @@
 				125450A717BF861C00EF23B7 /* Trigger.cpp */,
 				125450A817BF861C00EF23B7 /* Trigger.h */,
 				12D15FCD17CE0044003D9024 /* TriggerSettings.h */,
+				12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */,
 				12AF89EE17C4F38A001995FC /* TriggerManager.cpp */,
 				12AF89EF17C4F38A001995FC /* TriggerManager.h */,
 				12D15FCB17CD04C7003D9024 /* TriggerRendererBase.h */,
 				1208B39F17CE1FE7005CE5E4 /* TriggerableBase.h */,
 				120C788F17D35F9C0050D25D /* TriggerableRocket.cpp */,
 				120C788E17D35EBA0050D25D /* TriggerableRocket.h */,
+				1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */,
+				1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */,
 			);
 			path = Triggers;
 			sourceTree = "<group>";
@@ -1776,6 +1787,11 @@
 				1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */,
 				12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */,
 				120C789017D35F9C0050D25D /* TriggerableRocket.cpp in Sources */,
+<<<<<<< HEAD
+=======
+				12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */,
+				1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */,
+>>>>>>> 81b0fce3404c2cbe21053e06a44141560912b095
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
