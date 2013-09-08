@@ -109,10 +109,7 @@
 		1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565717BF880400EF23B7 /* PointGrey.cpp */; };
 		1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */; };
 		12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AF89EE17C4F38A001995FC /* TriggerManager.cpp */; };
-<<<<<<< HEAD
-=======
 		12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */; };
->>>>>>> 81b0fce3404c2cbe21053e06a44141560912b095
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -248,7 +245,7 @@
 		1254508C17BF861C00EF23B7 /* Sine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sine.cpp; sourceTree = "<group>"; };
 		1254508D17BF861C00EF23B7 /* Sine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sine.h; sourceTree = "<group>"; };
 		1254509117BF861C00EF23B7 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Scene.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		1254509217BF861C00EF23B7 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Scene.h; sourceTree = "<group>"; };
+		1254509217BF861C00EF23B7 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Scene.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1254509317BF861C00EF23B7 /* SceneCalibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SceneCalibration.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1254509417BF861C00EF23B7 /* SceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = SceneManager.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1254509517BF861C00EF23B7 /* SceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneManager.h; sourceTree = "<group>"; };
@@ -1787,11 +1784,8 @@
 				1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */,
 				12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */,
 				120C789017D35F9C0050D25D /* TriggerableRocket.cpp in Sources */,
-<<<<<<< HEAD
-=======
 				12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */,
 				1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */,
->>>>>>> 81b0fce3404c2cbe21053e06a44141560912b095
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
