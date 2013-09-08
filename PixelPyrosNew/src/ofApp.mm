@@ -5,7 +5,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	
+	ofSetWindowShape(1536, 1024);
 	ofSetDataPathRoot("data/");
 		
 	useFbo = true;
