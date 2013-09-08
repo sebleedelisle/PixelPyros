@@ -7,7 +7,8 @@
 //
 
 #pragma once
-class Trigger;
+//class Trigger;
+#include "ofMain.h"
 
 class TriggerRendererBase {
 
