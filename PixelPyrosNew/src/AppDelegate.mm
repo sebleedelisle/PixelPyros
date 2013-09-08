@@ -8,7 +8,7 @@
 	
 	//simple way...
 	ofxNSWindower::instance()->addWindow(new ofApp());
-	
+    ofxNSWindower::instance()->addWindow(new testApp());
 	
 	
 	//detailed way...
