@@ -6,6 +6,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	
+	ofSetDataPathRoot("data/");
+		
 	useFbo = true;
 	fboWarper1.label = "leftScreen";
 	fboWarper2.label = "rightScreen";
