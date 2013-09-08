@@ -6,6 +6,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetWindowShape(1536, 1024);
+    ofSetWindowTitle("PixelPyros Main");
 	ofSetDataPathRoot("data/");
 		
 	useFbo = true;
@@ -244,7 +245,7 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
-	//bool shiftPressed = (glutGetModifiers() & GLUT_ACTIVE_SHIFT);
+    //bool shiftPressed = (glutGetModifiers() & GLUT_ACTIVE_SHIFT);
 	if(key == OF_KEY_SHIFT) shiftPressed = true;
 	
 	if(key=='w') {
@@ -255,7 +256,9 @@ void ofApp::keyPressed(int key){
 		fboWarper1.visible = !fboWarper1.visible;
 	} else if (key=='2') {
 		fboWarper2.visible = !fboWarper2.visible;
-	}
+	} else if (key=='f') {
+        getParent()->toggleFullscreen();
+    }
 
 	//if(!cameraManager.warper.guiVisible) {
 			
