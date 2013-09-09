@@ -118,6 +118,10 @@
 		9E3379A417D93A6A00EDDB96 /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E33799317D93A6A00EDDB96 /* ofxOscParameterSync.cpp */; };
 		9E3379A517D93A6A00EDDB96 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E33799517D93A6A00EDDB96 /* ofxOscReceiver.cpp */; };
 		9E3379A617D93A6A00EDDB96 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E33799717D93A6A00EDDB96 /* ofxOscSender.cpp */; };
+		9E8EA8B217DDF18C00D5E415 /* ofxNSWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EA86117DDF18C00D5E415 /* ofxNSWindow.mm */; };
+		9E8EA8B317DDF18C00D5E415 /* ofxNSWindower.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EA86417DDF18C00D5E415 /* ofxNSWindower.mm */; };
+		9E8EA8B417DDF18C00D5E415 /* OpenGLContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EA86617DDF18C00D5E415 /* OpenGLContext.mm */; };
+		9E8EA8B517DDF18C00D5E415 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9E8EA86817DDF18C00D5E415 /* OpenGLView.mm */; };
 		9EC0889017DD2FE4009D5AEE /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC0887F17DD2FE4009D5AEE /* ofxBaseGui.cpp */; };
 		9EC0889117DD2FE4009D5AEE /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC0888117DD2FE4009D5AEE /* ofxButton.cpp */; };
 		9EC0889217DD2FE4009D5AEE /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC0888417DD2FE4009D5AEE /* ofxGuiGroup.cpp */; };
@@ -144,10 +148,6 @@
 		EE672E9F1541E64D00229B52 /* controlWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672E9C1541E64D00229B52 /* controlWindow.mm */; };
 		EE672EA01541E64D00229B52 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672E9D1541E64D00229B52 /* main.mm */; };
 		EE672EE31541E8D200229B52 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE672EA11541E67F00229B52 /* MainMenu.xib */; };
-		EE672F221541EA5B00229B52 /* ofxNSWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F191541EA5B00229B52 /* ofxNSWindow.mm */; };
-		EE672F241541EA5B00229B52 /* ofxNSWindower.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F1D1541EA5B00229B52 /* ofxNSWindower.mm */; };
-		EE672F251541EA5B00229B52 /* OpenGLContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F1F1541EA5B00229B52 /* OpenGLContext.mm */; };
-		EE672F261541EA5B00229B52 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = EE672F211541EA5B00229B52 /* OpenGLView.mm */; };
 		EEDA8938156E6A28003280BD /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEDA8937156E6A28003280BD /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
 
@@ -549,6 +549,15 @@
 		9E33799617D93A6A00EDDB96 /* ofxOscReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscReceiver.h; sourceTree = "<group>"; };
 		9E33799717D93A6A00EDDB96 /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		9E33799817D93A6A00EDDB96 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
+		9E8EA86017DDF18C00D5E415 /* ofxNSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNSWindow.h; sourceTree = "<group>"; };
+		9E8EA86117DDF18C00D5E415 /* ofxNSWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxNSWindow.mm; sourceTree = "<group>"; };
+		9E8EA86217DDF18C00D5E415 /* ofxNSWindowApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNSWindowApp.h; sourceTree = "<group>"; };
+		9E8EA86317DDF18C00D5E415 /* ofxNSWindower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNSWindower.h; sourceTree = "<group>"; };
+		9E8EA86417DDF18C00D5E415 /* ofxNSWindower.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxNSWindower.mm; sourceTree = "<group>"; };
+		9E8EA86517DDF18C00D5E415 /* OpenGLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLContext.h; sourceTree = "<group>"; };
+		9E8EA86617DDF18C00D5E415 /* OpenGLContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLContext.mm; sourceTree = "<group>"; };
+		9E8EA86717DDF18C00D5E415 /* OpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView.h; sourceTree = "<group>"; };
+		9E8EA86817DDF18C00D5E415 /* OpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLView.mm; sourceTree = "<group>"; };
 		9EC0887F17DD2FE4009D5AEE /* ofxBaseGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
 		9EC0888017DD2FE4009D5AEE /* ofxBaseGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBaseGui.h; sourceTree = "<group>"; };
 		9EC0888117DD2FE4009D5AEE /* ofxButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxButton.cpp; sourceTree = "<group>"; };
@@ -588,15 +597,6 @@
 		EE672E9C1541E64D00229B52 /* controlWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = controlWindow.mm; sourceTree = "<group>"; };
 		EE672E9D1541E64D00229B52 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		EE672EA11541E67F00229B52 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = resources/MainMenu.xib; sourceTree = "<group>"; };
-		EE672F181541EA5B00229B52 /* ofxNSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNSWindow.h; path = ../../../addons/ofxNSWindower/src/ofxNSWindow.h; sourceTree = SOURCE_ROOT; };
-		EE672F191541EA5B00229B52 /* ofxNSWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ofxNSWindow.mm; path = ../../../addons/ofxNSWindower/src/ofxNSWindow.mm; sourceTree = SOURCE_ROOT; };
-		EE672F1A1541EA5B00229B52 /* ofxNSWindowApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNSWindowApp.h; path = ../../../addons/ofxNSWindower/src/ofxNSWindowApp.h; sourceTree = SOURCE_ROOT; };
-		EE672F1C1541EA5B00229B52 /* ofxNSWindower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNSWindower.h; path = ../../../addons/ofxNSWindower/src/ofxNSWindower.h; sourceTree = SOURCE_ROOT; };
-		EE672F1D1541EA5B00229B52 /* ofxNSWindower.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ofxNSWindower.mm; path = ../../../addons/ofxNSWindower/src/ofxNSWindower.mm; sourceTree = SOURCE_ROOT; };
-		EE672F1E1541EA5B00229B52 /* OpenGLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLContext.h; path = ../../../addons/ofxNSWindower/src/OpenGLContext.h; sourceTree = SOURCE_ROOT; };
-		EE672F1F1541EA5B00229B52 /* OpenGLContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OpenGLContext.mm; path = ../../../addons/ofxNSWindower/src/OpenGLContext.mm; sourceTree = SOURCE_ROOT; };
-		EE672F201541EA5B00229B52 /* OpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGLView.h; path = ../../../addons/ofxNSWindower/src/OpenGLView.h; sourceTree = SOURCE_ROOT; };
-		EE672F211541EA5B00229B52 /* OpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OpenGLView.mm; path = ../../../addons/ofxNSWindower/src/OpenGLView.mm; sourceTree = SOURCE_ROOT; };
 		EEDA8937156E6A28003280BD /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -1541,6 +1541,31 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		9E8EA7D417DDF18B00D5E415 /* ofxNSWindower */ = {
+			isa = PBXGroup;
+			children = (
+				9E8EA85F17DDF18C00D5E415 /* src */,
+			);
+			name = ofxNSWindower;
+			path = ../addons/ofxNSWindower;
+			sourceTree = "<group>";
+		};
+		9E8EA85F17DDF18C00D5E415 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9E8EA86017DDF18C00D5E415 /* ofxNSWindow.h */,
+				9E8EA86117DDF18C00D5E415 /* ofxNSWindow.mm */,
+				9E8EA86217DDF18C00D5E415 /* ofxNSWindowApp.h */,
+				9E8EA86317DDF18C00D5E415 /* ofxNSWindower.h */,
+				9E8EA86417DDF18C00D5E415 /* ofxNSWindower.mm */,
+				9E8EA86517DDF18C00D5E415 /* OpenGLContext.h */,
+				9E8EA86617DDF18C00D5E415 /* OpenGLContext.mm */,
+				9E8EA86717DDF18C00D5E415 /* OpenGLView.h */,
+				9E8EA86817DDF18C00D5E415 /* OpenGLView.mm */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		9EC0887D17DD2FE4009D5AEE /* ofxGui */ = {
 			isa = PBXGroup;
 			children = (
@@ -1577,6 +1602,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				9E8EA7D417DDF18B00D5E415 /* ofxNSWindower */,
 				9EC0887D17DD2FE4009D5AEE /* ofxGui */,
 				9E33796E17D93A6A00EDDB96 /* ofxOsc */,
 				9E33796117D936D700EDDB96 /* ofxXmlSettings */,
@@ -1584,7 +1610,6 @@
 				9E33727317D92AC500EDDB96 /* ofxControlPanel */,
 				9E3372B217D92AC500EDDB96 /* ofxCv */,
 				9E33756C17D92ACB00EDDB96 /* ofxLibdc */,
-				EE672EB61541E6F500229B52 /* ofxNSWindower */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -1675,22 +1700,6 @@
 				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
 			);
 			name = openFrameworks;
-			sourceTree = "<group>";
-		};
-		EE672EB61541E6F500229B52 /* ofxNSWindower */ = {
-			isa = PBXGroup;
-			children = (
-				EE672F181541EA5B00229B52 /* ofxNSWindow.h */,
-				EE672F191541EA5B00229B52 /* ofxNSWindow.mm */,
-				EE672F1A1541EA5B00229B52 /* ofxNSWindowApp.h */,
-				EE672F1C1541EA5B00229B52 /* ofxNSWindower.h */,
-				EE672F1D1541EA5B00229B52 /* ofxNSWindower.mm */,
-				EE672F1E1541EA5B00229B52 /* OpenGLContext.h */,
-				EE672F1F1541EA5B00229B52 /* OpenGLContext.mm */,
-				EE672F201541EA5B00229B52 /* OpenGLView.h */,
-				EE672F211541EA5B00229B52 /* OpenGLView.mm */,
-			);
-			name = ofxNSWindower;
 			sourceTree = "<group>";
 		};
 		EE672F011541E9AD00229B52 /* resources */ = {
@@ -1806,10 +1815,6 @@
 			files = (
 				EE672E9F1541E64D00229B52 /* controlWindow.mm in Sources */,
 				EE672EA01541E64D00229B52 /* main.mm in Sources */,
-				EE672F221541EA5B00229B52 /* ofxNSWindow.mm in Sources */,
-				EE672F241541EA5B00229B52 /* ofxNSWindower.mm in Sources */,
-				EE672F251541EA5B00229B52 /* OpenGLContext.mm in Sources */,
-				EE672F261541EA5B00229B52 /* OpenGLView.mm in Sources */,
 				9E3371DE17D9210D00EDDB96 /* AppDelegate.mm in Sources */,
 				9E3371DF17D9210D00EDDB96 /* SceneIntro.cpp in Sources */,
 				9E3371E117D9210D00EDDB96 /* SceneSlideshow.cpp in Sources */,
@@ -1920,6 +1925,10 @@
 				9EC0889517DD2FE4009D5AEE /* ofxSlider.cpp in Sources */,
 				9EC0889617DD2FE4009D5AEE /* ofxSliderGroup.cpp in Sources */,
 				9EC0889717DD2FE4009D5AEE /* ofxToggle.cpp in Sources */,
+				9E8EA8B217DDF18C00D5E415 /* ofxNSWindow.mm in Sources */,
+				9E8EA8B317DDF18C00D5E415 /* ofxNSWindower.mm in Sources */,
+				9E8EA8B417DDF18C00D5E415 /* OpenGLContext.mm in Sources */,
+				9E8EA8B517DDF18C00D5E415 /* OpenGLView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
