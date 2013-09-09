@@ -9,7 +9,7 @@
 #include "TriggerRechargeSettings.h"
 
 
-TriggerRechargeSettings* TriggerRechargeSettings::defaultSettings = new TriggerRechargeSettings();
+//TriggerRechargeSettings* TriggerRechargeSettings::defaultSettings = new TriggerRechargeSettings();
 
 
 TriggerRechargeSettings::TriggerRechargeSettings() {
@@ -23,3 +23,5 @@ TriggerRechargeSettings::TriggerRechargeSettings() {
 	restoreSpeed = 1;
 
 }
+
+//TriggerRechargeSettings::defaultSettings->motionTriggerLevel = 1;

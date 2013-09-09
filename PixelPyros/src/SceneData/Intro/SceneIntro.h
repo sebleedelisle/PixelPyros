@@ -16,6 +16,7 @@
 #include "ParticleRendererLine.h"
 #include "RocketSettings.h"
 #include "TextWriter.h"
+#include "FireworkFactory.h"
 
 class SceneIntro : public Scene{
 	
