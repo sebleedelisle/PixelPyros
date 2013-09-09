@@ -5,8 +5,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	
-	ofSetDataPathRoot("data/");
+	ofSetWindowShape(1536, 1024);
+    ofSetWindowTitle("PixelPyros Main");
+	//ofSetDataPathRoot("data/");
 		
 	useFbo = true;
 	fboWarper1.label = "leftScreen";
@@ -244,7 +245,7 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
-	//bool shiftPressed = (glutGetModifiers() & GLUT_ACTIVE_SHIFT);
+    //bool shiftPressed = (glutGetModifiers() & GLUT_ACTIVE_SHIFT);
 	if(key == OF_KEY_SHIFT) shiftPressed = true;
 	
 	if(key=='w') {
@@ -255,16 +256,20 @@ void ofApp::keyPressed(int key){
 		fboWarper1.visible = !fboWarper1.visible;
 	} else if (key=='2') {
 		fboWarper2.visible = !fboWarper2.visible;
-	}
+	} else if (key=='f') {
+        getParent()->toggleFullscreen();
+    }
 
+    ofLog(OF_LOG_NOTICE, "%d %d %d", key, OF_KEY_SHIFT, OF_KEY_MODIFIER);
+    
 	//if(!cameraManager.warper.guiVisible) {
 			
-		if(key==OF_KEY_LEFT) {
+		if(key==KEY_LEFT_ARROW) {
 			if(shiftPressed)
 				sceneManager.prevScene();
 			else
 				sceneManager.previousArrangement();
-		} else if(key==OF_KEY_RIGHT) {
+		} else if(key==KEY_RIGHT_ARROW) {
 			if(shiftPressed)
 				sceneManager.nextScene();
 			else
