@@ -20,15 +20,11 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm) : Scene(s
 	TriggerPattern blank;
 	addTriggerPattern(blank);
 	
-	
-	
 	TriggerPattern pattern;
 	pattern.addTriggerSettings(getFountain(180,0));
 	pattern.addTriggerSettings(TriggerSettings::blank);
 	addTriggerPattern(pattern);
-	
-	
-	
+		
 	TriggerPattern multiColourFountains;
 	
 	float colours [10] = {0, 30, 60, 90, 120, 150,180,210,240 };
@@ -46,8 +42,6 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm) : Scene(s
 	
 	addTriggerPattern(multiColourFountains);
 			
-	
-	
 	TriggerPattern patternFountain;
 	patternFountain.addTriggerSettings(getFountain(180,0));
 	patternFountain.addTriggerSettings(TriggerSettings::blank);
@@ -55,7 +49,9 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm) : Scene(s
 	patternFountain.addTriggerSettings(TriggerSettings::blank);
 	addTriggerPattern(patternFountain);
 	
-
+	
+	
+	
 	texts.push_back("Welcome to PixelPyros");
 	texts.push_back("The fireworks display that you control");
 	texts.push_back("Move your hand across the orbs of light to trigger fireworks");
@@ -68,8 +64,6 @@ SceneIntro :: SceneIntro(string scenename, ParticleSystemManager& psm) : Scene(s
 	showText = true;
 	currentText = 0;
 	timePerText = 10;
-	
-	
 	
 }
 

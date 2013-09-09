@@ -29,7 +29,7 @@ Trigger :: Trigger(){
 	// SETTINGS :
 	// get defaults from the default TriggerSettings object
 	copySettings(TriggerSettings::blank);
-	rechargeSettings = TriggerRechargeSettings::defaultSettings;
+	//rechargeSettings = TriggerRechargeSettings::defaultSettings;
 	
 	motionValueCount = 20;
 	showDebugData = true;
@@ -199,7 +199,7 @@ void Trigger :: draw() {
 	c.setHue(settings.hue);
 
 	if(settings.renderer!=NULL) settings.renderer->draw(elapsedTime, pos, radius, c, unitPower, active);
-	else ofLog(OF_LOG_WARNING, "No renderer for trigger");
+	//else ofLog(OF_LOG_WARNING, "No renderer for trigger");
 	
 	//ofDrawBitmapString(ofToString(motionLevel), pos);
 
@@ -387,7 +387,11 @@ bool Trigger::doTrigger() {
 void Trigger::copySettings(const TriggerSettings& newsettings) {
 	
 	settings = newsettings;
-	
+	//if(newsettings.rechargeSettings==NULL)
+	//	rechargeSettings = TriggerRechargeSettings::defaultSettings;
+	//else
+		rechargeSettings = newsettings.rechargeSettings;
+		
 	/*
 	motionTriggerLevel = settings.motionTriggerLevel;
 	triggerPower = settings.triggerPower;

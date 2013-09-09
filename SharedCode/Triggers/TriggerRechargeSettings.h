@@ -12,7 +12,8 @@ class TriggerRechargeSettings {
 
 	public:
 	
-	static TriggerRechargeSettings* defaultSettings;
+	//static TriggerRechargeSettings* defaultSettings = new TriggerRechargeSettings();
+
 	
 	TriggerRechargeSettings();
 	

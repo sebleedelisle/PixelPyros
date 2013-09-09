@@ -9,24 +9,20 @@
 #include "TriggerSettings.h"
 #include "TriggerRechargeSettings.h"
 
+TriggerRechargeSettings* TriggerSettings::defaultRechargeSettings = new TriggerRechargeSettings();
+
 TriggerRendererBase * TriggerSettings::defaultRenderer = new TriggerRendererBase();
 TriggerSettings TriggerSettings::blank;
-
-//: TriggerSettings::blank.setTriggerable(NULL);
-
-//TriggerSettings::blank.setRenderer(NULL);
 
 
 TriggerSettings::TriggerSettings() {
 	
-	// default settings :
+	// default settings : TODO - where should this be? 
 	TriggerSettings::blank.setTriggerable(NULL);
 	TriggerSettings::blank.setRenderer(NULL);
-	
-	//rechargeSettings = TriggerRechargeSettings::defaultSettings;
-	
-	
 
+	rechargeSettings = TriggerSettings::defaultRechargeSettings;
+	
 	hue = 0;
 	saturation = 0;
 	renderer = TriggerSettings::defaultRenderer;
@@ -40,3 +36,4 @@ void TriggerSettings::setTriggerable(TriggerableBase * newtriggerable) {
 void TriggerSettings::setRenderer(TriggerRendererBase * newrenderer) {
 	renderer = newrenderer;
 }
+

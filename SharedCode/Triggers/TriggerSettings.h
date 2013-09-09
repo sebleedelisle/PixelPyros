@@ -18,7 +18,8 @@ class TriggerSettings {
 	public:
 	
 	static TriggerRendererBase * defaultRenderer;
-	static TriggerSettings blank; 
+	static TriggerSettings blank;
+	static TriggerRechargeSettings* defaultRechargeSettings;
 	
 	TriggerSettings();
 	void setTriggerable(TriggerableBase * newtriggerable);
@@ -29,7 +30,7 @@ class TriggerSettings {
 	float hue;
 	float saturation;
 	
-	//TriggerRechargeSettings* rechargeSettings;
+	TriggerRechargeSettings* rechargeSettings;
 	
 	TriggerRendererBase * renderer; 
 	TriggerableBase * triggerable;
