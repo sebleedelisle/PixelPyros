@@ -18,4 +18,4 @@
 	url = git@github.com:underdoeg/ofxFenster.git
 [submodule "addons/ofxNSWindower"]
 	path = addons/ofxNSWindower
-	url = git@github.com:whg/ofxNSWindower.git
+	url = git@github.com:paulhayes/ofxNSWindower.git

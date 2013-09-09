@@ -35,9 +35,8 @@ void controlWindow::update() {
 
 void controlWindow::draw() {
 
-	ofBackground(0, 125, 200);
-	
-	ofSetHexColor(0xffffff);
+	ofBackground(0, 0, 0);
+	//ofSetHexColor(0xffffff);
 	ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
     
     gui.draw();

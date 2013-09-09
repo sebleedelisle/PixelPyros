@@ -7,7 +7,7 @@
 void ofApp::setup(){
 	ofSetWindowShape(1536, 1024);
     ofSetWindowTitle("PixelPyros Main");
-	ofSetDataPathRoot("data/");
+	//ofSetDataPathRoot("data/");
 		
 	useFbo = true;
 	fboWarper1.label = "leftScreen";
@@ -260,14 +260,16 @@ void ofApp::keyPressed(int key){
         getParent()->toggleFullscreen();
     }
 
+    ofLog(OF_LOG_NOTICE, "%d %d %d", key, OF_KEY_SHIFT, OF_KEY_MODIFIER);
+    
 	//if(!cameraManager.warper.guiVisible) {
 			
-		if(key==OF_KEY_LEFT) {
+		if(key==KEY_LEFT_ARROW) {
 			if(shiftPressed)
 				sceneManager.prevScene();
 			else
 				sceneManager.previousArrangement();
-		} else if(key==OF_KEY_RIGHT) {
+		} else if(key==KEY_RIGHT_ARROW) {
 			if(shiftPressed)
 				sceneManager.nextScene();
 			else
