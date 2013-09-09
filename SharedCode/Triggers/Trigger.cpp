@@ -199,7 +199,7 @@ void Trigger :: draw() {
 	c.setHue(settings.hue);
 
 	if(settings.renderer!=NULL) settings.renderer->draw(elapsedTime, pos, radius, c, unitPower, active);
-	else ofLog(OF_LOG_WARNING, "No renderer for trigger");
+	//else ofLog(OF_LOG_WARNING, "No renderer for trigger");
 	
 	//ofDrawBitmapString(ofToString(motionLevel), pos);
 
