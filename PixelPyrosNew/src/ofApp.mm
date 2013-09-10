@@ -246,6 +246,7 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     
     //bool shiftPressed = (glutGetModifiers() & GLUT_ACTIVE_SHIFT);
+
 	if(key == OF_KEY_SHIFT) shiftPressed = true;
 	
 	if(key=='w') {
