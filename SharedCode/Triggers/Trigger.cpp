@@ -198,7 +198,7 @@ void Trigger :: draw() {
 	c.setSaturation(settings->saturation);
 	c.setHue(settings->hue);
 
-	if(settings->renderer!=NULL) settings->renderer->draw(elapsedTime, pos, radius, c, unitPower, active);
+	if(settings!=NULL) settings->draw(elapsedTime, pos, radius, c, unitPower, active);
 	//else ofLog(OF_LOG_WARNING, "No renderer for trigger");
 	
 	//ofDrawBitmapString(ofToString(motionLevel), pos);
@@ -376,8 +376,8 @@ void Trigger :: registerMotion(float unitValue) {
 }
 
 bool Trigger::doTrigger() {
-	if(settings->triggerable!=NULL) {
-		settings->triggerable->doTrigger(pos);
+	if(settings!=NULL) {
+		settings->doTrigger(pos);
 		
 	}
 	return true;//!disabled;
@@ -414,5 +414,5 @@ void Trigger::copySettings(TriggerSettings* newsettings) {
 	*/
 	
 	
-}
+};
 

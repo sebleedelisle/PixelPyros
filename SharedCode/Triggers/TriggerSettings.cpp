@@ -11,11 +11,8 @@
 
 TriggerRechargeSettings* TriggerSettings::defaultRechargeSettings = new TriggerRechargeSettings();
 
-TriggerRendererBase * TriggerSettings::defaultRenderer = new TriggerRendererBase();
-TriggerSettings* TriggerSettings::blank = new TriggerSettings();
-//TriggerSettings::blank->setTriggerable(NULL);
-//TriggerSettings::blank->setRenderer(NULL);
 
+TriggerSettings* TriggerSettings::blank = new TriggerSettings();
 
 TriggerSettings::TriggerSettings() {
 	
@@ -26,15 +23,32 @@ TriggerSettings::TriggerSettings() {
 	
 	hue = 0;
 	saturation = 0;
-	renderer = TriggerSettings::defaultRenderer;
-	triggerable = NULL;
+
 	
 }
 
-void TriggerSettings::setTriggerable(TriggerableBase * newtriggerable) {
-	triggerable = newtriggerable;
-}
-void TriggerSettings::setRenderer(TriggerRendererBase * newrenderer) {
-	renderer = newrenderer;
-}
+void TriggerSettings::doTrigger(ofVec3f& pos) {
+	doTrigger(pos, 1,0);
+};
 
+void TriggerSettings::doTrigger(ofVec3f& pos, float power) {
+	doTrigger(pos, power, 0);
+};
+
+void TriggerSettings::doTrigger(ofVec3f& pos, float power, float direction) {
+	ofLog(OF_LOG_WARNING, "triggered");
+};
+
+
+void TriggerSettings::draw(float elapsedtime, ofVec3f pos, float radius, ofColor colour, float unitPower, bool active ) {
+	
+	ofPushStyle();
+	ofNoFill();
+	
+	ofSetColor(colour);
+	if(!active) ofSetColor(ofColor::gray);
+	
+	ofCircle(pos, radius);
+	ofPopStyle();
+	
+}

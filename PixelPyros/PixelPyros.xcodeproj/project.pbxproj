@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		120C789017D35F9C0050D25D /* TriggerableRocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 120C788F17D35F9C0050D25D /* TriggerableRocket.cpp */; };
+		120C789017D35F9C0050D25D /* TriggerSettingsRocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 120C788F17D35F9C0050D25D /* TriggerSettingsRocket.cpp */; };
 		1254503A17BF860500EF23B7 /* SceneIntro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254501D17BF860500EF23B7 /* SceneIntro.cpp */; };
 		1254503C17BF860500EF23B7 /* SceneSlideshow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254502117BF860500EF23B7 /* SceneSlideshow.cpp */; };
 		125450AB17BF861C00EF23B7 /* CameraFirewire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254504517BF861C00EF23B7 /* CameraFirewire.cpp */; };
@@ -167,9 +167,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1208B39F17CE1FE7005CE5E4 /* TriggerableBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerableBase.h; sourceTree = "<group>"; };
-		120C788E17D35EBA0050D25D /* TriggerableRocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerableRocket.h; sourceTree = "<group>"; };
-		120C788F17D35F9C0050D25D /* TriggerableRocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerableRocket.cpp; sourceTree = "<group>"; };
+		120C788E17D35EBA0050D25D /* TriggerSettingsRocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsRocket.h; sourceTree = "<group>"; };
+		120C788F17D35F9C0050D25D /* TriggerSettingsRocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettingsRocket.cpp; sourceTree = "<group>"; };
 		1254501917BF860500EF23B7 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		1254501A17BF860500EF23B7 /* PyrosRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PyrosRenderer.h; sourceTree = "<group>"; };
 		1254501D17BF860500EF23B7 /* SceneIntro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = SceneIntro.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -535,7 +534,6 @@
 		12AF89EE17C4F38A001995FC /* TriggerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerManager.cpp; sourceTree = "<group>"; };
 		12AF89EF17C4F38A001995FC /* TriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerManager.h; sourceTree = "<group>"; };
 		12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettings.cpp; sourceTree = "<group>"; };
-		12D15FCB17CD04C7003D9024 /* TriggerRendererBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRendererBase.h; sourceTree = "<group>"; };
 		12D15FCD17CE0044003D9024 /* TriggerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
 		12DBC7B417DDDD280041FA5C /* FireworkFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireworkFactory.cpp; sourceTree = "<group>"; };
 		12DBC7B517DDDD280041FA5C /* FireworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireworkFactory.h; sourceTree = "<group>"; };
@@ -795,10 +793,8 @@
 				12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */,
 				12AF89EE17C4F38A001995FC /* TriggerManager.cpp */,
 				12AF89EF17C4F38A001995FC /* TriggerManager.h */,
-				12D15FCB17CD04C7003D9024 /* TriggerRendererBase.h */,
-				1208B39F17CE1FE7005CE5E4 /* TriggerableBase.h */,
-				120C788F17D35F9C0050D25D /* TriggerableRocket.cpp */,
-				120C788E17D35EBA0050D25D /* TriggerableRocket.h */,
+				120C788F17D35F9C0050D25D /* TriggerSettingsRocket.cpp */,
+				120C788E17D35EBA0050D25D /* TriggerSettingsRocket.h */,
 				1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */,
 				1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */,
 			);
@@ -1807,7 +1803,7 @@
 				1254565E17BF880400EF23B7 /* Grabber.cpp in Sources */,
 				1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */,
 				12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */,
-				120C789017D35F9C0050D25D /* TriggerableRocket.cpp in Sources */,
+				120C789017D35F9C0050D25D /* TriggerSettingsRocket.cpp in Sources */,
 				12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */,
 				1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */,
 				12DBC7B617DDDD280041FA5C /* FireworkFactory.cpp in Sources */,

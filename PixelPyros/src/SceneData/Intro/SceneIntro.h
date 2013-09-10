@@ -9,7 +9,7 @@
 
 #include "Scene.h"
 
-#include "TriggerableRocket.h"
+#include "TriggerSettingsRocket.h"
 #include "ParticleRendererShape.h"
 #include "ParticleRendererLowRes.h"
 #include "ParticleRendererBitmap.h"
@@ -20,27 +20,22 @@
 
 class SceneIntro : public Scene{
 	
-	
-	
-	
 	public :
 	
 	SceneIntro (string scenename) ;
-	
-	
+
 	virtual bool update(float deltaTime); 
 	virtual bool draw();
 	virtual void start();
 	
 	ParticleSystemSettings getLineExplosionParticles(float hue = 20, float hueChange = -5);
-	
-	
+
 	ParticleSystemSettings getSmoke();
 	
 	ofImage softWhiteImage;
 	ofImage bangerFlashImage;
 
-	ofSoundPlayer music; 
+	ofSoundPlayer music;
 	
 	bool showText;
 	
@@ -52,8 +47,5 @@ class SceneIntro : public Scene{
 	float timePerText;
 	float lastChangeTime;
 	float elapsedTime;
-	
-	
-	
 	
 };

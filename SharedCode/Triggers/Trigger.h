@@ -4,7 +4,7 @@
 #include "ofMain.h"
 #include "TriggerSettings.h"
 #include "TriggerRechargeSettings.h"
-#include "TriggerRendererBase.h"
+
 
 class Trigger {
 	

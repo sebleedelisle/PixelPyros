@@ -10,7 +10,7 @@
 
 #include "Trigger.h"
 #include "TriggerSettings.h"
-#include "TriggerableRocket.h"
+#include "TriggerSettingsRocket.h"
 
 class TriggerPattern  {
 
@@ -40,18 +40,18 @@ class TriggerPattern  {
 		triggers.push_back(trigger);
 	}
 	
-	TriggerableRocket* addRocketTrigger(RocketSettings rocketSettings) {
+	TriggerSettingsRocket* addRocketTrigger(RocketSettings* rocketSettings) {
 		
-		TriggerSettings* ts = new TriggerSettings();
+		TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 		// TODO - THIS IS BAD - should store these pointers somewhere and clear
 		// them later.
 		
-		TriggerableRocket* tr = new TriggerableRocket();
-		tr->rocketSettings = rocketSettings;
-		ts->setTriggerable(tr);
+		//TriggerableRocket* tr = new TriggerableRocket();
+		ts->rocketSettings = rocketSettings;
+		
 		addTriggerSettings(ts);
 		
-		return tr; 
+		return ts;
 	}
 
 	vector <TriggerSettings*> triggers;

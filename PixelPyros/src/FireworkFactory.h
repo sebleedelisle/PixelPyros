@@ -10,7 +10,7 @@
 
 #include "ofMain.h"
 #include "TriggerSettings.h"
-#include "TriggerableRocket.h"
+#include "TriggerSettingsRocket.h"
 #include "ParticleSystemSettings.h"
 #include "ParticleRendererBitmap.h"
 
@@ -26,8 +26,8 @@ class FireworkFactory {
 	FireworkFactory();
 
 	
-	RocketSettings getBasicRocket(float hue = 20, float hueChange = -5);
-	RocketSettings getFountain(float hueStartOffset = 150, float hueChange = 0);
+	TriggerSettingsRocket* getBasicRocket(float hue = 20, float hueChange = -5);
+	TriggerSettingsRocket* getFountain(float hueStartOffset = 150, float hueChange = 0);
 
 
 	ParticleSystemSettings getFlowerTrailParticles(float hue = 20, float hueChange = -5);

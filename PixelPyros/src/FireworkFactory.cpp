@@ -29,11 +29,11 @@ FireworkFactory :: FireworkFactory() {
 }
 
 
-RocketSettings FireworkFactory::getBasicRocket(float hue , float hueChange ){
+TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChange ){
 	
 	ParticleSystemManager& particleSystemManager = *ParticleSystemManager::instance();
 	
-	RocketSettings rocketSettings;
+	RocketSettings& rocketSettings = *new RocketSettings();
 	
 	rocketSettings.startSpeedMin = 600;
 	rocketSettings.startSpeedMax = 800;
@@ -55,9 +55,13 @@ RocketSettings FireworkFactory::getBasicRocket(float hue , float hueChange ){
 	rocketSettings.addParticleSystemSetting(explosion);
 	//rocketSettings.addParticleSystemSetting(explosionLines);
 	
-		
-	return rocketSettings;
 	
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	ts->rocketSettings = &rocketSettings;
+	
+	return ts;
+	
+
 	
 	
 }
@@ -153,7 +157,7 @@ ParticleSystemSettings FireworkFactory :: getFlowerExplosionParticles(float hue,
 	
 }
 
-RocketSettings FireworkFactory :: getFountain(float hueStartOffset , float hueChange){
+TriggerSettingsRocket* FireworkFactory :: getFountain(float hueStartOffset , float hueChange){
 	
 	
 	
@@ -286,7 +290,7 @@ RocketSettings FireworkFactory :: getFountain(float hueStartOffset , float hueCh
 	//ps2.velocityModifierSettings = new VelocityModifierSettings(200,300);
 	
 	
-	RocketSettings rocketSettings;
+	RocketSettings& rocketSettings = *new RocketSettings();
 	rocketSettings.startSpeedMin = 1000;
 	rocketSettings.startSpeedMax = 1500;
 	rocketSettings.direction = -90;
@@ -300,11 +304,10 @@ RocketSettings FireworkFactory :: getFountain(float hueStartOffset , float hueCh
 	rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(ps2);
 	
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	ts->rocketSettings = &rocketSettings;
 	
-	
-	
-	
-	return rocketSettings;
+	return ts;
 	
 	
 	

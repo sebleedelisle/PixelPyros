@@ -8,38 +8,35 @@
 
 #pragma once
 
-#include "TriggerRendererBase.h"
-#include "TriggerableBase.h"
 #include "TriggerRechargeSettings.h"
-
+#include "ofMain.h"
 
 class TriggerSettings {
 
 	public:
 	
-	static TriggerRendererBase* defaultRenderer;
 	static TriggerSettings* blank;
 	static TriggerRechargeSettings* defaultRechargeSettings;
 	
 	TriggerSettings();
-	void setTriggerable(TriggerableBase * newtriggerable);
-	void setRenderer(TriggerRendererBase * newrenderer);
 	
 	//ofColor colour;
 	float hue;
 	float saturation;
+	float elapsedTime;
+	
 	
 	TriggerRechargeSettings* rechargeSettings;
 	
-	TriggerRendererBase * renderer; 
-	TriggerableBase * triggerable;
+	virtual void doTrigger(ofVec3f& pos);
 	
-	// TODO ADDITIONAL STUFF FOR TRIGGER SETTINGS
-	// rotating triggers
-	// one shot / rechargeable
+	virtual void doTrigger(ofVec3f& pos, float power);
 	
+	virtual void doTrigger(ofVec3f& pos, float power, float direction);
+
 	
+	virtual void draw(float elapsedtime, ofVec3f pos, float radius, ofColor colour, float unitPower, bool active);
+
+
+
 };
-
-
-
