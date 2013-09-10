@@ -147,7 +147,7 @@ void ofApp::update(){
 		
 		triggerManager.update(deltaTime);
 	    sceneManager.update(deltaTime);
-        //particleSystemManager.update(deltaTime);
+        particleSystemManager.update(deltaTime);
     }
 }
 

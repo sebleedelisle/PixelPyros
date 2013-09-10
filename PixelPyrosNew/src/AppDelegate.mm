@@ -6,8 +6,8 @@
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification {
 	
-	//simple way...
-    ofxNSWindower::instance();
+    //force construction of singleton prior to creation of ofApp
+	ofxNSWindower::instance();
     
     ofApp* app = new ofApp();
 	ofxNSWindower::instance()->addWindow(app,"Pixel Pyros Main", NSTitledWindowMask, 0);
