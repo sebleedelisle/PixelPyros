@@ -14,33 +14,14 @@ class SoundPlayer {
 	
 	public :
 	
-	SoundPlayer(){
-		globalVolume = 1; 
-	};
+	static SoundPlayer* soundPlayer;
+	static SoundPlayer* instance();
 	
-	bool addSound(string filename, string reference, float vol = 1, float speed = 1, float speedVar = 0, string fileType = "aif", float retriggerMin = 0.02){
-		
-		sounds[reference] = Sound();// = (Sound);
-		Sound& newsound = sounds[reference];
-		newsound.masterVolume = vol;
-		newsound.speed = speed;
-		newsound.speedVariation = speedVar;
-		newsound.minRetriggerTime = retriggerMin;
-		
-		
-		if(!newsound.addSound(defaultPath, filename, vol,fileType)) {
-			sounds.erase(reference); 
-			
-		};
-		
-	};
+	SoundPlayer();
 	
-	bool playSound(string soundname, float volume = 1, float pan = 0){
-		
-		if(sounds.find(soundname) == sounds.end()) return false;
-		sounds[soundname].play(volume * globalVolume, pan);
-	}
-
+	bool addSound(string filename, string reference, float vol = 1, float speed = 1, float speedVar = 0, string fileType = "aif", float retriggerMin = 0.02);
+	
+	bool playSound(string soundname, float volume, float pan);
 	
 	map <string, Sound> sounds;
 	string defaultPath;
@@ -49,3 +30,4 @@ class SoundPlayer {
 	
 	
 };
+

@@ -195,10 +195,10 @@ void Trigger :: draw() {
 	if(!active) return;
 
 	ofColor c;
-	c.setSaturation(settings.saturation);
-	c.setHue(settings.hue);
+	c.setSaturation(settings->saturation);
+	c.setHue(settings->hue);
 
-	if(settings.renderer!=NULL) settings.renderer->draw(elapsedTime, pos, radius, c, unitPower, active);
+	if(settings->renderer!=NULL) settings->renderer->draw(elapsedTime, pos, radius, c, unitPower, active);
 	//else ofLog(OF_LOG_WARNING, "No renderer for trigger");
 	
 	//ofDrawBitmapString(ofToString(motionLevel), pos);
@@ -376,21 +376,21 @@ void Trigger :: registerMotion(float unitValue) {
 }
 
 bool Trigger::doTrigger() {
-	if(settings.triggerable!=NULL) {
-		settings.triggerable->doTrigger(pos);
+	if(settings->triggerable!=NULL) {
+		settings->triggerable->doTrigger(pos);
 		
 	}
 	return true;//!disabled;
 }
 
 
-void Trigger::copySettings(const TriggerSettings& newsettings) {
+void Trigger::copySettings(TriggerSettings* newsettings) {
 	
 	settings = newsettings;
 	//if(newsettings.rechargeSettings==NULL)
 	//	rechargeSettings = TriggerRechargeSettings::defaultSettings;
 	//else
-		rechargeSettings = newsettings.rechargeSettings;
+		rechargeSettings = newsettings->rechargeSettings;
 		
 	/*
 	motionTriggerLevel = settings.motionTriggerLevel;

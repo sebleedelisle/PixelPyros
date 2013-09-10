@@ -16,6 +16,10 @@ class TriggerManager {
 	
 	public :
 	
+	static TriggerManager * instance();
+	static TriggerManager * triggerManager;
+
+	
 	TriggerManager();
 	
 	bool update(float deltaTime);

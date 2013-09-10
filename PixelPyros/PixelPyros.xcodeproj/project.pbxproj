@@ -108,6 +108,9 @@
 		1254565E17BF880400EF23B7 /* Grabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565417BF880400EF23B7 /* Grabber.cpp */; };
 		1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565717BF880400EF23B7 /* PointGrey.cpp */; };
 		1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */; };
+		12A6DE3417DE1F83000D299A /* ParticleSystemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */; };
+		12A6DE3617DE640C000D299A /* SoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3517DE640C000D299A /* SoundPlayer.cpp */; };
+		12A6DE3A17DE6D57000D299A /* SceneRetro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3817DE6D57000D299A /* SceneRetro.cpp */; };
 		12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AF89EE17C4F38A001995FC /* TriggerManager.cpp */; };
 		12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */; };
 		12DBC7B617DDDD280041FA5C /* FireworkFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12DBC7B417DDDD280041FA5C /* FireworkFactory.cpp */; };
@@ -525,6 +528,10 @@
 		125FB18717CBEA3A00A1CAE6 /* TriggerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerPattern.h; sourceTree = "<group>"; };
 		1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
 		1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRechargeSettings.h; sourceTree = "<group>"; };
+		12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystemManager.cpp; sourceTree = "<group>"; };
+		12A6DE3517DE640C000D299A /* SoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundPlayer.cpp; sourceTree = "<group>"; };
+		12A6DE3817DE6D57000D299A /* SceneRetro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneRetro.cpp; sourceTree = "<group>"; };
+		12A6DE3917DE6D57000D299A /* SceneRetro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneRetro.h; sourceTree = "<group>"; };
 		12AF89EE17C4F38A001995FC /* TriggerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerManager.cpp; sourceTree = "<group>"; };
 		12AF89EF17C4F38A001995FC /* TriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerManager.h; sourceTree = "<group>"; };
 		12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettings.cpp; sourceTree = "<group>"; };
@@ -592,6 +599,7 @@
 		1254501B17BF860500EF23B7 /* SceneData */ = {
 			isa = PBXGroup;
 			children = (
+				12A6DE3717DE6D57000D299A /* Retro */,
 				1254501C17BF860500EF23B7 /* Intro */,
 				1254502B17BF860500EF23B7 /* RocketFountain.h */,
 				1254502C17BF860500EF23B7 /* SceneFountains.h */,
@@ -683,6 +691,7 @@
 				1254506317BF861C00EF23B7 /* ParticleSystem.cpp */,
 				1254506417BF861C00EF23B7 /* ParticleSystem.h */,
 				1254506517BF861C00EF23B7 /* ParticleSystemManager.h */,
+				12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */,
 				1254506617BF861C00EF23B7 /* ParticleSystemSettings.h */,
 				1254506717BF861C00EF23B7 /* PhysicsObject.h */,
 				1254506817BF861C00EF23B7 /* renderers */,
@@ -771,6 +780,7 @@
 			children = (
 				125450A017BF861C00EF23B7 /* Sound.h */,
 				125450A117BF861C00EF23B7 /* SoundPlayer.h */,
+				12A6DE3517DE640C000D299A /* SoundPlayer.cpp */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -1504,6 +1514,15 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		12A6DE3717DE6D57000D299A /* Retro */ = {
+			isa = PBXGroup;
+			children = (
+				12A6DE3817DE6D57000D299A /* SceneRetro.cpp */,
+				12A6DE3917DE6D57000D299A /* SceneRetro.h */,
+			);
+			path = Retro;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1792,6 +1811,9 @@
 				12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */,
 				1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */,
 				12DBC7B617DDDD280041FA5C /* FireworkFactory.cpp in Sources */,
+				12A6DE3417DE1F83000D299A /* ParticleSystemManager.cpp in Sources */,
+				12A6DE3617DE640C000D299A /* SoundPlayer.cpp in Sources */,
+				12A6DE3A17DE6D57000D299A /* SceneRetro.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

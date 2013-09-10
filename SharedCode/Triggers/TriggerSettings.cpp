@@ -12,15 +12,16 @@
 TriggerRechargeSettings* TriggerSettings::defaultRechargeSettings = new TriggerRechargeSettings();
 
 TriggerRendererBase * TriggerSettings::defaultRenderer = new TriggerRendererBase();
-TriggerSettings TriggerSettings::blank;
+TriggerSettings* TriggerSettings::blank = new TriggerSettings();
+//TriggerSettings::blank->setTriggerable(NULL);
+//TriggerSettings::blank->setRenderer(NULL);
 
 
 TriggerSettings::TriggerSettings() {
 	
+	
 	// default settings : TODO - where should this be? 
-	TriggerSettings::blank.setTriggerable(NULL);
-	TriggerSettings::blank.setRenderer(NULL);
-
+	
 	rechargeSettings = TriggerSettings::defaultRechargeSettings;
 	
 	hue = 0;

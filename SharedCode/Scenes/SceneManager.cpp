@@ -3,7 +3,7 @@
 #include "SceneManager.h"
 
 
-SceneManager :: SceneManager(ParticleSystemManager& psm, TriggerManager &tm) : particleSystemManager(psm), triggerManager(tm) {
+SceneManager :: SceneManager() : particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()) {
 	nextFlag = false;
 	previousFlag = false;
 

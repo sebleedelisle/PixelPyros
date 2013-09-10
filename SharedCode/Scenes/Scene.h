@@ -21,7 +21,7 @@ class Scene {
 
 	public : 
 	
-	Scene(string scenename, ParticleSystemManager& psm);
+	Scene(string scenename);
 	
 	virtual void start();
 	virtual void stop();

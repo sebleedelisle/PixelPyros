@@ -25,21 +25,13 @@ class SceneIntro : public Scene{
 	
 	public :
 	
-	SceneIntro (string scenename, ParticleSystemManager& psm) ;
+	SceneIntro (string scenename) ;
 	
 	
 	virtual bool update(float deltaTime); 
 	virtual bool draw();
 	virtual void start();
 	
-	
-	
-	TriggerSettings getBasicRocket(float hue = 20, float hueChange = -5);
-	TriggerSettings getFountain(float hueStartOffset = 150, float hueChange = 0);
-
-	
-	ParticleSystemSettings getFlowerTrailParticles(float hue = 20, float hueChange = -5);
-	ParticleSystemSettings getFlowerExplosionParticles(float hue = 20, float hueChange = -5);
 	ParticleSystemSettings getLineExplosionParticles(float hue = 20, float hueChange = -5);
 	
 	

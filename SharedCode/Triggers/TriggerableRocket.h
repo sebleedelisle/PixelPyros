@@ -17,7 +17,7 @@ class TriggerableRocket : public TriggerableBase {
 
 	public :
 	
-	TriggerableRocket(ParticleSystemManager &psm); 
+	TriggerableRocket(); 
 
 	void doTrigger(ofVec3f& pos, float power, float direction);
 	

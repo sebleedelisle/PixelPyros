@@ -249,7 +249,7 @@ class SceneSlideshow : public Scene {
 
 public:
     
-    SceneSlideshow(string scenename, ParticleSystemManager &);
+    SceneSlideshow(string scenename);
     
     virtual bool draw();
 	virtual bool update(float deltaTime);
