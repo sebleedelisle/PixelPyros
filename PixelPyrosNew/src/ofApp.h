@@ -21,10 +21,10 @@
 
 //
 //#include "SceneSpace.h"
-//#include "SceneTron.h"
+#include "SceneVectorizer.h"
 //#include "SceneLaunch.h"
 #include "SceneIntro.h"
-//#include "SceneRetro.h"
+#include "SceneRetro.h"
 //#include "SceneRealistic.h"
 #include "SceneCalibration.h"
 #include "SceneSlideshow.h"
@@ -75,7 +75,7 @@ public:
 	SoundPlayer& soundPlayer;
 	
 	ofFbo fbo; 
-	bool useFbo; 
+	bool useFbo;
 	
 	ofxAutoControlPanel gui; 
 	

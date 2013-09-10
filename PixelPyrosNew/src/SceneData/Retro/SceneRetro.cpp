@@ -65,18 +65,15 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	
 	
 	
-	/*
+	
 	TriggerPattern fatRockets;
 	float colours [4] = {170, 0, 220, 0};
 	
 	for(int i = 0; i<4; i++) {
-		TriggerRocket triggerRocketFat(mediumTriggerTemplate);
-		
-		
-		triggerRocketFat.radius = 5;
-		triggerRocketFat.addRocketSettings(getFatRocket(colours[i]));
+		TriggerSettingsRocket& triggerRocketFat = *getPixelRocket(colours[i]);
 		triggerRocketFat.hue = colours[i];
-		fatRockets.addTriggerSettings(triggerRocketFat);
+		triggerRocketFat.saturation = 255;
+		fatRockets.addTriggerSettings(&triggerRocketFat);
 		fatRockets.addTriggerSettings(); 
 	}
 	
@@ -86,8 +83,11 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	
 	
 	TriggerPattern patternRedChevrons;
-	patternRedChevrons.addTrigger(triggerFountainRed);
-	patternRedChevrons.addTrigger(triggerFountainRedHigh);
+	patternRedChevrons.addTriggerSettings(redFountainLow);
+	patternRedChevrons.addTriggerSettings();
+	patternRedChevrons.addTriggerSettings(redFountainHigh);
+	patternRedChevrons.addTriggerSettings();
+
 	addTriggerPattern(patternRedChevrons);
 
 	
@@ -96,18 +96,18 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	float colours2 [4] = {220, 180, 120, 180};
 	
 	for(int i = 0; i<4; i++) {
-		TriggerRocket triggerRocketFat(mediumTriggerTemplate);
 		
-		
-		triggerRocketFat.radius = 5;
-		triggerRocketFat.addRocketSettings(getFatRocket(colours2[i]));
+		TriggerSettingsRocket& triggerRocketFat = *getPixelRocket(colours2[i]);
 		triggerRocketFat.hue = colours2[i];
-		fatRockets2.addTrigger(triggerRocketFat, 0,0,0.75);
+		triggerRocketFat.saturation = 255;
+		fatRockets2.addTriggerSettings(&triggerRocketFat);
+		fatRockets2.addTriggerSettings();
+		
 	}
 	
 	addTriggerPattern(fatRockets2);
 
-	
+	/*
 	TriggerPattern patternCyanMix;
 	patternCyanMix.addTrigger(triggerRocketCyan);
 	patternCyanMix.addTrigger(triggerFountainCyan);
@@ -181,19 +181,18 @@ bool SceneRetro :: draw() {
 	
 }
 
-/*
-TriggerSettings* SceneRetro:: getFatRocket(float hue) {
 
-	TriggerSettings* ts = new TriggerSettings();
-	TriggerableRocket* tr = new TriggerableRocket();
+TriggerSettingsRocket* SceneRetro:: getPixelRocket(float hue) {
 
-	RocketSettings rocketSettings;
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
 	ParticleSystemSettings pss;
 	//pss.renderer = new ParticleRendererShape();
 	pss.renderer = new ParticleRendererLowRes(pixelSize,1);
 	pss.speedMin = pss.speedMax = 0;
 	pss.emitCount = 100;
-	pss.sizeStartMin = pss.sizeStartMax = pixelSize*1.5;
+	pss.sizeStartMin = pss.sizeStartMax = pixelSize*2;
 	pss.sizeChangeRatio = 0;
 	pss.saturationEnd =500;
 	pss.hueStartMin = pss.hueStartMax = hue; 
@@ -211,15 +210,16 @@ TriggerSettings* SceneRetro:: getFatRocket(float hue) {
 	rocketSettings.startSpeedMin = 1600;
 	rocketSettings.startSpeedMax= 1700;
 	rocketSettings.directionVar = 0;
-	//rocketSettings.drag = 0.98;
+	
+	rocketSettings.timeSpeed = pss.timeSpeed = 0.7;
+	
 	rocketSettings.gravity.set(0,1800);
-	tr->rocketSettings = rocketSettings;
-	ts->setTriggerable(tr);
+	ts->rocketSettings = &rocketSettings;
 	return ts;
 
 
 };
-*/
+
 TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
 	
 	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();

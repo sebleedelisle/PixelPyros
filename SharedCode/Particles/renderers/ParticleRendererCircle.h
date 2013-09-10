@@ -74,6 +74,7 @@ public:
 	ofMesh mesh;
 	
 		
-	bool fill; 
+	bool fill;
+	float lineWidth; 
 	
 };
