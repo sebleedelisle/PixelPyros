@@ -42,9 +42,9 @@ class ofApp : public ofxNSWindowApp {
 	
 public:
 	
-	ofApp(): particleSystemManager(soundPlayer), sceneManager(particleSystemManager, triggerManager) {
-		
-	};
+	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()) {
+ 		
+ 	};
 	
 	void setup();
 	void update();
@@ -62,14 +62,14 @@ public:
 	void initSounds(); 
 	
 	
-  	ParticleSystemManager particleSystemManager;
+  	ParticleSystemManager& particleSystemManager;
 	SceneManager sceneManager;
-	TriggerManager triggerManager;
+	TriggerManager& triggerManager;
 	OscManager oscManager;
     SettingsManager settingsManager;
 	CameraManagerWarped cameraManager;
 	MotionManager motionManager;
-	SoundPlayer soundPlayer;
+	SoundPlayer& soundPlayer;
 	
 	ofFbo fbo; 
 	bool useFbo; 
