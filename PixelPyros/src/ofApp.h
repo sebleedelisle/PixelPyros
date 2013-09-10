@@ -17,7 +17,7 @@
 #include "ofxAutoControlPanel.h"
 //
 //#include "SceneSpace.h"
-//#include "SceneTron.h"
+#include "SceneVectorizer.h"
 //#include "SceneLaunch.h"
 #include "SceneIntro.h"
 #include "SceneRetro.h"

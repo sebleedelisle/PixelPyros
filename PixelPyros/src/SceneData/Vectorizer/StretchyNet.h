@@ -130,7 +130,7 @@ class StretchyNet {
 		for(std::vector<StretchyNetPoint>::iterator it = points.begin(); it != points.end(); ++it) {
 			
 			mesh.addVertex(*it);
-			float strength = ofMap(it->vel.lengthSquared(),0,10,0.3,0.8,true) * brightness;
+			float strength = ofMap(it->vel.lengthSquared(),0,10,0.05,0.3,true) * brightness;
 			mesh.addColor(ofColor(strength*180,strength*255,(strength*255) + 0));
 		}
 		
