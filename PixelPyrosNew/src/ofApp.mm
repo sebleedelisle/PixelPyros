@@ -147,7 +147,7 @@ void ofApp::update(){
 		
 		triggerManager.update(deltaTime);
 	    sceneManager.update(deltaTime);
-        particleSystemManager.update(deltaTime);
+        //particleSystemManager.update(deltaTime);
     }
 }
 
@@ -328,7 +328,7 @@ void ofApp:: setupScenes() {
 
 	sceneManager.addScene(new SceneIntro("Intro"));
 	
-	sceneManager.addScene(new SceneRetro("Retro"));
+	//sceneManager.addScene(new SceneRetro("Retro"));
 	
 	//sceneManager.addScene(new SceneRealistic("Lights", particleSystemManager));
 	//sceneManager.addScene(new SceneTron("Vectorizer", particleSystemManager));

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		12BD9CBA17DF414800F28A4F /* TriggerSettingsRocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BD9CB817DF414800F28A4F /* TriggerSettingsRocket.cpp */; };
 		12BD9CBD17DF417A00F28A4F /* FireworkFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BD9CBB17DF417A00F28A4F /* FireworkFactory.cpp */; };
+		12BD9CC317DF44A200F28A4F /* SceneRetro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BD9CC117DF44A200F28A4F /* SceneRetro.cpp */; };
 		12F0EF4B17DCE2F400ADF84C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F0EF4A17DCE2F300ADF84C /* Accelerate.framework */; };
 		12F0EF4D17DCE30400ADF84C /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F0EF4C17DCE30400ADF84C /* QTKit.framework */; };
 		12F0EF5117DCE33700ADF84C /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F0EF4E17DCE33700ADF84C /* TriggerRechargeSettings.cpp */; };
@@ -187,6 +188,8 @@
 		12BD9CB917DF414800F28A4F /* TriggerSettingsRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsRocket.h; sourceTree = "<group>"; };
 		12BD9CBB17DF417A00F28A4F /* FireworkFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireworkFactory.cpp; sourceTree = "<group>"; };
 		12BD9CBC17DF417A00F28A4F /* FireworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireworkFactory.h; sourceTree = "<group>"; };
+		12BD9CC117DF44A200F28A4F /* SceneRetro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneRetro.cpp; sourceTree = "<group>"; };
+		12BD9CC217DF44A200F28A4F /* SceneRetro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneRetro.h; sourceTree = "<group>"; };
 		12F0EF4A17DCE2F300ADF84C /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = ../../../../../../../System/Library/Frameworks/Accelerate.framework; sourceTree = "<group>"; };
 		12F0EF4C17DCE30400ADF84C /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
 		12F0EF4E17DCE33700ADF84C /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
@@ -632,9 +635,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12BD9CC017DF44A200F28A4F /* Retro */ = {
+			isa = PBXGroup;
+			children = (
+				12BD9CC117DF44A200F28A4F /* SceneRetro.cpp */,
+				12BD9CC217DF44A200F28A4F /* SceneRetro.h */,
+			);
+			path = Retro;
+			sourceTree = "<group>";
+		};
 		9E3371BF17D9210D00EDDB96 /* SceneData */ = {
 			isa = PBXGroup;
 			children = (
+				12BD9CC017DF44A200F28A4F /* Retro */,
 				9E3371C017D9210D00EDDB96 /* Intro */,
 				9E3371CF17D9210D00EDDB96 /* RocketFountain.h */,
 				9E3371D017D9210D00EDDB96 /* SceneFountains.h */,
@@ -1931,6 +1944,7 @@
 				9E8EA8B517DDF18C00D5E415 /* OpenGLView.mm in Sources */,
 				12BD9CBA17DF414800F28A4F /* TriggerSettingsRocket.cpp in Sources */,
 				12BD9CBD17DF417A00F28A4F /* FireworkFactory.cpp in Sources */,
+				12BD9CC317DF44A200F28A4F /* SceneRetro.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
