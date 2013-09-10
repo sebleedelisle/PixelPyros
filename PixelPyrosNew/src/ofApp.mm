@@ -329,10 +329,10 @@ void ofApp:: setupScenes() {
 
 	sceneManager.addScene(new SceneIntro("Intro"));
 	
-	//sceneManager.addScene(new SceneRetro("Retro"));
+	sceneManager.addScene(new SceneRetro("Retro"));
 	
 	//sceneManager.addScene(new SceneRealistic("Lights", particleSystemManager));
-	//sceneManager.addScene(new SceneTron("Vectorizer", particleSystemManager));
+	sceneManager.addScene(new SceneVectorizer("Vectorizer"));
 	
 	//sceneManager.addScene(new SceneSpace("Stargazer", particleSystemManager));
 	

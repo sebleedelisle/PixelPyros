@@ -113,6 +113,8 @@
 		12A6DE3A17DE6D57000D299A /* SceneRetro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3817DE6D57000D299A /* SceneRetro.cpp */; };
 		12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AF89EE17C4F38A001995FC /* TriggerManager.cpp */; };
 		12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */; };
+		12BD9CCF17DF585E00F28A4F /* SceneVectorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BD9CCB17DF585E00F28A4F /* SceneVectorizer.cpp */; };
+		12BD9CD217DF5E8A00F28A4F /* TriggerSettingsRocketRotator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BD9CD017DF5E8A00F28A4F /* TriggerSettingsRocketRotator.cpp */; };
 		12DBC7B617DDDD280041FA5C /* FireworkFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12DBC7B417DDDD280041FA5C /* FireworkFactory.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -534,6 +536,15 @@
 		12AF89EE17C4F38A001995FC /* TriggerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerManager.cpp; sourceTree = "<group>"; };
 		12AF89EF17C4F38A001995FC /* TriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerManager.h; sourceTree = "<group>"; };
 		12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettings.cpp; sourceTree = "<group>"; };
+		12BD9CC817DF585E00F28A4F /* RocketThinFountain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocketThinFountain.h; sourceTree = "<group>"; };
+		12BD9CC917DF585E00F28A4F /* RocketTron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocketTron.h; sourceTree = "<group>"; };
+		12BD9CCA17DF585E00F28A4F /* RocketTronFountain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocketTronFountain.h; sourceTree = "<group>"; };
+		12BD9CCB17DF585E00F28A4F /* SceneVectorizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneVectorizer.cpp; sourceTree = "<group>"; };
+		12BD9CCC17DF585E00F28A4F /* SceneVectorizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneVectorizer.h; sourceTree = "<group>"; };
+		12BD9CCD17DF585E00F28A4F /* StretchyNet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StretchyNet.h; sourceTree = "<group>"; };
+		12BD9CCE17DF585E00F28A4F /* StretchyNetPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StretchyNetPoint.h; sourceTree = "<group>"; };
+		12BD9CD017DF5E8A00F28A4F /* TriggerSettingsRocketRotator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettingsRocketRotator.cpp; sourceTree = "<group>"; };
+		12BD9CD117DF5E8A00F28A4F /* TriggerSettingsRocketRotator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsRocketRotator.h; sourceTree = "<group>"; };
 		12D15FCD17CE0044003D9024 /* TriggerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
 		12DBC7B417DDDD280041FA5C /* FireworkFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireworkFactory.cpp; sourceTree = "<group>"; };
 		12DBC7B517DDDD280041FA5C /* FireworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireworkFactory.h; sourceTree = "<group>"; };
@@ -597,6 +608,7 @@
 		1254501B17BF860500EF23B7 /* SceneData */ = {
 			isa = PBXGroup;
 			children = (
+				12BD9CC717DF585E00F28A4F /* Vectorizer */,
 				12A6DE3717DE6D57000D299A /* Retro */,
 				1254501C17BF860500EF23B7 /* Intro */,
 				1254502B17BF860500EF23B7 /* RocketFountain.h */,
@@ -794,6 +806,8 @@
 				12AF89EE17C4F38A001995FC /* TriggerManager.cpp */,
 				12AF89EF17C4F38A001995FC /* TriggerManager.h */,
 				120C788F17D35F9C0050D25D /* TriggerSettingsRocket.cpp */,
+				12BD9CD017DF5E8A00F28A4F /* TriggerSettingsRocketRotator.cpp */,
+				12BD9CD117DF5E8A00F28A4F /* TriggerSettingsRocketRotator.h */,
 				120C788E17D35EBA0050D25D /* TriggerSettingsRocket.h */,
 				1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */,
 				1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */,
@@ -1519,6 +1533,20 @@
 			path = Retro;
 			sourceTree = "<group>";
 		};
+		12BD9CC717DF585E00F28A4F /* Vectorizer */ = {
+			isa = PBXGroup;
+			children = (
+				12BD9CC817DF585E00F28A4F /* RocketThinFountain.h */,
+				12BD9CC917DF585E00F28A4F /* RocketTron.h */,
+				12BD9CCA17DF585E00F28A4F /* RocketTronFountain.h */,
+				12BD9CCB17DF585E00F28A4F /* SceneVectorizer.cpp */,
+				12BD9CCC17DF585E00F28A4F /* SceneVectorizer.h */,
+				12BD9CCD17DF585E00F28A4F /* StretchyNet.h */,
+				12BD9CCE17DF585E00F28A4F /* StretchyNetPoint.h */,
+			);
+			path = Vectorizer;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1810,6 +1838,8 @@
 				12A6DE3417DE1F83000D299A /* ParticleSystemManager.cpp in Sources */,
 				12A6DE3617DE640C000D299A /* SoundPlayer.cpp in Sources */,
 				12A6DE3A17DE6D57000D299A /* SceneRetro.cpp in Sources */,
+				12BD9CCF17DF585E00F28A4F /* SceneVectorizer.cpp in Sources */,
+				12BD9CD217DF5E8A00F28A4F /* TriggerSettingsRocketRotator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

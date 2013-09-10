@@ -11,18 +11,18 @@
 #include "RocketTron.h"
 
 #include "RocketTronFountain.h"
-#include "TriggerRocket.h"
+#include "TriggerSettingsRocket.h"
 #include "StretchyNet.h"
 #include "ParticleRendererSquare.h"
 #include "RocketFountain.h"
-#include "TriggerRotator.h"
+#include "TriggerSettingsRocketRotator.h"
 
 
-class SceneTron : public Scene {
+class SceneVectorizer : public Scene {
 	
 	public : 
 	
-	SceneTron (string scenename, ParticleSystemManager& psm) ;
+	SceneVectorizer (string scenename) ;
 	
 	
 	RocketSettings getCircleFountain(float hue = 120);
@@ -31,6 +31,8 @@ class SceneTron : public Scene {
 	bool update(float deltaTime) ;
 	
 	bool draw();
+	
+	TriggerSettingsRocketRotator* getRocketTronFountain(float hueStartOffset = 0, float hueChange = 0, float explosionHue = 20);
 	
    
 	StretchyNet stretchyNet; 
