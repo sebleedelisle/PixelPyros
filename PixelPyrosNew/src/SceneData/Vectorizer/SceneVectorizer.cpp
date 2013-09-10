@@ -15,73 +15,37 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename){
 	
 	
 	TriggerSettingsRocketRotator * rocketFountainBlue = getRocketTronFountain(130,10);
-	//rocketFountainBlue.startSpeedMin = 500;
-	//rocketFountainBlue.startSpeedMax = 800;
-	//RocketTronFountain rocketFountainPink(-20,0);
-	//rocketFountainPink.startSpeedMin = 500;
-	//rocketFountainPink.startSpeedMax = 800;
-	
-	//TriggerSettingsRocketRotator fountainTriggerBlue(20,1,true);
-	//fountainTriggerBlue.restoreSpeed = 2;
-	//fountainTriggerBlue.saturation = 200;
-	
-	//TriggerSettingsRocketRotator fountainTriggerPink(fountainTriggerBlue);
-	//fountainTriggerBlue.hue = 130;
-	//fountainTriggerPink.hue = 255-20;
-	
-	//TriggerSettingsRocketRotator fountainTriggerBlueHigh(fountainTriggerBlue);
-	//TriggerSettingsRocketRotator fountainTriggerPinkHigh(fountainTriggerPink);
-	//fountainTriggerBlueHigh.radius =
-	//fountainTriggerPinkHigh.radius = 10;
-	//fountainTriggerBlueHigh.rotationExtent =
-	//fountainTriggerPinkHigh.rotationExtent = 5;
-	
-	
-	
-	//fountainTriggerBlue.add(rocketFountainBlue);
-	//fountainTriggerPink.addTriggerRocket(rocketFountainPink);
-
-	//RocketSettings rocketFountainBlueHigh(rocketFountainBlue);
-	//RocketSettings rocketFountainPinkHigh(rocketFountainPink);
-	
-	
-	//rocketFountainBlueHigh.startSpeedMin *=2.8;
-	//rocketFountainBlueHigh.startSpeedMax *=2.8;
-	//rocketFountainPinkHigh.startSpeedMin *=2.8;
-	//rocketFountainPinkHigh.startSpeedMax *=2.8;
-	
-	//fountainTriggerBlueHigh.addRocketSettings(rocketFountainBlueHigh);
-	//fountainTriggerPinkHigh.addRocketSettings(rocketFountainPinkHigh);
+	TriggerSettingsRocketRotator * rocketFountainPink = getRocketTronFountain(-20,0);
+	TriggerSettingsRocketRotator * rocketFountainBlueHigh = getRocketTronFountain(130,10);
+	TriggerSettingsRocketRotator * rocketFountainPinkHigh = getRocketTronFountain(-20,0);
 
 	
-	//TriggerRocket glitchRocketTrigger(particleSystemManager);
-	//glitchRocketTrigger.triggerLevel = 1;
-	//glitchRocketTrigger.restoreSpeed = 2;
-	//glitchRocketTrigger.triggerPower = 0.99;
-	//glitchRocketTrigger.radius = 8;
-	//glitchRocketTrigger.hue = 130;
-	//glitchRocketTrigger.saturation = 160;
-	
+	rocketFountainBlue->hue = rocketFountainBlueHigh->hue = 130;
+	rocketFountainPink->hue = rocketFountainPinkHigh->hue = 235;
+	rocketFountainBlueHigh->rocketSettings->startSpeedMin *=2.8;
+	rocketFountainBlueHigh->rocketSettings->startSpeedMax *=2.8;
+	rocketFountainPinkHigh->rocketSettings->startSpeedMin *=2.8;
+	rocketFountainPinkHigh->rocketSettings->startSpeedMax *=2.8;
 	
 	TriggerPattern glitchFountainPattern;
 	
 	glitchFountainPattern.addTriggerSettings(rocketFountainBlue);
-	//glitchFountainPattern.addTrigger(fountainTriggerBlue);
-	//glitchFountainPattern.addTrigger(fountainTriggerPink);
-	//glitchFountainPattern.addTrigger(fountainTriggerPink);
+	glitchFountainPattern.addTriggerSettings(rocketFountainBlue);
+	glitchFountainPattern.addTriggerSettings(rocketFountainPink);
+	glitchFountainPattern.addTriggerSettings(rocketFountainPink);
 	
 	
 	addTriggerPattern(glitchFountainPattern);
 
-/*
+
 
 	
 	
 	
-	RocketTron glitchRocket;
-	glitchRocket.head.renderer = new ParticleRendererGlitchLine(2);
-	glitchRocket.head.speedMin = 30;
-	glitchRocket.head.speedMax = 100;
+	RocketTron& glitchRocket = *new RocketTron();
+	glitchRocket.head.renderer = new ParticleRendererGlitchLine(1);
+	glitchRocket.head.speedMin = 20;
+	glitchRocket.head.speedMax = 60;
 	glitchRocket.head.brightnessStartMax = 255;
 	glitchRocket.head.brightnessStartMin = 255;
 	glitchRocket.head.brightnessEnd = 255;
@@ -89,13 +53,14 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename){
 	glitchRocket.head.lifeMin= 0.1;
 	glitchRocket.head.lifeMax= 0.15;
 	glitchRocket.head.emitInheritVelocity  =0.0;
+	glitchRocket.head.emitLifeTime= 3.0;
 	
 	glitchRocket.explosion.renderer = new ParticleRendererGlitchLine(1.1);
 	glitchRocket.explosion.sizeStartMin = glitchRocket.explosion.sizeStartMax =2;
 	
 	glitchRocket.explosion.brightnessEnd = 0;
-	glitchRocket.explosion.speedMin = 200;
-	glitchRocket.explosion.speedMax = 2000;
+	glitchRocket.explosion.speedMin = 100;
+	glitchRocket.explosion.speedMax = 1000;
 	glitchRocket.explosion.directionZVar = 0;
 	glitchRocket.explosion.lifeMin= 0.1;
 	glitchRocket.explosion.lifeMax= 0.4;
@@ -105,38 +70,44 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename){
 	
 	glitchRocket.explosion.emitCount = 5000;
 	glitchRocket.explosion.emitLifeTime = 0.1;
-	glitchRocket.explosion.emitDelay = 2.1;
+	glitchRocket.explosion.emitDelay = 3.1;
 	
 	glitchRocket.explosion.drag = 0.99;
 	
 	glitchRocket.startSpeedMin = 700;
+	
+	glitchRocket.startSpeedMax = 800;
 	glitchRocket.directionVar = 6;
 	
 	glitchRocket.addParticleSystemSetting(glitchRocket.head);
 	glitchRocket.addParticleSystemSetting(glitchRocket.explosion);
+	glitchRocket.timeSpeed = 	glitchRocket.head.timeSpeed = glitchRocket.explosion.timeSpeed= 0.7;
 	
+	glitchRocket.lifeTime = 2.4;
 	
-	glitchRocketTrigger.addRocketSettings(glitchRocket);
+	TriggerSettingsRocket* glitchRocketTrigger = new TriggerSettingsRocket();
+	glitchRocketTrigger->rocketSettings = &glitchRocket;
 	
-		
-	glitchFountainPattern.addTrigger(glitchRocketTrigger);
+	glitchFountainPattern.addTriggerSettings();
+	glitchFountainPattern.addTriggerSettings(glitchRocketTrigger);
+	glitchFountainPattern.addTriggerSettings();
 	
 	addTriggerPattern(glitchFountainPattern);
 	
-	
+
 	
 	
 	TriggerPattern glitchFountainPatternHigh;
 	
-	glitchFountainPatternHigh.addTrigger(fountainTriggerBlueHigh);
-	glitchFountainPatternHigh.addTrigger(fountainTriggerBlue);
-	glitchFountainPatternHigh.addTrigger(fountainTriggerPinkHigh);
-	glitchFountainPatternHigh.addTrigger(fountainTriggerPink);
+	glitchFountainPatternHigh.addTriggerSettings(rocketFountainBlueHigh);
+	glitchFountainPatternHigh.addTriggerSettings(rocketFountainBlue);
+	glitchFountainPatternHigh.addTriggerSettings(rocketFountainPinkHigh);
+	glitchFountainPatternHigh.addTriggerSettings(rocketFountainPink);
 	
 	addTriggerPattern(glitchFountainPatternHigh);
 	
 	
-	
+/*
 	
 	TriggerPattern rocketsAndFountainsPattern;
 	
@@ -259,7 +230,7 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename){
 	*/
 	
 	
-	stretchyNet.init(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT));
+	stretchyNet.init(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT), 15, 15);
 	
 	
 	
@@ -336,7 +307,7 @@ bool SceneVectorizer :: draw() {
 
 
 
-TriggerSettingsRocketRotator* SceneVectorizer :: getRocketTronFountain(float hueStartOffset, float hueChange , float explosionHue) {
+TriggerSettingsRocketRotator* SceneVectorizer :: getRocketTronFountain(float hueStartOffset, float hueChange) {
 	
 	
 	ParticleRendererBase* particleRenderer = new ParticleRendererSquare();
@@ -401,12 +372,6 @@ TriggerSettingsRocketRotator* SceneVectorizer :: getRocketTronFountain(float hue
 	ps.saturationMax = 255;
 	ps.saturationEnd = 255;
 	
-	//ps.shimmerMin = 0.1;
-	
-	// but also :
-	// lifeExpectancy
-	// delay
-	
 	ps.emitMode = PARTICLE_EMIT_CONTINUOUS;
 	ps.emitCount = 30;
 	
@@ -416,62 +381,11 @@ TriggerSettingsRocketRotator* SceneVectorizer :: getRocketTronFountain(float hue
 	ps.emitStartSizeModifier = 0;
 	ps.emitSpeedModifier = 10;
 	ps.emitHueModifierOffset = 0;
-	
-	//ps.emitAttachedPhysicsObject = &rocket;
 	ps.emitInheritVelocity = 0;
 	
 	ps.startSound = "DirtyTechno";
 	ps.renderer = particleLineRenderer;
 	
-	/*
-	
-	// PHYSICS
-	ps2.speedMin = 15;
-	ps2.speedMax = 20;
-	ps2.directionZ = 0;
-	ps2.directionZVar = 90;
-	ps2.directionYVar = 180;
-	ps2.drag = 0.90;
-	ps2.gravity.set(0,-30);
-	
-	//LIFE
-	ps2.lifeMin = 1;
-	ps2.lifeMax = 1.5;
-	
-	//APPEARANCE
-	
-	ps2.sizeStartMin = 2;
-	ps2.sizeStartMax = 5;
-	ps2.sizeChangeRatio = 5;
-	
-	ps2.hueStartMin = 0+hueStartOffset;
-	ps2.hueStartMax = 0+hueStartOffset;
-	ps2.hueChange = 0;
-	
-	ps2.brightnessStartMin = 20;
-	ps2.brightnessStartMax = 70;
-	ps2.brightnessEnd = 0;
-	
-	ps2.saturationMin = 100;
-	ps2.saturationMax = 100;
-	ps2.saturationEnd = 100;
-	
-	//ps.shimmerMin = 0.1;
-	
-	// but also :
-	// lifeExpectancy
-	// delay
-	
-	ps2.emitStartSizeModifier = 0;
-	//ps2.emitSpeedModifier = 0;
-	
-	
-	ps2.emitMode = PARTICLE_EMIT_CONTINUOUS;
-	ps2.emitCount = 500;
-	
-	ps2.emitDelay = 0;
-	ps2.emitLifeTime= 0.5;
-	ps2.renderer = new ParticleRendererShape();*/
 	
 	RocketSettings* rs = new RocketSettings();
 	
@@ -484,10 +398,10 @@ TriggerSettingsRocketRotator* SceneVectorizer :: getRocketTronFountain(float hue
 	rs->drag = 0.9;
 	
 	rs->addParticleSystemSetting(ps);
-	//addParticleSystemSetting(ps2);
 	
 	TriggerSettingsRocketRotator* ts = new TriggerSettingsRocketRotator();
 	ts->rocketSettings = rs;
+	ts->radius = 6;
 	return ts;
 	
 	

@@ -42,10 +42,7 @@ class Trigger {
 	// scale is just used to keep track of whether we're growing or shrinking
 	float scale;
 	//float targetScale;
-	// radius is the graphical size and also the motion area size
-	float radius;
-	
-	
+		
 	ofVec3f pos;
 	bool fixedPosition;
 	
