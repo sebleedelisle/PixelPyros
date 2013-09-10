@@ -4,11 +4,22 @@
 #include "ofMain.h"
 #include "ofxNSWindowApp.h"
 #include "ofxGui.h"
+#include "ofApp.h"
 
 class controlWindow : public ofxNSWindowApp {
 
+protected:
+    ofxPanel gui;
+    ofxToggle toggleDemo;
+    ofxSlider<float> sliderDemo;
+    ofxSlider<int> intSliderDemo;
+    ofxColorSlider colorSliderDemo;
+    ofxButton buttonDemo;
+    ofxLabel labelDemo;
+    ofApp* mainApp;
+    
 public:
-	controlWindow() {}
+	controlWindow(ofApp*);
 	
 	void setup();
 	void update();
@@ -22,16 +33,10 @@ public:
 	void mousePressed(int x, int y, int button);
 	void mouseReleased();
 	void mouseReleased(int x, int y, int button);
+    
+    void fullscreenButtonPressed();
 	
 	void mouseScrolled(float x, float y);
-	
-    ofxPanel gui;
-    ofxToggle toggleDemo;
-    ofxSlider<float> sliderDemo;
-    ofxSlider<int> intSliderDemo;
-    ofxColorSlider colorSliderDemo;
-    ofxButton buttonDemo;
-    ofxLabel labelDemo;
 
 };
 

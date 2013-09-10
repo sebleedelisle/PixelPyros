@@ -1,8 +1,12 @@
 
 #include "controlWindow.h"
 
+controlWindow::controlWindow(ofApp* app){
+    mainApp = app;
+}
 
 void controlWindow::setup() {
+    
     ofSetWindowShape(800, 600);
     ofSetWindowTitle("PixelPyros Control Panel");
     
@@ -26,7 +30,13 @@ void controlWindow::setup() {
     gui.add(colorSliderDemo.setup("Color Demo", ofColor::black, ofColor::black, ofColor::white));
     gui.add(buttonDemo.setup("Butto Demo"));
     gui.add(labelDemo.setup("Label Demo","label text"));
+    
+    buttonDemo.addListener(this, &controlWindow::fullscreenButtonPressed);
 
+}
+
+void controlWindow::fullscreenButtonPressed(){
+    mainApp->getParent()->toggleFullscreen();
 }
 
 void controlWindow::update() {
