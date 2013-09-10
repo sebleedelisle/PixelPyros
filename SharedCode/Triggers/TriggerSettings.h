@@ -17,15 +17,14 @@ class TriggerSettings {
 
 	public:
 	
-	static TriggerRendererBase * defaultRenderer;
-	static TriggerSettings blank;
+	static TriggerRendererBase* defaultRenderer;
+	static TriggerSettings* blank;
 	static TriggerRechargeSettings* defaultRechargeSettings;
 	
 	TriggerSettings();
 	void setTriggerable(TriggerableBase * newtriggerable);
 	void setRenderer(TriggerRendererBase * newrenderer);
 	
-		
 	//ofColor colour;
 	float hue;
 	float saturation;

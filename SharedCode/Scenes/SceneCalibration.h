@@ -11,20 +11,20 @@ class SceneCalibration : public Scene {
 	
 	public : 
 	
-	SceneCalibration(string scenename, ParticleSystemManager& psm) : Scene(scenename, psm){
+	SceneCalibration(string scenename) : Scene(scenename){
 		RocketBasic rocketSettings(100,10, 120);
 		
-		TriggerSettings trigger;
+		//TriggerSettings trigger;
 		
 		//trigger.addRocketSettings(rocketSettings);
 		//addTriggers(trigger, 50, 0, ofGetHeight()*0.85, ofGetWidth());
 		
 		//Trigger trigger2(psm);
-		TriggerPattern pattern;
+		//TriggerPattern pattern;
 		
-		pattern.addTriggerSettings(trigger);
+		//pattern.addTriggerSettings(TriggerSettings::blank);
 		//pattern.addTrigger(trigger2);
-		
+		TriggerPattern pattern;
 		addTriggerPattern(pattern);
 		
 		

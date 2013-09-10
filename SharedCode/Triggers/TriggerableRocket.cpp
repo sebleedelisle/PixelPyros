@@ -8,7 +8,7 @@
 
 #include "TriggerableRocket.h"
 
-TriggerableRocket :: TriggerableRocket(ParticleSystemManager &psm) : particleSystemManager(psm) {
+TriggerableRocket :: TriggerableRocket() : particleSystemManager(*ParticleSystemManager::instance()) {
 	
 	//rocketSettings = NULL;
 

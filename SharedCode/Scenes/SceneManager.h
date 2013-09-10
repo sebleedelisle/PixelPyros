@@ -11,7 +11,7 @@ class SceneManager {
 
 public :
 	
-	SceneManager(ParticleSystemManager& psm, TriggerManager & tm);
+	SceneManager();
 	
 	void addScene(Scene * scene);
     

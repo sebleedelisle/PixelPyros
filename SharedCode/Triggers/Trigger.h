@@ -23,7 +23,7 @@ class Trigger {
 	
 	bool doTrigger();
 	
-	void copySettings(const TriggerSettings& settings) ;
+	void copySettings(TriggerSettings* settings) ;
 	
 	float unitPower;
 	
@@ -67,7 +67,7 @@ class Trigger {
 	
 	//SETTINGS
 	
-	TriggerSettings settings;
+	TriggerSettings* settings;
 	TriggerRechargeSettings* rechargeSettings;
 	
 	

@@ -20,7 +20,7 @@
 //#include "SceneTron.h"
 //#include "SceneLaunch.h"
 #include "SceneIntro.h"
-//#include "SceneRetro.h"
+#include "SceneRetro.h"
 //#include "SceneRealistic.h"
 #include "SceneCalibration.h"
 #include "SceneSlideshow.h"
@@ -41,7 +41,7 @@ class ofApp : public ofBaseApp{
 	
 public:
 	
-	ofApp(): particleSystemManager(soundPlayer), sceneManager(particleSystemManager, triggerManager) {
+	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()) {
 		
 	};
 	
@@ -61,14 +61,14 @@ public:
 	void initSounds(); 
 	
 	
-  	ParticleSystemManager particleSystemManager;
+  	ParticleSystemManager& particleSystemManager;
 	SceneManager sceneManager;
-	TriggerManager triggerManager;
+	TriggerManager& triggerManager;
 	OscManager oscManager;
     SettingsManager settingsManager;
 	CameraManagerWarped cameraManager;
 	MotionManager motionManager;
-	SoundPlayer soundPlayer;
+	SoundPlayer& soundPlayer;
 	
 	ofFbo fbo; 
 	bool useFbo; 

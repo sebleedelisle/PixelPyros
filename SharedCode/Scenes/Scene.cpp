@@ -9,7 +9,7 @@
 #include "Scene.h"
 
 
-Scene::Scene(string scenename, ParticleSystemManager & psm) : particleSystemManager(psm) {
+Scene::Scene(string scenename) : particleSystemManager(*ParticleSystemManager::instance()) {
 	active = false;
 	stopping = false;
 

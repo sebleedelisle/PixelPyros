@@ -9,6 +9,15 @@
 #include "TriggerManager.h"
 
 
+TriggerManager * TriggerManager :: triggerManager = NULL;
+TriggerManager * TriggerManager::instance() {
+	if(triggerManager ==NULL) {
+		triggerManager = new TriggerManager();
+	}
+	return triggerManager;
+}
+
+
 
 TriggerManager::TriggerManager () {
 	

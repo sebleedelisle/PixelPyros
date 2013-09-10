@@ -20,13 +20,13 @@
     <val_0>50</val_0>
 </TEST_SLIDER>
 <THRESHOLD>
-    <val_0>8.900620461</val_0>
+    <val_0>1.416666746</val_0>
 </THRESHOLD>
 <TEST_VALUE>
     <val_0>7.2</val_0>
 </TEST_VALUE>
 <MOTION_SENSITIVITY>
-    <val_0>2.733333349</val_0>
+    <val_0>5.000000000</val_0>
 </MOTION_SENSITIVITY>
 <TRIGGER_AREA_WIDTH>
     <val_0>0.899999976</val_0>
