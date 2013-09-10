@@ -12,10 +12,13 @@
 #include "SettingsManager.h"
 #include "ParticleSystemManager.h"
 #include "CameraManagerWarped.h"
-#include "SoundPlayer.h"
 #include "MotionManager.h"
 #include "TriggerManager.h"
 #include "ofxAutoControlPanel.h"
+
+#include "SoundPlayer.h"
+
+
 //
 //#include "SceneSpace.h"
 //#include "SceneTron.h"

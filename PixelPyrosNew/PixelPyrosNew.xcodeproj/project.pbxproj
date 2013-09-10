@@ -132,6 +132,8 @@
 		9EC0889517DD2FE4009D5AEE /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC0888A17DD2FE4009D5AEE /* ofxSlider.cpp */; };
 		9EC0889617DD2FE4009D5AEE /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC0888C17DD2FE4009D5AEE /* ofxSliderGroup.cpp */; };
 		9EC0889717DD2FE4009D5AEE /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC0888E17DD2FE4009D5AEE /* ofxToggle.cpp */; };
+		9ED3F45717DF61B300BEFA3B /* SoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ED3F45617DF61B300BEFA3B /* SoundPlayer.cpp */; };
+		9ED3F45917DF620200BEFA3B /* ParticleSystemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ED3F45817DF620200BEFA3B /* ParticleSystemManager.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -579,6 +581,8 @@
 		9EC0888D17DD2FE4009D5AEE /* ofxSliderGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
 		9EC0888E17DD2FE4009D5AEE /* ofxToggle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
 		9EC0888F17DD2FE4009D5AEE /* ofxToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
+		9ED3F45617DF61B300BEFA3B /* SoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundPlayer.cpp; sourceTree = "<group>"; };
+		9ED3F45817DF620200BEFA3B /* ParticleSystemManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystemManager.cpp; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -732,6 +736,7 @@
 		9E33720817D92A5500EDDB96 /* Particles */ = {
 			isa = PBXGroup;
 			children = (
+				9ED3F45817DF620200BEFA3B /* ParticleSystemManager.cpp */,
 				9E33720917D92A5500EDDB96 /* ColourModifier.h */,
 				9E33720A17D92A5500EDDB96 /* LifeCycle.h */,
 				9E33720B17D92A5500EDDB96 /* Particle.cpp */,
@@ -825,6 +830,7 @@
 		9E33724617D92A5500EDDB96 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				9ED3F45617DF61B300BEFA3B /* SoundPlayer.cpp */,
 				9E33724717D92A5500EDDB96 /* Sound.h */,
 				9E33724817D92A5500EDDB96 /* SoundPlayer.h */,
 			);
@@ -1945,6 +1951,8 @@
 				12BD9CBA17DF414800F28A4F /* TriggerSettingsRocket.cpp in Sources */,
 				12BD9CBD17DF417A00F28A4F /* FireworkFactory.cpp in Sources */,
 				12BD9CC317DF44A200F28A4F /* SceneRetro.cpp in Sources */,
+				9ED3F45717DF61B300BEFA3B /* SoundPlayer.cpp in Sources */,
+				9ED3F45917DF620200BEFA3B /* ParticleSystemManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
