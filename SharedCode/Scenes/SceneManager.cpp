@@ -123,6 +123,7 @@ bool SceneManager :: changeScene (Scene* scene) {
 			currentSceneIndex = newSceneIndex;
 			currentScene = scene;
 			currentSceneName = scene->name ;
+			triggerManager.setPattern(currentScene->getCurrentTriggerPattern());
 
 		} else {
 			scenes[i]->stop();
