@@ -3,11 +3,11 @@
 #include "SceneRetro.h"
 
 
-SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm ) : Scene(scenename, psm) {
+SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 
-	pixelSize = 4;
+	pixelSize = 3;
 	
-	
+	/*
 	TriggerRocket fastTriggerTemplate(psm);
 	fastTriggerTemplate.restoreSpeed = 4;
 	fastTriggerTemplate.minTriggerInterval = 0.1;
@@ -31,25 +31,24 @@ SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm ) : Scene(
 		triggerFountainCyan.hue =
 		triggerFountainCyanHigh.hue = 120;
 	
+	*/
+	
+	TriggerSettings* redRocket = getRetroRocket();
+	TriggerSettings* cyanRocket = getRetroRocket(120);
+	TriggerSettings* redFountainLow = getRetroFountain();
+	TriggerSettings* cyanFountainLow = getRetroFountain(180, -70);
+	TriggerSettings* redFountainHigh = getRetroFountain(0,-128,1300,1900);
+	TriggerSettings* cyanFountainHigh = getRetroFountain(180, -70,1300,1900);
 	
 	
-	RocketSettings redRocket = getRetroRocket();
-	RocketSettings cyanRocket = getRetroRocket(120);
-	RocketSettings redFountainLow = getRetroFountain();
-	RocketSettings cyanFountainLow = getRetroFountain(180, -70);
-	RocketSettings redFountainHigh(redFountainLow);
-	RocketSettings cyanFountainHigh(cyanFountainLow);
-	redFountainHigh.startSpeedMin = cyanFountainHigh.startSpeedMin = 1300;
-	redFountainHigh.startSpeedMax = cyanFountainHigh.startSpeedMax = 1900;
-	
-	
+	/*
 	triggerRocketRed.addRocketSettings(redRocket);
 	triggerRocketCyan.addRocketSettings(cyanRocket);
 	triggerFountainRed.addRocketSettings(redFountainLow);
 	triggerFountainCyan.addRocketSettings(cyanFountainLow);
 	triggerFountainRedHigh.addRocketSettings(redFountainHigh);
 	triggerFountainCyanHigh.addRocketSettings(cyanFountainHigh);
-	
+	*/
 	
 	
 	TriggerPattern emptyPattern;
@@ -58,12 +57,15 @@ SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm ) : Scene(
 	
 	
 	TriggerPattern patternCyanChevrons;
-	patternCyanChevrons.addTrigger(triggerFountainCyan);
-	//patternCyanChevrons.addTrigger(triggerFountainCyanHigh);
+	patternCyanChevrons.addTriggerSettings(cyanFountainLow);
+	patternCyanChevrons.addTriggerSettings();
+	patternCyanChevrons.addTriggerSettings(cyanFountainHigh);
+	patternCyanChevrons.addTriggerSettings();
 	addTriggerPattern(patternCyanChevrons);
 	
 	
 	
+	/*
 	TriggerPattern fatRockets;
 	float colours [4] = {170, 0, 220, 0};
 	
@@ -74,7 +76,8 @@ SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm ) : Scene(
 		triggerRocketFat.radius = 5;
 		triggerRocketFat.addRocketSettings(getFatRocket(colours[i]));
 		triggerRocketFat.hue = colours[i];
-		fatRockets.addTrigger(triggerRocketFat, 0,0,0.75);
+		fatRockets.addTriggerSettings(triggerRocketFat);
+		fatRockets.addTriggerSettings(); 
 	}
 	
 	
@@ -135,7 +138,7 @@ SceneRetro :: SceneRetro(string scenename, ParticleSystemManager& psm ) : Scene(
 	addTriggerPattern(patternRedRockets);
 	
 	
-
+*/
 	
 };
 
@@ -178,7 +181,11 @@ bool SceneRetro :: draw() {
 	
 }
 
-RocketSettings SceneRetro:: getFatRocket(float hue) {
+/*
+TriggerSettings* SceneRetro:: getFatRocket(float hue) {
+
+	TriggerSettings* ts = new TriggerSettings();
+	TriggerableRocket* tr = new TriggerableRocket();
 
 	RocketSettings rocketSettings;
 	ParticleSystemSettings pss;
@@ -206,13 +213,18 @@ RocketSettings SceneRetro:: getFatRocket(float hue) {
 	rocketSettings.directionVar = 0;
 	//rocketSettings.drag = 0.98;
 	rocketSettings.gravity.set(0,1800);
-	
-	return rocketSettings;
+	tr->rocketSettings = rocketSettings;
+	ts->setTriggerable(tr);
+	return ts;
+
 
 };
-
-RocketSettings SceneRetro::getRetroRocket(float hue, float hueChange) {
-	RocketSettings rocketSettings;
+*/
+TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
+	
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
 	
 	rocketSettings.startSpeedMin = 1000;
 	rocketSettings.startSpeedMax = 1200;
@@ -220,24 +232,27 @@ RocketSettings SceneRetro::getRetroRocket(float hue, float hueChange) {
 		
 	ParticleSystemSettings trails = getPixelTrailParticles(hue, hueChange);
 	ParticleSystemSettings explosion = getPixelExplosionParticles(hue, hueChange);
-	
-	
-	
+
 	explosion.emitDelay = trails.emitLifeTime; 
 
 	rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
 	
-	return rocketSettings;
+	ts.rocketSettings = &rocketSettings;
+	
+	return &ts;
 
 	
 }
 
 
 
-RocketSettings SceneRetro:: getRetroFountain(float hueOffset, float hueChange) {
+TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueChange, float minSpeed, float maxSpeed ) {
 	
-	RocketSettings rocketSettings;
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	//TriggerableRocket* tr = new TriggerableRocket();
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
 	ParticleSystemSettings pss;
 	pss.renderer = new ParticleRendererLowRes(pixelSize);
 	pss.speedMin = 100;
@@ -266,22 +281,26 @@ RocketSettings SceneRetro:: getRetroFountain(float hueOffset, float hueChange) {
 	pss.emitLifeTime = 0.5;
 	pss.emitHueModifierOffset = hueChange;
 	pss.emitSpeedModifier = 0;
-	pss.emitInheritVelocity = 0.5; 
+	pss.emitInheritVelocity = 0.5;
+	pss.timeSpeed = 0.5;
 	
 	ParticleSystemSettings pss2(pss); 
 	pss2.directionZ = 180;
 	
 	pss2.startSound = "RetroFountain";
 	
-	rocketSettings.startSpeedMin = 700;
-	rocketSettings.startSpeedMax = 1200;
+	rocketSettings.startSpeedMin = minSpeed;
+	rocketSettings.startSpeedMax = maxSpeed;
 	rocketSettings.lifeTime = 0.5; 
 	rocketSettings.drag = 0.99;
 	rocketSettings.gravity.y = 1000;
 	rocketSettings.addParticleSystemSetting(pss);
 	rocketSettings.addParticleSystemSetting(pss2);
+	rocketSettings.timeSpeed = 0.5;
 	
-	return rocketSettings;
+	ts->rocketSettings = &rocketSettings;
+	//ts->setTriggerable(tr);
+	return ts;
 	
 };
 

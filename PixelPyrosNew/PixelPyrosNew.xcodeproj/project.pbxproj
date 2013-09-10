@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12BD9CBA17DF414800F28A4F /* TriggerSettingsRocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BD9CB817DF414800F28A4F /* TriggerSettingsRocket.cpp */; };
+		12BD9CBD17DF417A00F28A4F /* FireworkFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BD9CBB17DF417A00F28A4F /* FireworkFactory.cpp */; };
 		12F0EF4B17DCE2F400ADF84C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F0EF4A17DCE2F300ADF84C /* Accelerate.framework */; };
 		12F0EF4D17DCE30400ADF84C /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F0EF4C17DCE30400ADF84C /* QTKit.framework */; };
 		12F0EF5117DCE33700ADF84C /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F0EF4E17DCE33700ADF84C /* TriggerRechargeSettings.cpp */; };
@@ -43,7 +45,6 @@
 		9E33726E17D92A5500EDDB96 /* OscManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E33723F17D92A5500EDDB96 /* OscManager.cpp */; };
 		9E33726F17D92A5500EDDB96 /* SettingsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E33724317D92A5500EDDB96 /* SettingsManager.cpp */; };
 		9E33727017D92A5500EDDB96 /* Trigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E33724A17D92A5500EDDB96 /* Trigger.cpp */; };
-		9E33727117D92A5500EDDB96 /* TriggerableRocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E33724D17D92A5500EDDB96 /* TriggerableRocket.cpp */; };
 		9E33727217D92A5500EDDB96 /* TriggerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E33724F17D92A5500EDDB96 /* TriggerManager.cpp */; };
 		9E33759E17D92ACC00EDDB96 /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 9E33727517D92AC500EDDB96 /* README.markdown */; };
 		9E33759F17D92ACC00EDDB96 /* guiBaseObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E33727717D92AC500EDDB96 /* guiBaseObject.cpp */; };
@@ -182,6 +183,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		12BD9CB817DF414800F28A4F /* TriggerSettingsRocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettingsRocket.cpp; sourceTree = "<group>"; };
+		12BD9CB917DF414800F28A4F /* TriggerSettingsRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsRocket.h; sourceTree = "<group>"; };
+		12BD9CBB17DF417A00F28A4F /* FireworkFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireworkFactory.cpp; sourceTree = "<group>"; };
+		12BD9CBC17DF417A00F28A4F /* FireworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireworkFactory.h; sourceTree = "<group>"; };
 		12F0EF4A17DCE2F300ADF84C /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = ../../../../../../../System/Library/Frameworks/Accelerate.framework; sourceTree = "<group>"; };
 		12F0EF4C17DCE30400ADF84C /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
 		12F0EF4E17DCE33700ADF84C /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
@@ -285,13 +290,9 @@
 		9E33724817D92A5500EDDB96 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
 		9E33724A17D92A5500EDDB96 /* Trigger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trigger.cpp; sourceTree = "<group>"; };
 		9E33724B17D92A5500EDDB96 /* Trigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trigger.h; sourceTree = "<group>"; };
-		9E33724C17D92A5500EDDB96 /* TriggerableBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerableBase.h; sourceTree = "<group>"; };
-		9E33724D17D92A5500EDDB96 /* TriggerableRocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerableRocket.cpp; sourceTree = "<group>"; };
-		9E33724E17D92A5500EDDB96 /* TriggerableRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerableRocket.h; sourceTree = "<group>"; };
 		9E33724F17D92A5500EDDB96 /* TriggerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerManager.cpp; sourceTree = "<group>"; };
 		9E33725017D92A5500EDDB96 /* TriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerManager.h; sourceTree = "<group>"; };
 		9E33725117D92A5500EDDB96 /* TriggerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerPattern.h; sourceTree = "<group>"; };
-		9E33725217D92A5500EDDB96 /* TriggerRendererBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRendererBase.h; sourceTree = "<group>"; };
 		9E33725317D92A5500EDDB96 /* TriggerSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
 		9E33727517D92AC500EDDB96 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		9E33727717D92AC500EDDB96 /* guiBaseObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiBaseObject.cpp; sourceTree = "<group>"; };
@@ -820,18 +821,16 @@
 		9E33724917D92A5500EDDB96 /* Triggers */ = {
 			isa = PBXGroup;
 			children = (
+				12BD9CB817DF414800F28A4F /* TriggerSettingsRocket.cpp */,
+				12BD9CB917DF414800F28A4F /* TriggerSettingsRocket.h */,
 				12F0EF4E17DCE33700ADF84C /* TriggerRechargeSettings.cpp */,
 				12F0EF4F17DCE33700ADF84C /* TriggerRechargeSettings.h */,
 				12F0EF5017DCE33700ADF84C /* TriggerSettings.cpp */,
 				9E33724A17D92A5500EDDB96 /* Trigger.cpp */,
 				9E33724B17D92A5500EDDB96 /* Trigger.h */,
-				9E33724C17D92A5500EDDB96 /* TriggerableBase.h */,
-				9E33724D17D92A5500EDDB96 /* TriggerableRocket.cpp */,
-				9E33724E17D92A5500EDDB96 /* TriggerableRocket.h */,
 				9E33724F17D92A5500EDDB96 /* TriggerManager.cpp */,
 				9E33725017D92A5500EDDB96 /* TriggerManager.h */,
 				9E33725117D92A5500EDDB96 /* TriggerPattern.h */,
-				9E33725217D92A5500EDDB96 /* TriggerRendererBase.h */,
 				9E33725317D92A5500EDDB96 /* TriggerSettings.h */,
 			);
 			path = Triggers;
@@ -1679,6 +1678,8 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				12BD9CBB17DF417A00F28A4F /* FireworkFactory.cpp */,
+				12BD9CBC17DF417A00F28A4F /* FireworkFactory.h */,
 				9E3371E617D9214B00EDDB96 /* ofApp.h */,
 				9E3371E717D9214B00EDDB96 /* ofApp.mm */,
 				9E3371BB17D9210D00EDDB96 /* AppDelegate.h */,
@@ -1846,7 +1847,6 @@
 				9E33726E17D92A5500EDDB96 /* OscManager.cpp in Sources */,
 				9E33726F17D92A5500EDDB96 /* SettingsManager.cpp in Sources */,
 				9E33727017D92A5500EDDB96 /* Trigger.cpp in Sources */,
-				9E33727117D92A5500EDDB96 /* TriggerableRocket.cpp in Sources */,
 				9E33727217D92A5500EDDB96 /* TriggerManager.cpp in Sources */,
 				9E33759F17D92ACC00EDDB96 /* guiBaseObject.cpp in Sources */,
 				9E3375A017D92ACC00EDDB96 /* guiCallback.cpp in Sources */,
@@ -1929,6 +1929,8 @@
 				9E8EA8B317DDF18C00D5E415 /* ofxNSWindower.mm in Sources */,
 				9E8EA8B417DDF18C00D5E415 /* OpenGLContext.mm in Sources */,
 				9E8EA8B517DDF18C00D5E415 /* OpenGLView.mm in Sources */,
+				12BD9CBA17DF414800F28A4F /* TriggerSettingsRocket.cpp in Sources */,
+				12BD9CBD17DF417A00F28A4F /* FireworkFactory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

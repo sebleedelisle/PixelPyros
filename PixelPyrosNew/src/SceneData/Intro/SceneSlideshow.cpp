@@ -8,12 +8,9 @@
 #include "SceneSlideshow.h"
 
 
-SceneSlideshow::SceneSlideshow(string scenename, ParticleSystemManager &psm ): Scene(scenename, psm) {
+SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
     
-	
-	
-	
-	TriggerSettings trigger;
+	TriggerSettings* trigger = new TriggerSettings ;
 	TriggerPattern pattern;
 	//pattern.addTrigger(trigger);
 	addTriggerPattern(pattern);
