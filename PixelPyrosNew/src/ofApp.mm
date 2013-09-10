@@ -320,15 +320,15 @@ void ofApp:: mousePressed(int x, int y, int button ) {
 
 void ofApp:: setupScenes() { 
 	
-	//sceneManager.addScene(new SceneCalibration("Calibration", particleSystemManager));
-	//sceneManager.addScene(new SceneSlideshow("SlideShow", particleSystemManager));
+	sceneManager.addScene(new SceneCalibration("Calibration"));
+	sceneManager.addScene(new SceneSlideshow("SlideShow"));
 	
 	// This scene was to launch the Brighton Digital Festival
 	//sceneManager.addScene(new SceneLaunch("Launch", particleSystemManager));
 
-	sceneManager.addScene(new SceneIntro("Intro", particleSystemManager));
+	sceneManager.addScene(new SceneIntro("Intro"));
 	
-	//sceneManager.addScene(new SceneRetro("Retro", particleSystemManager));
+	sceneManager.addScene(new SceneRetro("Retro"));
 	
 	//sceneManager.addScene(new SceneRealistic("Lights", particleSystemManager));
 	//sceneManager.addScene(new SceneTron("Vectorizer", particleSystemManager));
