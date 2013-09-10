@@ -56,8 +56,8 @@ void TriggerManager :: updateMotion(MotionManager& motionManager, cv::Mat homogr
 		Trigger* trigger = triggers[i];
 		if(!trigger->active) continue;
 		
-		// TODO fixed motion size? 
-		float motion = motionManager.getMotionAtPosition(trigger->pos, trigger->radius*2, homography);
+		// Fixed motion size! 10 pixels radius
+		float motion = motionManager.getMotionAtPosition(trigger->pos, 10, homography);
 		trigger->registerMotion(motion/255);
 	}
 	
