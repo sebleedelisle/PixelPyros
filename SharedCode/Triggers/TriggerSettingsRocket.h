@@ -19,14 +19,14 @@ class TriggerSettingsRocket : public TriggerSettings {
 	
 	TriggerSettingsRocket(); 
 
-	void doTrigger(ofVec3f& pos, float power, float direction);
+	virtual void doTrigger(ofVec3f& pos, float power, float direction);
 
-	void draw(float elapsedtime, ofVec3f pos, float radius, ofColor colour, float unitPower, bool active);
+	virtual void draw(float elapsedtime, ofVec3f pos, float radius, ofColor colour, float unitPower, bool active);
+	
 	
 	ofPath path;
-	
-	
-	PhysicsObject *  makeNewRocket(ofVec3f& pos);
+
+	virtual PhysicsObject *  makeNewRocket(ofVec3f& pos);
 
 	ParticleSystemManager & particleSystemManager;
 	

@@ -24,7 +24,7 @@ class SceneRetro : public Scene {
 	ParticleSystemSettings getPixelExplosionParticles(float hue = -30, float hueChange = 40);
 
 	
-	//TriggerSettings* getFatRocket(float hue = 0);
+	TriggerSettingsRocket* getPixelRocket(float hue = 0);
     
 	unsigned int pixelSize;
     
