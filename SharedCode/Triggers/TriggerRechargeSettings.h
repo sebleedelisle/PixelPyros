@@ -12,10 +12,17 @@ class TriggerRechargeSettings {
 
 	public:
 	
-	//static TriggerRechargeSettings* defaultSettings = new TriggerRechargeSettings();
 
 	
+	static TriggerRechargeSettings* slow;
+	static TriggerRechargeSettings* medium;
+	static TriggerRechargeSettings* fast;
+
 	TriggerRechargeSettings();
+	
+	TriggerRechargeSettings(float restorespeed);
+
+	void initDefaults();
 	
 	// motionTriggerLevel is the amount of motion needed to make something happen
 	float motionTriggerLevel;

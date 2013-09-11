@@ -37,10 +37,6 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename){
 	
 	addTriggerPattern(glitchFountainPattern);
 
-
-
-	
-	
 	
 	RocketTron& glitchRocket = *new RocketTron();
 	glitchRocket.head.renderer = new ParticleRendererGlitchLine(1);
