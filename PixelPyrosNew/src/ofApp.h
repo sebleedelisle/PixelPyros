@@ -16,6 +16,8 @@
 #include "TriggerManager.h"
 #include "ofxAutoControlPanel.h"
 
+#include "LaserManager.h"
+
 #include "SoundPlayer.h"
 
 
@@ -66,6 +68,7 @@ public:
 	
 	
   	ParticleSystemManager& particleSystemManager;
+	LaserManager laserManager;
 	SceneManager sceneManager;
 	TriggerManager& triggerManager;
 	OscManager oscManager;
