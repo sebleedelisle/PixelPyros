@@ -9,9 +9,19 @@
 #include "LaserManager.h"
 
 
+LaserManager * LaserManager :: laserManager = NULL;
+
+LaserManager * LaserManager::instance() {
+	if(laserManager ==NULL) {
+		laserManager = new LaserManager();
+	}
+	return laserManager;
+}
+
+
 LaserManager:: LaserManager() {
 
-	
+
 	isConnected = false;
 	showSyncTest = false;
 	

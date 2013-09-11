@@ -47,7 +47,7 @@ class ofApp : public ofxNSWindowApp {
 	
 public:
 	
-	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()) {
+	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()), laserManager(*LaserManager::instance()) {
  		
  	};
 	
@@ -68,7 +68,7 @@ public:
 	
 	
   	ParticleSystemManager& particleSystemManager;
-	LaserManager laserManager;
+	LaserManager& laserManager;
 	SceneManager sceneManager;
 	TriggerManager& triggerManager;
 	OscManager oscManager;
