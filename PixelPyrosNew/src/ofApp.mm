@@ -87,7 +87,10 @@ void ofApp::setup(){
 	triggerManager.setPattern(pattern);
 	*/
 	
-	
+    ofAddListener(ofEvents().mousePressed, this, &ofApp::mousePressed);
+	ofAddListener(ofEvents().mouseDragged, this, &ofApp::mouseDragged);
+	ofAddListener(ofEvents().mouseReleased, this, &ofApp::mouseReleased);
+	ofAddListener(ofEvents().mouseMoved, this, &ofApp::mouseMoved);
 
 
 }
@@ -379,7 +382,6 @@ void ofApp::initSounds() {
 
 
 void ofApp::mouseMoved( int x, int y ){
-	
 	triggerManager.mouseMoved(x, y);
 	
 	// TO DO
@@ -527,3 +529,9 @@ void ofApp::exit() {
 
 
 }
+
+void ofApp::mousePressed(ofMouseEventArgs &e){}
+void ofApp::mouseDragged(ofMouseEventArgs &e){}
+void ofApp::mouseReleased(ofMouseEventArgs &e){}
+void ofApp::mouseMoved(ofMouseEventArgs &e){}
+
