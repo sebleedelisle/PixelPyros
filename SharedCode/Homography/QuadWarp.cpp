@@ -254,9 +254,9 @@ void QuadWarp :: mousePressed(ofMouseEventArgs &e) {
 	
 		
 	ofVec3f clickPoint(e.x, e.y);
-	
+	    
 	for(int i = 0; i < dstPoints.size(); i++) {
-		if(dstPoints[i].distance(clickPoint) < pointRadius) {
+        if(dstPoints[i].distance(clickPoint) < pointRadius) {
 			curPointIndex = i;
 			ofVec3f &curPoint = dstPoints[i];
 			clickOffset = curPoint - clickPoint;

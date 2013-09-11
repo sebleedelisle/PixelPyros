@@ -1,0 +1,70 @@
+<group>
+    <fill>1</fill>
+    <radius>140</radius>
+    <center>512, 689.633</center>
+    <color>100, 100, 140, 255</color>
+    <circle_res>5</circle_res>
+    <screen_size/>
+<group/>
+	<showParticles>1</showParticles>
+<numParticles>40</numParticles>
+<LaserTestGUI>
+		<showParticles>0</showParticles>
+		<numParticles>27</numParticles>
+		<center>888.163, 384</center>
+		<color>255, 149, 192, 255</color>
+		<circle_res>5</circle_res>
+		<screen_size/>
+	<dot_pre_blank>1</dot_pre_blank>
+	<dot_post_blank>1</dot_post_blank>
+		<dot_max_points>4</dot_max_points>
+	<flicker>1</flicker>
+	<show_move_points>1</show_move_points>
+	<speed>1.775</speed>
+	<move_speed>1.55845</move_speed>
+	<brightness>1</brightness>
+		<move_points_padding>0</move_points_padding>
+	<intensity>1</intensity>
+	<colour_change_offset>-7</colour_change_offset>
+	<Laser_Manager>
+			<intensity>1</intensity>
+			<colour_change_offset>-6</colour_change_offset>
+			<show_move_points>0</show_move_points>
+			<move_speed>2.5741</move_speed>
+			<move_points_padding>0.0666667</move_points_padding>
+			<dot_pre_blank>0</dot_pre_blank>
+			<dot_post_blank>1</dot_post_blank>
+			<dot_max_points>22</dot_max_points>
+		<Etherdream_connect>0</Etherdream_connect>
+		<Etherdream>
+				<Etherdream_connect>0</Etherdream_connect>
+				<status/>
+			</Etherdream>
+			<laser>
+				<intensity>1</intensity>
+				<colour_change_offset>-3</colour_change_offset>
+				<show_move_points>0</show_move_points>
+			</laser>
+			<laser_graphics>
+				<move_speed>3</move_speed>
+				<move_points_padding>0</move_points_padding>
+				<dot_pre_blank>3</dot_pre_blank>
+				<dot_post_blank>3</dot_post_blank>
+				<dot_max_points>7</dot_max_points>
+			</laser_graphics>
+		<status/>
+			<group/>
+		<show_registration>0</show_registration>
+			<show_sync_test>0</show_sync_test>
+		<render_laser_path>0</render_laser_path>
+		<acceleration>1.13428</acceleration>
+			<max_speed>2.098</max_speed>
+		</Laser_Manager>
+	<Show_Particles>0</Show_Particles>
+		<Num_Particles>36</Num_Particles>
+		<Speed>1.63333</Speed>
+		<Particle_Colour>255, 44, 255, 255</Particle_Colour>
+		<Flicker>0.216667</Flicker>
+	<Show_Rectangle>0</Show_Rectangle>
+	</LaserTestGUI>
+</group>
