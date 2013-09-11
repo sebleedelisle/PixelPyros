@@ -80,6 +80,7 @@ void ofApp::setup(){
 	shiftPressed = false;
 
 	triggerManager.updateTriggerSettings(triggerArea, triggerSpacing);
+	
 	/*
 	Trigger trigger;
 	TriggerPattern pattern;

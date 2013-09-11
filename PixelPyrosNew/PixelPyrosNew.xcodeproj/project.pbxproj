@@ -15,6 +15,22 @@
 		12E76F8A17E0AA01002BB0DB /* KeyboardMapping.c in Sources */ = {isa = PBXBuildFile; fileRef = 12E76F8717E0AA01002BB0DB /* KeyboardMapping.c */; };
 		12E76F8B17E0AA01002BB0DB /* KeyboardMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E76F8817E0AA01002BB0DB /* KeyboardMapping.cpp */; };
 		12E76F8E17E0AA0B002BB0DB /* ParameterManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E76F8C17E0AA0B002BB0DB /* ParameterManager.cpp */; };
+		12E76FCE17E0ACC6002BB0DB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 12E76F9117E0ACC6002BB0DB /* .gitignore */; };
+		12E76FCF17E0ACC6002BB0DB /* fatfs_readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 12E76F9417E0ACC6002BB0DB /* fatfs_readme.txt */; };
+		12E76FD017E0ACC6002BB0DB /* openocd.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 12E76F9517E0ACC6002BB0DB /* openocd.cfg */; };
+		12E76FD117E0ACC6002BB0DB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 12E76F9817E0ACC6002BB0DB /* .gitignore */; };
+		12E76FD217E0ACC6002BB0DB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 12E76F9A17E0ACC6002BB0DB /* .gitignore */; };
+		12E76FD317E0ACC6002BB0DB /* etherdream.c in Sources */ = {isa = PBXBuildFile; fileRef = 12E76F9B17E0ACC6002BB0DB /* etherdream.c */; };
+		12E76FD417E0ACC6002BB0DB /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 12E76F9D17E0ACC6002BB0DB /* Makefile */; };
+		12E76FD517E0ACC6002BB0DB /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = 12E76F9E17E0ACC6002BB0DB /* test.c */; };
+		12E76FD617E0ACC6002BB0DB /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 12E76F9F17E0ACC6002BB0DB /* Makefile */; };
+		12E76FD717E0ACC6002BB0DB /* license.md in Resources */ = {isa = PBXBuildFile; fileRef = 12E76FA017E0ACC6002BB0DB /* license.md */; };
+		12E76FD817E0ACC6002BB0DB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 12E76FA117E0ACC6002BB0DB /* README.md */; };
+		12E76FD917E0ACC6002BB0DB /* ofxEtherdream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E76FA317E0ACC6002BB0DB /* ofxEtherdream.cpp */; };
+		12E76FDA17E0ACC6002BB0DB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 12E76FA617E0ACC6002BB0DB /* .gitignore */; };
+		12E76FDB17E0ACC6002BB0DB /* license.md in Resources */ = {isa = PBXBuildFile; fileRef = 12E76FA717E0ACC6002BB0DB /* license.md */; };
+		12E76FE917E0ACC6002BB0DB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 12E76FC717E0ACC6002BB0DB /* README.md */; };
+		12E76FF517E0B108002BB0DB /* LaserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E76FF317E0B108002BB0DB /* LaserManager.cpp */; };
 		12F0EF4B17DCE2F400ADF84C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F0EF4A17DCE2F300ADF84C /* Accelerate.framework */; };
 		12F0EF4D17DCE30400ADF84C /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F0EF4C17DCE30400ADF84C /* QTKit.framework */; };
 		12F0EF5117DCE33700ADF84C /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F0EF4E17DCE33700ADF84C /* TriggerRechargeSettings.cpp */; };
@@ -211,6 +227,33 @@
 		12E76F8917E0AA01002BB0DB /* KeyboardMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardMapping.h; sourceTree = "<group>"; };
 		12E76F8C17E0AA0B002BB0DB /* ParameterManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParameterManager.cpp; sourceTree = "<group>"; };
 		12E76F8D17E0AA0B002BB0DB /* ParameterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterManager.h; sourceTree = "<group>"; };
+		12E76F9117E0ACC6002BB0DB /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		12E76F9417E0ACC6002BB0DB /* fatfs_readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fatfs_readme.txt; sourceTree = "<group>"; };
+		12E76F9517E0ACC6002BB0DB /* openocd.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = openocd.cfg; sourceTree = "<group>"; };
+		12E76F9617E0ACC6002BB0DB /* protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol.h; sourceTree = "<group>"; };
+		12E76F9817E0ACC6002BB0DB /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		12E76F9A17E0ACC6002BB0DB /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		12E76F9B17E0ACC6002BB0DB /* etherdream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = etherdream.c; sourceTree = "<group>"; };
+		12E76F9C17E0ACC6002BB0DB /* etherdream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = etherdream.h; sourceTree = "<group>"; };
+		12E76F9D17E0ACC6002BB0DB /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		12E76F9E17E0ACC6002BB0DB /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
+		12E76F9F17E0ACC6002BB0DB /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		12E76FA017E0ACC6002BB0DB /* license.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.md; sourceTree = "<group>"; };
+		12E76FA117E0ACC6002BB0DB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		12E76FA317E0ACC6002BB0DB /* ofxEtherdream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxEtherdream.cpp; sourceTree = "<group>"; };
+		12E76FA417E0ACC6002BB0DB /* ofxEtherdream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEtherdream.h; sourceTree = "<group>"; };
+		12E76FA617E0ACC6002BB0DB /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		12E76FA717E0ACC6002BB0DB /* license.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.md; sourceTree = "<group>"; };
+		12E76FC717E0ACC6002BB0DB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		12E76FC917E0ACC6002BB0DB /* ofxIldaFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxIldaFrame.h; sourceTree = "<group>"; };
+		12E76FCA17E0ACC6002BB0DB /* ofxIldaPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxIldaPoint.h; sourceTree = "<group>"; };
+		12E76FCB17E0ACC6002BB0DB /* ofxIldaPoly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxIldaPoly.h; sourceTree = "<group>"; };
+		12E76FCC17E0ACC6002BB0DB /* ofxIldaPolyProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxIldaPolyProcessor.h; sourceTree = "<group>"; };
+		12E76FCD17E0ACC6002BB0DB /* ofxIldaRenderTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxIldaRenderTarget.h; sourceTree = "<group>"; };
+		12E76FF117E0B108002BB0DB /* CubicBezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubicBezier.h; sourceTree = "<group>"; };
+		12E76FF217E0B108002BB0DB /* LaserDot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserDot.h; sourceTree = "<group>"; };
+		12E76FF317E0B108002BB0DB /* LaserManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LaserManager.cpp; sourceTree = "<group>"; };
+		12E76FF417E0B108002BB0DB /* LaserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserManager.h; sourceTree = "<group>"; };
 		12F0EF4A17DCE2F300ADF84C /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = ../../../../../../../System/Library/Frameworks/Accelerate.framework; sourceTree = "<group>"; };
 		12F0EF4C17DCE30400ADF84C /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
 		12F0EF4E17DCE33700ADF84C /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
@@ -681,6 +724,104 @@
 			path = Vectorizer;
 			sourceTree = "<group>";
 		};
+		12E76F9017E0ACC6002BB0DB /* ofxEtherdream */ = {
+			isa = PBXGroup;
+			children = (
+				12E76F9117E0ACC6002BB0DB /* .gitignore */,
+				12E76F9217E0ACC6002BB0DB /* libs */,
+				12E76FA017E0ACC6002BB0DB /* license.md */,
+				12E76FA117E0ACC6002BB0DB /* README.md */,
+				12E76FA217E0ACC6002BB0DB /* src */,
+			);
+			name = ofxEtherdream;
+			path = ../addons/ofxEtherdream;
+			sourceTree = "<group>";
+		};
+		12E76F9217E0ACC6002BB0DB /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				12E76F9317E0ACC6002BB0DB /* common */,
+				12E76F9717E0ACC6002BB0DB /* driver */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		12E76F9317E0ACC6002BB0DB /* common */ = {
+			isa = PBXGroup;
+			children = (
+				12E76F9417E0ACC6002BB0DB /* fatfs_readme.txt */,
+				12E76F9517E0ACC6002BB0DB /* openocd.cfg */,
+				12E76F9617E0ACC6002BB0DB /* protocol.h */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		12E76F9717E0ACC6002BB0DB /* driver */ = {
+			isa = PBXGroup;
+			children = (
+				12E76F9817E0ACC6002BB0DB /* .gitignore */,
+				12E76F9917E0ACC6002BB0DB /* libetherdream */,
+				12E76F9F17E0ACC6002BB0DB /* Makefile */,
+			);
+			path = driver;
+			sourceTree = "<group>";
+		};
+		12E76F9917E0ACC6002BB0DB /* libetherdream */ = {
+			isa = PBXGroup;
+			children = (
+				12E76F9A17E0ACC6002BB0DB /* .gitignore */,
+				12E76F9B17E0ACC6002BB0DB /* etherdream.c */,
+				12E76F9C17E0ACC6002BB0DB /* etherdream.h */,
+				12E76F9D17E0ACC6002BB0DB /* Makefile */,
+				12E76F9E17E0ACC6002BB0DB /* test.c */,
+			);
+			path = libetherdream;
+			sourceTree = "<group>";
+		};
+		12E76FA217E0ACC6002BB0DB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				12E76FA317E0ACC6002BB0DB /* ofxEtherdream.cpp */,
+				12E76FA417E0ACC6002BB0DB /* ofxEtherdream.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		12E76FA517E0ACC6002BB0DB /* ofxIlda */ = {
+			isa = PBXGroup;
+			children = (
+				12E76FA617E0ACC6002BB0DB /* .gitignore */,
+				12E76FA717E0ACC6002BB0DB /* license.md */,
+				12E76FC717E0ACC6002BB0DB /* README.md */,
+				12E76FC817E0ACC6002BB0DB /* src */,
+			);
+			name = ofxIlda;
+			path = ../addons/ofxIlda;
+			sourceTree = "<group>";
+		};
+		12E76FC817E0ACC6002BB0DB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				12E76FC917E0ACC6002BB0DB /* ofxIldaFrame.h */,
+				12E76FCA17E0ACC6002BB0DB /* ofxIldaPoint.h */,
+				12E76FCB17E0ACC6002BB0DB /* ofxIldaPoly.h */,
+				12E76FCC17E0ACC6002BB0DB /* ofxIldaPolyProcessor.h */,
+				12E76FCD17E0ACC6002BB0DB /* ofxIldaRenderTarget.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		12E76FF017E0B108002BB0DB /* Laser */ = {
+			isa = PBXGroup;
+			children = (
+				12E76FF117E0B108002BB0DB /* CubicBezier.h */,
+				12E76FF217E0B108002BB0DB /* LaserDot.h */,
+				12E76FF317E0B108002BB0DB /* LaserManager.cpp */,
+				12E76FF417E0B108002BB0DB /* LaserManager.h */,
+			);
+			path = Laser;
+			sourceTree = "<group>";
+		};
 		9E3371BF17D9210D00EDDB96 /* SceneData */ = {
 			isa = PBXGroup;
 			children = (
@@ -709,6 +850,7 @@
 		9E3371EB17D92A5500EDDB96 /* SharedCode */ = {
 			isa = PBXGroup;
 			children = (
+				12E76FF017E0B108002BB0DB /* Laser */,
 				9E3371EC17D92A5500EDDB96 /* Camera */,
 				9E3371FD17D92A5500EDDB96 /* Homography */,
 				9E33720317D92A5500EDDB96 /* LetterWriter */,
@@ -1661,6 +1803,8 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				12E76F9017E0ACC6002BB0DB /* ofxEtherdream */,
+				12E76FA517E0ACC6002BB0DB /* ofxIlda */,
 				9E8EA7D417DDF18B00D5E415 /* ofxNSWindower */,
 				9EC0887D17DD2FE4009D5AEE /* ofxGui */,
 				9E33796E17D93A6A00EDDB96 /* ofxOsc */,
@@ -1848,6 +1992,16 @@
 				9E33759E17D92ACC00EDDB96 /* README.markdown in Resources */,
 				9E33776B17D92ACC00EDDB96 /* license.md in Resources */,
 				9E33776C17D92ACC00EDDB96 /* readme.md in Resources */,
+				12E76FCE17E0ACC6002BB0DB /* .gitignore in Resources */,
+				12E76FCF17E0ACC6002BB0DB /* fatfs_readme.txt in Resources */,
+				12E76FD017E0ACC6002BB0DB /* openocd.cfg in Resources */,
+				12E76FD117E0ACC6002BB0DB /* .gitignore in Resources */,
+				12E76FD217E0ACC6002BB0DB /* .gitignore in Resources */,
+				12E76FD717E0ACC6002BB0DB /* license.md in Resources */,
+				12E76FD817E0ACC6002BB0DB /* README.md in Resources */,
+				12E76FDA17E0ACC6002BB0DB /* .gitignore in Resources */,
+				12E76FDB17E0ACC6002BB0DB /* license.md in Resources */,
+				12E76FE917E0ACC6002BB0DB /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1999,6 +2153,12 @@
 				12E76F8A17E0AA01002BB0DB /* KeyboardMapping.c in Sources */,
 				12E76F8B17E0AA01002BB0DB /* KeyboardMapping.cpp in Sources */,
 				12E76F8E17E0AA0B002BB0DB /* ParameterManager.cpp in Sources */,
+				12E76FD317E0ACC6002BB0DB /* etherdream.c in Sources */,
+				12E76FD417E0ACC6002BB0DB /* Makefile in Sources */,
+				12E76FD517E0ACC6002BB0DB /* test.c in Sources */,
+				12E76FD617E0ACC6002BB0DB /* Makefile in Sources */,
+				12E76FD917E0ACC6002BB0DB /* ofxEtherdream.cpp in Sources */,
+				12E76FF517E0B108002BB0DB /* LaserManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
