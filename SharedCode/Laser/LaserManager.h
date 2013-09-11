@@ -25,6 +25,10 @@ class LaserManager {
 
 	public:
 	
+	static LaserManager * instance();
+	static LaserManager * laserManager;
+
+	
 	LaserManager();
 	
 	void update(); 
