@@ -39,6 +39,10 @@ void LaserManager:: disconnectFromEtherdream() {
 }
 
 void LaserManager:: setup () {
+    
+    appWidth = ofGetWidth();
+    appHeight = ofGetHeight();
+    
     isConnected = false;
 	showSyncTest = false;
 	
@@ -68,7 +72,7 @@ void LaserManager:: setup () {
     //	float y1 = 0;
     //	float y2 = APP_HEIGHT;
 	
-	warp = QuadWarp("laserWarp");
+	warp.label = "laserWarp";
 	
 	warp.setDstPoint(0, ofVec2f(x1,y1));
 	warp.setDstPoint(1, ofVec2f(x2,y1));

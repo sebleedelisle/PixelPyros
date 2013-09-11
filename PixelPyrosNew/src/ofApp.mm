@@ -87,12 +87,13 @@ void ofApp::setup(){
 	pattern.addTrigger(trigger);
 	triggerManager.setPattern(pattern);
 	*/
-	
+    
+	/*
     ofAddListener(ofEvents().mousePressed, this, &ofApp::mousePressed);
 	ofAddListener(ofEvents().mouseDragged, this, &ofApp::mouseDragged);
 	ofAddListener(ofEvents().mouseReleased, this, &ofApp::mouseReleased);
 	ofAddListener(ofEvents().mouseMoved, this, &ofApp::mouseMoved);
-
+     */
     laserManager.setup();
 
 }
@@ -528,7 +529,6 @@ void ofApp::eventsIn(guiCallbackData & data){
 
 
 void ofApp::exit() { 
-
 
 }
 
