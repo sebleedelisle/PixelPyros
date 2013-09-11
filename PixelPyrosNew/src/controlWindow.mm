@@ -1,7 +1,7 @@
 
 #include "controlWindow.h"
 
-controlWindow::controlWindow(ofApp* app){
+controlWindow::controlWindow(ofApp* app):laserManager(*LaserManager::instance()){
     mainApp = app;
 }
 
@@ -32,6 +32,45 @@ void controlWindow::setup() {
     gui.add(labelDemo.setup("Label Demo","label text"));
     
     buttonDemo.addListener(this, &controlWindow::fullscreenButtonPressed);
+    
+    laserGui.ofxBaseGui::setPosition(500, 100);
+    laserGui.useFrameBuffer(true);
+    laserGui.setDefaultWidth(400);
+    
+    laserGui.setDefaultHeight(18);
+	laserGui.setDefaultWidth(300);
+	laserGui.setDefaultTextPadding(7);
+	
+	
+	laserGui.setDefaultSpacing(2);
+	laserGui.setDefaultElementSpacing(5);
+	laserGui.setDefaultElementIndentation(1);
+    
+	
+	//gui.setSpacing
+	laserGui.loadFont("Verdana.ttf", 10, false);
+	
+	//ofDrawBitmapString("HELLO", 0,0);
+	
+	
+	laserGui.setup("LaserTestGUI"); // most of the time you don't need a name
+	
+	//gui.setSize(500,30);
+	//gui.setUseTTF(true);
+	laserGui.add(showParticles.setup("Show Particles", true));
+	laserGui.add(showRectangle.setup("Show Rectangle", false));
+	laserGui.add(speed.set( "Speed", 1, 0, 5 ));
+	laserGui.add(numParticles.set( "Num Particles", 40, 1, 300 ));
+	
+	
+	laserGui.add(color.setup("Particle Colour",ofColor(100,100,140),ofColor(0,0),ofColor(255,255)));
+	laserGui.add(particleFlicker.set("Flicker",0.5,0,1));
+	laserGui.setPosition(0,0);
+	laserGui.add(laserManager.parameters);
+	
+    
+	laserGui.loadFromFile("settings.xml");
+
 
 }
 
@@ -40,7 +79,6 @@ void controlWindow::fullscreenButtonPressed(){
 }
 
 void controlWindow::update() {
-	
 }
 
 void controlWindow::draw() {
@@ -50,6 +88,7 @@ void controlWindow::draw() {
 	ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
     
     gui.draw();
+    laserGui.draw();
 
 }
 
