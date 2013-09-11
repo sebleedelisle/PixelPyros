@@ -71,6 +71,4 @@ public:
 	ofMesh mesh;
 	
 	
-	
-	
 };

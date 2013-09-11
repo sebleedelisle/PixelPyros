@@ -17,7 +17,8 @@ class QuadWarp {
 	
 	QuadWarp (string saveLabel = "default");
 	
-	void draw(bool lockAxis = false);
+	void draw();
+	void draw(bool lockAxis);
 	
 	void mousePressed(ofMouseEventArgs &e);
 	void mouseDragged(ofMouseEventArgs &e);

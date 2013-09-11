@@ -38,7 +38,7 @@ void TriggerSettings::doTrigger(ofVec3f& pos, float power) {
 };
 
 void TriggerSettings::doTrigger(ofVec3f& pos, float power, float direction) {
-	ofLog(OF_LOG_WARNING, "triggered");
+	//ofLog(OF_LOG_WARNING, "triggered");
 };
 
 
