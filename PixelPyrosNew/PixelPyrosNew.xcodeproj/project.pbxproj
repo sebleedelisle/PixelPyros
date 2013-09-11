@@ -662,11 +662,11 @@
 		12BD9CD517DF78B200F28A4F /* Vectorizer */ = {
 			isa = PBXGroup;
 			children = (
+				12BD9CD917DF78B200F28A4F /* SceneVectorizer.cpp */,
+				12BD9CDA17DF78B200F28A4F /* SceneVectorizer.h */,
 				12BD9CD617DF78B200F28A4F /* RocketThinFountain.h */,
 				12BD9CD717DF78B200F28A4F /* RocketTron.h */,
 				12BD9CD817DF78B200F28A4F /* RocketTronFountain.h */,
-				12BD9CD917DF78B200F28A4F /* SceneVectorizer.cpp */,
-				12BD9CDA17DF78B200F28A4F /* SceneVectorizer.h */,
 				12BD9CDB17DF78B200F28A4F /* StretchyNet.h */,
 				12BD9CDC17DF78B200F28A4F /* StretchyNetPoint.h */,
 			);

@@ -12,7 +12,8 @@
 TriggerRechargeSettings* TriggerSettings::defaultRechargeSettings = new TriggerRechargeSettings();
 
 
-TriggerSettings* TriggerSettings::blank = new TriggerSettings();
+TriggerSettings* TriggerSettings::blank = new TriggerSettings() ;
+
 
 TriggerSettings::TriggerSettings() {
 	
@@ -23,7 +24,8 @@ TriggerSettings::TriggerSettings() {
 	
 	hue = 0;
 	saturation = 0;
-
+	radius = 10;
+	
 	
 }
 
@@ -40,7 +42,7 @@ void TriggerSettings::doTrigger(ofVec3f& pos, float power, float direction) {
 };
 
 
-void TriggerSettings::draw(float elapsedtime, ofVec3f pos, float radius, ofColor colour, float unitPower, bool active ) {
+void TriggerSettings::draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active ) {
 	
 	ofPushStyle();
 	ofNoFill();

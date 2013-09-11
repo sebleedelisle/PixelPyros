@@ -8,8 +8,6 @@
 
 Trigger :: Trigger(){
 	
-	radius = 10;
-	
 	// the amount typename = "TriggerRocket"; of power a rocket takes away
 	elapsedTime = 0;
 	lastTriggerTime = 0;
@@ -198,7 +196,7 @@ void Trigger :: draw() {
 	c.setSaturation(settings->saturation);
 	c.setHue(settings->hue);
 
-	if(settings!=NULL) settings->draw(elapsedTime, pos, radius, c, unitPower, active);
+	if(settings!=NULL) settings->draw(elapsedTime, pos,  c, unitPower, active);
 	//else ofLog(OF_LOG_WARNING, "No renderer for trigger");
 	
 	//ofDrawBitmapString(ofToString(motionLevel), pos);
