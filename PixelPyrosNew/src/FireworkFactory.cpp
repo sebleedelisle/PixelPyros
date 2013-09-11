@@ -58,6 +58,7 @@ TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChan
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->rocketSettings = &rocketSettings;
+	ts->rechargeSettings = TriggerRechargeSettings::medium; 
 	
 	return ts;
 	
@@ -306,6 +307,8 @@ TriggerSettingsRocket* FireworkFactory :: getFountain(float hueStartOffset , flo
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->rocketSettings = &rocketSettings;
+	
+	ts->rechargeSettings = TriggerRechargeSettings::fast;
 	
 	return ts;
 	

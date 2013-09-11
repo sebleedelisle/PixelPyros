@@ -265,12 +265,12 @@ void ofApp::keyPressed(int key){
     
 	//if(!cameraManager.warper.guiVisible) {
 			
-		if(key==KEY_LEFT_ARROW) {
+		if(key==OF_KEY_LEFT) {
 			if(shiftPressed)
 				sceneManager.prevScene();
 			else
 				sceneManager.previousArrangement();
-		} else if(key==KEY_RIGHT_ARROW) {
+		} else if(key==OF_KEY_RIGHT) {
 			if(shiftPressed)
 				sceneManager.nextScene();
 			else
