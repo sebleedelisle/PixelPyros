@@ -16,6 +16,8 @@
 #include "TriggerManager.h"
 #include "ofxAutoControlPanel.h"
 
+#include "LaserManager.h"
+
 #include "SoundPlayer.h"
 
 
@@ -45,7 +47,7 @@ class ofApp : public ofxNSWindowApp {
 	
 public:
 	
-	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()) {
+	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()), laserManager(*LaserManager::instance()) {
  		
  	};
 	
@@ -70,6 +72,7 @@ public:
 	void mouseMoved(ofMouseEventArgs &e);
 	
   	ParticleSystemManager& particleSystemManager;
+	LaserManager& laserManager;
 	SceneManager sceneManager;
 	TriggerManager& triggerManager;
 	OscManager oscManager;
