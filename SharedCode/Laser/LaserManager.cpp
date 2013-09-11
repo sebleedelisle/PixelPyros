@@ -21,12 +21,29 @@ LaserManager * LaserManager::instance() {
 
 LaserManager:: LaserManager() {
 
+}
 
+
+void LaserManager:: connectToEtherdream() {
+
+	etherdream.setup();
+    etherdream.setPPS(50000);
+	isConnected = true;
+	
+}
+void LaserManager:: disconnectFromEtherdream() {
+	
+	etherdream.stop();
 	isConnected = false;
+	
+}
+
+void LaserManager:: setup () {
+    isConnected = false;
 	showSyncTest = false;
 	
 	minPoints = 600;
-
+    
 	white.set(1,1,1);
 	black.set(0,0,0);
 	
@@ -39,17 +56,17 @@ LaserManager:: LaserManager() {
 	showRegistration = true;
 	showMovePoints = false;
 	renderLaserPath = true;
-	intensity = 1; 
-
+	intensity = 1;
+    
 	float x1 = appWidth*0.2;
 	float x2 = appWidth*0.7;
 	float y1 = appHeight*0.2;
 	float y2 = appHeight*0.65;
 	
-//	float x1 = 0;
-//	float x2 = APP_WIDTH;
-//	float y1 = 0;
-//	float y2 = APP_HEIGHT;
+    //	float x1 = 0;
+    //	float x2 = APP_WIDTH;
+    //	float y1 = 0;
+    //	float y2 = APP_HEIGHT;
 	
 	warp = QuadWarp("laserWarp");
 	
@@ -63,7 +80,7 @@ LaserManager:: LaserManager() {
 	warp.setSrcPoint(2, ofVec2f(appWidth,appHeight));
 	warp.setSrcPoint(3, ofVec2f(0,appHeight));
 	
-	warp.loadSettings(); 
+	warp.loadSettings();
 	
 	intensity = 1;
 	dotPreBlank = 3;
@@ -79,7 +96,7 @@ LaserManager:: LaserManager() {
 	
 	
 	//p2.setName("laser");
-
+    
 	parameters.add(intensity.set("intensity", 1, 0, 1));
 	parameters.add(colourChangeDelay.set("colour change offset", -6, -15, 15));
 	
@@ -101,35 +118,21 @@ LaserManager:: LaserManager() {
 	
 	parameters.add(acceleration.set("acceleration", 0.5, 0.001, 20));
 	parameters.add(maxSpeed.set("max speed", 20,0.1, 100));
-	 
-
+    
+    
 	
-		//	parameters.add(p1);
-//	parameters.add(p2);
-//	parameters.add(p3);
-
+    //	parameters.add(p1);
+    //	parameters.add(p2);
+    //	parameters.add(p3);
+    
 	
 	colourChangeDelay = -6;
 	
 	warp.visible = true;
-	 
+    
 	warp.dragSpeed = 1; 
-
-}
-
-
-void LaserManager:: connectToEtherdream() {
-
-	etherdream.setup();
-    etherdream.setPPS(50000);
-	isConnected = true;
-	
-}
-void LaserManager:: disconnectFromEtherdream() {
-	
-	etherdream.stop();
-	isConnected = false;
-	
+    
+    
 }
 
 void LaserManager:: update() {

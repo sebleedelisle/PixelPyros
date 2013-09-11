@@ -31,7 +31,8 @@ class LaserManager {
 	
 	LaserManager();
 	
-	void update(); 
+	void setup();
+    void update();
 	
 	bool my_compare( ofPoint a, ofPoint b){
 		return a.y < b.y;
@@ -125,8 +126,8 @@ class LaserManager {
 	vector<ofxIlda::Point> ildaPoints;
 	vector<ofPoint> ofPoints;
 	
-	float appWidth = ofGetWidth();
-	float appHeight = ofGetHeight();
+	float appWidth; //= ofGetWidth();
+	float appHeight; //= ofGetHeight();
 
 
 };

@@ -10,6 +10,7 @@ class controlWindow : public ofxNSWindowApp {
 
 protected:
     ofxPanel gui;
+	ofxPanel laserGui;
     ofxToggle toggleDemo;
     ofxSlider<float> sliderDemo;
     ofxSlider<int> intSliderDemo;
@@ -18,6 +19,16 @@ protected:
     ofxLabel labelDemo;
     ofApp* mainApp;
     
+    ofParameter<int> numParticles;
+	ofxColorSlider color;
+	ofParameter<float> particleFlicker;
+	ofParameter<float> speed;
+    
+    ofxToggle showParticles;
+	ofxToggle showRectangle;
+
+    LaserManager& laserManager;
+
 public:
 	controlWindow(ofApp*);
 	

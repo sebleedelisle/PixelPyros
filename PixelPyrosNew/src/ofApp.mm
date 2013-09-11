@@ -93,6 +93,7 @@ void ofApp::setup(){
 	ofAddListener(ofEvents().mouseReleased, this, &ofApp::mouseReleased);
 	ofAddListener(ofEvents().mouseMoved, this, &ofApp::mouseMoved);
 
+    laserManager.setup();
 
 }
 
