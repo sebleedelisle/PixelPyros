@@ -39,6 +39,11 @@ QuadWarp :: QuadWarp (string saveLabel) {
 
 }
 
+void QuadWarp :: draw() {
+	QuadWarp ::draw(ofGetKeyPressed(OF_KEY_SHIFT));
+
+}
+
 void QuadWarp :: draw(bool lockAxis) {
 	
 	if(!visible) return;

@@ -77,6 +77,10 @@ class StretchyNet {
 		
 		vector <PhysicsObject*> & physicsObjects = psm.physicsObjects;
 		
+		
+		float area = 150;
+		float bendiness = 20;
+		
 		int expectedNumUpdates = elapsedTime*50;
 		
 		while(updateCount < expectedNumUpdates) {
@@ -88,12 +92,12 @@ class StretchyNet {
 				
 				for(std::vector<PhysicsObject*>::iterator it2 = physicsObjects.begin(); it2 != physicsObjects.end(); ++it2) {
 					PhysicsObject* po = *it2;
-					if(!po->enabled) continue;
+					if((!po->enabled) || (!po->life.active)) continue;
 					
 					float distsquared = po->pos.distanceSquared(p);
-					if(distsquared<(200*200)){
+					if(distsquared<(area*area)){
 						float dist = sqrt(distsquared);
-						float power = (200-dist)/200 * 6;
+						float power = (area-dist)/area * bendiness;
 						p +=  (power*((p-po->pos)/dist));
 						
 						
@@ -130,7 +134,7 @@ class StretchyNet {
 		for(std::vector<StretchyNetPoint>::iterator it = points.begin(); it != points.end(); ++it) {
 			
 			mesh.addVertex(*it);
-			float strength = ofMap(it->vel.lengthSquared(),0,10,0.05,0.3,true) * brightness;
+			float strength = ofMap(it->vel.lengthSquared(),0,20*20,0.05,0.8,true) * brightness;
 			mesh.addColor(ofColor(strength*180,strength*255,(strength*255) + 0));
 		}
 		

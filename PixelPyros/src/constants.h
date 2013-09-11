@@ -9,9 +9,9 @@
 #ifndef PixelPyros_constants_h
 #define PixelPyros_constants_h
 
-#define APP_SCALE 1
-#define APP_WIDTH 768*2*APP_SCALE
-#define APP_HEIGHT 1024*APP_SCALE
+//#define APP_SCALE 1
+#define APP_WIDTH 768*2 //*APP_SCALE
+#define APP_HEIGHT 1024 //*APP_SCALE
 
 
 #endif

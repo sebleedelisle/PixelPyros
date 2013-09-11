@@ -31,6 +31,7 @@
 		12E76FDB17E0ACC6002BB0DB /* license.md in Resources */ = {isa = PBXBuildFile; fileRef = 12E76FA717E0ACC6002BB0DB /* license.md */; };
 		12E76FE917E0ACC6002BB0DB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 12E76FC717E0ACC6002BB0DB /* README.md */; };
 		12E76FF517E0B108002BB0DB /* LaserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12E76FF317E0B108002BB0DB /* LaserManager.cpp */; };
+		12EB3B6517E0C549002D90A0 /* SceneNadia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3B6317E0C549002D90A0 /* SceneNadia.cpp */; };
 		12F0EF4B17DCE2F400ADF84C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F0EF4A17DCE2F300ADF84C /* Accelerate.framework */; };
 		12F0EF4D17DCE30400ADF84C /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F0EF4C17DCE30400ADF84C /* QTKit.framework */; };
 		12F0EF5117DCE33700ADF84C /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F0EF4E17DCE33700ADF84C /* TriggerRechargeSettings.cpp */; };
@@ -254,6 +255,8 @@
 		12E76FF217E0B108002BB0DB /* LaserDot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserDot.h; sourceTree = "<group>"; };
 		12E76FF317E0B108002BB0DB /* LaserManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LaserManager.cpp; sourceTree = "<group>"; };
 		12E76FF417E0B108002BB0DB /* LaserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserManager.h; sourceTree = "<group>"; };
+		12EB3B6317E0C549002D90A0 /* SceneNadia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneNadia.cpp; sourceTree = "<group>"; };
+		12EB3B6417E0C549002D90A0 /* SceneNadia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneNadia.h; sourceTree = "<group>"; };
 		12F0EF4A17DCE2F300ADF84C /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = ../../../../../../../System/Library/Frameworks/Accelerate.framework; sourceTree = "<group>"; };
 		12F0EF4C17DCE30400ADF84C /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
 		12F0EF4E17DCE33700ADF84C /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
@@ -822,9 +825,19 @@
 			path = Laser;
 			sourceTree = "<group>";
 		};
+		12EB3B6217E0C539002D90A0 /* NadiaScene */ = {
+			isa = PBXGroup;
+			children = (
+				12EB3B6317E0C549002D90A0 /* SceneNadia.cpp */,
+				12EB3B6417E0C549002D90A0 /* SceneNadia.h */,
+			);
+			path = NadiaScene;
+			sourceTree = "<group>";
+		};
 		9E3371BF17D9210D00EDDB96 /* SceneData */ = {
 			isa = PBXGroup;
 			children = (
+				12EB3B6217E0C539002D90A0 /* NadiaScene */,
 				12BD9CD517DF78B200F28A4F /* Vectorizer */,
 				12BD9CC017DF44A200F28A4F /* Retro */,
 				9E3371C017D9210D00EDDB96 /* Intro */,
@@ -2159,6 +2172,7 @@
 				12E76FD617E0ACC6002BB0DB /* Makefile in Sources */,
 				12E76FD917E0ACC6002BB0DB /* ofxEtherdream.cpp in Sources */,
 				12E76FF517E0B108002BB0DB /* LaserManager.cpp in Sources */,
+				12EB3B6517E0C549002D90A0 /* SceneNadia.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -65,7 +65,7 @@ void ofApp::setup(){
 	gui.hide();
 	
 	// TODO FBO oversamples now so check performance / smoothing
-	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 0);
+	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4);
 	
 	fbo.begin();
 	ofClear(0,0,0);
@@ -84,6 +84,7 @@ void ofApp::setup(){
 	triggerManager.setPattern(pattern);
 	*/
 	
+	laserManager.setup();
 	
 
 
@@ -159,49 +160,21 @@ void ofApp::draw(){
 	
 	if(useFbo) {
 		fbo.begin();
-		
-		
-		
-//		FOR TRAILS :
-//		ofEnableAlphaBlending();
-//		ofSetColor(0, 100);
-//		ofRect(0,0,APP_WIDTH,APP_HEIGHT);
-//		ofDisableAlphaBlending();
-//		
 		ofClear(0);
-		//ofSetColor(255);
-        
 	}
 	
 	if(drawCameraIntoFBO)
 		cameraManager.draw(0,0);
-	
 
-	//ofPushMatrix();
-	
-	//ofEnableAlphaBlending();
+
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
 	
 	particleSystemManager.draw();
 	
 	triggerManager.draw();
-	
-    //ofPopMatrix();
-    
-	// this draws all the triggers, should be outside of the rotation upwards
-    // a better solution would be to alter matrix for the particle system 
-    // dependent on start position.
-	
+	    
 	sceneManager.draw(); 
-	
-	/* 
-	//DRAWS TRIGGER RECTANGLE
-	 
-	ofSetColor(255);
-	ofNoFill();
-	ofRect(triggerArea);
-	*/
-	
+		
 	if(useFbo) {
 		fbo.end();
         
@@ -214,26 +187,13 @@ void ofApp::draw(){
 //	ofDrawBitmapString(ofToString(particleSystemManager.particleSystems.size()),20,35);
 //	ofDrawBitmapString(ofToString(particleSystemManager.activeParticleCount),20,50);
 //	ofDrawBitmapString(ofToString(particleSystemManager.activePhysicsObjectCount),20,65);
-    
-//	ofDrawBitmapString("L: " + ofToString(gui.getValueF("SHADER_BLACK")),20,150);
-//	ofDrawBitmapString("H: " + ofToString(gui.getValueF("SHADER_WHITE")),20,165);
-//	ofDrawBitmapString("G: " + ofToString(gui.getValueF("SHADER_GAMMA")),20,180);
-//	ofDrawBitmapString("Bloom: " + ofToString(gui.getValueF("SHADER_BLOOM")),20,195);
-    
-	// DEBUG DATA FOR SCENES / triggerPatterns / TRIGGERS.
-	// Should probably put this in a GUI or something... :) 
-	
-	
-	
+
 	ofDisableBlendMode();
 	ofDisableAlphaBlending();
 	
-	//ofFill();
-	
-	
 	// draw the warper UIs if necessary
-	fboWarper1.draw(ofGetKeyPressed(OF_KEY_SHIFT));
-	fboWarper2.draw(ofGetKeyPressed(OF_KEY_SHIFT));
+	fboWarper1.draw();
+	fboWarper2.draw();
 	
  
     

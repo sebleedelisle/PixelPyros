@@ -240,6 +240,8 @@ TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
 	
 	ts.rocketSettings = &rocketSettings;
 	
+	ts.rechargeSettings = TriggerRechargeSettings::medium;
+	
 	return &ts;
 
 	
@@ -299,6 +301,7 @@ TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueC
 	rocketSettings.timeSpeed = 0.5;
 	
 	ts->rocketSettings = &rocketSettings;
+	ts->rechargeSettings = TriggerRechargeSettings::fast;
 	//ts->setTriggerable(tr);
 	return ts;
 	

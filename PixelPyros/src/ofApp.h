@@ -11,10 +11,15 @@
 #include "SettingsManager.h"
 #include "ParticleSystemManager.h"
 #include "CameraManagerWarped.h"
-#include "SoundPlayer.h"
 #include "MotionManager.h"
 #include "TriggerManager.h"
 #include "ofxAutoControlPanel.h"
+
+#include "LaserManager.h"
+
+#include "SoundPlayer.h"
+
+
 //
 //#include "SceneSpace.h"
 #include "SceneVectorizer.h"
@@ -37,18 +42,18 @@
 
 #include "TextWriter.h"
 
-class ofApp : public ofBaseApp{
+class ofApp :public ofBaseApp{
 	
 public:
 	
-	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()) {
-		
-	};
+	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()), laserManager(*LaserManager::instance()) {
+ 		
+ 	};
 	
 	void setup();
 	void update();
 	void draw();
-	void exit(); 
+	void exit();
 	void mousePressed( int x, int y, int button );
 	void mouseMoved( int x, int y );
 	void keyPressed( int key );
@@ -56,12 +61,17 @@ public:
 	
 	void setupControlPanel();
 	void eventsIn(guiCallbackData & data);
-
-	void setupScenes();
-	void initSounds(); 
 	
+	void setupScenes();
+	void initSounds();
+	
+//    void mousePressed(ofMouseEventArgs &e);
+//	void mouseDragged(ofMouseEventArgs &e);
+//	void mouseReleased(ofMouseEventArgs &e);
+//	void mouseMoved(ofMouseEventArgs &e);
 	
   	ParticleSystemManager& particleSystemManager;
+	LaserManager& laserManager;
 	SceneManager sceneManager;
 	TriggerManager& triggerManager;
 	OscManager oscManager;
@@ -70,10 +80,10 @@ public:
 	MotionManager motionManager;
 	SoundPlayer& soundPlayer;
 	
-	ofFbo fbo; 
-	bool useFbo; 
+	ofFbo fbo;
+	bool useFbo;
 	
-	ofxAutoControlPanel gui; 
+	ofxAutoControlPanel gui;
 	
 	float lastUpdateTime;
 	
@@ -97,7 +107,7 @@ public:
 	
 	
 	
-	float testValue; 
+	float testValue;
     
 private:
     

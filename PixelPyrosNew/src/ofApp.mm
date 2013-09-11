@@ -244,6 +244,8 @@ void ofApp::draw(){
 	fboWarper1.draw(ofGetKeyPressed(OF_KEY_SHIFT));
 	fboWarper2.draw(ofGetKeyPressed(OF_KEY_SHIFT));
 	
+	laserManager.update();
+	
  
     
 }
