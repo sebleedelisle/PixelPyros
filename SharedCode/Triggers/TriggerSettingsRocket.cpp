@@ -37,7 +37,7 @@ PhysicsObject * TriggerSettingsRocket:: makeNewRocket(ofVec3f& pos) {
 }
 
 
-void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float radius, ofColor colour, float unitPower, bool active ) {
+void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active ) {
 	
 	//elapsedTime+=deltaTime;
 	

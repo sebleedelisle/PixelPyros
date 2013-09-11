@@ -24,6 +24,7 @@ class TriggerSettings {
 	float hue;
 	float saturation;
 	float elapsedTime;
+	float radius;
 	
 	
 	TriggerRechargeSettings* rechargeSettings;
@@ -35,7 +36,7 @@ class TriggerSettings {
 	virtual void doTrigger(ofVec3f& pos, float power, float direction);
 
 	
-	virtual void draw(float elapsedtime, ofVec3f pos, float radius, ofColor colour, float unitPower, bool active);
+	virtual void draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active);
 
 
 

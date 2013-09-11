@@ -68,7 +68,7 @@ void ofApp::setup(){
 	gui.hide();
 	
 	// TODO FBO oversamples now so check performance / smoothing
-	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 0);
+	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGB, 4);
 	
 	fbo.begin();
 	ofClear(0,0,0);
