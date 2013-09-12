@@ -60,7 +60,7 @@
 		<acceleration>1.13428</acceleration>
 			<max_speed>2.098</max_speed>
 		</Laser_Manager>
-	<Show_Particles>1</Show_Particles>
+	<Show_Particles>0</Show_Particles>
 		<Num_Particles>36</Num_Particles>
 		<Speed>1.58333</Speed>
 		<Particle_Colour>255, 255, 255, 255</Particle_Colour>

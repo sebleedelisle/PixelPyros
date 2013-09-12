@@ -85,6 +85,7 @@ void ofApp::setup(){
 	*/
 	
 	laserManager.setup();
+	//laserManager.renderLaserPath = true;
 	
     /* 
         Now that all of the parameters should be registered with the 
@@ -174,6 +175,7 @@ void ofApp::draw(){
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
 	
 	particleSystemManager.draw();
+	laserManager.update();
 	
 	triggerManager.draw();
 	    
@@ -289,6 +291,7 @@ void ofApp:: setupScenes() {
 	
 	//sceneManager.addScene(new SceneRealistic("Lights", particleSystemManager));
 	sceneManager.addScene(new SceneVectorizer("Vectorizer"));
+	sceneManager.addScene(new SceneNadia("Nadia"));
 	
 	//sceneManager.addScene(new SceneSpace("Stargazer", particleSystemManager));
 	
