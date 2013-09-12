@@ -20,14 +20,19 @@ class ParameterManager {
     
     void setup();
     
-    void registerParameter(ofAbstractParameter);
+    void registerParameter(ofAbstractParameter * params);
     
-    ofParameter<bool> getBoolParameter();
-    ofParameter<float> getFloatParamter();
-    ofParameter<int> getIntParamter();
+    void registerParameterGroup(string groupName, ofParameterGroup* group);
+    
+    ofParameter<bool> getBoolParameter(string name);
+    ofParameter<float> getFloatParamter(string name);
+    ofParameter<int> getIntParamter(string name);
+    ofParameterGroup * getParameterGroup(string groupName);
     
     protected:
     static ParameterManager * parameterManager;
     
+    map<string,ofAbstractParameter*> params;
+    map<string,ofParameterGroup*> paramGroups;
 };
 
