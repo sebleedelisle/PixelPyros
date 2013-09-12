@@ -74,6 +74,7 @@ void ofApp::setup(){
 	oscManager.setup () ;
 	
     paused = false;
+    altPressed = false;
 	shiftPressed = false;
 
 	triggerManager.updateTriggerSettings(triggerArea, triggerSpacing);
@@ -209,68 +210,77 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     
 	//bool shiftPressed = (glutGetModifiers() & GLUT_ACTIVE_SHIFT);
-	if(key == OF_KEY_SHIFT) shiftPressed = true;
-	
-	if(key=='w') {
-		cameraManager.toggleWarperGui();
-    }else if(key=='e') {
-		drawCameraIntoFBO = !drawCameraIntoFBO;
-    } else if (key=='1') {
-		fboWarper1.visible = !fboWarper1.visible;
-	} else if (key=='2') {
-		fboWarper2.visible = !fboWarper2.visible;
-	}
-
-	//if(!cameraManager.warper.guiVisible) {
-			
-		if(key==OF_KEY_LEFT) {
-			if(shiftPressed)
-				sceneManager.prevScene();
-			else
-				sceneManager.previousArrangement();
-		} else if(key==OF_KEY_RIGHT) {
-			if(shiftPressed)
-				sceneManager.nextScene();
-			else
-				sceneManager.nextArrangement();
-		}
-		
-	//}
-	if(key=='c') {
-		cameraManager.next(); 
-	} else if( key == 'R' ) {
-		if(!cameraManager.capturing)
-			cameraManager.beginCapture();
-		else
-			cameraManager.endCapture();
-
-    } else if( key == 'p' ) {
-        paused = !paused;
+	if(key == OF_KEY_SHIFT) {
+        shiftPressed = true;
     }
-	else if ( key == 't' )
-	{
-		triggersDisabled = !triggersDisabled ;
-	}
-	else if ( key == 'd' )
-	{
-		triggerManager.toggleDebug();//triggerShowDebug = !triggerShowDebug ;
-	}
-	else if ( key == 'k' )
-	{
-		particleSystemManager.killAllParticlesFlag = true ;
-	}
-	else if ( key == 'r' )
-	{
-		sceneManager.showSlideShow = true ;
-	}
+
+	if(key == OF_KEY_ALT){
+        altPressed = true;
+    }
+
+    if( shiftPressed ) {
+        if(key=='w') {
+            cameraManager.toggleWarperGui();
+        }else if(key=='e') {
+            drawCameraIntoFBO = !drawCameraIntoFBO;
+        } else if (key=='1') {
+            fboWarper1.visible = !fboWarper1.visible;
+        } else if (key=='2') {
+            fboWarper2.visible = !fboWarper2.visible;
+        }
+
+        //if(!cameraManager.warper.guiVisible) {
+
+        if(key==OF_KEY_LEFT) {
+            if(altPressed)
+                sceneManager.prevScene();
+            else
+                sceneManager.previousArrangement();
+        } else if(key==OF_KEY_RIGHT) {
+            if(altPressed)
+                sceneManager.nextScene();
+            else
+                sceneManager.nextArrangement();
+        }
+
+        //}
+        if(key=='c') {
+            cameraManager.next();
+        } else if( key == 'R' ) {
+            if(!cameraManager.capturing)
+                cameraManager.beginCapture();
+            else
+                cameraManager.endCapture();
+            
+        } else if( key == 'p' ) {
+            paused = !paused;
+        }
+        else if ( key == 't' )
+        {
+            triggersDisabled = !triggersDisabled ;
+        }
+        else if ( key == 'd' )
+        {
+            triggerManager.toggleDebug();//triggerShowDebug = !triggerShowDebug ;
+        }
+        else if ( key == 'k' )
+        {
+            particleSystemManager.killAllParticlesFlag = true ;
+        }
+        else if ( key == 'r' )
+        {
+            sceneManager.showSlideShow = true ;
+        }
+    }
+    
+    controlPanels.keyPressed(key);
+	
 	
 }
 
 void ofApp::keyReleased(int key){
 	if(key == OF_KEY_SHIFT) shiftPressed = false;
-	
-	
-	
+    if(key == OF_KEY_ALT) altPressed = false;
 }
 
 void ofApp:: mousePressed(int x, int y, int button ) { 
