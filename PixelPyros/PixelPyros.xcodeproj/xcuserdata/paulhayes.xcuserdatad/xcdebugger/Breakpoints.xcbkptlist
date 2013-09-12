@@ -7,13 +7,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "src/ControlPanels/ControlPanels.h"
-         timestampString = "400674581.751335"
+         filePath = "../SharedCode/Laser/LaserManager.h"
+         timestampString = "400684190.88807"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "18"
-         endingLineNumber = "18"
-         landmarkName = "class ControlPanels"
+         startingLineNumber = "48"
+         endingLineNumber = "48"
+         landmarkName = "class LaserManager"
          landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
