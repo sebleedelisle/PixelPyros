@@ -129,6 +129,7 @@
 		12EB3BD717E0EB86002D90A0 /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3BCD17E0EB86002D90A0 /* ofxSliderGroup.cpp */; };
 		12EB3BD817E0EB86002D90A0 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3BCF17E0EB86002D90A0 /* ofxToggle.cpp */; };
 		9E16CA5817E1C20D009867E9 /* ParameterManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E16CA5617E1C20D009867E9 /* ParameterManager.cpp */; };
+		9E16CA5D17E1CE2D009867E9 /* ControlPanels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E16CA5B17E1CE2D009867E9 /* ControlPanels.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -605,6 +606,8 @@
 		12EB3BD017E0EB86002D90A0 /* ofxToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
 		9E16CA5617E1C20D009867E9 /* ParameterManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParameterManager.cpp; sourceTree = "<group>"; };
 		9E16CA5717E1C20D009867E9 /* ParameterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterManager.h; sourceTree = "<group>"; };
+		9E16CA5B17E1CE2D009867E9 /* ControlPanels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPanels.cpp; sourceTree = "<group>"; };
+		9E16CA5C17E1CE2D009867E9 /* ControlPanels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlPanels.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -1736,6 +1739,15 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		9E16CA5A17E1CE13009867E9 /* ControlPanels */ = {
+			isa = PBXGroup;
+			children = (
+				9E16CA5B17E1CE2D009867E9 /* ControlPanels.cpp */,
+				9E16CA5C17E1CE2D009867E9 /* ControlPanels.h */,
+			);
+			path = ControlPanels;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1816,6 +1828,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9E16CA5A17E1CE13009867E9 /* ControlPanels */,
 				1254501917BF860500EF23B7 /* constants.h */,
 				1254501A17BF860500EF23B7 /* PyrosRenderer.h */,
 				1254501B17BF860500EF23B7 /* SceneData */,
@@ -2045,6 +2058,7 @@
 				12EB3BD717E0EB86002D90A0 /* ofxSliderGroup.cpp in Sources */,
 				12EB3BD817E0EB86002D90A0 /* ofxToggle.cpp in Sources */,
 				9E16CA5817E1C20D009867E9 /* ParameterManager.cpp in Sources */,
+				9E16CA5D17E1CE2D009867E9 /* ControlPanels.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
