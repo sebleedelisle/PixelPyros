@@ -108,6 +108,7 @@
 		1254565E17BF880400EF23B7 /* Grabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565417BF880400EF23B7 /* Grabber.cpp */; };
 		1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565717BF880400EF23B7 /* PointGrey.cpp */; };
 		1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */; };
+		129988BA17E1E9CC0044879E /* SceneNadia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129988B817E1E9CC0044879E /* SceneNadia.cpp */; };
 		12A6DE3417DE1F83000D299A /* ParticleSystemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */; };
 		12A6DE3617DE640C000D299A /* SoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3517DE640C000D299A /* SoundPlayer.cpp */; };
 		12A6DE3A17DE6D57000D299A /* SceneRetro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3817DE6D57000D299A /* SceneRetro.cpp */; };
@@ -543,6 +544,9 @@
 		125FB18717CBEA3A00A1CAE6 /* TriggerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerPattern.h; sourceTree = "<group>"; };
 		1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
 		1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRechargeSettings.h; sourceTree = "<group>"; };
+		129988B417E1E6610044879E /* ParticleRendererLaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererLaser.h; sourceTree = "<group>"; };
+		129988B817E1E9CC0044879E /* SceneNadia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneNadia.cpp; sourceTree = "<group>"; };
+		129988B917E1E9CC0044879E /* SceneNadia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneNadia.h; sourceTree = "<group>"; };
 		12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystemManager.cpp; sourceTree = "<group>"; };
 		12A6DE3517DE640C000D299A /* SoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundPlayer.cpp; sourceTree = "<group>"; };
 		12A6DE3817DE6D57000D299A /* SceneRetro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneRetro.cpp; sourceTree = "<group>"; };
@@ -668,6 +672,7 @@
 		1254501B17BF860500EF23B7 /* SceneData */ = {
 			isa = PBXGroup;
 			children = (
+				129988B717E1E9CC0044879E /* Nadia */,
 				12BD9CC717DF585E00F28A4F /* Vectorizer */,
 				12A6DE3717DE6D57000D299A /* Retro */,
 				1254501C17BF860500EF23B7 /* Intro */,
@@ -784,6 +789,7 @@
 				1254506D17BF861C00EF23B7 /* ParticleRendererLine.h */,
 				1254506E17BF861C00EF23B7 /* ParticleRendererLowRes.h */,
 				1254506F17BF861C00EF23B7 /* ParticleRendererShape.h */,
+				129988B417E1E6610044879E /* ParticleRendererLaser.h */,
 				1254507017BF861C00EF23B7 /* ParticleRendererSquare.h */,
 				1254507117BF861C00EF23B7 /* ParticleRendererStar.h */,
 			);
@@ -1587,6 +1593,15 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		129988B717E1E9CC0044879E /* Nadia */ = {
+			isa = PBXGroup;
+			children = (
+				129988B817E1E9CC0044879E /* SceneNadia.cpp */,
+				129988B917E1E9CC0044879E /* SceneNadia.h */,
+			);
+			path = Nadia;
+			sourceTree = "<group>";
+		};
 		12A6DE3717DE6D57000D299A /* Retro */ = {
 			isa = PBXGroup;
 			children = (
@@ -2059,6 +2074,7 @@
 				12EB3BD817E0EB86002D90A0 /* ofxToggle.cpp in Sources */,
 				9E16CA5817E1C20D009867E9 /* ParameterManager.cpp in Sources */,
 				9E16CA5D17E1CE2D009867E9 /* ControlPanels.cpp in Sources */,
+				129988BA17E1E9CC0044879E /* SceneNadia.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

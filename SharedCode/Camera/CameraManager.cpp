@@ -15,9 +15,9 @@ CameraManager::CameraManager() {
     cameraVidGrabber	= new CameraVidGrabber();
 	//cameraCanon			= new CameraCanon();
     
-    captureInterval = 1.0f / CAPTURE_FPS;
+   // captureInterval = 1.0f / CAPTURE_FPS;
     capturing = false;
-    captureBase = "/tmp";
+    captureBase = "capturedFrames/";
 }
 
 void CameraManager::init() { 
@@ -108,12 +108,12 @@ CameraVidPlayer * CameraManager:: addVidPlayer(string filename, int width, int h
 
 
 void CameraManager::captureFrame() {
-    if( capturing && ((ofGetElapsedTimef() - captureDelta) > captureInterval) ) {
+   // if( capturing && ((ofGetElapsedTimef() - captureDelta) > captureInterval) ) {
         ofSaveImage(camera->getPixelsRef(), getCaptureFilename());
         
-        captureDelta = ofGetElapsedTimef();
+   //     captureDelta = ofGetElapsedTimef();
         framesCaptured++;
-    }
+   // }
 }
 
 void CameraManager::draw(float x, float y, float w, float h){

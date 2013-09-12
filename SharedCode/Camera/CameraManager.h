@@ -70,7 +70,7 @@ class CameraManager : public ofBaseDraws{
 	int brightness;
 	
     bool capturing;
-    float captureInterval;
+    //float captureInterval;
     unsigned long framesCaptured;
     string captureBase;
     string captureTimestamp;
