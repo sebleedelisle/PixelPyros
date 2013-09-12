@@ -1,0 +1,20 @@
+<LaserTestGUI>
+	<Laser_Manager>
+		<Etherdream_connect>0</Etherdream_connect>
+		<status/>
+		<intensity>1</intensity>
+		<colour_change_offset>-6</colour_change_offset>
+		<show_registration>0</show_registration>
+		<show_move_points>0</show_move_points>
+		<show_sync_test>0</show_sync_test>
+		<render_laser_path>1</render_laser_path>
+		<move_speed>3</move_speed>
+		<move_points_padding>0</move_points_padding>
+		<dot_pre_blank>3</dot_pre_blank>
+		<dot_post_blank>3</dot_post_blank>
+		<dot_max_points>7</dot_max_points>
+		<acceleration>0.5</acceleration>
+		<max_speed>20</max_speed>
+	</Laser_Manager>
+<LaserTestGUI/>
+</LaserTestGUI>

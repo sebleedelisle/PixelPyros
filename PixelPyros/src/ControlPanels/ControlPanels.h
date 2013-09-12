@@ -21,6 +21,7 @@ class ControlPanels {
     ControlPanels():parameterManager(*ParameterManager::instance()){};
     void setup(ParameterManager * parameterManager);
     void draw();
+    void exit();
     
     protected:
     ParameterManager& parameterManager;

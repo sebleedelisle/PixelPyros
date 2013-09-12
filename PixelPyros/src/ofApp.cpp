@@ -482,6 +482,5 @@ void ofApp::eventsIn(guiCallbackData & data){
 
 
 void ofApp::exit() { 
-
-
+    controlPanels.exit();
 }
