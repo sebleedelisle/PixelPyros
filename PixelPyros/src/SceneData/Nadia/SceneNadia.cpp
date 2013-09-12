@@ -68,6 +68,8 @@ ParticleSystemSettings SceneNadia::  getLaserParticles(float hue, float hueChang
 	laserParticles.saturationEnd = 500;
 	laserParticles.brightnessStartMin = laserParticles.brightnessStartMin = laserParticles.brightnessEnd = 255;
 	
+	laserParticles.emitCount = 20; 
+	laserParticles.emitInheritVelocity = 1;
 	laserParticles.shimmerMin = 0;
 	laserParticles.lifeMin = laserParticles.lifeMax = 0.1; 
 	laserParticles.startSound = "RetroLaunch";

@@ -1,11 +1,11 @@
 <LaserTestGUI>
 	<Laser_Manager>
-		<Etherdream_connect>0</Etherdream_connect>
+		<Etherdream_connect>1</Etherdream_connect>
 		<status/>
 		<intensity>1</intensity>
 		<colour_change_offset>-6</colour_change_offset>
 		<show_registration>0</show_registration>
-		<show_move_points>0</show_move_points>
+		<show_move_points>1</show_move_points>
 		<show_sync_test>0</show_sync_test>
 		<render_laser_path>0</render_laser_path>
 		<move_speed>3</move_speed>
