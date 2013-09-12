@@ -22,6 +22,7 @@ class ControlPanels {
     void setup(ParameterManager * parameterManager);
     void draw();
     void exit();
+    void keyPressed(int key);
     
     protected:
     ParameterManager& parameterManager;

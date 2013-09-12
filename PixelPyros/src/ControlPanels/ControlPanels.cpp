@@ -27,6 +27,7 @@ void ControlPanels::setup(ParameterManager * parameterManager){
 	laserGui.setSize(500,30);
 	laserGui.setUseTTF(true);
     laserGui.setPosition(1600, 0);
+    laserGui.setVisible(false);
 
     laserGui.add( *parameterManager->getParameterGroup("laser") );
     
@@ -40,4 +41,10 @@ void ControlPanels::draw(){
 
 void ControlPanels::exit(){
     laserGui.saveToFile("laserSettings.xml");
+}
+
+void ControlPanels::keyPressed(int key){
+    if( key == '1' ){
+        laserGui.setVisible( !laserGui.getVisibile() );
+    }
 }
