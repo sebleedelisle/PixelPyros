@@ -16,6 +16,8 @@ class ParameterManager {
     
     ParameterManager();
     
+    static ParameterManager * instance();
+    
     void setup();
     
     void registerParameter(ofAbstractParameter);
@@ -23,6 +25,9 @@ class ParameterManager {
     ofParameter<bool> getBoolParameter();
     ofParameter<float> getFloatParamter();
     ofParameter<int> getIntParamter();
+    
+    protected:
+    static ParameterManager * parameterManager;
     
 };
 

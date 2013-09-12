@@ -7,3 +7,12 @@
 //
 
 #include "ParameterManager.h"
+
+ParameterManager * ParameterManager::instance() {
+	if( parameterManager==NULL) {
+		parameterManager = new ParameterManager();
+	}
+	return parameterManager;
+}
+
+ParameterManager * ParameterManager :: parameterManager = NULL;
