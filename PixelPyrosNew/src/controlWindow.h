@@ -20,10 +20,10 @@ protected:
     ofApp* mainApp;
     
     ofParameter<int> numParticles;
-	ofxColorSlider color;
 	ofParameter<float> particleFlicker;
 	ofParameter<float> speed;
     
+	ofxColorSlider color;
     ofxToggle showParticles;
 	ofxToggle showRectangle;
 
