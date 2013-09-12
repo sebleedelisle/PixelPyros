@@ -106,6 +106,7 @@ public:
 	bool triggersDisabled;
 	bool drawCameraIntoFBO;
 	bool shiftPressed;
+    bool altPressed;
 	
 	PyrosRenderer renderer;
 	
