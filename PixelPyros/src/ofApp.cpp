@@ -86,11 +86,13 @@ void ofApp::setup(){
 	
 	laserManager.setup();
 	
+    parameterManager.registerParameterGroup("laser", &laserManager.parameters );
+    
     /* 
         Now that all of the parameters should be registered with the 
         ParameterManager, setup the control gui
      */
-    controlPanels.setup();
+    controlPanels.setup( &parameterManager );
 
 }
 

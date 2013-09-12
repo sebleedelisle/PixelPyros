@@ -10,16 +10,34 @@
 
 #include <iostream>
 #include "ParameterManager.h"
+#include "ofxPanel.h"
+#include "ofxToggle.h"
+#include "ofxSliderGroup.h"
 
 class ControlPanels {
     
     public:
     
     ControlPanels():parameterManager(*ParameterManager::instance()){};
-    void setup();
+    void setup(ParameterManager * parameterManager);
     void draw();
     
     protected:
     ParameterManager& parameterManager;
+    
+    /*-- Laser GUI begin --*/
+    
+    ofxPanel laserGui;
+    
+    ofParameter<int> numParticles;
+	ofParameter<float> particleFlicker;
+	ofParameter<float> speed;
+    
+	ofxColorSlider color;
+    ofxToggle showParticles;
+	ofxToggle showRectangle;
+    
+    /*-- Laser GUI end --*/
+
     
 };
