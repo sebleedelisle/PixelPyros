@@ -26,22 +26,22 @@ void ControlPanels::setup(ParameterManager * parameterManager){
 	laserGui.loadFont("Verdana.ttf", 10, false);
 	laserGui.setup("LaserTestGUI"); // most of the time you don't need a name
 	
-    
 	laserGui.setSize(500,30);
 	laserGui.setUseTTF(true);
     
 	
-    laserGui.add(showParticles.setup("Show Particles", true));
-	laserGui.add(showRectangle.setup("Show Rectangle", false));
+    //laserGui.add(showParticles.setup("Show Particles", true));
+	//laserGui.add(showRectangle.setup("Show Rectangle", false));
 	
     
-    laserGui.add(speed.set( "Speed", 1, 0, 5 ));
-    laserGui.add(numParticles.set( "Num Particles", 40, 1, 300 ));
+    //laserGui.add(speed.set( "Speed", 1, 0, 5 ));
+    //laserGui.add(numParticles.set( "Num Particles", 40, 1, 300 ));
 	
 	
-	laserGui.add(color.setup("Particle Colour",ofColor(100,100,140),ofColor(0,0),ofColor(255,255)));
-	laserGui.add(particleFlicker.set("Flicker",0.5,0,1));
-	laserGui.add( *parameterManager->getParameterGroup("laser") );
+	//laserGui.add(color.setup("Particle Colour",ofColor(100,100,140),ofColor(0,0),ofColor(255,255)));
+	//laserGui.add(particleFlicker.set("Flicker",0.5,0,1));
+	
+    laserGui.add( *parameterManager->getParameterGroup("laser") );
     
 	laserGui.loadFromFile("laserSettings.xml");
 
