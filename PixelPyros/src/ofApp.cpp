@@ -86,7 +86,11 @@ void ofApp::setup(){
 	
 	laserManager.setup();
 	
-
+    /* 
+        Now that all of the parameters should be registered with the 
+        ParameterManager, setup the control gui
+     */
+    controlPanels.setup();
 
 }
 
@@ -195,7 +199,7 @@ void ofApp::draw(){
 	fboWarper1.draw();
 	fboWarper2.draw();
 	
- 
+    controlPanels.draw();
     
 }
 

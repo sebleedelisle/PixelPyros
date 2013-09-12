@@ -14,7 +14,7 @@
 class ParameterManager {
     public:
     
-    ParameterManager();
+    ParameterManager(){};
     
     static ParameterManager * instance();
     

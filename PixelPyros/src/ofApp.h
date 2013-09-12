@@ -16,7 +16,7 @@
 #include "ofxAutoControlPanel.h"
 
 #include "LaserManager.h"
-
+#include "ControlPanels.h"
 #include "SoundPlayer.h"
 
 
@@ -46,7 +46,8 @@ class ofApp :public ofBaseApp{
 	
 public:
 	
-	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()), laserManager(*LaserManager::instance()) {
+	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()), laserManager(*LaserManager::instance()),
+        parameterManager(*ParameterManager::instance()){
  		
  	};
 	
@@ -79,6 +80,8 @@ public:
 	CameraManagerWarped cameraManager;
 	MotionManager motionManager;
 	SoundPlayer& soundPlayer;
+    ParameterManager& parameterManager;
+    ControlPanels controlPanels;
 	
 	ofFbo fbo;
 	bool useFbo;

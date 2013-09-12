@@ -8,3 +8,8 @@
 
 #include "ControlPanels.h"
 
+void ControlPanels::setup(){
+}
+
+void ControlPanels::draw(){
+}
