@@ -15,4 +15,12 @@ ParameterManager * ParameterManager::instance() {
 	return parameterManager;
 }
 
+void ParameterManager::registerParameterGroup(string groupName, ofParameterGroup* group){
+    paramGroups[groupName] = group;
+}
+
+ofParameterGroup * ParameterManager::getParameterGroup(string groupName){
+    return paramGroups[groupName];
+}
+
 ParameterManager * ParameterManager :: parameterManager = NULL;
