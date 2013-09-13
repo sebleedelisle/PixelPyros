@@ -22,6 +22,8 @@ CameraManager::CameraManager() {
 
 void CameraManager::init() { 
 	
+    initParams();
+    
 	if(cameraFirewire->setup("Firewire", 1024, 768, 60)) {
 		cameras.push_back(cameraFirewire); 
 	}; 
@@ -49,6 +51,9 @@ void CameraManager::init() {
 	
 }
 
+void CameraManager::initParams(){
+    parameters.setName("Camera Manager");
+}
 
 
 bool CameraManager::update() { 
@@ -233,7 +238,6 @@ void CameraManager::guiEventsIn(guiCallbackData & data){
 	} 
 	
 }
-
 
 void CameraManager::close() { 
 	for(int i = 0; i<cameras.size(); i++) {

@@ -24,7 +24,8 @@ class CameraManager : public ofBaseDraws{
 	public : 
 	
 	CameraManager(); 
-	void init(); 
+	void init();
+    void initParams();
 	bool update(); 
 	void draw(float x, float y); 
 	void draw(float x, float y, float w, float h); 
@@ -64,11 +65,18 @@ class CameraManager : public ofBaseDraws{
 	CameraVidPlayer*	cameraVidPlayer;
 	//CameraCanon*		cameraCanon;
 	
-	int gain; 
+    int gain; 
 	int gamma;
 	int shutter; 
 	int brightness;
-	
+    
+//    Unimplemented currently
+//    ofParameter<int> gainParam;
+//    ofParameter<int> gammaParam;
+//    ofParameter<int> shutterParam;
+//    ofParameter<int> brightnessParam;
+	ofParameterGroup parameters;
+    
     bool capturing;
     //float captureInterval;
     unsigned long framesCaptured;

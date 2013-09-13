@@ -111,8 +111,6 @@ public:
 	
 	PyrosRenderer renderer;
 	
-	
-	
 	float testValue;
     
 private:
