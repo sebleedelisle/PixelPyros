@@ -22,6 +22,8 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     setupPanel( "Laser", "laserSettings.xml", ofRectangle( offsetX, 0, 400, 30 ), laserGui );
     laserGui.add( *parameterManager->getParameterGroup("laser") );
     laserGui.load();
+    laserGui.getToggle("Etherdream connect") = false;
+    laserGui.getToggle("status") = false;    
     
     setupPanel( "Renderer", "rendererSettings.xml", ofRectangle( offsetX + 420, 0, 400, 30 ), rendererGui );
     rendererGui.add( *parameterManager->getParameterGroup("renderer") );
