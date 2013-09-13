@@ -36,14 +36,15 @@ class MotionManager {
 	
 	
 	int width, height;
-	
-	float thresholdLevel;
-		
+			
 	ofImage current; 
 	ofImage previous; 
 	ofImage diff; 
 	
 	vector <ofVec2f> motionPositions;
-	float motionSensitivity; 
+    ofParameter<float> thresholdLevelParam;
+    ofParameter<float> motionSensitivityParam;
+    
+    ofParameterGroup parameters;
 
 };
