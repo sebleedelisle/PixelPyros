@@ -92,8 +92,6 @@ void LaserManager:: setup () {
 	dotMaxPoints = 10;
 	parameters.setName("Laser Manager");
 	
-	
-	
 	//p1.setName("Etherdream");
 	parameters.add(connectButton.set("Etherdream connect", false));
 	parameters.add(etherdreamStatus.set("status", ""));

@@ -11,7 +11,7 @@ void ofApp::setup(){
 	fboWarper2.label = "rightScreen";
 	
 	triggerArea.set(APP_WIDTH*0.15,APP_HEIGHT*0.85,APP_WIDTH*0.7,APP_HEIGHT*0.5); 
-	
+    
 	fboWarper1.setDstPoint(0, ofVec2f(0,0));
 	fboWarper1.setDstPoint(1, ofVec2f(APP_WIDTH/2,0));
 	fboWarper1.setDstPoint(2, ofVec2f(APP_WIDTH/2,APP_HEIGHT));
@@ -77,7 +77,8 @@ void ofApp::setup(){
     altPressed = false;
 	shiftPressed = false;
 
-	triggerManager.updateTriggerSettings(triggerArea, triggerSpacing);
+    triggerManager.setDisplaySize(APP_WIDTH, APP_HEIGHT);
+	//triggerManager.updateTriggerSettings(triggerArea, triggerSpacing);
 	/*
 	Trigger trigger;
 	TriggerPattern pattern;
@@ -89,6 +90,8 @@ void ofApp::setup(){
 	//laserManager.renderLaserPath = true;
 	
     parameterManager.registerParameterGroup("laser", &laserManager.parameters );
+    parameterManager.registerParameterGroup("renderer", &renderer.paramters );
+    parameterManager.registerParameterGroup("triggers", &triggerManager.parameters);
     
     /* 
         Now that all of the parameters should be registered with the 
@@ -124,20 +127,18 @@ void ofApp::update(){
 
 	lastUpdateTime = time;
 	
-	if (( triggerAreaWidth*APP_WIDTH!=triggerArea.width ) ||
-		(triggerAreaHeight*APP_HEIGHT != triggerArea.height) ||
-		(triggerAreaCentreY*APP_HEIGHT != triggerArea.getCenter().y) ||
-		(triggerSpacing != triggerManager.minimumSpacing ) ) {
-		
-		triggerArea.width = triggerAreaWidth*APP_WIDTH;
-		triggerArea.x = (APP_WIDTH - triggerArea.width)/2;
-		triggerArea.height = (APP_HEIGHT * triggerAreaHeight);
-		triggerArea.y = (APP_HEIGHT * triggerAreaCentreY) - (triggerArea.height/2) ;
-		
-		triggerManager.updateTriggerSettings(triggerArea, triggerSpacing) ;
-		// TODO - should be :
-		// triggerManager.updateTriggerSettings...
-	}
+//	if (( triggerAreaWidth*APP_WIDTH!=triggerArea.width ) ||
+//		(triggerAreaHeight*APP_HEIGHT != triggerArea.height) ||
+//		(triggerAreaCentreY*APP_HEIGHT != triggerArea.getCenter().y) ||
+//		(triggerSpacing != triggerManager.minimumSpacing ) ) {
+//		
+//		triggerArea.width = triggerAreaWidth*APP_WIDTH;
+//		triggerArea.x = (APP_WIDTH - triggerArea.width)/2;
+//		triggerArea.height = (APP_HEIGHT * triggerAreaHeight);
+//		triggerArea.y = (APP_HEIGHT * triggerAreaCentreY) - (triggerArea.height/2) ;
+//		
+//		triggerManager.updateTriggerSettings(triggerArea, triggerSpacing) ;
+//	}
 	/*
 	if ( triggerShowDebug != triggerManager.triggerShowDebug ) {
 		triggerManager.setShowTriggerDebug(triggerShowDebug) ;
@@ -392,14 +393,6 @@ void ofApp::setupControlPanel() {
 
 	gui.setWhichColumn(1);
     
-	gui.addLabel("Levels");
-	
-	gui.addSlider("Black Point", "SHADER_BLACK", 0, 0, 1.0, false);//->setDimensions(400, 10);
-	gui.addSlider("Gamma", "SHADER_GAMMA", 0, 0, 10.0, false);//->setDimensions(400, 10);
-	gui.addSlider("White Point", "SHADER_WHITE", 0, 0, 1.0, false);//->setDimensions(400, 10);
-	gui.addSlider("Bloom", "SHADER_BLOOM", 0, 0, 10.0, false);//->setDimensions(400, 10);
-	
-	 
 	gui.addPanel("Motion");
 	
 	motionManager.initControlPanel(gui);
@@ -442,11 +435,11 @@ void ofApp::setupControlPanel() {
 	settingsManager.addSettingBool(&triggersDisabled, "", "/PixelPyros/MotionDisable/x", true);
 	settingsManager.addSettingBool(&triggerShowDebug, "", "/PixelPyros/TriggerDebug/x", true);
 	
-	settingsManager.addSettingFloat(&renderer.blackPoint, "SHADER_BLACK", "/PixelPyros/Setup/BlackLevel/x",0, 1);
-	settingsManager.addSettingFloat(&renderer.whitePoint, "SHADER_WHITE", "/PixelPyros/Setup/WhiteLevel/x",0, 1);
-	settingsManager.addSettingFloat(&renderer.gammaValue, "SHADER_GAMMA", "/PixelPyros/Setup/GammaLevel/x",0, 10);
-	settingsManager.addSettingFloat(&renderer.bloomValue, "SHADER_BLOOM", "/PixelPyros/Setup/BloomLevel/x",0, 3);
-	settingsManager.addSettingFloat(&renderer.bloomValue, "SHADER_BLOOM", "/PixelPyros/BloomLevel/x",0, 3);
+//	settingsManager.addSettingFloat(&renderer.blackPoint, "SHADER_BLACK", "/PixelPyros/Setup/BlackLevel/x",0, 1);
+//	settingsManager.addSettingFloat(&renderer.whitePoint, "SHADER_WHITE", "/PixelPyros/Setup/WhiteLevel/x",0, 1);
+//	settingsManager.addSettingFloat(&renderer.gammaValue, "SHADER_GAMMA", "/PixelPyros/Setup/GammaLevel/x",0, 10);
+//	settingsManager.addSettingFloat(&renderer.bloomValue, "SHADER_BLOOM", "/PixelPyros/Setup/BloomLevel/x",0, 3);
+//	settingsManager.addSettingFloat(&renderer.bloomValue, "SHADER_BLOOM", "/PixelPyros/BloomLevel/x",0, 3);
 	
 	settingsManager.addSettingBool(&particleSystemManager.killAllParticlesFlag, "", "/PixelPyros/KillParticles/x", false );
 	
@@ -466,28 +459,27 @@ void ofApp::setupControlPanel() {
 void ofApp::eventsIn(guiCallbackData & data){
     
 	
-	if( data.getXmlName() == "SHADER_BLACK" ) {
-        renderer.blackPoint = data.getFloat(0);
-    }
-	else if( data.getXmlName() == "SHADER_WHITE" ) {
-         renderer.whitePoint = data.getFloat(0);
-    }
-	else if( data.getXmlName() == "SHADER_GAMMA" ) {
-        renderer.gammaValue = data.getFloat(0);
-    }
-	else if( data.getXmlName() == "SHADER_BLOOM" ) {
-        renderer.bloomValue = data.getFloat(0);
-    } else if( data.getXmlName() == "TRIGGER_AREA_WIDTH" ) {
-        triggerAreaWidth = data.getFloat(0);
-    } else if( data.getXmlName() == "TRIGGER_AREA_HEIGHT" ) {
-        triggerAreaHeight = data.getFloat(0);
-    } else if( data.getXmlName() == "TRIGGER_AREA_Y" ) {
-        triggerAreaCentreY = data.getFloat(0);
-    } else if( data.getXmlName() == "TRIGGER_SPACING" ) {
-        triggerSpacing = data.getFloat(0);
-    }
-	
-	
+//	if( data.getXmlName() == "SHADER_BLACK" ) {
+//        renderer.blackPoint = data.getFloat(0);
+//    }
+//	else if( data.getXmlName() == "SHADER_WHITE" ) {
+//         renderer.whitePoint = data.getFloat(0);
+//    }
+//	else if( data.getXmlName() == "SHADER_GAMMA" ) {
+//        renderer.gammaValue = data.getFloat(0);
+//    }
+//	else if( data.getXmlName() == "SHADER_BLOOM" ) {
+//        renderer.bloomValue = data.getFloat(0);
+//    } else if( data.getXmlName() == "TRIGGER_AREA_WIDTH" ) {
+//        triggerAreaWidth = data.getFloat(0);
+//    } else if( data.getXmlName() == "TRIGGER_AREA_HEIGHT" ) {
+//        triggerAreaHeight = data.getFloat(0);
+//    } else if( data.getXmlName() == "TRIGGER_AREA_Y" ) {
+//        triggerAreaCentreY = data.getFloat(0);
+//    } else if( data.getXmlName() == "TRIGGER_SPACING" ) {
+//        triggerSpacing = data.getFloat(0);
+//    }
+		
 	//gui.saveSettings();
 }
 
