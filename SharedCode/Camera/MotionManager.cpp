@@ -12,18 +12,15 @@ using namespace ofxCv;
 using namespace cv; 
 MotionManager :: MotionManager(int w, int h){ 
 	
-	//thresholdLevel = 20.0f;
-	
-	init(w, h);
-	
-	motionSensitivity = 1;
-	
-
 };
 
-
 void MotionManager::init(int w, int h, ofImageType type) {
-	
+    motionSensitivityParam = 1;
+    thresholdLevelParam = 20;
+    
+    parameters.setName("Motion Detection");
+    parameters.add( thresholdLevelParam.set("threshold", 1, 0, 255) );
+    parameters.add( motionSensitivityParam.set("motion sensitivity", 1, 1, 5) );
 	
 	if(current.isAllocated()) current.clear(); 
 	if(previous.isAllocated()) previous.clear(); 
@@ -61,8 +58,8 @@ bool MotionManager :: update(ofPixelsRef image){
 	copy(image, current); 
 	
 	absdiff(previous, current, diff);
-	if(thresholdLevel>0)
-		threshold(diff, thresholdLevel);
+	if(thresholdLevelParam>0)
+		threshold(diff, thresholdLevelParam);
 	diff.update();
 	
 	motionPositions.clear(); 
@@ -119,48 +116,48 @@ float MotionManager :: getMotionAtPosition(ofVec2f topleft, ofVec2f bottomright)
 	motionPositions.push_back(topleft);
 	motionPositions.push_back(dimensions);
 
-		Mat diffMat = toCv(diff); 
+    Mat diffMat = toCv(diff);
 	Mat diffRoi(diffMat, cv::Rect(topleft.x, topleft.y, dimensions.x , dimensions.y ));
 	
 	//absdiff(prevRoi, curRoi, diffMat); 
 	
 	Scalar avg = mean(diffRoi);
 	ofColor avgColor(avg[0]);
-	return avgColor.getBrightness() * motionSensitivity;
+	return avgColor.getBrightness() * motionSensitivityParam;
 	
 };
 
 
 
 
-void MotionManager:: initControlPanel(ofxAutoControlPanel &gui){
-	
-	//gui.addPanel("MotionManager");
-	
-	gui.addDrawableRect("Motion", &diff, 400, 300);
-	
-	gui.addSlider("Threshold","THRESHOLD", thresholdLevel, 0,255);
-	gui.addSlider("Sensitivity","MOTION_SENSITIVITY", motionSensitivity, 1,5);
-	
-	ofAddListener(gui.guiEvent, this, &MotionManager::guiEventsIn);
-	
-	
-}
+//void MotionManager:: initControlPanel(ofxAutoControlPanel &gui){
+//	
+//	//gui.addPanel("MotionManager");
+//	
+//	gui.addDrawableRect("Motion", &diff, 400, 300);
+//	
+//	gui.addSlider("Threshold","THRESHOLD", thresholdLevel, 0,255);
+//	gui.addSlider("Sensitivity","MOTION_SENSITIVITY", motionSensitivity, 1,5);
+//	
+//	ofAddListener(gui.guiEvent, this, &MotionManager::guiEventsIn);
+//	
+//	
+//}
 
-void MotionManager::guiEventsIn(guiCallbackData & data){
-	
-	if (data.getXmlName() == "THRESHOLD") {
-		
-		//cout << "MotionManager::guiEventsIn threshold change : " << data.getFloat(0) << endl;
-		thresholdLevel = data.getFloat(0);
-		
-	} else if (data.getXmlName() == "MOTION_SENSITIVITY") {
-		
-		//cout << "MotionManager::guiEventsIn threshold change : " << data.getFloat(0) << endl;
-		motionSensitivity = data.getFloat(0);
-		
-	}
-		
-}
+//void MotionManager::guiEventsIn(guiCallbackData & data){
+//	
+//	if (data.getXmlName() == "THRESHOLD") {
+//		
+//		//cout << "MotionManager::guiEventsIn threshold change : " << data.getFloat(0) << endl;
+//		thresholdLevel = data.getFloat(0);
+//		
+//	} else if (data.getXmlName() == "MOTION_SENSITIVITY") {
+//		
+//		//cout << "MotionManager::guiEventsIn threshold change : " << data.getFloat(0) << endl;
+//		motionSensitivity = data.getFloat(0);
+//		
+//	}
+//		
+//}
 
 
