@@ -33,5 +33,6 @@ class ControlPanels {
     ofxPanel laserGui;
     ofxPanel rendererGui;
     ofxPanel triggerGui;
+    ofxPanel motionGui;
     
 };

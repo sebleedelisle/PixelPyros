@@ -22,8 +22,8 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     setupPanel( "Laser", "laserSettings.xml", ofRectangle( offsetX, 0, 400, 30 ), laserGui );
     laserGui.add( *parameterManager->getParameterGroup("laser") );
     laserGui.load();
-    laserGui.getToggle("Etherdream connect") = false;
-    laserGui.getToggle("status") = false;    
+    laserGui.getGroup("Laser Manager").getToggle("Etherdream connect") = false;
+    laserGui.getGroup("Laser Manager").getLabel("status") = "";
     
     setupPanel( "Renderer", "rendererSettings.xml", ofRectangle( offsetX + 420, 0, 400, 30 ), rendererGui );
     rendererGui.add( *parameterManager->getParameterGroup("renderer") );
@@ -32,6 +32,10 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     setupPanel( "Triggers", "triggerSettings.xml", ofRectangle( offsetX + 840, 0, 400, 30 ), triggerGui );
     triggerGui.add( *parameterManager->getParameterGroup("triggers") );
     triggerGui.load();
+    
+    setupPanel( "Motion", "motionDetectionSettings.xml", ofRectangle( offsetX + 1260, 0, 400, 30 ), motionGui );
+    motionGui.add( *parameterManager->getParameterGroup("motion") );
+    motionGui.load();
 
 }
 
@@ -39,6 +43,7 @@ void ControlPanels::draw(){
     laserGui.draw();
     rendererGui.draw();
     triggerGui.draw();
+    motionGui.draw();
 }
 
 void ControlPanels::exit(){
@@ -56,6 +61,9 @@ void ControlPanels::keyPressed(int key){
     }
     if( key == '3' ){
         triggerGui.toggleVisible();
+    }
+    if( key == '4'){
+        motionGui.toggleVisible();
     }
 }
 

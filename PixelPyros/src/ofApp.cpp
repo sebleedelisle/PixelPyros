@@ -92,7 +92,7 @@ void ofApp::setup(){
     parameterManager.registerParameterGroup("laser", &laserManager.parameters );
     parameterManager.registerParameterGroup("renderer", &renderer.paramters );
     parameterManager.registerParameterGroup("triggers", &triggerManager.parameters);
-    
+    parameterManager.registerParameterGroup("motion", &motionManager.parameters);
     /* 
         Now that all of the parameters should be registered with the 
         ParameterManager, setup the control gui
@@ -379,12 +379,12 @@ void ofApp::setupControlPanel() {
 	
 	cameraManager.initControlPanel(gui);
 
-	gui.setWhichColumn(1);
+//	gui.setWhichColumn(1);
     
-	gui.addPanel("Motion");
-	
-	motionManager.initControlPanel(gui);
-	
+//	gui.addPanel("Motion");
+//	
+//	motionManager.initControlPanel(gui);
+//	
 //	gui.addPanel("Triggers");
 //	gui.addSlider("Area width", "TRIGGER_AREA_WIDTH", 0, 0, 1.0, false);//->setDimensions(400, 10);
 //	gui.addSlider("Area height", "TRIGGER_AREA_HEIGHT", 0, 0, 0.5, false);//->setDimensions(400, 10);
@@ -392,29 +392,27 @@ void ofApp::setupControlPanel() {
 //	gui.addSlider("Spacing", "TRIGGER_SPACING", 0, 0, 400, false);//->setDimensions(400, 10);
 //	
 
-	ofAddListener(gui.guiEvent, this, &ofApp::eventsIn);
+	//ofAddListener(gui.guiEvent, this, &ofApp::eventsIn);
 	
 	
-	gui.setupEvents();
-	gui.enableEvents();
-
-	
-	gui.loadSettings("controlPanelSettings.xml");
+	//gui.setupEvents();
+	//gui.enableEvents();
+	//gui.loadSettings("controlPanelSettings.xml");
 
 	
 	
 	settingsManager.setup(&oscManager, &gui) ;
 	
 	
-	settingsManager.addSettingFloat(&motionManager.thresholdLevel, "THRESHOLD", "/PixelPyros/Setup/Threshold/x", 0, 255);
-	settingsManager.addSettingFloat(&motionManager.motionSensitivity, "MOTION_SENSITIVITY", "/PixelPyros/Setup/Sensitivity/x", 1, 5);
-	
-	settingsManager.addSettingFloat(&triggerAreaWidth, "TRIGGER_AREA_WIDTH", "/PixelPyros/Setup/Width/x", 0, 1);
-	settingsManager.addSettingFloat(&triggerAreaHeight, "TRIGGER_AREA_HEIGHT", "/PixelPyros/Setup/Height/x",0, 0.5);
-	settingsManager.addSettingFloat(&triggerAreaCentreY, "TRIGGER_AREA_Y", "/PixelPyros/Setup/VPOS/x",0.5, 1);
-	settingsManager.addSettingFloat(&triggerSpacing, "TRIGGER_SPACING", "/PixelPyros/Setup/Spacing/x",0, 400);
-	settingsManager.addSettingFloat(&triggerSpacing, "TRIGGER_SPACING", "/PixelPyros/Spacing/x",0, 400);
-	
+//	settingsManager.addSettingFloat(&motionManager.thresholdLevel, "THRESHOLD", "/PixelPyros/Setup/Threshold/x", 0, 255);
+//	settingsManager.addSettingFloat(&motionManager.motionSensitivity, "MOTION_SENSITIVITY", "/PixelPyros/Setup/Sensitivity/x", 1, 5);
+//	
+//	settingsManager.addSettingFloat(&triggerAreaWidth, "TRIGGER_AREA_WIDTH", "/PixelPyros/Setup/Width/x", 0, 1);
+//	settingsManager.addSettingFloat(&triggerAreaHeight, "TRIGGER_AREA_HEIGHT", "/PixelPyros/Setup/Height/x",0, 0.5);
+//	settingsManager.addSettingFloat(&triggerAreaCentreY, "TRIGGER_AREA_Y", "/PixelPyros/Setup/VPOS/x",0.5, 1);
+//	settingsManager.addSettingFloat(&triggerSpacing, "TRIGGER_SPACING", "/PixelPyros/Setup/Spacing/x",0, 400);
+//	settingsManager.addSettingFloat(&triggerSpacing, "TRIGGER_SPACING", "/PixelPyros/Spacing/x",0, 400);
+//	
 	settingsManager.addSettingBool(&showDiffImage, "", "/PixelPyros/Setup/ShowDiff/x", true);
 	
 	settingsManager.addSettingBool(&triggersDisabled, "", "/PixelPyros/Setup/MotionDisable/x", true);
@@ -443,8 +441,8 @@ void ofApp::setupControlPanel() {
 	
 }
 
-void ofApp::eventsIn(guiCallbackData & data){
-    
+//void ofApp::eventsIn(guiCallbackData & data){
+
 	
 //	if( data.getXmlName() == "SHADER_BLACK" ) {
 //        renderer.blackPoint = data.getFloat(0);
@@ -468,7 +466,7 @@ void ofApp::eventsIn(guiCallbackData & data){
 //    }
 		
 	//gui.saveSettings();
-}
+//}
 
 
 
