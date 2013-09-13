@@ -27,6 +27,7 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     
     setupPanel( "Renderer", "rendererSettings.xml", ofRectangle( offset.x + 420, offset.y, 400, 30 ), rendererGui );
     rendererGui.add( *parameterManager->getParameterGroup("renderer") );
+    rendererGui.add( *parameterManager->getParameterGroup("particles") );
     rendererGui.load();
     
     setupPanel( "Triggers", "triggerSettings.xml", ofRectangle( offset.x + 840, offset.y, 400, 30 ), triggerGui );
@@ -50,6 +51,7 @@ void ControlPanels::exit(){
     laserGui.save();
     rendererGui.save();
     triggerGui.save();
+    motionGui.save();
 }
 
 void ControlPanels::keyPressed(int key){
