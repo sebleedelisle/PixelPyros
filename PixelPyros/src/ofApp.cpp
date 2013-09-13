@@ -5,7 +5,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	
+	ofSetLogLevel(OF_LOG_WARNING);
 	useFbo = true;
 	fboWarper1.label = "leftScreen";
 	fboWarper2.label = "rightScreen";
@@ -154,6 +154,7 @@ void ofApp::update(){
 		triggerManager.update(deltaTime);
 	    sceneManager.update(deltaTime);
         particleSystemManager.update(deltaTime);
+		sequencer.update(); 
     }
 }
 
@@ -220,7 +221,7 @@ void ofApp::keyPressed(int key){
         altPressed = true;
     }
 
-    if( shiftPressed ) {
+   // if( shiftPressed ) {
         if(key=='w') {
             cameraManager.toggleWarperGui();
         }else if(key=='e') {
@@ -237,12 +238,12 @@ void ofApp::keyPressed(int key){
             if(altPressed)
                 sceneManager.prevScene();
             else
-                sceneManager.previousArrangement();
+                sceneManager.previousPattern();
         } else if(key==OF_KEY_RIGHT) {
             if(altPressed)
                 sceneManager.nextScene();
             else
-                sceneManager.nextArrangement();
+                sceneManager.nextPattern();
         }
 
         //}
@@ -271,9 +272,9 @@ void ofApp::keyPressed(int key){
         }
         else if ( key == 'r' )
         {
-            sceneManager.showSlideShow = true ;
+            sequencer.runSequence("Intro");
         }
-    }
+   // }
     
     controlPanels.keyPressed(key);
 	
@@ -298,6 +299,17 @@ void ofApp:: setupScenes() {
 	//sceneManager.addScene(new SceneLaunch("Launch", particleSystemManager));
 
 	sceneManager.addScene(new SceneIntro("Intro"));
+	Sequence* seq = sequencer.loadSequence("Intro", "Intro", "02 In Motion.aif");
+	seq->addCommand(0, SEQ_PATTERN_CHANGE, 0);
+	seq->addCommand(2, SEQ_PATTERN_CHANGE, 1);
+	seq->addCommand(9, SEQ_PATTERN_CHANGE, 2);
+	seq->addCommand(10, SEQ_PATTERN_CHANGE, 3);
+	seq->addCommand(11, SEQ_PATTERN_CHANGE, 1);
+	seq->addCommand(12, SEQ_PATTERN_CHANGE, 2);
+	seq->addCommand(13, SEQ_PATTERN_CHANGE, 3);
+	
+	
+	
 	
 	sceneManager.addScene(new SceneRetro("Retro"));
 	
@@ -308,6 +320,8 @@ void ofApp:: setupScenes() {
 	//sceneManager.addScene(new SceneSpace("Stargazer", particleSystemManager));
 	
 	sceneManager.changeScene(0);
+	
+	
 	
 }
 
@@ -454,8 +468,8 @@ void ofApp::setupControlPanel() {
 
 	settingsManager.addSettingBool(&sceneManager.nextFlag, "", "/PixelPyros/SceneNext/x", true, false);
 	settingsManager.addSettingBool(&sceneManager.previousFlag, "", "/PixelPyros/ScenePrevious/x", true, true);
-	settingsManager.addSettingBool(&sceneManager.nextArrangementFlag, "", "/PixelPyros/ArrNext/x", true, true);
-	settingsManager.addSettingBool(&sceneManager.previousArrangementFlag, "", "/PixelPyros/ArrPrevious/x", true, true);
+	settingsManager.addSettingBool(&sceneManager.nextPatternFlag, "", "/PixelPyros/ArrNext/x", true, true);
+	settingsManager.addSettingBool(&sceneManager.previousPatternFlag, "", "/PixelPyros/ArrPrevious/x", true, true);
 	
 	
 	sceneManager.initSceneControls(settingsManager);

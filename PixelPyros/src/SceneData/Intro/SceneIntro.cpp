@@ -47,6 +47,8 @@ SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 	TriggerPattern patternFountain;
 	patternFountain.addTriggerSettings(fireworkFactory.getFountain(180,0));
 	patternFountain.addTriggerSettings();
+	patternFountain.addTriggerSettings(fireworkFactory.getFountain(180,0));
+	patternFountain.addTriggerSettings();
 	patternFountain.addTriggerSettings(fireworkFactory.getBasicRocket(5));
 	patternFountain.addTriggerSettings();
 	addTriggerPattern(patternFountain);

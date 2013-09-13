@@ -18,7 +18,7 @@
 #include "LaserManager.h"
 #include "ControlPanels.h"
 #include "SoundPlayer.h"
-
+#include "Sequencer.h"
 
 //
 //#include "SceneSpace.h"
@@ -48,7 +48,7 @@ class ofApp :public ofBaseApp{
 public:
 	
 	ofApp(): particleSystemManager(*ParticleSystemManager::instance()), triggerManager(*TriggerManager::instance()), soundPlayer(*SoundPlayer::instance()), laserManager(*LaserManager::instance()),
-        parameterManager(*ParameterManager::instance()){
+        parameterManager(*ParameterManager::instance()), sequencer(&sceneManager){
  		
  	};
 	
@@ -83,6 +83,7 @@ public:
 	SoundPlayer& soundPlayer;
     ParameterManager& parameterManager;
     ControlPanels controlPanels;
+	Sequencer sequencer; 
 	
 	ofFbo fbo;
 	bool useFbo;

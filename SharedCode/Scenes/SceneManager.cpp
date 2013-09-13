@@ -7,8 +7,8 @@ SceneManager :: SceneManager() : particleSystemManager(*ParticleSystemManager::i
 	nextFlag = false;
 	previousFlag = false;
 
-	nextArrangementFlag = false;
-	previousArrangementFlag = false;
+	nextPatternFlag = false;
+	previousPatternFlag = false;
 }
 
 void SceneManager::addScene(Scene *scene) {
@@ -32,12 +32,12 @@ bool SceneManager ::update(float deltaTime){
 	}
 	
 	if(currentScene!=NULL) {
-		if(nextArrangementFlag) nextArrangement();
-		if(previousArrangementFlag) previousArrangement();
+		if(nextPatternFlag) nextPattern();
+		if(previousPatternFlag) previousPattern();
 		
 		currentSceneArrangement = ofToString ( currentScene->currentTriggerPatternIndex + 1 ) ;
 	}
-	nextArrangementFlag = previousArrangementFlag = false;
+	nextPatternFlag = previousPatternFlag = false;
 	
 	for(int i = 0; i<scenes.size(); i++) {
 		scenes[i]->update(deltaTime);
@@ -108,6 +108,22 @@ bool SceneManager :: changeScene(int sceneIndex) {
 		
 }
 
+bool SceneManager :: changeScene(string scenename) {
+	
+	for(int i =0; i<scenes.size(); i++) {
+		
+		Scene *scene = scenes[i];
+		if(scene->name == scenename) return changeScene(scene);
+		
+		
+	}
+	
+	return false; 
+	
+	
+}
+
+
 
 bool SceneManager :: changeScene (Scene* scene) {
 
@@ -164,8 +180,18 @@ bool SceneManager::prevScene(){
 	
 }
 
+bool SceneManager::changeTriggerPattern(int patternNum) {
+	if(currentScene == NULL) return false;
+	
+	currentScene->changeTriggerPattern(patternNum);
 
-bool SceneManager::nextArrangement(){
+	triggerManager.setPattern(currentScene->getCurrentTriggerPattern());
+
+	return true; 
+}
+
+
+bool SceneManager::nextPattern(){
 	if(currentScene == NULL) return false;
 	
 	currentScene->next();
@@ -175,7 +201,7 @@ bool SceneManager::nextArrangement(){
 	return true;
 }
 
-bool SceneManager::previousArrangement(){
+bool SceneManager::previousPattern(){
 	if(currentScene == NULL) return false;
 	currentScene->previous();
 	

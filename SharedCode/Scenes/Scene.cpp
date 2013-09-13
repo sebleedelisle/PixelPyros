@@ -143,11 +143,11 @@ bool Scene :: changeTriggerPattern(int num) {
 bool Scene :: next() {
 	if(triggerPatterns.size()==0) return false;
 	
-	int nextArrangement = currentTriggerPatternIndex+1;
-	if(nextArrangement>=triggerPatterns.size())
-		nextArrangement = 0;
+	int nextPattern = currentTriggerPatternIndex+1;
+	if(nextPattern>=triggerPatterns.size())
+		nextPattern = 0;
 	
-	changeTriggerPattern(nextArrangement);
+	changeTriggerPattern(nextPattern);
 	
 	
 }
