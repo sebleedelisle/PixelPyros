@@ -16,7 +16,8 @@ public :
 	void addScene(Scene * scene);
     
 	bool changeScene(int sceneIndex);
-	bool changeScene(Scene * scene); 
+	bool changeScene(Scene * scene);
+	bool changeScene(string scenename);
 	bool nextScene();
 	bool prevScene();
 	
@@ -30,8 +31,9 @@ public :
 	void updateTriggerDebug(bool debug);
 	void setTriggersDisabled(bool disabled);*/
 	
-	bool nextArrangement();
-	bool previousArrangement(); 
+	bool nextPattern();
+	bool previousPattern();
+	bool changeTriggerPattern(int patternNum);
     
   	
 	vector <Scene*> scenes;
@@ -47,8 +49,8 @@ public :
 	
 	bool nextFlag;
 	bool previousFlag; 
-	bool nextArrangementFlag;
-	bool previousArrangementFlag;
+	bool nextPatternFlag;
+	bool previousPatternFlag;
 	
 	bool showSlideShow;
 	

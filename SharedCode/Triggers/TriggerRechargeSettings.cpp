@@ -11,9 +11,9 @@
 
 //TriggerRechargeSettings* TriggerRechargeSettings::defaultSettings = new TriggerRechargeSettings();
 
-TriggerRechargeSettings* TriggerRechargeSettings::medium = new TriggerRechargeSettings(1);
+TriggerRechargeSettings* TriggerRechargeSettings::medium = new TriggerRechargeSettings(0.5);
 TriggerRechargeSettings* TriggerRechargeSettings::fast = new TriggerRechargeSettings(2);
-TriggerRechargeSettings* TriggerRechargeSettings::slow = new TriggerRechargeSettings(0.5);
+TriggerRechargeSettings* TriggerRechargeSettings::slow = new TriggerRechargeSettings(0.2);
 
 TriggerRechargeSettings::TriggerRechargeSettings() {
 

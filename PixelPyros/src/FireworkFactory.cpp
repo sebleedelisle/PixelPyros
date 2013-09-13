@@ -309,7 +309,7 @@ TriggerSettingsRocket* FireworkFactory :: getFountain(float hueStartOffset , flo
 	ts->rocketSettings = &rocketSettings;
 	
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
-	
+	ts->radius = 5; 
 	return ts;
 	
 	
