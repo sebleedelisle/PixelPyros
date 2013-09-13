@@ -10,41 +10,61 @@
 
 void ControlPanels::setup(ParameterManager * parameterManager){
     
-    laserGui.useFrameBuffer(false);
-    laserGui.setDefaultWidth(300);
+    ofxBaseGui::setDefaultWidth(500);
+    ofxBaseGui::setDefaultHeight(18);
+	ofxBaseGui::setDefaultSpacing(2);
+    ofxBaseGui::setDefaultElementSpacing(5);
+	ofxBaseGui::setDefaultElementIndentation(1);
+	ofxBaseGui::setDefaultTextPadding(7);
     
-    laserGui.setDefaultHeight(18);
-	
-	laserGui.setDefaultTextPadding(7);
-	
-	
-	laserGui.setDefaultSpacing(2);
-	laserGui.setDefaultElementSpacing(5);
-	laserGui.setDefaultElementIndentation(1);
-	laserGui.loadFont("Verdana.ttf", 10, false);
-	laserGui.setup("LaserTestGUI"); // most of the time you don't need a name
-	
-	laserGui.setSize(500,30);
-	laserGui.setUseTTF(true);
-    laserGui.setPosition(1600, 0);
-    laserGui.setVisible(false);
-
+    float offsetX = 160;
+    
+    setupPanel( "Laser", "laserSettings.xml", ofRectangle( offsetX, 0, 400, 30 ), laserGui );
     laserGui.add( *parameterManager->getParameterGroup("laser") );
+    laserGui.load();
     
-	laserGui.loadFromFile("laserSettings.xml");
+    setupPanel( "Renderer", "rendererSettings.xml", ofRectangle( offsetX + 420, 0, 400, 30 ), rendererGui );
+    rendererGui.add( *parameterManager->getParameterGroup("renderer") );
+    rendererGui.load();
+    
+    setupPanel( "Triggers", "triggerSettings.xml", ofRectangle( offsetX + 840, 0, 400, 30 ), triggerGui );
+    triggerGui.add( *parameterManager->getParameterGroup("triggers") );
+    triggerGui.load();
 
 }
 
 void ControlPanels::draw(){
     laserGui.draw();
+    rendererGui.draw();
+    triggerGui.draw();
 }
 
 void ControlPanels::exit(){
-    laserGui.saveToFile("laserSettings.xml");
+    laserGui.save();
+    rendererGui.save();
+    triggerGui.save();
 }
 
 void ControlPanels::keyPressed(int key){
     if( key == '1' ){
-        laserGui.setVisible( !laserGui.getVisibile() );
+        laserGui.toggleVisible();
     }
+    if( key == '2' ){
+        rendererGui.toggleVisible();
+    }
+    if( key == '3' ){
+        triggerGui.toggleVisible();
+    }
+}
+
+void ControlPanels::setupPanel( string name, string filename, ofRectangle rect, ofxPanel & panel ){
+    panel.setup(name, filename);
+    panel.useFrameBuffer(false);
+	panel.loadFont("Verdana.ttf", 10, false);
+	
+    panel.setSize( rect.width, rect.height );
+	panel.setUseTTF(true);
+    panel.setPosition(rect.x, rect.y);
+    panel.setVisible(false);
+
 }

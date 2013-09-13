@@ -25,21 +25,13 @@ class ControlPanels {
     void keyPressed(int key);
     
     protected:
+
+    void setupPanel( string name, string filename, ofRectangle rect, ofxPanel & panel );
+
     ParameterManager& parameterManager;
     
-    /*-- Laser GUI begin --*/
-    
     ofxPanel laserGui;
-    
-    ofParameter<int> numParticles;
-	ofParameter<float> particleFlicker;
-	ofParameter<float> speed;
-    
-	ofxColorSlider color;
-    ofxToggle showParticles;
-	ofxToggle showRectangle;
-    
-    /*-- Laser GUI end --*/
-
+    ofxPanel rendererGui;
+    ofxPanel triggerGui;
     
 };
