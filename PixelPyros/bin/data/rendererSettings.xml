@@ -6,4 +6,7 @@
 		<white_point>1</white_point>
 	</Levels>
 <Renderer/>
+<Particle_Manager>
+		<KILL_ALL_PARTICLES>0</KILL_ALL_PARTICLES>
+	</Particle_Manager>
 </Renderer>
