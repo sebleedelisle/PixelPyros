@@ -23,10 +23,24 @@ TriggerManager::TriggerManager () {
 	
 	triggersDisabled = false;
 	triggerDebug = false;
+    
+    initParams();
 
 }
 
-
+void TriggerManager::initParams(){
+    parameters.setName("Trigger Positioning");
+    parameters.add( triggerAreaWidthParam.set("width", 0.5, 0, 1 ) );
+    parameters.add( triggerAreaHeightParam.set("height", 0.5, 0, 0.5 ) );
+    parameters.add( triggerAreaCenterYParam.set("centre y", 0.5, 0.5, 1 ) );
+    parameters.add( triggerSpacingParam.set("spacing", 0, 0, 400 ) );
+    
+    triggerAreaWidthParam.addListener(this, &TriggerManager::triggerParamChanged);
+    triggerAreaHeightParam.addListener(this, &TriggerManager::triggerParamChanged);
+    triggerAreaCenterYParam.addListener(this, &TriggerManager::triggerParamChanged);
+    triggerSpacingParam.addListener(this, &TriggerManager::triggerParamChanged);
+    
+}
 
 
 bool TriggerManager :: update(float deltaTime) {
@@ -45,8 +59,7 @@ bool TriggerManager :: update(float deltaTime) {
 	}*/
 	
 	return true;
-	
-	
+		
 }
 
 void TriggerManager :: updateMotion(MotionManager& motionManager, cv::Mat homography){
@@ -115,18 +128,20 @@ void TriggerManager :: setPattern(TriggerPattern tp ) {
 }
 
 
-void TriggerManager :: updateTriggerSettings(ofRectangle triggerarea, float spacing ){
-	
-	triggerArea = triggerarea;
-	minimumSpacing = spacing;
-	
-	//if(spacing<=0) spacing = 0.1;
-	//for(int i = 0; i<triggerPatterns.size() ; i++) {
-	//	triggerPatterns[i]->updateLayout(triggerarea, spacing, triggerDebug, triggersDisabled);
-	//}
-	
-	updateLayout();
-	
+//void TriggerManager :: updateTriggerSettings(ofRectangle triggerarea, float spacing ){
+//    
+//    
+//	
+//	triggerArea = triggerarea;
+//	minimumSpacing = spacing;
+//	
+//	updateLayout();
+//	
+//}
+
+void TriggerManager:: setDisplaySize( float width, float height ){
+    displayWidth = width;
+    displayHeight = height;
 }
 
 void TriggerManager :: toggleDebug() {
@@ -369,5 +384,16 @@ void TriggerManager :: mouseMoved(int x, int y){
 
 	}
 
+}
+
+void TriggerManager::triggerParamChanged(float &value){
+    triggerArea.width = triggerAreaWidthParam*displayWidth;
+    triggerArea.x = (displayWidth - triggerArea.width)/2;
+    triggerArea.height = (displayHeight * triggerAreaHeightParam);
+    triggerArea.y = (displayHeight * triggerAreaCenterYParam) - (triggerArea.height/2) ;
+
+    minimumSpacing = triggerSpacingParam.get();
+    
+    updateLayout();
 }
 

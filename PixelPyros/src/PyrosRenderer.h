@@ -15,9 +15,15 @@ class PyrosRenderer : public ofShader {
 public:
     
     PyrosRenderer() : ofShader() {
-		
+        
+        paramters.setName("Levels");
+        paramters.add( bloomParam.set("bloom", 0.3, 0, 3 ) );
+        paramters.add( gammaParam.set("gamma", 1.2, 0, 10 ) );
+        paramters.add( blackPointParam.set("black point", 0, 0, 1 ) );
+        paramters.add( whitePointParam.set("white point", 1, 0, 1 ) );
+        
 		resetDefaults();
-		resetFlag = false; 
+		resetFlag = false;
     }
     
     PyrosRenderer(string filename) : ofShader() {
@@ -26,19 +32,20 @@ public:
     
 	
 	void resetDefaults() {
-		blackPoint = 0;
-		whitePoint = 1;
-		gammaValue = 1.2;
-		bloomValue = 0.3;
-		resetFlag = false; 
+        
+		blackPointParam = 0;
+		whitePointParam = 1;
+		gammaParam = 1.2;
+		bloomParam = 0.3;
+		resetFlag = false;
 		
 	}
 	
     virtual void setShaderParameters() {
-        setUniform1f("bloom", bloomValue);
-        setUniform1f("gamma", gammaValue);
-        setUniform1f("blackPoint", blackPoint);
-        setUniform1f("whitePoint", whitePoint);
+        setUniform1f("bloom", bloomParam.get() );
+        setUniform1f("gamma", gammaParam.get() );
+        setUniform1f("blackPoint", blackPointParam.get() );
+        setUniform1f("whitePoint", whitePointParam.get() );
     }
     
 	// would be nice to make this a little more flexible, right now it is hard coded for
@@ -140,10 +147,12 @@ public:
 	
 	bool resetFlag; 
     
-    float bloomValue;
-    float gammaValue;
-    float blackPoint;
-    float whitePoint;
+    ofParameter<float> bloomParam;
+    ofParameter<float> gammaParam;
+    ofParameter<float> blackPointParam;
+    ofParameter<float> whitePointParam;
+    
+    ofParameterGroup paramters;
     
 private:
     
