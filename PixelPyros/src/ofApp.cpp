@@ -127,18 +127,6 @@ void ofApp::update(){
 
 	lastUpdateTime = time;
 	
-//	if (( triggerAreaWidth*APP_WIDTH!=triggerArea.width ) ||
-//		(triggerAreaHeight*APP_HEIGHT != triggerArea.height) ||
-//		(triggerAreaCentreY*APP_HEIGHT != triggerArea.getCenter().y) ||
-//		(triggerSpacing != triggerManager.minimumSpacing ) ) {
-//		
-//		triggerArea.width = triggerAreaWidth*APP_WIDTH;
-//		triggerArea.x = (APP_WIDTH - triggerArea.width)/2;
-//		triggerArea.height = (APP_HEIGHT * triggerAreaHeight);
-//		triggerArea.y = (APP_HEIGHT * triggerAreaCentreY) - (triggerArea.height/2) ;
-//		
-//		triggerManager.updateTriggerSettings(triggerArea, triggerSpacing) ;
-//	}
 	/*
 	if ( triggerShowDebug != triggerManager.triggerShowDebug ) {
 		triggerManager.setShowTriggerDebug(triggerShowDebug) ;
@@ -397,13 +385,12 @@ void ofApp::setupControlPanel() {
 	
 	motionManager.initControlPanel(gui);
 	
-	gui.addPanel("Triggers");
-	
-	gui.addSlider("Area width", "TRIGGER_AREA_WIDTH", 0, 0, 1.0, false);//->setDimensions(400, 10);
-	gui.addSlider("Area height", "TRIGGER_AREA_HEIGHT", 0, 0, 0.5, false);//->setDimensions(400, 10);
-	gui.addSlider("Area y pos", "TRIGGER_AREA_Y", 0, 0.5, 1, false);//->setDimensions(400, 10);
-	gui.addSlider("Spacing", "TRIGGER_SPACING", 0, 0, 400, false);//->setDimensions(400, 10);
-	
+//	gui.addPanel("Triggers");
+//	gui.addSlider("Area width", "TRIGGER_AREA_WIDTH", 0, 0, 1.0, false);//->setDimensions(400, 10);
+//	gui.addSlider("Area height", "TRIGGER_AREA_HEIGHT", 0, 0, 0.5, false);//->setDimensions(400, 10);
+//	gui.addSlider("Area y pos", "TRIGGER_AREA_Y", 0, 0.5, 1, false);//->setDimensions(400, 10);
+//	gui.addSlider("Spacing", "TRIGGER_SPACING", 0, 0, 400, false);//->setDimensions(400, 10);
+//	
 
 	ofAddListener(gui.guiEvent, this, &ofApp::eventsIn);
 	
