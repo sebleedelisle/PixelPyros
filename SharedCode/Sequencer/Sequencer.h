@@ -25,8 +25,16 @@ class Sequencer {
 	void runSequence(Sequence* );
 	
 	bool pauseCurrentSequence();
+	bool toggleShowInterface(); 
 	
-	bool update(); 
+	bool update();
+	void draw();
+	
+	void mousePressed(ofMouseEventArgs &e);
+	void mouseDragged(ofMouseEventArgs &e);
+	void mouseReleased(ofMouseEventArgs &e);
+	void keyPressed(ofKeyEventArgs &e);
+
 
 	map <string, Sequence*> sequences;
 	
@@ -34,5 +42,9 @@ class Sequencer {
 	
 	SceneManager* sceneManager; 
 
+	bool showInterface;
+	bool dragPlayHead;
+	ofPoint playHeadClickOffset; 
+	ofRectangle playHeadRect; 
 	
 };

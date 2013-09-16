@@ -135,7 +135,7 @@ void OscManager::sendOscMessage(string address, string arg )
     message.setAddress(address) ;
     message.addStringArg(arg) ;
 	
-	std::cout << "sending string message " << address << " : " <<arg << std::endl ;
+	//std::cout << "sending string message " << address << " : " <<arg << std::endl ;
 	
 	for (int i = 0; i<senders.size(); i++) {
 		senders[i].sendMessage(message) ;

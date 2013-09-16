@@ -30,13 +30,17 @@ class Sequence {
 	
 	SequenceCommand addCommand(int time, SequenceCommandType type, int arg);
 	
+	// TODO this is kinda horrible - fix somehow.
+	SceneManager * sceneManager;
 	
 	vector <SequenceCommand> commands;
 	
 	string name;
 	string sceneName;
 	string musicFile;
-	float lastUpdate; 
+	float lastUpdate;
+	float lengthSeconds;
+	float positionSeconds;
 	
 	ofSoundPlayer music;
 	
