@@ -76,16 +76,10 @@ void ControlPanels::exit(){
 }
 
 void ControlPanels::keyPressed(int key){
-    if( key == '1' ){
+    if( key == OF_KEY_TAB ){
         laserGui.toggleVisible();
-    }
-    if( key == '2' ){
         rendererGui.toggleVisible();
-    }
-    if( key == '3' ){
         triggerGui.toggleVisible();
-    }
-    if( key == '4'){
         motionGui.toggleVisible();
     }
 }
