@@ -41,8 +41,11 @@ public:
 
 	vector <PhysicsObject *> physicsObjects; 
 	vector <PhysicsObject *> sparePhysicsObjects; 
-
-	bool killAllParticlesFlag;
+    bool killAllParticlesFlag;
+    
+	ofParameter<bool> killAllParticlesParam;
+    
+    ofParameterGroup parameters;
 	
     int activeParticleCount;
 	int activePhysicsObjectCount;
