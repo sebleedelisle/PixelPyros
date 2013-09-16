@@ -7,8 +7,27 @@
 //
 
 #include "ControlPanels.h"
+#include <GLFW/glfw3.h>
+#define GLFW_EXPOSE_NATIVE_COCOA
+#define GLFW_EXPOSE_NATIVE_NSGL
+#include "GLFW/glfw3native.h"
+
 
 void ControlPanels::setup(ParameterManager * parameterManager){
+	int monitorCount;
+    
+    GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
+
+    int x,y,w,h;
+    ofVec2f offset(0,0);
+    int monitorLeft=0, monitorRight=0, monitorTop=0, monitorBottom=0;
+    for(int i = 0; i < monitorCount; i++){
+        glfwGetMonitorPos(monitors[i],&x,&y);
+        glfwGetMonitorPhysicalSize(monitors[i],&w,&h);
+        offset.x = MAX( offset.x, x );
+    }
+    
+    offset += ofVec2f(40,40);
     
     ofxBaseGui::setDefaultWidth(500);
     ofxBaseGui::setDefaultHeight(18);
@@ -17,7 +36,6 @@ void ControlPanels::setup(ParameterManager * parameterManager){
 	ofxBaseGui::setDefaultElementIndentation(1);
 	ofxBaseGui::setDefaultTextPadding(7);
     
-    ofVec2f offset(160,40);
     
     setupPanel( "Laser", "laserSettings.xml", ofRectangle( offset.x, offset.y, 400, 30 ), laserGui );
     laserGui.add( *parameterManager->getParameterGroup("laser") );
