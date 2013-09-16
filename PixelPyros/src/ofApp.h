@@ -67,7 +67,7 @@ public:
 	void setupScenes();
 	void initSounds();
 	
-//    void mousePressed(ofMouseEventArgs &e);
+//  void mousePressed(ofMouseEventArgs &e);
 //	void mouseDragged(ofMouseEventArgs &e);
 //	void mouseReleased(ofMouseEventArgs &e);
 //	void mouseMoved(ofMouseEventArgs &e);

@@ -194,6 +194,8 @@ void ofApp::draw(){
 	fboWarper1.draw();
 	fboWarper2.draw();
 	
+	sequencer.draw();
+	
     controlPanels.draw();
     
 }
