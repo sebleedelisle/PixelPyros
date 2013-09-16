@@ -24,7 +24,10 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     for(int i = 0; i < monitorCount; i++){
         glfwGetMonitorPos(monitors[i],&x,&y);
         glfwGetMonitorPhysicalSize(monitors[i],&w,&h);
-        offset.x = MAX( offset.x, x );
+        if( offset.x < x ){
+            offset.x = x;
+            offset.y = y;
+        }
     }
     
     offset += ofVec2f(40,40);
@@ -85,6 +88,10 @@ void ControlPanels::keyPressed(int key){
     if( key == '4'){
         motionGui.toggleVisible();
     }
+}
+
+void ControlPanels::mouseMoved(int x, int y){
+    
 }
 
 void ControlPanels::setupPanel( string name, string filename, ofRectangle rect, ofxPanel & panel ){
