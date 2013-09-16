@@ -21,22 +21,28 @@ ParticleSystemManager :: ParticleSystemManager() : soundPlayer(*SoundPlayer::ins
     
 	activeParticleCount = 0;
 	activePhysicsObjectCount = 0;
-	
+
+    parameters.setName("Particle Manager");
+    parameters.add( killAllParticlesParam.set("KILL ALL PARTICLES",false) );
+	killAllParticlesFlag = false;
 }
 
 
 
 void ParticleSystemManager :: update(float deltaTime) {
 	
-	activeParticleCount  =0 ;
-	
-	
+	activeParticleCount  = 0;
 	activePhysicsObjectCount = 0;
 	
-	if ( killAllParticlesFlag )
+    /* cause single update delay before setting param back to false */
+    if( killAllParticlesFlag ){
+        killAllParticlesFlag = killAllParticlesParam = false;
+    }
+    
+	if ( killAllParticlesParam )
 	{
 		killAllParticles () ;
-		killAllParticlesFlag = false ;
+        killAllParticlesFlag = true;
 	}
 	
 	for(int i = 0; i<particleSystems.size(); i++) {
