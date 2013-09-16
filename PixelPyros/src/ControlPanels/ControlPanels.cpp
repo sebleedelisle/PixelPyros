@@ -20,6 +20,7 @@ void ControlPanels::setup(ParameterManager * parameterManager){
 
     int x,y,w,h;
     ofVec2f offset(0,0);
+    ofVec2f padding(40,40);
     int monitorLeft=0, monitorRight=0, monitorTop=0, monitorBottom=0;
     for(int i = 0; i < monitorCount; i++){
         glfwGetMonitorPos(monitors[i],&x,&y);
@@ -30,7 +31,7 @@ void ControlPanels::setup(ParameterManager * parameterManager){
         }
     }
     
-    offset += ofVec2f(40,40);
+    offset += padding;
     
     ofxBaseGui::setDefaultWidth(500);
     ofxBaseGui::setDefaultHeight(18);
@@ -55,7 +56,7 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     triggerGui.add( *parameterManager->getParameterGroup("triggers") );
     triggerGui.load();
     
-    setupPanel( "Motion", "motionDetectionSettings.xml", ofRectangle( offset.x, offset.y * 2 + laserGui.getHeight(), 400, 30 ), motionGui );
+    setupPanel( "Motion", "motionDetectionSettings.xml", ofRectangle( offset.x, offset.y + 2 * padding.y + laserGui.getHeight(), 400, 30 ), motionGui );
     motionGui.add( *parameterManager->getParameterGroup("motion") );
     motionGui.load();
 
@@ -90,7 +91,7 @@ void ControlPanels::mouseMoved(int x, int y){
 
 void ControlPanels::setupPanel( string name, string filename, ofRectangle rect, ofxPanel & panel ){
     panel.setup(name, filename);
-    panel.useFrameBuffer(false);
+    panel.useFrameBuffer(true);
 	panel.loadFont("Verdana.ttf", 10, false);
 	
     panel.setSize( rect.width, rect.height );
