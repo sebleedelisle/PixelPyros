@@ -93,7 +93,9 @@ void ofApp::setup(){
     parameterManager.registerParameterGroup("renderer", &renderer.paramters );
     parameterManager.registerParameterGroup("triggers", &triggerManager.parameters);
     parameterManager.registerParameterGroup("motion", &motionManager.parameters);
-    /* 
+    parameterManager.registerParameterGroup("particles", &particleSystemManager.parameters);
+
+    /*
         Now that all of the parameters should be registered with the 
         ParameterManager, setup the control gui
      */
@@ -259,7 +261,7 @@ void ofApp::keyPressed(int key){
         }
         else if ( key == 'k' )
         {
-            particleSystemManager.killAllParticlesFlag = true ;
+            particleSystemManager.killAllParticlesParam = true ;
         }
         else if ( key == 'r' )
         {
@@ -442,7 +444,7 @@ void ofApp::setupControlPanel() {
 //	settingsManager.addSettingFloat(&renderer.bloomValue, "SHADER_BLOOM", "/PixelPyros/Setup/BloomLevel/x",0, 3);
 //	settingsManager.addSettingFloat(&renderer.bloomValue, "SHADER_BLOOM", "/PixelPyros/BloomLevel/x",0, 3);
 	
-	settingsManager.addSettingBool(&particleSystemManager.killAllParticlesFlag, "", "/PixelPyros/KillParticles/x", false );
+//	settingsManager.addSettingBool(&particleSystemManager.killAllParticlesFlag, "", "/PixelPyros/KillParticles/x", false );
 	
 	settingsManager.addSettingBool(&renderer.resetFlag, "", "/PixelPyros/Setup/ResetDefault/x", true);
 
@@ -450,7 +452,6 @@ void ofApp::setupControlPanel() {
 	settingsManager.addSettingBool(&sceneManager.previousFlag, "", "/PixelPyros/ScenePrevious/x", true, true);
 	settingsManager.addSettingBool(&sceneManager.nextPatternFlag, "", "/PixelPyros/ArrNext/x", true, true);
 	settingsManager.addSettingBool(&sceneManager.previousPatternFlag, "", "/PixelPyros/ArrPrevious/x", true, true);
-	
 	
 	sceneManager.initSceneControls(settingsManager);
 	
