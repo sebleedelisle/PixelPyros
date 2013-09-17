@@ -28,7 +28,7 @@ void TriggerSettingsRocketRotator::draw(float elapsedtime, ofVec3f pos, ofColor 
 	
 	elapsedTime = elapsedtime;
 
-	TriggerSettingsRocket::draw(elapsedtime, pos, colour, unitPower, active, scale);
+	TriggerSettingsRocket::draw(elapsedtime, pos, unitPower, active, scale);
 	
 	if(!rotateOnFire) {
 		angle = (sin(elapsedTime*rotationSpeed)*rotationExtent)-90;

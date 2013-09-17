@@ -91,8 +91,7 @@ void Trigger :: stop() {
 
 bool Trigger::update(float deltaTime) {
 
-	if(!active) return false;
-	
+	//
 	//if((!stopping) && (scale<1)) scale+=0.1;
 
 	elapsedTime+=deltaTime;
@@ -157,7 +156,7 @@ bool Trigger::update(float deltaTime) {
 	// we need to have sensed motion,
 	// AND we need to have enough unitPower to trigger
 	if( (!stopping) &&
-		//(scale>0.99) &&
+		(scale>0.99) &&
 		(motionLevel >= rechargeSettings->motionTriggerLevel) &&
 		(unitPower>=rechargeSettings->triggerPower) &&
 		(elapsedTime - lastTriggerTime > rechargeSettings->minTriggerInterval) ) {
@@ -213,14 +212,16 @@ bool Trigger::update(float deltaTime) {
 
 void Trigger :: draw() {
 
+
+//	ofColor c;
+//	c.setSaturation(settings->saturation);
+//	c.setHue(settings->hue);
+
+	if(settings!=NULL) settings->draw(elapsedTime, pos,  unitPower, active, scale);
+	if(lastSettings!=NULL) lastSettings->draw(elapsedTime, pos,  unitPower, active, lastScale);
+	
 	if(!active) return;
 
-	ofColor c;
-	c.setSaturation(settings->saturation);
-	c.setHue(settings->hue);
-
-	if(settings!=NULL) settings->draw(elapsedTime, pos,  c, unitPower, active, scale);
-	if(lastSettings!=NULL) lastSettings->draw(elapsedTime, pos,  lastColor, unitPower, active, lastScale);
 	//else ofLog(OF_LOG_WARNING, "No renderer for trigger");
 	
 	//ofDrawBitmapString(ofToString(motionLevel), pos);
@@ -409,18 +410,10 @@ bool Trigger::doTrigger() {
 void Trigger::copySettings(TriggerSettings* newsettings) {
 	lastSettings = settings;
 	lastScale = scale;
-	ofColor c;
-	if(settings!=NULL) {
-		c.setSaturation(settings->saturation);
-		c.setHue(settings->hue);
-		lastColor = c;
-	} else {
-		lastColor = ofColor::black;
-	}
-	
 
 	settings = newsettings;
-	rechargeSettings = newsettings->rechargeSettings;
+	if(newsettings!=NULL)
+		rechargeSettings = newsettings->rechargeSettings;
 
 	scale = 0; 
 	/*

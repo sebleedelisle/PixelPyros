@@ -20,7 +20,6 @@ class TriggerSettings {
 	
 	TriggerSettings();
 	
-	//ofColor colour;
 	float hue;
 	float saturation;
 	float elapsedTime;
@@ -36,8 +35,9 @@ class TriggerSettings {
 	virtual void doTrigger(ofVec3f& pos, float power, float direction);
 
 	
-	virtual void draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active, float scale = 1);
+	virtual void draw(float elapsedtime, ofVec3f pos,  float unitPower, bool active, float scale = 1);
 
-
+	virtual ofColor getColour(); 
+	
 
 };

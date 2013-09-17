@@ -44,8 +44,12 @@ void TriggerSettings::doTrigger(ofVec3f& pos, float power, float direction) {
 	//ofLog(OF_LOG_WARNING, "triggered");
 }
 
+ofColor TriggerSettings::getColour() {
+	return ofColor::black;
+	
+}
 
-void TriggerSettings::draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active, float scale ) {
+void TriggerSettings::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale ) {
 	
 	
 	// BASE CLASS HAS NO RENDERER
