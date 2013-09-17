@@ -8,7 +8,7 @@
 
 #include "SceneVectorizer.h"
 
-SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename){
+SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), particleSystemManager(*ParticleSystemManager::instance()){
 	
 	TriggerPattern empty;
 	addTriggerPattern(empty);
