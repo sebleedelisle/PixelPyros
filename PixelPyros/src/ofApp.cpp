@@ -146,7 +146,7 @@ void ofApp::update(){
 		triggerManager.update(deltaTime);
 	    sceneManager.update(deltaTime);
         particleSystemManager.update(deltaTime);
-		sequencer.update(); 
+		//sequencer.update();
     }
 }
 
@@ -197,7 +197,7 @@ void ofApp::draw(){
 	fboWarper1.draw();
 	fboWarper2.draw();
 	
-	sequencer.draw();
+	//sequencer.draw();
 	
     controlPanels.draw();
     
@@ -266,7 +266,7 @@ void ofApp::keyPressed(int key){
         }
         else if ( key == 'r' )
         {
-            sequencer.runSequence("Intro");
+            //sequencer.runSequence("Intro");
         }
    // }
     
@@ -292,15 +292,16 @@ void ofApp:: setupScenes() {
 	// This scene was to launch the Brighton Digital Festival
 	//sceneManager.addScene(new SceneLaunch("Launch", particleSystemManager));
 
-	sceneManager.addScene(new SceneIntro("Intro"));
-	Sequence* seq = sequencer.loadSequence("Intro", "Intro", "02 In Motion.aif");
-	seq->addCommand(0, SEQ_PATTERN_CHANGE, 0);
-	seq->addCommand(2, SEQ_PATTERN_CHANGE, 1);
-	seq->addCommand(9, SEQ_PATTERN_CHANGE, 2);
-	seq->addCommand(10, SEQ_PATTERN_CHANGE, 3);
-	seq->addCommand(11, SEQ_PATTERN_CHANGE, 1);
-	seq->addCommand(12, SEQ_PATTERN_CHANGE, 2);
-	seq->addCommand(13, SEQ_PATTERN_CHANGE, 3);
+	SceneIntro* intro = new SceneIntro("Intro");
+	sceneManager.addScene(intro);
+	intro->loadMusicFile("02 In Motion.aif");
+	intro->addCommand(0, SEQ_PATTERN_CHANGE, 0);
+	intro->addCommand(2, SEQ_PATTERN_CHANGE, 1);
+	intro->addCommand(9, SEQ_PATTERN_CHANGE, 2);
+	intro->addCommand(10, SEQ_PATTERN_CHANGE, 3);
+	intro->addCommand(11, SEQ_PATTERN_CHANGE, 1);
+	intro->addCommand(12, SEQ_PATTERN_CHANGE, 2);
+	intro->addCommand(13, SEQ_PATTERN_CHANGE, 3);
 	
 	
 	
@@ -313,7 +314,7 @@ void ofApp:: setupScenes() {
 	
 	//sceneManager.addScene(new SceneSpace("Stargazer", particleSystemManager));
 	
-	sceneManager.changeScene(0);
+	sceneManager.changeScene(1);
 	
 	
 	
@@ -454,7 +455,7 @@ void ofApp::setupControlPanel() {
 	settingsManager.addSettingBool(&sceneManager.nextPatternFlag, "", "/PixelPyros/ArrNext/x", true, true);
 	settingsManager.addSettingBool(&sceneManager.previousPatternFlag, "", "/PixelPyros/ArrPrevious/x", true, true);
 	
-	sceneManager.initSceneControls(settingsManager);
+	//sceneManager.initSceneControls(settingsManager);
 	
 	
 }

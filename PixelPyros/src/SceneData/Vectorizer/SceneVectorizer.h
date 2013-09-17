@@ -35,7 +35,10 @@ class SceneVectorizer : public Scene {
 	TriggerSettingsRocketRotator* getRocketTronFountain(float hueStartOffset = 0, float hueChange = 0);
 	
    
-	StretchyNet stretchyNet; 
+	StretchyNet stretchyNet;
+	
 	ParticleRendererSquare renderer;
 	
+	ParticleSystemManager& particleSystemManager;
+
 };
