@@ -10,6 +10,7 @@
 
 using namespace ofxCv;
 using namespace cv;
+using namespace std;
 
 class QuadWarp {
 	
@@ -70,6 +71,8 @@ class QuadWarp {
 	ofRectangle bounds;
 	string label;
 	float pointRadius;
-	
-	
+	   
 };
+
+std::ostream& operator<<(std::ostream& stream, const QuadWarp& warp);
+std::istream& operator>>(std::istream& stream, QuadWarp& warp);

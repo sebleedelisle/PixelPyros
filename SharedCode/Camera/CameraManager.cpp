@@ -8,6 +8,7 @@
  */
 
 #include "CameraManager.h"
+#include <vector>
 
 CameraManager::CameraManager() {
 	cameraFirewire		= new CameraFirewire(); 
@@ -244,6 +245,6 @@ void CameraManager::close() {
 		cameras[i]->close();
 		delete cameras[i]; 
 	}
-
 }
+
 

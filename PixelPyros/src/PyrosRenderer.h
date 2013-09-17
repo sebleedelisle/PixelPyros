@@ -64,7 +64,6 @@ public:
 		
 		ofPushMatrix();
 		
-			
 		begin();
         setUniformTexture("baseTexture", fbo.getTextureReference(), 0);
         setShaderParameters();

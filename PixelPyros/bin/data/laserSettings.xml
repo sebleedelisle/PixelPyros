@@ -53,6 +53,7 @@
 			<dot_max_points>7</dot_max_points>
 			<acceleration>0.5</acceleration>
 			<max_speed>20</max_speed>
+		<Homography>182.2, 145.8: 921.2, 120.8: 914.2, 554.6: 177.2, 551.6: </Homography>
 		</Laser_Manager>
 	</Laser>
 </LaserTestGUI>

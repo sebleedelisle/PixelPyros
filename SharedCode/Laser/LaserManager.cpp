@@ -72,6 +72,7 @@ void LaserManager:: setup () {
     //	float y1 = 0;
     //	float y2 = APP_HEIGHT;
 	
+    warp = warpParam;
 	warp.label = "laserWarp";
 	
 	warp.setDstPoint(0, ofVec2f(x1,y1));
@@ -85,7 +86,7 @@ void LaserManager:: setup () {
 	warp.setSrcPoint(3, ofVec2f(0,appHeight));
 	
 	warp.loadSettings();
-	
+    	
 	intensity = 1;
 	dotPreBlank = 3;
 	dotPostBlank = 3;
@@ -95,7 +96,6 @@ void LaserManager:: setup () {
 	//p1.setName("Etherdream");
 	parameters.add(connectButton.set("Etherdream connect", false));
 	parameters.add(etherdreamStatus.set("status", ""));
-	
 	
 	//p2.setName("laser");
     
@@ -108,6 +108,9 @@ void LaserManager:: setup () {
 	parameters.add(showSyncTest.set("show sync test", false));
 	parameters.add(renderLaserPath.set("render laser path", true));
 	
+    calibrationParameters.setName("Laser Calibration");
+    calibrationParameters.add(warpParam.set("Homography", warp) );
+    
 	//p3.setName("laser graphics");
 	
 	
