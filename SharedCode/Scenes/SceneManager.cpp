@@ -300,12 +300,26 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 		toggleRecord();
 	} else if(e.key=='0') {
 		currentScene->changeTriggerPattern(newPattern = 0);
-		} else if(e.key=='1') {
+	}
+
+	if(e.key=='1') {
 		currentScene->changeTriggerPattern(newPattern = 1);
-		} else if(e.key=='2') {
+	} else if(e.key=='2') {
 		currentScene->changeTriggerPattern(newPattern = 2);
 	} else if(e.key=='3') {
 		currentScene->changeTriggerPattern(newPattern = 3);
+	}else if(e.key=='4') {
+		currentScene->changeTriggerPattern(newPattern = 4);
+	}else if(e.key=='5') {
+		currentScene->changeTriggerPattern(newPattern = 5);
+	}else if(e.key=='6') {
+		currentScene->changeTriggerPattern(newPattern = 6);
+	}else if(e.key=='7') {
+		currentScene->changeTriggerPattern(newPattern = 7);
+	}else if(e.key=='8') {
+		currentScene->changeTriggerPattern(newPattern = 8);
+	}else if(e.key=='9') {
+		currentScene->changeTriggerPattern(newPattern = 9);
 	}
 	
 	if((currentScene->recording) && (newPattern>=0) ){

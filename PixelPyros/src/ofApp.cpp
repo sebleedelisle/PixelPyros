@@ -387,6 +387,7 @@ void ofApp::mouseMoved( int x, int y ){
 
 void ofApp::setupControlPanel() { 
 	gui.setup(450, ofGetHeight());
+	gui.setPosition(1536,0);
 
 	ofxControlPanel::setBackgroundColor(simpleColor(30, 30, 60, 200));
 	ofxControlPanel::setTextColor(simpleColor(240, 50, 50, 255));
