@@ -94,6 +94,7 @@ void ofApp::setup(){
     parameterManager.registerParameterGroup("triggers", &triggerManager.parameters);
     parameterManager.registerParameterGroup("motion", &motionManager.parameters);
     parameterManager.registerParameterGroup("particles", &particleSystemManager.parameters);
+    parameterManager.registerParameterGroup("laser calibration", &laserManager.calibrationParameters );
 
     /*
         Now that all of the parameters should be registered with the 
@@ -156,7 +157,7 @@ void ofApp::draw(){
 	ofSetColor(255);
 	
 	if(!drawCameraIntoFBO)
-		cameraManager.draw(0,0);
+		cameraManager.draw();
 	
 	if(useFbo) {
 		fbo.begin();
@@ -164,7 +165,7 @@ void ofApp::draw(){
 	}
 	
 	if(drawCameraIntoFBO)
-		cameraManager.draw(0,0);
+		cameraManager.draw();
 
 
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
