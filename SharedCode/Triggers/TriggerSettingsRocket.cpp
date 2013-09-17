@@ -37,9 +37,11 @@ PhysicsObject * TriggerSettingsRocket:: makeNewRocket(ofVec3f& pos) {
 }
 
 
-void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active, float scale) {
+void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale) {
 	
 	//elapsedTime+=deltaTime;
+	
+	ofColor colour = getColour(); 
 	
 	ofPushMatrix();
 	ofPushStyle();
@@ -71,15 +73,24 @@ void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, ofColor colour,
 	
 	path.draw();
 	
-	
+	/*
 	if(!active) {
 		
 		ofSetColor(ofColor::red);
 		ofRect(0,0, radius, radius);
 		
 		
-	}
+	}*/
 	
 	ofPopStyle();
 	ofPopMatrix();
+}
+
+ofColor TriggerSettingsRocket::getColour() {
+	ofColor c = ofColor::white;
+	c.setSaturation(saturation);
+
+	c.setHue(hue);
+	return c; 
+
 }

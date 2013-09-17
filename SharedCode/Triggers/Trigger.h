@@ -42,8 +42,6 @@ class Trigger {
 	// scale is just used to keep track of whether we're growing or shrinking
 	float scale;
 	float lastScale;
-	ofColor lastColor; 
-	//float targetScale;
 		
 	ofVec3f pos;
 	bool fixedPosition;

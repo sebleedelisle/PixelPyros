@@ -21,8 +21,9 @@ class TriggerSettingsRocket : public TriggerSettings {
 
 	virtual void doTrigger(ofVec3f& pos, float power, float direction);
 
-	virtual void draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active, float scale);
+	virtual void draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale);
 	
+	virtual ofColor getColour();
 	
 	ofPath path;
 

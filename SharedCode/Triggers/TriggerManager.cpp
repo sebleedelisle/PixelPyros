@@ -205,7 +205,8 @@ void TriggerManager :: updateLayout() {
 		
 		
 		for(int i = 0; i<triggers.size(); i++) {
-			triggers[i]->active = false;
+			//triggers[i]->active = false;
+			triggers[i]->copySettings(NULL);
 			
 		}
 		
