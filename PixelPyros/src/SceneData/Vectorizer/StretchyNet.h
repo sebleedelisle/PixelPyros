@@ -81,15 +81,19 @@ class StretchyNet {
 		float area = 150;
 		float bendiness = 20;
 		
-		int expectedNumUpdates = elapsedTime*50;
+		//int expectedNumUpdates = elapsedTime*50;
+		//if(expectedNumUpdates-updateCount>5) updateCount = (expectedNumUpdates-5);
 		
-		while(updateCount < expectedNumUpdates) {
+		//int repeatTimes = expectedNumUpdates - updateCount;
+		
+		//while(updateCount < expectedNumUpdates) {
 			
 			for(std::vector<StretchyNetPoint>::iterator it = points.begin(); it != points.end(); ++it) {
 				StretchyNetPoint& p = *it;
 				
-				p.update();
-				
+				//for(int i = 0; i<repeatTimes;i++) {
+					p.update();
+				//}
 				for(std::vector<PhysicsObject*>::iterator it2 = physicsObjects.begin(); it2 != physicsObjects.end(); ++it2) {
 					PhysicsObject* po = *it2;
 					if((!po->enabled) || (!po->life.active)) continue;
@@ -100,8 +104,6 @@ class StretchyNet {
 						float power = (area-dist)/area * bendiness;
 						p +=  (power*((p-po->pos)/dist));
 						
-						
-						
 					}
 				
 				
@@ -110,9 +112,10 @@ class StretchyNet {
 				
 			}
 			
-			updateCount++;
 			
-		}
+			
+		//}/
+		//updateCount = expectedNumUpdates;
 		
 	}
 	

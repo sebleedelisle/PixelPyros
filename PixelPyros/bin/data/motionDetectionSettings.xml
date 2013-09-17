@@ -1,6 +1,6 @@
 <Motion>
 	<Motion_Detection>
-		<threshold>20.4</threshold>
+		<threshold>1</threshold>
 		<motion_sensitivity>1</motion_sensitivity>
 	</Motion_Detection>
 <Motion/>

@@ -9,38 +9,71 @@
 #include "Scene.h"
 
 
-Scene::Scene(string scenename) : particleSystemManager(*ParticleSystemManager::instance()) {
+Scene::Scene(string scenename) {
 	active = false;
-	stopping = false;
-
+	//stopping = false;
+	
+	triggerManager = NULL;
+	
 	currentTriggerPatternIndex = 0;
-	activeTriggerPatterns = 0;
+	//activeTriggerPatterns = 0;
 	
 	name = scenename;
+	
+	playing = false;
+	recording = false; 
+	positionSeconds = 0;
+	lengthSeconds = 1;
+
+	
+	
+}
+void Scene :: loadMusicFile(string musicfile){
+	
+	musicFile = "../../../Music/"+musicfile;
+	
+	music.loadSound(musicFile);
+	// riddiculous hack to get the sound file length #facepalm
+	music.play();
+	music.setPosition(0.9999999f);
+	int ms = music.getPositionMS();
+	lengthSeconds = (float)ms/1000.0f;
+	music.stop();
+	
+	
 }
 
-
 void Scene :: start() {
-	stopping = false; 
-	if ((triggerPatterns.size()==0)|| (changeTriggerPattern(0))) active = true;
+	//stopping = false;
+	//if ((triggerPatterns.size()==0)|| (changeTriggerPattern(0))) active = true;
+	
+	if(music.isLoaded()) {
+		music.setPosition(0);
+		positionSeconds = 0;
+		music.play();
+		lastUpdate = 0;
+	
+		playing = true;
+	}
+	active = true;
 }
 
 void Scene :: stop() { 
 	
 	// TODO : tell triggerManager to stop the triggers
+	if(music.isLoaded())
+		music.stop(); 
 	
-	for(int i=0; i<triggerPatterns.size(); i++) {
-
-		//triggerPatterns[i]->stop();
-		
-	}
-	stopping = true; 
-	
+	active = false; 
 }
 
 bool Scene :: update(float deltaTime) {
 
 	
+	// WHAT DOES THIS HAVE TO DO NOW?
+	// MAYBE JUST THE SEQUENCER? 
+	
+	/*
 	// check to see if a changeTriggerPattern message has come in from
 	// the external UI and if so, change to that arrangement
 	for(int i = 0; i<triggerPatternChangeTriggers.size(); i++) {
@@ -51,53 +84,128 @@ bool Scene :: update(float deltaTime) {
 			} 
 		} 		
 		*triggerPatternChangeTriggers[i] = false;
-	}
+	}*/
 	
-	if(!active) return false;
+	//if(!active) return false;
 	
-	activeTriggerPatterns = 0;
 	
-	for(int i=0; i<triggerPatterns.size(); i++) {
+	
+	//activeTriggerPatterns = 0;
+	
+	//for(int i=0; i<triggerPatterns.size(); i++) {
 		//if( triggerPatterns[i]->update(deltaTime)) activeTriggerPatterns++;
 		
 		//THIS LINE MAKES IT AUTO CONTINUE - maybe a scene flag? 
 		//else if ((!stopping) && (i==currentTriggerPatternIndex)) next();
 		
-	}
+	//}
 	
 	
-	if((stopping) && (activeTriggerPatterns==0) ) {
-		active = false;
-	}
+	//if(stopping)  {
+	//	active = false;
+	//}
 
-	return active; 
+	
+	if((!playing)|| (!active)) return false;
+	
+	positionSeconds = (float)music.getPositionMS()/1000.0f;
+	
+	vector<int> deleteIndices; 
+	
+	for(int i = 0; i<commands.size(); i++) {
+		
+		SequenceCommand& command = commands[i];
+		if((command.time>lastUpdate) && (command.time<=positionSeconds)) {
+			
+			if(recording) {
+				command.enabled = false;
+			} else if(command.enabled){
+				processCommand(command);
+			}
+		}
+	}
+	
+	lastUpdate = positionSeconds;
+
+	return active;
 	
 	
 }
 
 
-bool Scene:: draw() {
+SequenceCommand Scene :: addCommand(float time, SequenceCommandType type, int arg){
+	
+	SequenceCommand cmd(type, time, arg);
+	commands.push_back(cmd);
+	//sort(commands.begin(), commands.end());
+	
+	return cmd;
+	
+}
 
-	if(!active) return false; 
-	for(int i=0; i<triggerPatterns.size(); i++) {
-		
-		//triggerPatterns[i]->draw();
+
+void Scene :: processCommand(SequenceCommand command) {
+	cout << "PROCESS COMMAND "<< command.arg1 << endl;
+	if(!command.enabled) return; 
+	if(command.type == SEQ_PATTERN_CHANGE) {
+		changeTriggerPattern(command.arg1);
 		
 	}
+	
+	
+}
+bool Scene:: draw() {
+
+	if(!active) return false;
+	
 	
 	return true; 
 
 }
-void Scene :: updateMotion(MotionManager& motionManager, cv::Mat homography){
-	
-	for(int i = 0; i<triggerPatterns.size(); i++) {
-		
-		//Arrangement * arrangement = triggerPatterns[i];
 
-		//arrangement->updateMotion(motionManager, homography);
+
+bool Scene :: togglePlayPause(){
+	if(playing) music.stop();
+	else {
+		music.play();
+		music.setPositionMS(positionSeconds*1000);
+		
 	}
 	
+	playing = !playing;
+	return playing;
 }
+bool Scene::toggleRecord() {
+	recording = !recording;
+	return recording; 
+}
+
+void Scene :: goToTime(float timeSeconds){
+	music.setPositionMS(timeSeconds*1000);
+	positionSeconds = timeSeconds;
+	
+	//TODO CYCLE THROUGH MESSAGES
+	float lastPosition = 0;
+	SequenceCommand* lastCommand = NULL;
+	
+	for(int i = 0; i<commands.size(); i++) {
+		SequenceCommand c = commands[i];
+		if((c.time>=lastPosition) && (c.time<timeSeconds)) {
+			
+			lastCommand = &commands[i];
+			lastPosition = c.time;
+			cout << i<<" " <<c.time << " " << timeSeconds << endl;
+		}
+		
+	}
+	
+	if(lastCommand!=NULL) {
+		cout << lastCommand->time << " " << lastCommand->arg1 << endl;
+		processCommand(*lastCommand);
+		lastUpdate = timeSeconds;
+	}
+}
+
 
 
 TriggerPattern Scene :: getCurrentTriggerPattern() {
@@ -107,15 +215,19 @@ TriggerPattern Scene :: getCurrentTriggerPattern() {
 }
 
 void Scene ::addTriggerPattern(TriggerPattern& pattern) {
+	addTriggerPattern(pattern, "");
+	
+	//triggerPatternChangeTriggers.push_back(new bool(false));
+}
+void Scene ::addTriggerPattern(TriggerPattern& pattern, string label) {
 	triggerPatterns.push_back(pattern);
-	triggerPatternChangeTriggers.push_back(new bool(false));
+	
+	//triggerPatternChangeTriggers.push_back(new bool(false));
 }
 
 bool Scene :: changeTriggerPattern(int num) {
-	
-	//if(currentTriggerPatternIndex == num) return false;
-	
-	if((num>=triggerPatterns.size())|| (stopping))  return false;
+
+	if(num>=triggerPatterns.size())  return false;
 	
 	//TODO this needs to tell the triggerManager to change stuff
 	
@@ -130,13 +242,18 @@ bool Scene :: changeTriggerPattern(int num) {
 	
 	triggerPatterns[num]->start();*/
 	
+		
+	currentTriggerPatternIndex = num;
+	if(triggerManager!=NULL)
+		triggerManager->setPattern(getCurrentTriggerPattern());
 	
-	
-	currentTriggerPatternIndex = num; 
+		
+
 	return true;
 	
 	
 }
+
 
 
 

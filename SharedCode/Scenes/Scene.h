@@ -11,9 +11,8 @@
 
 #include "constants.h"
 #include "TriggerPattern.h"
-#include "ParticleSystemManager.h"
-#include "MotionManager.h"
-#include "ofxCV.h"
+#include "TriggerManager.h"
+#include "SequenceCommand.h"
 
 
 class Scene { 
@@ -23,37 +22,55 @@ class Scene {
 	
 	Scene(string scenename);
 	
+	void loadMusicFile(string musicfile);
+	
 	virtual void start();
 	virtual void stop();
 	
 	virtual bool update(float deltaTime); 
 	virtual bool draw();
-	
-	virtual void updateMotion(MotionManager& motionManager, cv::Mat homography);
    
 	virtual bool changeTriggerPattern(int num);
 	
 	void addTriggerPattern(TriggerPattern& pattern);
+	void addTriggerPattern(TriggerPattern& pattern, string label);
 	
 	TriggerPattern getCurrentTriggerPattern();
 	
-//	void updateTriggerSettings(ofRectangle triggerarea, float spacing);
-//	void setShowTriggerDebug(bool);
-//	void setTriggersDisabled(bool disabled);
-
+	TriggerManager* triggerManager; 
+	
 	string name; 
  
 	bool next();
 	bool previous();
 	
-	bool active; 
-	bool stopping;
+	bool active;
+	//bool stopping;
 	
 	vector <TriggerPattern> triggerPatterns;
 	int currentTriggerPatternIndex;
-	int activeTriggerPatterns; 
 	
-	ParticleSystemManager& particleSystemManager; 
+	bool playing;
+	bool recording; 
+	bool togglePlayPause();
+	bool toggleRecord();
+	void goToTime(float time);
+	
+	SequenceCommand addCommand(float time, SequenceCommandType type, int arg);
+	vector <SequenceCommand> commands;
+	void processCommand(SequenceCommand command);
+
+	float lastUpdate;
+	float lengthSeconds;
+	float positionSeconds;
+	
+	ofSoundPlayer music;
+	string musicFile;
+	
+	
+	
+	//int activeTriggerPatterns;
+	
 	
 //	ofRectangle triggerArea; 
 //	bool triggerDebug;
@@ -61,7 +78,7 @@ class Scene {
 	
 	// AN ARRAY OF TRIGGERS TO CHANGE ARRANGEMENT
 	// FROM THE GUI / OSC
-	vector <bool *> triggerPatternChangeTriggers;
+	//vector <bool *> triggerPatternChangeTriggers;
     
 
 };
