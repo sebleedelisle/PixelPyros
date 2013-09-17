@@ -52,7 +52,7 @@ class CameraManagerWarped : public CameraManager {
 		
 	}
 	
-	void draw(float x,float y)  { 
+	void draw()  { 
 		if(warper.guiVisible) warper.draw(camera->getPixelsRef());
 		
 		if(capturing) {

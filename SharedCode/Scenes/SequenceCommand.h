@@ -44,6 +44,24 @@ class SequenceCommand {
 	SequenceCommandType type;
 	float time;
 	int arg1;
-	bool enabled; 
+	bool enabled;
+        
+        friend ostream& operator<<(ostream& os, const SequenceCommand& command){
+            os << (float)command.time << ", " << (int) command.arg1 << ", " << (bool) command.enabled << endl;
+            
+            return os;
+        };
+    
+        friend istream& operator>>(istream& is, SequenceCommand& command){
+            is >> command.time;
+            is.ignore(2);
+            is >> command.arg1;
+            is.ignore(2);
+            is >> command.enabled;
+            is.ignore(1);
+            
+            return is;
+        };
+
 
 };

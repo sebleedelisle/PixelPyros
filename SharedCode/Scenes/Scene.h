@@ -13,9 +13,9 @@
 #include "TriggerPattern.h"
 #include "TriggerManager.h"
 #include "SequenceCommand.h"
+#include "ofxXMLSettings.h"
 
-
-class Scene { 
+class Scene {
 
 
 	public : 
@@ -29,7 +29,10 @@ class Scene {
 	
 	virtual bool update(float deltaTime); 
 	virtual bool draw();
-   
+
+    virtual void save();
+    virtual void load();
+    
 	virtual bool changeTriggerPattern(int num);
 	
 	void addTriggerPattern(TriggerPattern& pattern);
@@ -47,6 +50,8 @@ class Scene {
 	bool active;
 	//bool stopping;
 	
+    ofPtr<ofBaseFileSerializer> serializer;
+    
 	vector <TriggerPattern> triggerPatterns;
 	int currentTriggerPatternIndex;
 	

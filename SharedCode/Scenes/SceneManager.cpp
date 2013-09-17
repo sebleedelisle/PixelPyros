@@ -32,6 +32,9 @@ void SceneManager::addScene(Scene *scene) {
 	if(scenes.size() ==1) {
 		changeScene(0);
 	}
+    
+    scene->load();
+
 }
 
 bool SceneManager ::update(float deltaTime){
@@ -96,6 +99,10 @@ void SceneManager::draw() {
 	
 }
 
+void SceneManager::exit(){
+    if( currentScene != NULL ) currentScene->save();
+}
+
 bool SceneManager :: changeScene(int sceneIndex) {
 
 	if(sceneIndex>=scenes.size()) return false;
@@ -125,7 +132,9 @@ bool SceneManager :: changeScene (Scene* scene) {
 
 	if(scene == NULL ) return false;
 	if(currentScene == scene) return false;
-	
+
+	if( currentScene != NULL ) currentScene->save();
+    
 	int newSceneIndex = -1;
 	
 	for(int i = 0 ; i<scenes.size(); i++) {
@@ -148,14 +157,14 @@ bool SceneManager :: changeScene (Scene* scene) {
 		currentSceneIndex = -1;
 		return false;
 	}
-	
+    	
 	return true;
 }
 
 bool SceneManager::nextScene(){
 	
 	nextFlag = false;
-
+    
 	if(currentSceneIndex == scenes.size()-1) {
 		return false;
 	} else {
