@@ -7,7 +7,7 @@
 //
 
 #include "Scene.h"
-
+#include <stdio.h>
 
 Scene::Scene(string scenename) {
 	active = false;
@@ -175,29 +175,61 @@ void Scene:: save(){
 //    }
     ofxXmlSettings xml;
 	
-	string filename = name+".xml";
+    ofxXmlSettings previousXml;
+    
+	string filename = "sequences/"+name+".xml";
+    
+    previousXml.load( filename );
+    
+    int a = 0;
     for(int i=1;i<commands.size();i++){
         SequenceCommand command = commands[i];
+        if( !command.enabled ) continue;
         xml.addTag("command");
-        xml.pushTag("command",i-1);
+        xml.pushTag("command",a);
         xml.addValue("time", command.time );
         xml.addValue("arg1", command.arg1 );
-        xml.addValue("enabled", command.enabled );
         xml.popTag();
+        a++;
 	}
-    xml.saveFile( filename );
+
+    string oldData;
+    string newData;
+    
+    previousXml.copyXmlToString(oldData);
+    xml.copyXmlToString(newData);
+    
+    oldData.erase(std::remove_if(oldData.begin(), oldData.end(), ::isspace ), oldData.end());
+    newData.erase(std::remove_if(newData.begin(), newData.end(), ::isspace ), newData.end());
+    
+    cout << endl << oldData << endl;
+    cout << endl << newData << endl;
+    
+    
+    if( oldData.compare( newData ) != 0 ){
+        ofLogError() << "Scene data has changed, baking up and saving";
+        
+        std::time_t t = std::time(NULL);
+        struct tm * ptr;
+        char mbstr[100];
+        ptr = localtime ( &t );
+        strftime( mbstr, 100,"%Y-%m-%dT%H:%M:%S", ptr);
+        char backupFilename[100] ;
+        sprintf( backupFilename, "sequences/%s.%s.xml", name.c_str(), mbstr );
+        previousXml.saveFile( backupFilename );
+        xml.saveFile( filename );
+    }
 
 }
 
 void Scene:: load(){
-	string filename = name+".xml";
+	string filename = "sequences/"+name+".xml";
 	ofxXmlSettings xml;
     bool loaded = xml.loadFile(filename);
     if( !loaded ) return;
     int numCommands = xml.getNumTags("command");
     for(int i=0;i<numCommands;i++){
-        bool enabled = xml.getValue("command:enabled", 0, i);
-        if( enabled ) addCommand( xml.getValue("command:time", 0.0, i), SEQ_PATTERN_CHANGE, xml.getValue("command:arg1", 0, i) );
+        addCommand( xml.getValue("command:time", 0.0, i), SEQ_PATTERN_CHANGE, xml.getValue("command:arg1", 0, i) );
     }
     
 }
