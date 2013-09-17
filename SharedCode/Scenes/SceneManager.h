@@ -22,7 +22,8 @@ public :
 	bool prevScene();
 	
 	bool update(float deltaTime);
-	void draw(); 
+	void draw();
+    void exit();
 	
 	bool nextPattern();
 	bool previousPattern();

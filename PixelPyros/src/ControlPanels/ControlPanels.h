@@ -27,13 +27,28 @@ class ControlPanels {
     
     protected:
 
+    void setupPanel( string name, ofRectangle rect, ofxPanel & panel );
     void setupPanel( string name, string filename, ofRectangle rect, ofxPanel & panel );
-
+    void layoutPanels(vector<ofxPanel> panels,ofRectangle space );
+    vector<ofxPanel> getVisiblePanels();
+    
     ParameterManager& parameterManager;
+    
+    ofxPanel laserCalibration;
+    ofxPanel projectorCalibration;
+    ofxPanel cameraCalibration;
     
     ofxPanel laserGui;
     ofxPanel rendererGui;
     ofxPanel triggerGui;
     ofxPanel motionGui;
+    
+    
+    ofRectangle screen;
+    ofVec2f padding;
+    
+    ofFbo main;
+    ofFbo camera;
+    ofFbo motion;
     
 };

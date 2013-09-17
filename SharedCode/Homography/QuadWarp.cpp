@@ -366,6 +366,31 @@ void QuadWarp::saveSettings() {
 	xml.popTag();
 	
 	xml.saveFile(filename);
+    
+    
 }
 
+std::ostream& operator<< (std::ostream& stream, const QuadWarp& warp){
+
+    for(int i=0;i<4;i++){
+        stream << (float) warp.dstPoints[i].x << ", ";
+        stream << (float) warp.dstPoints[i].y << ": ";
+    }
+    
+    return stream;
+}
+
+std::istream& operator>> (std::istream& stream, QuadWarp& warp){
+    float component;
+    for(int i=0;i<4;i++){
+        stream >> component;
+        warp.dstPoints[i].x = component;
+        stream.ignore(2);
+        stream >> component;
+        warp.dstPoints[i].y = component;
+        stream.ignore(2);
+    }
+    
+    return stream;
+}
 

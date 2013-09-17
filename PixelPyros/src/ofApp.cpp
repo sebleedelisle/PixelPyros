@@ -94,6 +94,7 @@ void ofApp::setup(){
     parameterManager.registerParameterGroup("triggers", &triggerManager.parameters);
     parameterManager.registerParameterGroup("motion", &motionManager.parameters);
     parameterManager.registerParameterGroup("particles", &particleSystemManager.parameters);
+    parameterManager.registerParameterGroup("laser calibration", &laserManager.calibrationParameters );
 
     /*
         Now that all of the parameters should be registered with the 
@@ -156,7 +157,7 @@ void ofApp::draw(){
 	ofSetColor(255);
 	
 	if(!drawCameraIntoFBO)
-		cameraManager.draw(0,0);
+		cameraManager.draw();
 	
 	if(useFbo) {
 		fbo.begin();
@@ -164,7 +165,7 @@ void ofApp::draw(){
 	}
 	
 	if(drawCameraIntoFBO)
-		cameraManager.draw(0,0);
+		cameraManager.draw();
 
 
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
@@ -294,17 +295,7 @@ void ofApp:: setupScenes() {
 	SceneIntro* intro = new SceneIntro("Intro");
 	sceneManager.addScene(intro);
 	intro->loadMusicFile("02 In Motion.aif");
-	intro->addCommand(0, SEQ_PATTERN_CHANGE, 0);
-	intro->addCommand(2, SEQ_PATTERN_CHANGE, 1);
-	intro->addCommand(9, SEQ_PATTERN_CHANGE, 2);
-	intro->addCommand(10, SEQ_PATTERN_CHANGE, 3);
-	intro->addCommand(11, SEQ_PATTERN_CHANGE, 1);
-	intro->addCommand(12, SEQ_PATTERN_CHANGE, 2);
-	intro->addCommand(13, SEQ_PATTERN_CHANGE, 3);
-	
-	
-	
-	
+
 	sceneManager.addScene(new SceneRetro("Retro"));
 	
 	//sceneManager.addScene(new SceneRealistic("Lights", particleSystemManager));
@@ -492,4 +483,5 @@ void ofApp::setupControlPanel() {
 
 void ofApp::exit() { 
     controlPanels.exit();
+    sceneManager.exit();
 }
