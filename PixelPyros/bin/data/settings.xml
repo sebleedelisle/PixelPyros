@@ -1,3 +1,8 @@
 <USB_SHOW_CONTROLS>
     <val_0>0.000000000</val_0>
+<Laser_Calibration>
+		<Laser_Calibration>
+			<Homography>193.2, 112.8: 921.2, 120.8: 927.2, 554.6: 177.2, 551.6: </Homography>
+		</Laser_Calibration>
+	</Laser_Calibration>
 </USB_SHOW_CONTROLS>

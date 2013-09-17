@@ -295,17 +295,7 @@ void ofApp:: setupScenes() {
 	SceneIntro* intro = new SceneIntro("Intro");
 	sceneManager.addScene(intro);
 	intro->loadMusicFile("02 In Motion.aif");
-	intro->addCommand(0, SEQ_PATTERN_CHANGE, 0);
-	intro->addCommand(2, SEQ_PATTERN_CHANGE, 1);
-	intro->addCommand(9, SEQ_PATTERN_CHANGE, 2);
-	intro->addCommand(10, SEQ_PATTERN_CHANGE, 3);
-	intro->addCommand(11, SEQ_PATTERN_CHANGE, 1);
-	intro->addCommand(12, SEQ_PATTERN_CHANGE, 2);
-	intro->addCommand(13, SEQ_PATTERN_CHANGE, 3);
-	
-	
-	
-	
+
 	sceneManager.addScene(new SceneRetro("Retro"));
 	
 	//sceneManager.addScene(new SceneRealistic("Lights", particleSystemManager));
@@ -492,4 +482,5 @@ void ofApp::setupControlPanel() {
 
 void ofApp::exit() { 
     controlPanels.exit();
+    sceneManager.exit();
 }
