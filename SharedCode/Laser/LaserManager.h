@@ -108,11 +108,13 @@ class LaserManager {
 	
 	ofParameterGroup p1, p2, p3;
 	ofParameterGroup parameters;
+    ofParameterGroup calibrationParameters;
 	
 	bool isConnected; 
 
 	
-	QuadWarp warp; 
+	QuadWarp warp;
+    ofParameter<QuadWarp> warpParam;
 	
 	ofMesh previewMesh;
 	ofPoint pmin;
