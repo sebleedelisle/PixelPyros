@@ -107,8 +107,6 @@
 		1254565D17BF880400EF23B7 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565217BF880400EF23B7 /* Camera.cpp */; };
 		1254565E17BF880400EF23B7 /* Grabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565417BF880400EF23B7 /* Grabber.cpp */; };
 		1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565717BF880400EF23B7 /* PointGrey.cpp */; };
-		1256451E17E3063D0056F885 /* Sequencer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1256451C17E3063D0056F885 /* Sequencer.cpp */; };
-		1256452217E306720056F885 /* Sequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1256452017E306720056F885 /* Sequence.cpp */; };
 		1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */; };
 		129988BA17E1E9CC0044879E /* SceneNadia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129988B817E1E9CC0044879E /* SceneNadia.cpp */; };
 		12A6DE3417DE1F83000D299A /* ParticleSystemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */; };
@@ -543,11 +541,6 @@
 		1254565617BF880400EF23B7 /* ofxLibdc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxLibdc.h; sourceTree = "<group>"; };
 		1254565717BF880400EF23B7 /* PointGrey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointGrey.cpp; sourceTree = "<group>"; };
 		1254565817BF880400EF23B7 /* PointGrey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointGrey.h; sourceTree = "<group>"; };
-		1256451C17E3063D0056F885 /* Sequencer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sequencer.cpp; sourceTree = "<group>"; };
-		1256451D17E3063D0056F885 /* Sequencer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sequencer.h; sourceTree = "<group>"; };
-		1256452017E306720056F885 /* Sequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sequence.cpp; sourceTree = "<group>"; };
-		1256452117E306720056F885 /* Sequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sequence.h; sourceTree = "<group>"; };
-		1256452517E32AEB0056F885 /* SequenceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequenceCommand.h; sourceTree = "<group>"; };
 		125FB18717CBEA3A00A1CAE6 /* TriggerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerPattern.h; sourceTree = "<group>"; };
 		1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
 		1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRechargeSettings.h; sourceTree = "<group>"; };
@@ -573,6 +566,7 @@
 		12D15FCD17CE0044003D9024 /* TriggerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
 		12DBC7B417DDDD280041FA5C /* FireworkFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireworkFactory.cpp; sourceTree = "<group>"; };
 		12DBC7B517DDDD280041FA5C /* FireworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireworkFactory.h; sourceTree = "<group>"; };
+		12EB0A1A17E7D0840045DC0B /* SequenceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequenceCommand.h; sourceTree = "<group>"; };
 		12EB3B6C17E0EB37002D90A0 /* CubicBezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubicBezier.h; sourceTree = "<group>"; };
 		12EB3B6D17E0EB37002D90A0 /* LaserDot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserDot.h; sourceTree = "<group>"; };
 		12EB3B6E17E0EB37002D90A0 /* LaserManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LaserManager.cpp; sourceTree = "<group>"; };
@@ -705,7 +699,6 @@
 		1254504117BF861C00EF23B7 /* SharedCode */ = {
 			isa = PBXGroup;
 			children = (
-				1256451B17E3062D0056F885 /* Sequencer */,
 				12EB3B6B17E0EB37002D90A0 /* Laser */,
 				1254504217BF861C00EF23B7 /* Camera */,
 				1254505317BF861C00EF23B7 /* Homography */,
@@ -842,6 +835,7 @@
 				1254509317BF861C00EF23B7 /* SceneCalibration.h */,
 				1254509417BF861C00EF23B7 /* SceneManager.cpp */,
 				1254509517BF861C00EF23B7 /* SceneManager.h */,
+				12EB0A1A17E7D0840045DC0B /* SequenceCommand.h */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1601,18 +1595,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		1256451B17E3062D0056F885 /* Sequencer */ = {
-			isa = PBXGroup;
-			children = (
-				1256451C17E3063D0056F885 /* Sequencer.cpp */,
-				1256451D17E3063D0056F885 /* Sequencer.h */,
-				1256452017E306720056F885 /* Sequence.cpp */,
-				1256452117E306720056F885 /* Sequence.h */,
-				1256452517E32AEB0056F885 /* SequenceCommand.h */,
-			);
-			path = Sequencer;
-			sourceTree = "<group>";
-		};
 		129988B717E1E9CC0044879E /* Nadia */ = {
 			isa = PBXGroup;
 			children = (
@@ -2095,8 +2077,6 @@
 				9E16CA5817E1C20D009867E9 /* ParameterManager.cpp in Sources */,
 				9E16CA5D17E1CE2D009867E9 /* ControlPanels.cpp in Sources */,
 				129988BA17E1E9CC0044879E /* SceneNadia.cpp in Sources */,
-				1256451E17E3063D0056F885 /* Sequencer.cpp in Sources */,
-				1256452217E306720056F885 /* Sequence.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

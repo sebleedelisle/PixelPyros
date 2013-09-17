@@ -23,6 +23,7 @@ class SequenceCommand {
 		type = SEQ_PATTERN_CHANGE;
 		time = 0;
 		arg1 = 0;
+		enabled = true;
 
 	};
 	
@@ -31,12 +32,18 @@ class SequenceCommand {
 		type = _type;
 		time = _time;
 		arg1 = _arg1;
-		
+		enabled = true;
 	}
 
+	
+	inline bool operator< (const SequenceCommand& rhs) const{
+		return this->time<rhs.time;
+		};
+		
+	
 	SequenceCommandType type;
 	float time;
 	int arg1;
-
+	bool enabled; 
 
 };
