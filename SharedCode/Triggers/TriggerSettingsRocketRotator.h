@@ -22,7 +22,7 @@ class TriggerSettingsRocketRotator : public TriggerSettingsRocket {
 	
 	virtual void doTrigger(ofVec3f& pos, float power, float direction);
 	
-	virtual void draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active);
+	virtual void draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active, float scale);
 	
 	
 	

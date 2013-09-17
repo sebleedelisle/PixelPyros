@@ -17,6 +17,7 @@ class TriggerRechargeSettings {
 	static TriggerRechargeSettings* slow;
 	static TriggerRechargeSettings* medium;
 	static TriggerRechargeSettings* fast;
+	static TriggerRechargeSettings* oneShot;
 
 	TriggerRechargeSettings();
 	

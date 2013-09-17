@@ -19,14 +19,18 @@ Trigger :: Trigger(){
 	stopping = false;
 	active = false;
 	scale = 0;
+	lastScale = 0; 
 	
 	// the power level for the trigger
 	unitPower =1;
 	
-	
 	// SETTINGS :
+	
+	lastSettings = NULL;
+	settings = NULL;
 	// get defaults from the default TriggerSettings object
 	copySettings(TriggerSettings::blank);
+	
 	//rechargeSettings = TriggerRechargeSettings::defaultSettings;
 	
 	motionValueCount = 20;
@@ -67,6 +71,7 @@ void Trigger :: start() {
 	motionLevel = 0;
 	
 	
+	
 	//if(type == TRIGGER_TYPE_FIRE_ON_CHARGE) {
 	//	unitPower = 0;
 	//} else if(type == TRIGGER_TYPE_FIRE_ON_MOTION) {
@@ -87,9 +92,11 @@ void Trigger :: stop() {
 bool Trigger::update(float deltaTime) {
 
 	if(!active) return false;
+	
+	//if((!stopping) && (scale<1)) scale+=0.1;
 
 	elapsedTime+=deltaTime;
-	/*
+	
 	// scale up / down on start stop
 	if(stopping) {
 		scale-=deltaTime*3;
@@ -100,7 +107,16 @@ bool Trigger::update(float deltaTime) {
 		}
 	} else {
 		scale+= (1-scale)*0.1;
-	}*/
+	}
+	
+	if(lastSettings!=NULL) {
+		lastScale-=deltaTime*3;
+		if(lastScale<=0.0) {
+			lastScale = 0;
+			lastSettings  = NULL;
+		}
+		
+	}
 	
 	
 	//if(type == TRIGGER_TYPE_FIRE_ON_MOTION) {
@@ -132,6 +148,11 @@ bool Trigger::update(float deltaTime) {
 	unitPower+=rechargeSettings->restoreSpeed * deltaTime;
 	if(unitPower>1) unitPower = 1;
 	
+	if((rechargeSettings->restoreSpeed==0) && (unitPower<=0)) {
+		stopping = true; 
+	
+	}
+	
 	
 	// we need to have sensed motion,
 	// AND we need to have enough unitPower to trigger
@@ -157,6 +178,8 @@ bool Trigger::update(float deltaTime) {
 	motionLevel -= rechargeSettings->motionDecay*deltaTime;
 	if(motionLevel<0) motionLevel = 0;
 		
+	
+	
 	//}
 	
 	
@@ -196,7 +219,8 @@ void Trigger :: draw() {
 	c.setSaturation(settings->saturation);
 	c.setHue(settings->hue);
 
-	if(settings!=NULL) settings->draw(elapsedTime, pos,  c, unitPower, active);
+	if(settings!=NULL) settings->draw(elapsedTime, pos,  c, unitPower, active, scale);
+	if(lastSettings!=NULL) lastSettings->draw(elapsedTime, pos,  lastColor, unitPower, active, lastScale);
 	//else ofLog(OF_LOG_WARNING, "No renderer for trigger");
 	
 	//ofDrawBitmapString(ofToString(motionLevel), pos);
@@ -383,13 +407,22 @@ bool Trigger::doTrigger() {
 
 
 void Trigger::copySettings(TriggerSettings* newsettings) {
+	lastSettings = settings;
+	lastScale = scale;
+	ofColor c;
+	if(settings!=NULL) {
+		c.setSaturation(settings->saturation);
+		c.setHue(settings->hue);
+		lastColor = c;
+	} else {
+		lastColor = ofColor::black;
+	}
 	
+
 	settings = newsettings;
-	//if(newsettings.rechargeSettings==NULL)
-	//	rechargeSettings = TriggerRechargeSettings::defaultSettings;
-	//else
-		rechargeSettings = newsettings->rechargeSettings;
-		
+	rechargeSettings = newsettings->rechargeSettings;
+
+	scale = 0; 
 	/*
 	motionTriggerLevel = settings.motionTriggerLevel;
 	triggerPower = settings.triggerPower;

@@ -29,6 +29,87 @@ FireworkFactory :: FireworkFactory() {
 }
 
 
+
+TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue , float saturation, float speedVar, float directionVar ){
+	
+	ParticleSystemManager& particleSystemManager = *ParticleSystemManager::instance();
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	
+	rocketSettings.startSpeedMin = speed *(1-speedVar);
+	rocketSettings.startSpeedMax = speed;
+	rocketSettings.direction = -90;
+	rocketSettings.directionVar = directionVar;
+	rocketSettings.gravity.y = 300;
+	
+	//rocketSettings.drag = 0.95;
+	
+	ParticleSystemSettings rocketParticles;
+	rocketParticles.speedMin = 0;
+	rocketParticles.speedMax = 0;
+	rocketParticles.drag = 0.9;
+	rocketParticles.gravity.y = 30;
+	rocketParticles.directionZ = 0;
+	rocketParticles.directionZVar = 90;
+	rocketParticles.directionYVar = 180;
+	
+	rocketParticles.sizeStartMin = 5;
+	rocketParticles.sizeStartMax = 15;
+	rocketParticles.sizeChangeRatio = 0;
+	rocketParticles.hueStartMin = hue;
+	rocketParticles.hueStartMax = hue + 5;
+	rocketParticles.hueChange = 0;
+	rocketParticles.saturationMin = saturation/5;
+	rocketParticles.saturationMax = saturation/2;
+	rocketParticles.saturationEnd = saturation;
+	rocketParticles.brightnessStartMin =
+	rocketParticles.brightnessStartMin = 200;
+	rocketParticles.brightnessEnd = 100;
+	
+	rocketParticles.shimmerMin = 0.1;
+	rocketParticles.lifeMin = 0.1;
+	rocketParticles.lifeMax = 0.5;
+	
+	//explosion.emitMode = PARTICLE_EMIT_BURST;
+	rocketParticles.emitLifeTime = 2;
+	rocketParticles.emitCount = 300;
+	rocketParticles.startSound = "LaunchRocketSharp";
+	
+	
+	
+	
+	
+	
+	// = getFlowerTrailParticles(hue, hueChange);
+	//ParticleSystemSettings explosion = getFlowerExplosionParticles(hue, hueChange);
+	//ParticleSystemSettings explosionLines = getLineExplosionParticles(150, hueChange);
+	
+	//trails.timeSpeed = explosion.timeSpeed = rocketSettings.timeSpeed = 0.7;
+	
+	//explosion.emitDelay = trails.emitLifeTime = 2;
+	
+	//rocketSettings.addParticleSystemSetting(trails);
+	rocketSettings.addParticleSystemSetting(rocketParticles);
+	//rocketSettings.addParticleSystemSetting(explosionLines);
+	
+	
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	ts->radius = 7;
+	ts->hue = hue;
+	ts->saturation = saturation * 0.7;
+	ts->rocketSettings = &rocketSettings;
+	ts->rechargeSettings = TriggerRechargeSettings::medium;
+	
+	return ts;
+	
+	
+	
+	
+}
+
+
+
+
 TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChange ){
 	
 	ParticleSystemManager& particleSystemManager = *ParticleSystemManager::instance();
