@@ -376,7 +376,6 @@ std::ostream& operator<< (std::ostream& stream, const QuadWarp& warp){
         stream << (float) warp.dstPoints[i].x << ", ";
         stream << (float) warp.dstPoints[i].y << ": ";
     }
-
     
     return stream;
 }

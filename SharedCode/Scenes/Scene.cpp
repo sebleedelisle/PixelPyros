@@ -25,8 +25,7 @@ Scene::Scene(string scenename) {
 	positionSeconds = 0;
 	lengthSeconds = 1;
 
-	
-	
+    addCommand(0, SEQ_PATTERN_CHANGE, 0);	
 }
 void Scene :: loadMusicFile(string musicfile){
 	
@@ -163,6 +162,45 @@ bool Scene:: draw() {
 
 }
 
+void Scene:: save(){
+//    string filename = name + ".seq";
+//    
+//    ofFile fileHandle;
+//    ofBuffer f;
+//    fileHandle.open(filename, ofFile::WriteOnly, true);
+//    
+//    for(int i=0;i<commands.size();i++){
+//        SequenceCommand command = commands[i];
+//        fileHandle << command;
+//    }
+    ofxXmlSettings xml;
+	
+	string filename = name+".xml";
+    for(int i=1;i<commands.size();i++){
+        SequenceCommand command = commands[i];
+        xml.addTag("command");
+        xml.pushTag("command",i-1);
+        xml.addValue("time", command.time );
+        xml.addValue("arg1", command.arg1 );
+        xml.addValue("enabled", command.enabled );
+        xml.popTag();
+	}
+    xml.saveFile( filename );
+
+}
+
+void Scene:: load(){
+	string filename = name+".xml";
+	ofxXmlSettings xml;
+    bool loaded = xml.loadFile(filename);
+    if( !loaded ) return;
+    int numCommands = xml.getNumTags("command");
+    for(int i=0;i<numCommands;i++){
+        bool enabled = xml.getValue("command:enabled", 0, i);
+        if( enabled ) addCommand( xml.getValue("command:time", 0.0, i), SEQ_PATTERN_CHANGE, xml.getValue("command:arg1", 0, i) );
+    }
+    
+}
 
 bool Scene :: togglePlayPause(){
 	if(playing) music.stop();
