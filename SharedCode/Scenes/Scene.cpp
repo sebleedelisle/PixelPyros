@@ -105,7 +105,7 @@ bool Scene :: update(float deltaTime) {
 	//}
 
 	
-	if((!playing)|| (!active)) return false;
+	if((!active)) return false;
 	
 	positionSeconds = (float)music.getPositionMS()/1000.0f;
 	

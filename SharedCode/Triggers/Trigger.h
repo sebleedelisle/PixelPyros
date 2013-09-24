@@ -60,6 +60,10 @@ class Trigger {
 	int motionValueCount;
 	float lastUpdate;
 	
+	// angle
+	float angle;
+	int triggerCount; 
+	
 	
 	
 	//SETTINGS

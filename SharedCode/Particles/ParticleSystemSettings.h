@@ -68,8 +68,10 @@ class ParticleSystemSettings{
 		emitSpeedModifier = 1;		// Multiplier
 		emitHueModifierOffset = 0;	// Offset
 		
-		//emitAttachedPhysicsObject = NULL; 
-		emitInheritVelocity = 0; 
+		emitInheritVelocity = 0;
+		
+		rotateMin = rotateMax = 0;
+		rotateAxis.set(0,1,0);
 		
 		velocityModifierSettings = 0;
 		
@@ -147,7 +149,12 @@ class ParticleSystemSettings{
 
 	//EMISSION LIFE CYCLE
 	float emitLifeTime; 
-	float emitDelay; 
+	float emitDelay;
+	
+	// rotate around y axis from emit point
+	float rotateMin;
+	float rotateMax;
+	ofVec3f rotateAxis;
 	
 	// EMISSION MODE AND PARTICLE COUNT
 	ParticleEmitMode emitMode; 

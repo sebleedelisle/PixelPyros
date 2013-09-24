@@ -14,10 +14,10 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	addTriggerPattern(empty);
 	
 	
-	TriggerSettingsRocketRotator * rocketFountainBlue = getRocketTronFountain(130,10);
-	TriggerSettingsRocketRotator * rocketFountainPink = getRocketTronFountain(-20,0);
-	TriggerSettingsRocketRotator * rocketFountainBlueHigh = getRocketTronFountain(130,10);
-	TriggerSettingsRocketRotator * rocketFountainPinkHigh = getRocketTronFountain(-20,0);
+	TriggerSettingsRocket * rocketFountainBlue = getRocketTronFountain(130,10);
+	TriggerSettingsRocket * rocketFountainPink = getRocketTronFountain(-20,0);
+	TriggerSettingsRocket * rocketFountainBlueHigh = getRocketTronFountain(130,10);
+	TriggerSettingsRocket * rocketFountainPinkHigh = getRocketTronFountain(-20,0);
 
 	
 	rocketFountainBlue->hue = rocketFountainBlueHigh->hue = 130;
@@ -298,7 +298,7 @@ bool SceneVectorizer :: draw() {
 
 
 
-TriggerSettingsRocketRotator* SceneVectorizer :: getRocketTronFountain(float hueStartOffset, float hueChange) {
+TriggerSettingsRocket* SceneVectorizer :: getRocketTronFountain(float hueStartOffset, float hueChange) {
 	
 	
 	ParticleRendererBase* particleRenderer = new ParticleRendererSquare();
@@ -390,8 +390,11 @@ TriggerSettingsRocketRotator* SceneVectorizer :: getRocketTronFountain(float hue
 	
 	rs->addParticleSystemSetting(ps);
 	
-	TriggerSettingsRocketRotator* ts = new TriggerSettingsRocketRotator();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->rocketSettings = rs;
+	ts->rotateOnFire = true;
+	ts->rotationExtent = 10;
+	ts->rotationSpeed = 2;
 	ts->radius = 6;
 	return ts;
 	

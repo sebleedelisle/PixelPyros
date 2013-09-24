@@ -32,7 +32,7 @@ class SceneVectorizer : public Scene {
 	
 	bool draw();
 	
-	TriggerSettingsRocketRotator* getRocketTronFountain(float hueStartOffset = 0, float hueChange = 0);
+	TriggerSettingsRocket* getRocketTronFountain(float hueStartOffset = 0, float hueChange = 0);
 	
    
 	StretchyNet stretchyNet;

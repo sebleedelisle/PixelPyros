@@ -53,8 +53,8 @@ TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue ,
 	rocketParticles.directionZVar = 90;
 	rocketParticles.directionYVar = 180;
 	
-	rocketParticles.sizeStartMin = 5;
-	rocketParticles.sizeStartMax = 15;
+	rocketParticles.sizeStartMin = 2.5;
+	rocketParticles.sizeStartMax = 7.5;
 	rocketParticles.sizeChangeRatio = 0;
 	rocketParticles.hueStartMin = hue;
 	rocketParticles.hueStartMax = hue + 5;
@@ -74,10 +74,6 @@ TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue ,
 	rocketParticles.emitLifeTime = 2;
 	rocketParticles.emitCount = 300;
 	rocketParticles.startSound = "LaunchRocketSharp";
-	
-	
-	
-	
 	
 	
 	// = getFlowerTrailParticles(hue, hueChange);
@@ -103,6 +99,78 @@ TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue ,
 	return ts;
 	
 	
+}
+
+
+
+TriggerSettingsRocket* FireworkFactory::getRotatingRocket(float speed, float hue , float saturation, float speedVar, float directionVar ){
+	
+	ParticleSystemManager& particleSystemManager = *ParticleSystemManager::instance();
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	
+	rocketSettings.startSpeedMin = speed *(1-speedVar);
+	rocketSettings.startSpeedMax = speed;
+	rocketSettings.direction = -90;
+	rocketSettings.directionVar = directionVar;
+	rocketSettings.gravity.y = 300;
+	
+	//rocketSettings.drag = 0.95;
+	
+	ParticleSystemSettings rocketParticles;
+	rocketParticles.speedMin = 0;
+	rocketParticles.speedMax = 0;
+	rocketParticles.drag = 0.9;
+	rocketParticles.gravity.y = 30;
+	rocketParticles.directionZ = 0;
+	rocketParticles.directionZVar = 90;
+	rocketParticles.directionYVar = 180;
+	
+	rocketParticles.sizeStartMin = 2.5;
+	rocketParticles.sizeStartMax = 7.5;
+	rocketParticles.sizeChangeRatio = 0;
+	rocketParticles.hueStartMin = hue;
+	rocketParticles.hueStartMax = hue + 5;
+	rocketParticles.hueChange = 0;
+	rocketParticles.saturationMin = saturation/5;
+	rocketParticles.saturationMax = saturation/2;
+	rocketParticles.saturationEnd = saturation;
+	rocketParticles.brightnessStartMin =
+	rocketParticles.brightnessStartMin = 200;
+	rocketParticles.brightnessEnd = 100;
+	
+	rocketParticles.shimmerMin = 0.1;
+	rocketParticles.lifeMin = 0.1;
+	rocketParticles.lifeMax = 0.5;
+	
+	//explosion.emitMode = PARTICLE_EMIT_BURST;
+	rocketParticles.emitLifeTime = 2;
+	rocketParticles.emitCount = 300;
+	rocketParticles.startSound = "LaunchRocketSharp";
+	
+	
+	// = getFlowerTrailParticles(hue, hueChange);
+	//ParticleSystemSettings explosion = getFlowerExplosionParticles(hue, hueChange);
+	//ParticleSystemSettings explosionLines = getLineExplosionParticles(150, hueChange);
+	
+	//trails.timeSpeed = explosion.timeSpeed = rocketSettings.timeSpeed = 0.7;
+	
+	//explosion.emitDelay = trails.emitLifeTime = 2;
+	
+	//rocketSettings.addParticleSystemSetting(trails);
+	rocketSettings.addParticleSystemSetting(rocketParticles);
+	//rocketSettings.addParticleSystemSetting(explosionLines);
+	
+	
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	ts->radius = 7;
+	ts->hue = hue;
+	ts->saturation = saturation * 0.7;
+	ts->rocketSettings = &rocketSettings;
+	ts->rechargeSettings = TriggerRechargeSettings::fast;
+	ts->rotateOnFire = true;
+	
+	return ts;
 	
 	
 }
@@ -239,7 +307,7 @@ ParticleSystemSettings FireworkFactory :: getFlowerExplosionParticles(float hue,
 	
 }
 
-TriggerSettingsRocket* FireworkFactory :: getFountain(float hueStartOffset , float hueChange){
+TriggerSettingsRocket* FireworkFactory :: getSimpleFountain(float hueStartOffset , float hueChange){
 	
 	
 	
@@ -396,6 +464,287 @@ TriggerSettingsRocket* FireworkFactory :: getFountain(float hueStartOffset , flo
 	
 	
 }
+
+
+TriggerSettingsRocket* FireworkFactory :: getFountain(float hueStartOffset , float hueChange){
+	return new RocketFountain(hueStartOffset, hueChange);
+	
+}
+
+
+TriggerSettingsRocket* FireworkFactory :: getFluffyRocket(){
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	ParticleSystemSettings pss;
+	pss.renderer = new ParticleRendererBitmap(&softWhiteImage);
+	
+	pss.gravity.y = 100;
+	pss.speedMin = 00;
+	pss.speedMax = 20;
+	pss.drag = 0.93;
+	
+	pss.sizeStartMin = 8;
+	pss.sizeStartMax = 15;
+	pss.sizeChangeRatio = 0.9;
+	pss.shimmerMin = 1;
+	
+	pss.emitCount = 500;
+	pss.emitStartSizeModifier = 0.2;
+	
+	pss.brightnessStartMin = 10;
+	pss.brightnessStartMax = 255;
+	pss.brightnessEnd = 0;
+	
+	pss.lifeMin = 0.5;
+	pss.lifeMax = 0.8;
+	
+	
+	pss.startSound = "RocketFountain";
+	
+	
+	rocketSettings.startSpeedMin = 1000;
+	rocketSettings.startSpeedMax = 1400;
+	rocketSettings.gravity.y = 1200;
+	rocketSettings.timeSpeed = pss.timeSpeed = 0.7;
+	
+	
+	
+	rocketSettings.addParticleSystemSetting(pss);
+	//rocketSettings.addParticleSystemSetting(getSmoke());
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	ts->rocketSettings = &rocketSettings;
+	ts->rechargeSettings = TriggerRechargeSettings::fast;
+	
+	return ts;
+	
+}
+
+
+
+
+TriggerSettingsRocket* FireworkFactory:: getBangerRocket() {
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	
+	rocketSettings.startSpeedMin = 1000;
+	rocketSettings.startSpeedMax = 1200;
+	rocketSettings.directionVar = 4;
+	rocketSettings.gravity.y = 200;
+	rocketSettings.drag = 0.95;
+	
+	ParticleSystemSettings trails = getBangerTrails();
+	ParticleSystemSettings bang = getBangerBang();
+	ParticleSystemSettings bangCrackles = getBangerCrackles();
+	ParticleSystemSettings smoke1 = getSmoke();
+	ParticleSystemSettings smoke2 = getSmoke();
+	
+	smoke2.emitMode = PARTICLE_EMIT_CONTINUOUS;
+	smoke2.emitCount = 200;
+	smoke2.emitLifeTime = 0.2;
+	smoke2.sizeStartMax = 30;
+	smoke2.speedMax = 100;
+	smoke2.brightnessStartMin = 10;
+	smoke2.brightnessStartMax = 30;
+	
+	
+	bang.emitDelay = bangCrackles.emitDelay = trails.emitLifeTime = smoke1.emitLifeTime =smoke2.emitDelay = 2;
+	
+	rocketSettings.addParticleSystemSetting(trails);
+	//rocketSettings.addParticleSystemSetting(smoke1);
+	rocketSettings.addParticleSystemSetting(smoke2);
+	rocketSettings.addParticleSystemSetting(bang);
+	rocketSettings.addParticleSystemSetting(bangCrackles);
+	
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	
+	ts->rocketSettings = &rocketSettings;
+	ts->rechargeSettings = TriggerRechargeSettings::slow;
+	ts->radius *=1.3;
+	
+	return ts;
+	
+	
+}
+
+
+
+
+ParticleSystemSettings FireworkFactory :: getBangerTrails() {
+	
+	ParticleSystemSettings trails;
+	trails.renderer = new ParticleRendererLine(1, true);
+	trails.directionZVar = 20;
+	trails.speedMin = 5;
+	trails.speedMax = 60;
+	trails.sizeStartMin = trails.sizeStartMax = 3;
+	trails.hueStartMin = trails.hueStartMax = 30;
+	trails.hueChange = -10;
+	trails.saturationMin = trails.saturationMax = 0;
+	trails.saturationEnd = 0;
+	trails.brightnessStartMin = trails.brightnessStartMin = trails.brightnessEnd = 255;
+	
+	trails.emitInheritVelocity = -0.1;
+	trails.emitStartSizeModifier = 0;
+	trails.emitSpeedModifier = 0;
+	
+	trails.emitCount = 100;
+	
+	
+	trails.shimmerMin = 0;
+	trails.lifeMin = 0.1;
+	trails.lifeMax = 0.3;
+	trails.startSound = "Launch";
+	
+	return trails;
+	
+	
+}
+
+
+ParticleSystemSettings FireworkFactory:: getBangerBang() {
+	
+	ParticleSystemSettings explosion;
+	//explosion.renderer = new ParticleRendererCircle(24);
+	explosion.renderer = new ParticleRendererBitmap(&bangerFlashImage);
+	
+	//pss.directionZVar = 20;
+	explosion.speedMin = 0;
+	explosion.speedMax = 0;
+	explosion.drag = 0.90;
+	
+	explosion.sizeStartMin = 600;
+	explosion.sizeStartMax = 900;
+	explosion.sizeChangeRatio = 0;
+	explosion.hueStartMin = explosion.hueStartMax = 0;
+	explosion.hueChange = 0;
+	explosion.saturationMin = explosion.saturationMax = 0;
+	explosion.saturationEnd = 0;
+	explosion.brightnessStartMin = explosion.brightnessStartMin = 255;
+	explosion.brightnessEnd = 0;
+	
+	explosion.shimmerMin = 1;
+	explosion.lifeMin = 0.1;
+	explosion.lifeMax = 0.1;
+	
+	explosion.emitMode = PARTICLE_EMIT_BURST;
+	explosion.emitLifeTime = 0.1;
+	explosion.emitCount = 1;
+	
+	
+	
+	explosion.startSound = "Banger";
+	
+	
+	return explosion;
+	
+	
+	return ParticleSystemSettings();
+	
+}
+
+
+
+ParticleSystemSettings FireworkFactory:: getBangerCrackles() {
+	
+	ParticleSystemSettings explosion;
+	explosion.renderer = new ParticleRendererCircle();
+	
+	
+	explosion.directionYVar= 90;
+	explosion.speedMin = 300;
+	explosion.speedMax = 400;
+	explosion.drag = 0.93;
+	
+	explosion.sizeStartMin = 5;
+	explosion.sizeStartMax = 8;
+	explosion.hueStartMin = explosion.hueStartMax = 0;
+	explosion.hueChange = 0;
+	explosion.saturationMin = explosion.saturationMax = 0;
+	explosion.saturationEnd = 0;
+	explosion.brightnessStartMin = explosion.brightnessStartMin = 255;
+	explosion.brightnessEnd = 0;
+	
+	explosion.shimmerMin = 0.0;
+	explosion.lifeMin = 0.1;
+	explosion.lifeMax = 0.2;
+	
+	explosion.emitMode = PARTICLE_EMIT_BURST;
+	//explosion.emitLifeTime = 0.1;
+	explosion.emitCount = 200;
+	
+	explosion.renderDelayMin = 0.5;
+	explosion.renderDelayMax = 3;
+	
+	
+	explosion.startSound = "Crackle";
+	
+	
+	return explosion;
+	
+	
+}
+
+
+ParticleSystemSettings FireworkFactory:: getSmoke() {
+	
+	float hueStartOffset = 200;
+	float saturation = 0;
+	ParticleSystemSettings ps2;
+	// PHYSICS
+	ps2.speedMin = 15;
+	ps2.speedMax = 20;
+	ps2.directionZ = 0;
+	ps2.directionZVar = 90;
+	ps2.directionYVar = 180;
+	ps2.drag = 0.90;
+	ps2.gravity.set(0,-30);
+	
+	//LIFE
+	ps2.lifeMin = 1;
+	ps2.lifeMax = 1.5;
+	
+	//APPEARANCE
+	
+	ps2.sizeStartMin = 2;
+	ps2.sizeStartMax = 5;
+	ps2.sizeChangeRatio = 5;
+	
+	ps2.hueStartMin = 0+hueStartOffset;
+	ps2.hueStartMax = 0+hueStartOffset;
+	ps2.hueChange = 0;
+	
+	ps2.brightnessStartMin = 20;
+	ps2.brightnessStartMax = 70;
+	ps2.brightnessEnd = 0;
+	
+	ps2.saturationMin = saturation;
+	ps2.saturationMax = saturation;
+	ps2.saturationEnd = saturation;
+	
+	//ps.shimmerMin = 0.1;
+	
+	// but also :
+	// lifeExpectancy
+	// delay
+	
+	ps2.emitStartSizeModifier = 0;
+	//ps2.emitSpeedModifier = 0;
+	
+	
+	ps2.emitMode = PARTICLE_EMIT_CONTINUOUS;
+	ps2.emitCount = 500;
+	
+	ps2.emitDelay = 0;
+	ps2.emitLifeTime= 0.5;
+	
+	ps2.renderer = new ParticleRendererBitmap(&softWhiteImage);
+	
+	
+	return ps2;
+	
+	
+}
+
 
 
 

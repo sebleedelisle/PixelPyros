@@ -21,12 +21,12 @@
 //#include "Sequencer.h"
 
 //
-//#include "SceneSpace.h"
+#include "SceneSpace.h"
 #include "SceneVectorizer.h"
 //#include "SceneLaunch.h"
 #include "SceneIntro.h"
 #include "SceneRetro.h"
-//#include "SceneRealistic.h"
+#include "SceneRealistic.h"
 #include "SceneCalibration.h"
 #include "SceneSlideshow.h"
 #include "SceneNadia.h"

@@ -27,8 +27,12 @@ TriggerSettings::TriggerSettings() {
 	
 	hue = 0;
 	saturation = 0;
-	radius = 10;
+	radius = 7;
 	
+	rotationExtent = 0;
+	rotationSpeed = 0;
+	
+	rotateOnFire = false;
 	
 }
 
@@ -49,7 +53,7 @@ ofColor TriggerSettings::getColour() {
 	
 }
 
-void TriggerSettings::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale ) {
+void TriggerSettings::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale, float angle ) {
 	
 	
 	// BASE CLASS HAS NO RENDERER

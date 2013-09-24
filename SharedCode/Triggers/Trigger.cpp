@@ -35,6 +35,9 @@ Trigger :: Trigger(){
 	
 	motionValueCount = 20;
 	showDebugData = true;
+	
+	angle = 0;
+	triggerCount = 0;
 
 	/*
 	
@@ -105,7 +108,7 @@ bool Trigger::update(float deltaTime) {
 			return false;
 		}
 	} else {
-		scale+= (1-scale)*0.1;
+		scale+= (1-scale)*0.2;
 	}
 	
 	if(lastSettings!=NULL) {
@@ -117,7 +120,13 @@ bool Trigger::update(float deltaTime) {
 		
 	}
 	
+	//angle++;
 	
+	if((settings!=NULL) && (settings->rotationSpeed>0) && (!settings->rotateOnFire)) {
+		angle = (sin(elapsedTime*settings->rotationSpeed)*settings->rotationExtent);
+		
+	}
+		
 	//if(type == TRIGGER_TYPE_FIRE_ON_MOTION) {
 	
 	if(showDebugData) {
@@ -130,7 +139,6 @@ bool Trigger::update(float deltaTime) {
 		 } else {
 		 
 		 float lastlevel = 0;
-		 
 		 
 		 lastlevel = motionValues[motionValues.size()-1];
 		 
@@ -156,7 +164,7 @@ bool Trigger::update(float deltaTime) {
 	// we need to have sensed motion,
 	// AND we need to have enough unitPower to trigger
 	if( (!stopping) &&
-		(scale>0.99) &&
+		(scale>0.95) &&
 		(motionLevel >= rechargeSettings->motionTriggerLevel) &&
 		(unitPower>=rechargeSettings->triggerPower) &&
 		(elapsedTime - lastTriggerTime > rechargeSettings->minTriggerInterval) ) {
@@ -217,8 +225,8 @@ void Trigger :: draw() {
 //	c.setSaturation(settings->saturation);
 //	c.setHue(settings->hue);
 
-	if(settings!=NULL) settings->draw(elapsedTime, pos,  unitPower, active, scale);
-	if(lastSettings!=NULL) lastSettings->draw(elapsedTime, pos,  unitPower, active, lastScale);
+	if(settings!=NULL) settings->draw(elapsedTime, pos,  unitPower, active, scale, angle);
+	if(lastSettings!=NULL) lastSettings->draw(elapsedTime, pos,  unitPower, active, lastScale, angle);
 	
 	if(!active) return;
 
@@ -400,8 +408,12 @@ void Trigger :: registerMotion(float unitValue) {
 
 bool Trigger::doTrigger() {
 	if(settings!=NULL) {
-		settings->doTrigger(pos);
-		
+		settings->doTrigger(pos,1,angle);
+		triggerCount++;
+		if(settings->rotateOnFire) {
+			angle = (sin(triggerCount*settings->rotationSpeed)*settings->rotationExtent);
+		}
+
 	}
 	return true;//!disabled;
 }
@@ -415,7 +427,8 @@ void Trigger::copySettings(TriggerSettings* newsettings) {
 	if(newsettings!=NULL)
 		rechargeSettings = newsettings->rechargeSettings;
 
-	scale = 0; 
+	scale = 0;
+	angle = 0;
 	/*
 	motionTriggerLevel = settings.motionTriggerLevel;
 	triggerPower = settings.triggerPower;
