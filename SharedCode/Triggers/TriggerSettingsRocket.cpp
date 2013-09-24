@@ -11,19 +11,36 @@
 TriggerSettingsRocket :: TriggerSettingsRocket() : particleSystemManager(*ParticleSystemManager::instance()) {
 	
 	//rocketSettings = NULL;
-
+	
+	rotationExtent = 0;
+	rotationSpeed = 0;
+	rotateOnFire = false;
+	
+	//rocketCount = 0;
+	
 }
 
 
 
 void TriggerSettingsRocket ::doTrigger(ofVec3f& pos, float power, float direction){
 	
-	PhysicsObject *rocket = makeNewRocket(pos);
+	PhysicsObject* rocket = NULL;
+	
+	if(rocketSettings!=NULL) {
+		rocket = particleSystemManager.addRocket(*rocketSettings, pos);
+		
+		//rocket->vel.set(0,ofMap(ofRandom(1), 0, 1, -rocketSettings->startSpeedMin, -rocketSettings->startSpeedMax),0);
+		rocket->vel.rotate(0,0, direction );
+		
+	}
+	
+
+
 
 }
 
 
-
+/*
 PhysicsObject * TriggerSettingsRocket:: makeNewRocket(ofVec3f& pos) {
 	PhysicsObject* rocket = NULL;
 	
@@ -34,10 +51,10 @@ PhysicsObject * TriggerSettingsRocket:: makeNewRocket(ofVec3f& pos) {
 	
 	return rocket;
 	
-}
+}*/
 
 
-void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale) {
+void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale, float angle) {
 	
 	//elapsedTime+=deltaTime;
 	
@@ -45,6 +62,10 @@ void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower
 	
 	ofPushMatrix();
 	ofPushStyle();
+	ofDisableBlendMode();
+	
+	ofTranslate(pos);
+	ofScale(scale, scale);
 	
 	ofFill();
 	ofSetColor(0);
@@ -57,8 +78,6 @@ void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower
 	ofSetColor(colour);
 	if(!active) ofSetColor(ofColor::gray);
 	
-	ofTranslate(pos);
-	ofScale(scale, scale);
 	
 	ofCircle(0,0, radius);
 	
@@ -81,6 +100,10 @@ void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower
 		
 		
 	}*/
+	
+	ofRotate(angle);
+	ofLine(0,0,0,-20);
+
 	
 	ofPopStyle();
 	ofPopMatrix();

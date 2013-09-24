@@ -23,7 +23,9 @@ void ParticleSystem::reset(){
 	life.reset(); 
 	numParticlesCreated = 0; 
 	finished = false;
-	power = 1; 
+	power = 1;
+	
+	rotateAmount = 0;
 }
 
 
@@ -174,6 +176,9 @@ Particle * ParticleSystem::initParticle(Particle * p) {
 	
 	p->sizeEnd = p->sizeStart * settings.sizeChangeRatio; 
 	
+	p->rotateAmount = rotateAmount;
+	p->rotateAxis = settings.rotateAxis; 
+	
 	settings.initColourModifier(p->colourModifier, life);
 	p->shimmerMin = settings.shimmerMin; 
 	
@@ -210,6 +215,9 @@ void ParticleSystem:: init(ParticleSystemSettings& pes) {
 	//physics.drag = pes.drag; 
 	//physics.gravity = pes.gravity; 
 	settings = pes;
+	
+	rotateAmount = ofRandom(settings.rotateMin, settings.rotateMax);
+	
 	
 	
 	

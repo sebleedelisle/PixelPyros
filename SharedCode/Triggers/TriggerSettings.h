@@ -25,6 +25,11 @@ class TriggerSettings {
 	float elapsedTime;
 	float radius;
 	
+	// rotation settings
+	float rotationExtent;
+	float rotationSpeed;
+	bool rotateOnFire;
+
 	
 	TriggerRechargeSettings* rechargeSettings;
 	
@@ -35,7 +40,7 @@ class TriggerSettings {
 	virtual void doTrigger(ofVec3f& pos, float power, float direction);
 
 	
-	virtual void draw(float elapsedtime, ofVec3f pos,  float unitPower, bool active, float scale = 1);
+	virtual void draw(float elapsedtime, ofVec3f pos,  float unitPower, bool active, float scale = 1, float angle = 0);
 
 	virtual ofColor getColour(); 
 	

@@ -122,6 +122,7 @@ class StretchyNet {
 	void draw() {
 		
 		ofPushMatrix();
+		ofPushStyle(); 
 		ofTranslate(bounds.width/2,bounds.height/2);
 		ofRotateY(sin(elapsedTime/3)*3);
 		ofRotateX(cos(elapsedTime/3)*3);
@@ -146,7 +147,7 @@ class StretchyNet {
 		
 		mesh.draw();
 		//ofDisableBlendMode();
-		
+		ofPopStyle();
 		ofPopMatrix();
 	}
 
