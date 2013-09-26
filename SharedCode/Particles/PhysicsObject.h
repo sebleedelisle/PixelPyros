@@ -16,23 +16,24 @@ class PhysicsObject {
 	
 	PhysicsObject() { 
 		reset(); 
-		
-		dragApplyFrequency = 30; 
-		pos.set(0,0,0); 
-		lastPos.set(0,0,0); 
-		vel.set(0,0,0); 
-		drag = 1; 
-		gravity.set(0,0,0);
-		velScalar.set(1,1,1);
-		
-		timeSpeed =1;
-		
 	}; 
 	
 	virtual void reset() { 
 		dragApplyCount = 0; 
 		elapsedTime = 0; 
 		enabled = true;
+		
+		dragApplyFrequency = 30;
+		pos.set(0,0,0);
+		lastPos.set(0,0,0);
+		vel.set(0,0,0);
+		drag = 1;
+		gravity.set(0,0,0);
+		velScalar.set(1,1,1);
+		
+		timeSpeed =1;
+		
+		
 		life.reset();
 		
 		//renderer = NULL;

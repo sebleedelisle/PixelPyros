@@ -17,6 +17,8 @@
 #include "QuadWarp.h"
 #include "ofxCv.h"
 #include "LaserDot.h"
+#include "LaserShape.h"
+#include "LaserCircle.h"
 #include "ofxGui.h"
 #include "ofMain.h"
 
@@ -31,7 +33,7 @@ class LaserManager {
 	
 	LaserManager();
 	
-	void setup();
+	void setup(int width, int height);
     void update();
 	
 	bool my_compare( ofPoint a, ofPoint b){
@@ -39,13 +41,16 @@ class LaserManager {
 	}
 	
 	void addLaserDot(const ofPoint& ofpoint, ofFloatColor colour, float intensity =1);
-	void addLaserLine(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
-	void addLaserLineEased(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
-	void addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour);
-	void addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour);
-	void closeLaserLoop();
-	void moveLaser(const ofPoint & target, bool alreadyWarped = false);
-	void moveLaserToPointAndVel(const ofPoint& targetPos, const ofPoint& targetVel);
+	
+	void addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, float radius, float intensity =1);
+
+	//void addLaserLine(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
+	//void addLaserLineEased(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
+	//void addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour);
+	//void addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour);
+	//void closeLaserLoop();
+	void moveLaser(const ofPoint & target);
+	//void moveLaserToPointAndVel(const ofPoint& targetPos, const ofPoint& targetVel);
 	
 	void drawDots();
 	
@@ -64,7 +69,7 @@ class LaserManager {
 	void addDelayTest() ;
 
 	
-	vector <LaserDot> dots; 
+	vector <LaserShape*> shapes;
 	
 	ofxEtherdream etherdream;
 	
@@ -74,7 +79,7 @@ class LaserManager {
 	ofPoint startPosition;
 	ofPoint startVel;
 	ofPoint currentPosition;
-	ofPoint currentVel;
+	//ofPoint currentVel;
 	
 	ofParameter<float> maxSpeed;
 	ofParameter<float> acceleration;
@@ -128,8 +133,8 @@ class LaserManager {
 	vector<ofxIlda::Point> ildaPoints;
 	vector<ofPoint> ofPoints;
 	
-	float appWidth; //= ofGetWidth();
-	float appHeight; //= ofGetHeight();
+	float appWidth;
+	float appHeight;
 
 
 };
