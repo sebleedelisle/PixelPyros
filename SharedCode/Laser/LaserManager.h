@@ -52,7 +52,7 @@ class LaserManager {
 	void moveLaser(const ofPoint & target);
 	//void moveLaserToPointAndVel(const ofPoint& targetPos, const ofPoint& targetVel);
 	
-	void drawDots();
+	void drawShapes();
 	
 	void resetIldaPoints();
 	void addIldaPoint(const ofPoint& p, ofFloatColor c);
@@ -103,6 +103,7 @@ class LaserManager {
 	ofParameter<bool> showMovePoints;
 	// the speed for movement and 
 	ofParameter<float> moveSpeed;
+	ofParameter<float> circleMoveSpeed;
 	ofParameter<float> movePointsPadding;
 	ofParameter<bool> connectButton;
 	ofParameter<string> etherdreamStatus; 

@@ -594,13 +594,14 @@ TriggerSettingsRocket* SceneSpace :: getSphereFlowerRocket(float hue , float hue
 	
 	explosion.emitDelay = explosionLines.emitDelay = crackles.emitDelay = trails.emitLifeTime = 2;
 	
-	//ParticleSystemSettings laserExplosion = FireworkFactory::instance()->getLaserExplosionParticles(hue, hueChange);
+	ParticleSystemSettings laserExplosion = FireworkFactory::instance()->getLaserExplosionParticles(hue, hueChange);
 	
-	//laserExplosion.emitDelay = explosion.emitDelay-0.05;
+	laserExplosion.emitDelay = explosion.emitDelay-0.05;
 	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = explosionLines.timeSpeed = crackles.timeSpeed;
 	
 	rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
+	rocketSettings.addParticleSystemSetting(laserExplosion);
 	rocketSettings.addParticleSystemSetting(explosionLines);
 	rocketSettings.addParticleSystemSetting(crackles);
 	

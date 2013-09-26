@@ -67,9 +67,9 @@ TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange
 	ps.drag = 0.4;
 	ps.emitSpeedModifier = 0.5;
 	
-	ps.sizeStartMin = 0.1;
-	ps.sizeStartMax = 2;
-	ps.sizeChangeRatio = 10;
+	ps.sizeStartMin = 5;
+	ps.sizeStartMax = 20;
+	ps.sizeChangeRatio = 0;
 	
 	ps.emitInheritVelocity = 1;
 	
@@ -80,6 +80,12 @@ TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange
 	//laser.gravity.y = 100;
 	laser.startSound = ""; 
 	laser.emitStartSizeModifier = 0.1;
+	
+	laser.sizeStartMin = 20;
+	laser.sizeStartMax = 40;
+	laser.sizeChangeRatio = 0.1;
+	laser.shimmerMin = 1; 
+	
 	laser.emitLifeTime = 14;
 	laser.emitInheritVelocity =1;
 	laser.drag = 0.97;
@@ -119,16 +125,30 @@ TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	
 	rocketSettings.startSpeedMin = 800;
 	rocketSettings.startSpeedMax = 900;
-	rocketSettings.drag = 1;
-	rocketSettings.gravity.y = 800;
+	rocketSettings.drag = 0.96;
+	rocketSettings.gravity.y = 100;
+	rocketSettings.lifeTime = 1.7;
 	
-	ParticleSystemSettings trails = getLaserParticles(hue, hueChange);
-	ParticleSystemSettings explosion = getTrailParticles(hue, hueChange);
+	ParticleSystemSettings laserTrails = getLaserParticles(hue, hueChange);
+	ParticleSystemSettings trails = getTrailParticles(hue, hueChange);
 	
+	laserTrails.sizeStartMin = 8;
+	laserTrails.sizeStartMax = 10;
+	laserTrails.sizeChangeRatio = 0; 
+	laserTrails.shimmerMin = 1;
+	laserTrails.emitInheritVelocity = 1;
+	laserTrails.drag = rocketSettings.drag;
+	laserTrails.gravity = rocketSettings.gravity;
+	
+	laserTrails.lifeMin = laserTrails.lifeMax = rocketSettings.lifeTime;
+	
+	laserTrails.emitCount = 1;
+	laserTrails.emitMode = PARTICLE_EMIT_BURST;
+	trails.emitLifeTime = rocketSettings.lifeTime;
 	//explosion.emitDelay = trails.emitLifeTime;
 	
+	rocketSettings.addParticleSystemSetting(laserTrails);
 	rocketSettings.addParticleSystemSetting(trails);
-	rocketSettings.addParticleSystemSetting(explosion);
 	
 	ts.rocketSettings = &rocketSettings;
 	
