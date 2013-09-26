@@ -38,10 +38,10 @@ void LaserManager:: disconnectFromEtherdream() {
 	
 }
 
-void LaserManager:: setup () {
+void LaserManager:: setup (int width, int height) {
     
-    appWidth = ofGetWidth();
-    appHeight = ofGetHeight();
+    appWidth = width; // ofGetWidth();
+    appHeight = height;//ofGetHeight();
     
     isConnected = false;
 	showSyncTest = false;
@@ -55,7 +55,7 @@ void LaserManager:: setup () {
 	blankCount = 0;
 	
 	pmin.set(0,0);
-	pmax.set(ofGetWidth(), ofGetHeight());
+	pmax.set(appWidth, appHeight);
 	
 	showRegistration = true;
 	showMovePoints = false;
@@ -159,9 +159,25 @@ void LaserManager:: update() {
 	
 	if(showRegistration) {
 		
-		addLaserRectEased(pmin, pmax, white);
-		addLaserLineEased(pmin, pmax, white);
-		addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
+		//addLaserRectEased(pmin, pmax, white);
+		//addLaserLineEased(pmin, pmax, white);
+		//addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
+		
+		ofPoint v = pmax - pmin;
+		
+		for(float x =0 ; x<=1; x+=0.2) {
+			for(float y = 0; y<=1; y+=0.2) {
+				addLaserDot(ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*y)), white, 1);
+				ofCircle(pmin.x + (v.x*x), pmin.x + (v.x*x), 10); 
+			}
+		}
+		/*
+		addLaserDot(pmin, white, 1);
+		addLaserDot(ofPoint(pmax.x, pmin.y), white, 1);
+		addLaserDot(pmax, white, 1);
+		addLaserDot(ofPoint(pmin.x, pmax.y), white, 1);
+		*/
+		
 		
 	}
 	
@@ -204,7 +220,7 @@ void LaserManager:: update() {
 		//etherdream.setPPS(50000);
 	}
     
-	if(renderLaserPath) {
+	if((renderLaserPath)||(showRegistration)) {
 		
 		ofNoFill();
 		
@@ -223,16 +239,19 @@ void LaserManager:: update() {
 	
 	warp.draw();
 	
+}
 
+void LaserManager::addLaserDot(const ofPoint& ofpoint, ofFloatColor colour, float intensity){
+	
+	//ofPoint target = warp.getWarpedPoint(ofpoint);
+	
+	shapes.push_back(new LaserDot(ofpoint, colour, intensity));
 }
 
 
-
-void LaserManager::addLaserDot(const ofPoint& ofpoint, ofFloatColor colour, float intensity) {
+void LaserManager::addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, float radius, float intensity){
 	
-	ofPoint target = warp.getWarpedPoint(ofpoint);
-	
-	dots.push_back(LaserDot(target, colour, intensity));
+	shapes.push_back(new LaserCircle(ofpoint, colour, radius, intensity));
 }
 
 
@@ -241,11 +260,11 @@ void LaserManager:: drawDots() {
 	
 	// sort the dots by nearest neighbour
 	
-	if(dots.size()==0) return; 
-	vector<LaserDot> sortedDots;
+	if(shapes.size()==0) return; 
+	vector<LaserShape*> sortedShapes;
 	
 	int numberSorted = 0;
-	int dotNum = dots.size();
+	int dotNum = shapes.size();
 	int currentIndex = 0; 
 	
 	int nextDotIndex = NULL;
@@ -255,22 +274,22 @@ void LaserManager:: drawDots() {
 	
 	do {
 		
-		LaserDot & dot1 = dots.at(currentIndex);
+		LaserShape * dot1 = shapes.at(currentIndex);
 		
 		//LaserDot & nextDot = dots.at(nextDotIndex);
-		dot1.tested = true;
-		sortedDots.push_back(dot1);
+		dot1->tested = true;
+		sortedShapes.push_back(dot1);
 		
 		float shortestDistance = INFINITY;
 		nextDotIndex = -1;
 		
-		for(int j = 0; j<dots.size(); j++) {
+		for(int j = 0; j<shapes.size(); j++) {
 			
-			LaserDot & dot2 = dots.at(j);
-			if((dot1==dot2) || (dot2.tested)) continue;
+			LaserShape * dot2 = shapes.at(j);
+			if((dot1==dot2) || (dot2->tested)) continue;
 		
-			if(dot1.distanceSquared(dot2) < shortestDistance) {
-				shortestDistance = dot1.distanceSquared(dot2);
+			if(dot1->endPos.distanceSquared(dot2->startPos) < shortestDistance) {
+				shortestDistance = dot1->endPos.distanceSquared(dot2->startPos);
 				nextDotIndex = j;
 			}
 			
@@ -289,11 +308,11 @@ void LaserManager:: drawDots() {
 	
 	float travelDistanceUnsorted = 0;
 	
-	for(int i = 0; i<dots.size()-1; i++) {
-		LaserDot& dot1 = dots.at(i);
-		LaserDot& dot2 = dots.at(i+1);
+	for(int i = 0; i<shapes.size()-1; i++) {
+		LaserShape* dot1 = shapes.at(i);
+		LaserShape* dot2 = shapes.at(i+1);
 		
-		travelDistanceUnsorted += dot1.distance(dot2); 
+		travelDistanceUnsorted += dot1->endPos.distanceSquared(dot2->startPos); 
 		
 	}
 	
@@ -304,26 +323,32 @@ void LaserManager:: drawDots() {
 	
 	
 	
-	for(int i = 0; i<sortedDots.size(); i++) {
+	for(int i = 0; i<sortedShapes.size(); i++) {
 		
-		LaserDot& dot = sortedDots.at(i);
-		if(!currentPosition.match(dot, 0.01)) {
-			moveLaser(dot, true);
-		}
-		
-		int particlecount = ceil(dotMaxPoints* dot.intensity);
-		 
-		for(int i = 0; i<dotPreBlank; i++) {
-			addIldaPoint(dot, black);
-		}
-		for(int i = 0; i<particlecount; i++) {
-			addIldaPoint(dot, dot.colour);
-		}
-		for(int i = 0; i<dotPostBlank; i++) {
-			addIldaPoint(dot, black);
+		LaserShape* shape = sortedShapes.at(i);
+
+		if(!currentPosition.match(shape->startPos, 0.01)) {
+			moveLaser(shape->startPos);
 		}
 		
 		
+		// CHECK FOR A DOT
+		LaserDot * dot = static_cast<LaserDot*>(shape);
+		
+		if(dot!=NULL) {
+			int particlecount = ceil(dotMaxPoints* dot->intensity);
+			 
+			for(int i = 0; i<dotPreBlank; i++) {
+				addIldaPoint(dot->startPos, black);
+			}
+			for(int i = 0; i<particlecount; i++) {
+				addIldaPoint(dot->startPos, dot->colour);
+			}
+			for(int i = 0; i<dotPostBlank; i++) {
+				addIldaPoint(dot->startPos, black);
+			}
+		}
+	
 	}
 	
 	
@@ -352,10 +377,10 @@ void LaserManager::closeLaserLoop() {
 	
 }*/
 
-void LaserManager :: moveLaser(const ofPoint & targetpoint, bool alreadyWarped){
+void LaserManager :: moveLaser(const ofPoint & targetpoint){
 	
-	ofPoint target = alreadyWarped ? targetpoint : warp.getWarpedPoint(targetpoint),
-			start = currentPosition;
+	ofPoint target = targetpoint;//alreadyWarped ? targetpoint : warp.getWarpedPoint(targetpoint),
+	ofPoint start = currentPosition;
 
 
 	ofPoint v = target-start;
@@ -373,13 +398,15 @@ void LaserManager :: moveLaser(const ofPoint & targetpoint, bool alreadyWarped){
 		addIldaPoint(c, (showMovePoints && j%2==0) ? ofColor::red : ofColor::black);
 		
 	}
-	currentVel.set(0,0);
+	//currentVel.set(0,0);
 }
 
+
+/*
 void LaserManager:: addLaserLineEased(const ofPoint&startpoint, const ofPoint&endpoint, ofFloatColor colour) {
 	
-	ofPoint start = warp.getWarpedPoint(startpoint);
-	ofPoint end = warp.getWarpedPoint(endpoint);
+	ofPoint start = startpoint;// warp.getWarpedPoint(startpoint);
+	ofPoint end = endpoint;//warp.getWarpedPoint(endpoint);
 
 	if(!currentPosition.match(start, 0.01)) {
 		moveLaser(startpoint);
@@ -413,9 +440,9 @@ void LaserManager:: addLaserLineEased(const ofPoint&startpoint, const ofPoint&en
 	
 	
 }
+*/
 
-
-
+/*
 void LaserManager:: addLaserLine(const ofPoint&startpoint, const ofPoint&endpoint, ofFloatColor colour) {
 	
 	ofPoint start = warp.getWarpedPoint(startpoint);
@@ -504,8 +531,8 @@ void LaserManager:: addLaserLine(const ofPoint&startpoint, const ofPoint&endpoin
 
 	
 }
-
-
+*/
+/*
 void LaserManager::addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour){
 	
 	addLaserLine(topLeft, ofPoint(topLeft.x+dimensions.x,topLeft.y), colour);
@@ -514,7 +541,8 @@ void LaserManager::addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions,
 	addLaserLine(ofPoint(topLeft.x,topLeft.y+dimensions.y), topLeft, colour);
 
 }
-
+*/
+/*
 void LaserManager::addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour){
 	
 	addLaserLineEased(topLeft, ofPoint(topLeft.x+dimensions.x,topLeft.y), colour);
@@ -523,6 +551,7 @@ void LaserManager::addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimens
 	addLaserLineEased(ofPoint(topLeft.x,topLeft.y+dimensions.y), topLeft, colour);
 	
 }
+*/
 
 ofxIlda::Point LaserManager::ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour){
 	
@@ -544,7 +573,7 @@ ofPoint LaserManager::ildaPointToOfPoint(const ofxIlda::Point& ildapoint){
 
 void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c){
 	
-	ofPoint warpedpoint = p;
+	ofPoint warpedpoint = warp.getWarpedPoint(p);;
 	
 	ofPoints.push_back(warpedpoint);
 
@@ -556,7 +585,7 @@ void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c){
 	
 	ildaPoints.push_back(ofPointToIldaPoint(warpedpoint, c));
 	
-	currentPosition = warpedpoint;
+	currentPosition = p;
 	
 }
 
@@ -566,7 +595,12 @@ void LaserManager::resetIldaPoints() {
 	previewMesh.clear();
 	previewMesh.setMode(OF_PRIMITIVE_LINES);
 	ofPoints.clear();
-	dots.clear();
+	
+	for(int i = 0; i<shapes.size(); i++) {
+		delete shapes[i];
+	}
+	
+	shapes.clear();
 }
 
 
@@ -583,8 +617,8 @@ void LaserManager::addDelayTest() {
 		pos.set((100+(x/50)),0);
 		float angle = ofMap(x,0,pointcount, 0,1080);
 		pos.rotate(angle,ofPoint(0,0,1));
-		pos.x+=ofGetWidth()/2;
-		pos.y+=ofGetHeight()/2;
+		pos.x+=appWidth/2;
+		pos.y+=appHeight/2;
 		//pointcolour.setHsb(ofMap(x,0,pointcount, 0,1), 1, 1);
 		//pointcolour.setHsb(0, 1, 1);
 		
@@ -602,22 +636,8 @@ void LaserManager::addDelayTest() {
 	}
 	//pos.set(500,350);
 	pos = warp.getWarpedPoint(ofPoint(500,350));
-//
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-//	addIldaPoint(pos, black);
-	addLaserLine(ofPoint(650,ofGetHeight()/2),(ofPoint(350,ofGetHeight()/2)), ofFloatColor(1,0,0));
-	//closeLaserLoop();
+
+//	addLaserLine(ofPoint(650,ofGetHeight()/2),(ofPoint(350,ofGetHeight()/2)), ofFloatColor(1,0,0));
 	
 }
 
@@ -627,6 +647,7 @@ bool LaserManager:: toggleRegistration() {
 	showRegistration = !showRegistration;
 	
 }
+
 /*
  void LaserManager:: moveLaserToPointAndVel(const ofPoint& targetPos, const ofPoint& targetVel) {
  

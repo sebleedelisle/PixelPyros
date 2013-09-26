@@ -7,26 +7,31 @@
 
 #pragma once
 
-class LaserDot : public ofPoint{
+#include "LaserShape.h"
+
+class LaserDot : public LaserShape{
 	
 	public :
 	
-	LaserDot(const ofPoint& dotPosition, ofFloatColor& dotColour, float dotIntensity = 1) {
+	LaserDot(const ofPoint& dotPosition, ofFloatColor& dotColour, float dotIntensity = 1){
 		set(dotPosition, dotColour, dotIntensity);
-		
 	}
+	
+	/*
+	LaserDot(const ofPoint& dotPosition, ofFloatColor& dotColour, float dotIntensity = 1) : LaserShape(dotPosition,dotPosition){
+		set(dotPosition, dotColour, dotIntensity);
+	}*/
+
 	void set(const ofPoint& dotPosition, ofFloatColor& dotColour, float dotIntensity = 1) {
-		
 		colour = dotColour;
-		ofPoint::set(dotPosition);
+		startPos.set(dotPosition);
+		endPos.set(dotPosition);
 		intensity = dotIntensity; 
 		tested = false;
 	}
 		
 	float intensity = 1;
 	ofFloatColor colour;
-	bool tested = false;
-
-	
+		
 };
 

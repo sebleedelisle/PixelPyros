@@ -16,7 +16,8 @@
 #include "ParticleRendererBitmap.h"
 #include "ParticleRendererLine.h"
 #include "ParticleRendererCircle.h"
-#include "RocketFountain.h"
+#include "ParticleRendererLaser.h"
+#include "TriggerSettingsFountain.h"
 
 
 class FireworkFactory {
@@ -38,6 +39,9 @@ class FireworkFactory {
 	ParticleSystemSettings getFlowerTrailParticles(float hue = 20, float hueChange = -5);
 	ParticleSystemSettings getFlowerExplosionParticles(float hue = 20, float hueChange = -5);
 
+	ParticleSystemSettings getLaserExplosionParticles(float hue, float hueChange);
+
+	
 	TriggerSettingsRocket* getFluffyRocket();
 	
 	TriggerSettingsRocket* getBangerRocket();

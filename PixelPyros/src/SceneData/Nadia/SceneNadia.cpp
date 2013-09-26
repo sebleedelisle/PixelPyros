@@ -11,8 +11,20 @@
 
 SceneNadia :: SceneNadia  (string scenename) : Scene(scenename){
 	
+	loadMusicFile("06 Nadia.aif");
+	
 	TriggerPattern empty;
 	addTriggerPattern(empty);
+	
+	TriggerPattern soft1;
+	soft1.addTriggerSettings();
+	soft1.addTriggerSettings();
+	soft1.addTriggerSettings();
+	soft1.addTriggerSettings(getLaserSlowRocket(10,0));
+	
+	addTriggerPattern(soft1);
+
+	
 	
 	TriggerPattern pattern1;
 	TriggerSettings* laserRocket = getLaserRocket();
@@ -22,6 +34,80 @@ SceneNadia :: SceneNadia  (string scenename) : Scene(scenename){
 	addTriggerPattern(pattern1);
 	
 }
+
+
+
+
+
+TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange) {
+	
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	
+	rocketSettings.startSpeedMin = 40;
+	rocketSettings.startSpeedMax = 60;
+	rocketSettings.drag = 1;
+	rocketSettings.gravity.y = 0;
+	
+	ParticleSystemSettings ps;
+	
+	ps.emitLifeTime = 14;
+	ps.renderer = new ParticleRendererCircle(11, false, 2);
+	ps.hueStartMin = hue;
+	ps.hueStartMax = hue;
+	ps.hueChange = hueChange;
+	ps.brightnessEnd = 0;
+	ps.saturationEnd = 500;
+	ps.emitCount = 10;
+	ps.speedMin = 0;
+	ps.speedMax = 0;
+	ps.lifeMin = 0.5;
+	ps.lifeMax = 1;
+	ps.drag = 0.4;
+	ps.emitSpeedModifier = 0.5;
+	
+	ps.sizeStartMin = 0.1;
+	ps.sizeStartMax = 2;
+	ps.sizeChangeRatio = 10;
+	
+	ps.emitInheritVelocity = 1;
+	
+	ParticleSystemSettings laser = getLaserParticles(hue, hueChange);
+	laser.emitCount = 3;
+	laser.lifeMin = 0.2;
+	laser.lifeMax = 4;
+	//laser.gravity.y = 100;
+	laser.startSound = ""; 
+	laser.emitStartSizeModifier = 0.1;
+	laser.emitLifeTime = 14;
+	laser.emitInheritVelocity =1;
+	laser.drag = 0.97;
+	laser.saturationMin = laser.saturationMax = 0;
+	laser.gravity.y = 20; 
+	
+	ParticleSystemSettings smoke = FireworkFactory::instance()->getSmoke();
+	smoke.emitCount = 100;
+	smoke.emitLifeTime = 14;
+	smoke.lifeMin = 1;
+	smoke.lifeMax = 3;
+	smoke.brightnessStartMax *=0.5;
+	smoke.brightnessStartMin *=0.5;
+	
+
+	rocketSettings.addParticleSystemSetting(ps);
+	rocketSettings.addParticleSystemSetting(laser);
+	rocketSettings.addParticleSystemSetting(smoke);
+	
+	
+	ts.rocketSettings = &rocketSettings;
+	
+	ts.rechargeSettings = TriggerRechargeSettings::slow;
+	
+	return &ts;
+	
+}
+
 
 
 
@@ -68,10 +154,11 @@ ParticleSystemSettings SceneNadia::  getLaserParticles(float hue, float hueChang
 	laserParticles.saturationEnd = 500;
 	laserParticles.brightnessStartMin = laserParticles.brightnessStartMin = laserParticles.brightnessEnd = 255;
 	
-	laserParticles.emitCount = 20; 
+	laserParticles.emitCount = 50;
 	laserParticles.emitInheritVelocity = 1;
 	laserParticles.shimmerMin = 0;
-	laserParticles.lifeMin = laserParticles.lifeMax = 0.1; 
+	laserParticles.lifeMin = 0.1;
+	laserParticles.lifeMax = 0.1;
 	laserParticles.startSound = "RetroLaunch";
 	
 	return laserParticles;
@@ -101,3 +188,7 @@ ParticleSystemSettings SceneNadia::  getTrailParticles(float hue, float hueChang
 	return trails;
 	
 };
+
+
+
+

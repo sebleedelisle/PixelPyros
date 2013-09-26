@@ -85,7 +85,7 @@ void ofApp::setup(){
 	triggerManager.setPattern(pattern);
 	*/
 	
-	laserManager.setup();
+	laserManager.setup(APP_WIDTH, APP_HEIGHT);
 	//laserManager.renderLaserPath = true;
 	
     parameterManager.registerParameterGroup("laser", &laserManager.parameters );
@@ -188,7 +188,7 @@ void ofApp::draw(){
 	ofDrawBitmapString(ofToString(ofGetFrameRate()),20,20);
 //	ofDrawBitmapString(ofToString(particleSystemManager.particleSystems.size()),20,35);
 //	ofDrawBitmapString(ofToString(particleSystemManager.activeParticleCount),20,50);
-//	ofDrawBitmapString(ofToString(particleSystemManager.activePhysicsObjectCount),20,65);
+	ofDrawBitmapString(ofToString(particleSystemManager.activePhysicsObjectCount),20,65);
 
 	ofDisableBlendMode();
 	ofDisableAlphaBlending();
@@ -304,7 +304,7 @@ void ofApp:: setupScenes() {
 	
 	sceneManager.addScene(new SceneSpace("Space"));
 	
-	sceneManager.changeScene(7);
+	sceneManager.changeScene(6);
 	
 	
 	

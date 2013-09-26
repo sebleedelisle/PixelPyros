@@ -19,7 +19,7 @@ class ParticleRendererBase {
     
     virtual void renderParticles(vector <Particle * > particles) = 0;
 	
-	
+	int historyCount=0;
 
 
 };
