@@ -70,7 +70,7 @@ void ofApp::setup(){
 	ofClear(0,0,0);
 	fbo.end(); 
 
-	oscManager.setup () ;
+	//oscManager.setup () ;
 	
     paused = false;
     altPressed = false;
@@ -108,9 +108,8 @@ void ofApp::update(){
 
 	
 	
-	oscManager.update () ;
-	
-	settingsManager.update(); 
+	//oscManager.update () ;
+	//settingsManager.update();
 	
 	if(cameraManager.update()){
 		
