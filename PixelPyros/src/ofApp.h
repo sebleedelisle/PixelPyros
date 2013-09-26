@@ -76,8 +76,8 @@ public:
 	LaserManager& laserManager;
 	SceneManager sceneManager;
 	TriggerManager& triggerManager;
-	OscManager oscManager;
-    SettingsManager settingsManager;
+	//OscManager oscManager;
+    //SettingsManager settingsManager;
 	CameraManagerWarped cameraManager;
 	MotionManager motionManager;
 	SoundPlayer& soundPlayer;
@@ -88,7 +88,7 @@ public:
 	ofFbo fbo;
 	bool useFbo;
 	
-	ofxAutoControlPanel gui;
+	//ofxAutoControlPanel gui;
 	
 	float lastUpdateTime;
 	
