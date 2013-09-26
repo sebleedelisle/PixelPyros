@@ -14,8 +14,7 @@
 
 
 void ControlPanels::setup(ParameterManager * parameterManager){
-	int monitorCount;
-    
+	
     GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
 
     int x=0,y=0,w=0,h=0;
@@ -24,7 +23,6 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     padding = ofVec2f(40,40);
     int monitorLeft=0, monitorRight=0, monitorTop=0, monitorBottom=0;
     
-    cout << "Positions:" << endl;
     for(int i = 0; i < monitorCount; i++){
         glfwGetMonitorPos(monitors[i],&x,&y);
         const GLFWvidmode * desktopMode = glfwGetVideoMode(monitors[i]);
@@ -45,14 +43,14 @@ void ControlPanels::setup(ParameterManager * parameterManager){
             origin.x = x;
         }
         
-        cout << offset.x << "," << offset.y << " " << x << "," << y << endl;
+        //cout << offset.x << "," << offset.y << " " << x << "," << y << endl;
 
     }
 
     offset -= origin;
     screen = screen + origin * -1;
     
-    cout << offset.x << "," << offset.y << " " << screen.x << "," << screen.y << endl;
+    //cout << offset.x << "," << offset.y << " " << screen.x << "," << screen.y << endl;
     
     offset += padding;
     
@@ -90,7 +88,7 @@ void ControlPanels::setup(ParameterManager * parameterManager){
 
 void ControlPanels::draw(){
     
-    //drawPreviewScreen();
+    if( monitorCount > 1 ) drawPreviewScreen();
     
     cameraCalibration.draw();
     laserCalibration.draw();
@@ -105,8 +103,10 @@ void ControlPanels::draw(){
 void ControlPanels::drawPreviewScreen(){
     previewScreenPosition = screen.position;
     ofPushMatrix();
-    ofScale(0.5, 0.5);
-    main.draw(previewScreenPosition);
+    ofTranslate(previewScreenPosition.x, previewScreenPosition.y);
+    //ofScale(0.5, 0.5);
+    cout << previewScreenPosition.x << "," << previewScreenPosition.y << endl;
+    main.draw(0,0);
     ofPopMatrix();
 }
 
