@@ -11,19 +11,36 @@
 TriggerSettingsRocket :: TriggerSettingsRocket() : particleSystemManager(*ParticleSystemManager::instance()) {
 	
 	//rocketSettings = NULL;
-
+	
+	rotationExtent = 0;
+	rotationSpeed = 0;
+	rotateOnFire = false;
+	
+	//rocketCount = 0;
+	
 }
 
 
 
 void TriggerSettingsRocket ::doTrigger(ofVec3f& pos, float power, float direction){
 	
-	PhysicsObject *rocket = makeNewRocket(pos);
+	PhysicsObject* rocket = NULL;
+	
+	if(rocketSettings!=NULL) {
+		rocket = particleSystemManager.addRocket(*rocketSettings, pos);
+		
+		//rocket->vel.set(0,ofMap(ofRandom(1), 0, 1, -rocketSettings->startSpeedMin, -rocketSettings->startSpeedMax),0);
+		rocket->vel.rotate(0,0, direction );
+		
+	}
+	
+
+
 
 }
 
 
-
+/*
 PhysicsObject * TriggerSettingsRocket:: makeNewRocket(ofVec3f& pos) {
 	PhysicsObject* rocket = NULL;
 	
@@ -34,40 +51,69 @@ PhysicsObject * TriggerSettingsRocket:: makeNewRocket(ofVec3f& pos) {
 	
 	return rocket;
 	
-}
+}*/
 
 
-void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active ) {
+void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale, float angle) {
 	
 	//elapsedTime+=deltaTime;
 	
+	ofColor colour = getColour(); 
+	
+	ofPushMatrix();
 	ofPushStyle();
+	ofDisableBlendMode();
+	
+	ofTranslate(pos);
+	ofScale(scale, scale);
+	
+	ofFill();
+	ofSetColor(0);
+	ofCircle(0,0, radius);
+	
+	
 	ofNoFill();
+	ofSetLineWidth(1);
 	
 	ofSetColor(colour);
 	if(!active) ofSetColor(ofColor::gray);
 	
-	ofCircle(pos, radius);
+	
+	ofCircle(0,0, radius);
+	
 	
 	//ofCircle(pos, radius*unitPower);
 	
 	path.clear();
 	path.setFillColor(colour);
 	path.setCircleResolution(12);
-	path.arc(pos, radius*unitPower, radius*unitPower, -90, -90 + unitPower*360);
+	path.arc(0,0, (radius-2)*unitPower, (radius-2)*unitPower, -90, -90 + unitPower*360);
 	
 	
 	path.draw();
 	
-	
+	/*
 	if(!active) {
 		
 		ofSetColor(ofColor::red);
-		ofRect(pos, radius, radius);
+		ofRect(0,0, radius, radius);
 		
 		
-	}
+	}*/
+	
+	ofRotate(angle);
+	ofLine(0,0,0,-20);
+
 	
 	ofPopStyle();
-	
+	ofPopMatrix();
+}
+
+ofColor TriggerSettingsRocket::getColour() {
+	ofColor c = ofColor::white;
+	c.setSaturation(saturation);
+
+	c.setHue(hue);
+	return c; 
+
 }

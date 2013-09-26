@@ -28,7 +28,11 @@ class Particle : public PhysicsObject{
     
 	float sizeStart; 
 	float sizeEnd; 
-	float shimmerMin; 
+	float shimmerMin;
+	
+	// rotates around any axis!
+	float rotateAmount;
+	ofVec3f rotateAxis;
 	
 	bool	enabled;
 	

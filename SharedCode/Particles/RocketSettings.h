@@ -24,7 +24,7 @@ class RocketSettings {
 		startSpeedMin = 100; 
 		startSpeedMax = 100; 
 		direction = -90; 
-		directionVar = 10; 
+		directionVar = 5;
 		gravity.set(0,0,0); 
 		drag = 1;
 		lifeTime = 2;

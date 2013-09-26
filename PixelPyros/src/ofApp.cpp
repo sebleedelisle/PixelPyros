@@ -173,9 +173,10 @@ void ofApp::draw(){
 	particleSystemManager.draw();
 	laserManager.update();
 	
-	triggerManager.draw();
 	    
-	sceneManager.draw(); 
+	sceneManager.draw();
+	triggerManager.draw();
+
 		
 	if(useFbo) {
 		fbo.end();
@@ -298,13 +299,13 @@ void ofApp:: setupScenes() {
 
 	sceneManager.addScene(new SceneRetro("Retro"));
 	
-	//sceneManager.addScene(new SceneRealistic("Lights", particleSystemManager));
+	sceneManager.addScene(new SceneRealistic("Lights"));
 	sceneManager.addScene(new SceneVectorizer("Vectorizer"));
 	sceneManager.addScene(new SceneNadia("Nadia"));
 	
-	//sceneManager.addScene(new SceneSpace("Stargazer", particleSystemManager));
+	sceneManager.addScene(new SceneSpace("Space"));
 	
-	sceneManager.changeScene(1);
+	sceneManager.changeScene(7);
 	
 	
 	
@@ -378,6 +379,7 @@ void ofApp::mouseMoved( int x, int y ){
 
 void ofApp::setupControlPanel() { 
 	gui.setup(450, ofGetHeight());
+	gui.setPosition(1536,0);
 
 	ofxControlPanel::setBackgroundColor(simpleColor(30, 30, 60, 200));
 	ofxControlPanel::setTextColor(simpleColor(240, 50, 50, 255));

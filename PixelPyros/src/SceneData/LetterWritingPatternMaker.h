@@ -9,7 +9,7 @@
 #pragma once 
 #include "ParticleRendererLine.h"
 #include "ParticleRendererStar.h"
-#include "TriggerRocket.h"
+#include "TriggerSettingsRocket.h"
 #include "RocketBasic.h"
 #include "ParticleSystemManager.h"
 #include "ofMain.h"
@@ -69,8 +69,8 @@ class LetterWritingPatternMaker {
 		rocketTemplate.addParticleSystemSetting(sparkler);
 		rocketTemplate.addParticleSystemSetting(sparklerSmoke);
 		
-		TriggerRocket triggerTemplate(psm);
-		triggerTemplate.restoreSpeed = 0;
+		//TriggerRocket triggerTemplate(psm);
+		//triggerTemplate.restoreSpeed = 0;
 		
 		
 		TriggerPattern pattern;
@@ -134,23 +134,18 @@ class LetterWritingPatternMaker {
 			rocket.targetSpeed = fusetime;
 			
 			
-			TriggerRocket trigger(triggerTemplate);
-			trigger.pos.x = ((x- (horizontalCentre)) * triggerspacing) + (triggercentre);
-			trigger.fixedPosition = true;
+			//TriggerRocket trigger(triggerTemplate);
+			//trigger.pos.x = ((x- (horizontalCentre)) * triggerspacing) + (triggercentre);
+			//trigger.fixedPosition = true;
 			
-			ofVec3f targetToLetter = ofVec3f(x,450) - trigger.pos;
+			//ofVec3f targetToLetter = ofVec3f(x,450) - trigger.pos;
 			
-			// dunno why i have to do this.
-			//targetToLetter.y = -targetToLetter.y;
-			//rocket.direction = -targetToLetter.angle(ofVec3f(1,0,0));
-			//rocket.startSpeedMin = rocket.startSpeedMax = targetToLetter.length() / fusetime;
-			
-			trigger.addRocketSettings(rocket);
+			//trigger.addRocketSettings(rocket);
 			
 			
 			
 			
-			pattern.addTrigger(trigger);
+			//pattern.addTrigger(trigger);
 			
 			
 			x+=letterspacing;

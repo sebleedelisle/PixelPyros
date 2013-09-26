@@ -45,25 +45,30 @@ class Starfield {
 	
 	void draw() {
 		
+		ofPushStyle(); 
 		ofPushMatrix();
 		//ofRotateY(sin(elapsedTime)*5);
 		ofEnableBlendMode(OF_BLENDMODE_ADD);
 		ofDisableSmoothing();
+		ofTranslate(0,-200);
+		ofRotateX(15);
+		ofSetLineWidth(1);
+		
 		ofMesh mesh ;
 		mesh.setMode(OF_PRIMITIVE_POINTS);
-		
+
 		
 		for(std::vector<ofVec3f>::iterator it = stars.begin(); it != stars.end(); ++it) {
 			ofVec3f& s = *it;
 			mesh.addVertex(s);
-			mesh.addColor(ofColor(ofMap(s.z,0,-2000,255,10,true )));
+			mesh.addColor(ofColor(ofMap(s.z,3000,-2000,255,10,true )));
 			
 		
 		}
 		
 		mesh.draw();
 		
-		
+		/*
 		ofMesh mesh2 ;
 		mesh2.setMode(OF_PRIMITIVE_LINES);
 		
@@ -83,9 +88,10 @@ class Starfield {
 		}
 		
 		mesh2.draw();
-
+*/
 		
 		ofPopMatrix();
+		ofPopStyle();
 		
 	}
 	

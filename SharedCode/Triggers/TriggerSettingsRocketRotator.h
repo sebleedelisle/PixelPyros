@@ -5,7 +5,7 @@
 //  Created by Seb Lee-Delisle on 10/09/2013.
 //
 //
-
+/*
 #pragma once
 
 #include "TriggerSettingsRocket.h"
@@ -22,22 +22,9 @@ class TriggerSettingsRocketRotator : public TriggerSettingsRocket {
 	
 	virtual void doTrigger(ofVec3f& pos, float power, float direction);
 	
-	virtual void draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active);
-	
-	
-	
-	float rotationExtent;
-	float rotationSpeed;
-	float rocketCount;
-	bool rotateOnFire;
-	float angle;
-	float displayAngle;
-	
-
-	
-	
-	
+	virtual void draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale);
 	
 	
 	
 };
+*/

@@ -25,11 +25,14 @@ void Particle::reset() {
 	sizeEnd = 0; 
 	shimmerMin = 0.2;
 	
-	renderDelay = 0; 
+	renderDelay = 0;
+	rotateAmount = 0;
+	rotateAxis.set(0,1,0);
 	
 	velocityModifier.reset(); 
 	
 	enabled = true;
+	startPos = pos; 
 	
 }
 
@@ -57,6 +60,12 @@ bool Particle :: update(float deltaTime) {
 	}
     
 	colourModifier->update(life.unitLifeProgress);
+	
+	if(rotateAmount!=0) {
+		pos.rotate(rotateAmount*deltaTime, startPos, rotateAxis);
+		
+		
+	}
 	
 	return enabled; 
 }

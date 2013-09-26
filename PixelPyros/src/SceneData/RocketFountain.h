@@ -11,12 +11,18 @@
 #include "ParticleSystemSettings.h"
 #include "ParticleRendererShape.h"
 
-class RocketFountain : public RocketSettings {
+class RocketFountain : public TriggerSettingsRocket {
 	
     public :
     
-    RocketFountain(float hueStartOffset = 150, float hueChange = 0, float explosionHue = 160) : RocketSettings() {
-        
+    RocketFountain(float hueStartOffset = 150, float hueChange = 0) : TriggerSettingsRocket() {
+		
+        ParticleRendererBase * renderer;
+		ParticleSystemSettings ps, ps2;
+
+		
+		rocketSettings = new RocketSettings();
+		
         renderer = new ParticleRendererShape();
 		
         // ParticleData
@@ -145,29 +151,25 @@ class RocketFountain : public RocketSettings {
 		
 		
         
-        startSpeedMin = 500;
-		startSpeedMax = 1000;
-		direction = -90;
-		directionVar = 5;
-		gravity.y = 300;
-		drag = 0.9;
-		lifeTime = 1; 
+        rocketSettings->startSpeedMin = 500;
+		rocketSettings->startSpeedMax = 1000;
+		rocketSettings->direction = -90;
+		rocketSettings->directionVar = 5;
+		rocketSettings->gravity.y = 300;
+		rocketSettings->drag = 0.9;
+		rocketSettings->lifeTime = 1;
 		
-		addParticleSystemSetting(ps);
-		addParticleSystemSetting(ps2);
+		rocketSettings->addParticleSystemSetting(ps);
+		rocketSettings->addParticleSystemSetting(ps2);
 	   
-        
+        rechargeSettings = TriggerRechargeSettings::fast;
         
         
     };
 	
 	
 	
-	ParticleRendererBase * renderer;
-	
-	
-	ParticleSystemSettings ps, ps2;
-	
+		
 	
 		
 };
