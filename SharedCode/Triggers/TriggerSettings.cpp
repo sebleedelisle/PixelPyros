@@ -18,6 +18,7 @@ TriggerSettings* TriggerSettings::blank = new TriggerSettings() ;
 TriggerSettings::TriggerSettings() {
 	if(TriggerSettings::blank!=NULL) {
 		TriggerSettings::blank->radius = 4;
+		
 	
 	}
 		// default settings : TODO - where should this be?
@@ -26,8 +27,12 @@ TriggerSettings::TriggerSettings() {
 	
 	hue = 0;
 	saturation = 0;
-	radius = 10;
+	radius = 7;
 	
+	rotationExtent = 0;
+	rotationSpeed = 0;
+	
+	rotateOnFire = false;
 	
 }
 
@@ -43,8 +48,18 @@ void TriggerSettings::doTrigger(ofVec3f& pos, float power, float direction) {
 	//ofLog(OF_LOG_WARNING, "triggered");
 }
 
+ofColor TriggerSettings::getColour() {
+	return ofColor::black;
+	
+}
 
-void TriggerSettings::draw(float elapsedtime, ofVec3f pos, ofColor colour, float unitPower, bool active ) {
+void TriggerSettings::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale, float angle ) {
+	
+	
+	// BASE CLASS HAS NO RENDERER
+	return;
+	/*
+	
 	
 	ofPushStyle();
 	ofNoFill();
@@ -54,7 +69,7 @@ void TriggerSettings::draw(float elapsedtime, ofVec3f pos, ofColor colour, float
 	
 	ofCircle(pos, radius);
 	ofPopStyle();
-	
+	*/
 }
 
 

@@ -16,24 +16,64 @@ SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 	
 	softWhiteImage.loadImage("img/ParticleWhite.png");
 	bangerFlashImage.loadImage("img/ParticleBangerFlash.png");
-	
-	//music.loadSound("music/02 In Motion.aif");
 
 	TriggerPattern blank;
 	addTriggerPattern(blank);
 	
+	// SIMPLE ROCKET
+	
+	TriggerPattern pattern1;
+	pattern1.addTriggerSettings(fireworkFactory.getSimpleRocket(500,140,255));
+	pattern1.addTriggerSettings(TriggerSettings::blank); 
+
+	addTriggerPattern(pattern1);
+
+	// SIMPLE ROCKET 2 colour
+	pattern1.addTriggerSettings(fireworkFactory.getSimpleRocket(600,220,255));
+	pattern1.addTriggerSettings(TriggerSettings::blank);
+	addTriggerPattern(pattern1);
+	
+	
+	// JUST WHITE ROCKETS
+	
+	TriggerPattern pattern3;
+	// white rocket
+	TriggerSettings* whiteRocket = fireworkFactory.getSimpleRocket(700,220,0,0.05,1);
+	whiteRocket->rechargeSettings = TriggerRechargeSettings::oneShot;
+	pattern3.addTriggerSettings(whiteRocket);
+	//pattern3.addTriggerSettings(TriggerSettings::blank);
+	addTriggerPattern(pattern3);
+
+	
+	// JUST WHITE ROCKETS
+	
+	TriggerPattern pattern4;
+	// white rocket
+	TriggerSettings* rotateRocket = fireworkFactory.getRotatingRocket(700,220,0,0.05,1);
+	whiteRocket->rechargeSettings = TriggerRechargeSettings::fast;
+	pattern4.addTriggerSettings(rotateRocket);
+	pattern4.addTriggerSettings(TriggerSettings::blank);
+	addTriggerPattern(pattern4);
+	
+	
+	// SIMPLE FOUNTAINS
+	
 	TriggerPattern pattern;
-	pattern.addTriggerSettings(fireworkFactory.getFountain(180,0));
+	pattern.addTriggerSettings(fireworkFactory.getSimpleFountain(180,0));
 	pattern.addTriggerSettings(TriggerSettings::blank);
 	addTriggerPattern(pattern);
-		
+	
+	
+	// RAINBOW FOUNTAINS
 	TriggerPattern multiColourPattern;
 	
 	float colours [10] = {0, 30, 60, 90, 120, 150,180,210,240 };
 	
 	for(int i = 0; i<10; i++) {
-		TriggerSettingsRocket* colourFountain = fireworkFactory.getFountain(colours[i],0);
-				
+		TriggerSettingsRocket* colourFountain = fireworkFactory.getSimpleFountain(colours[i],0);
+		RocketSettings* rs = colourFountain->rocketSettings;
+		rs->startSpeedMin*=1.5;
+		rs->startSpeedMax*=1.5;
 		colourFountain->hue = colours[i];
 		colourFountain->saturation = 255;
 		
@@ -44,10 +84,11 @@ SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 	
 	addTriggerPattern(multiColourPattern);
 			
+	// FOUNTAINS + ROCKETS
 	TriggerPattern patternFountain;
-	patternFountain.addTriggerSettings(fireworkFactory.getFountain(180,0));
+	patternFountain.addTriggerSettings(fireworkFactory.getSimpleFountain(180,0));
 	patternFountain.addTriggerSettings();
-	patternFountain.addTriggerSettings(fireworkFactory.getFountain(180,0));
+	patternFountain.addTriggerSettings(fireworkFactory.getSimpleFountain(180,0));
 	patternFountain.addTriggerSettings();
 	patternFountain.addTriggerSettings(fireworkFactory.getBasicRocket(5));
 	patternFountain.addTriggerSettings();

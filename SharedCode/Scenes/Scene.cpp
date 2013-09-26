@@ -105,7 +105,7 @@ bool Scene :: update(float deltaTime) {
 	//}
 
 	
-	if((!playing)|| (!active)) return false;
+	if((!active)) return false;
 	
 	positionSeconds = (float)music.getPositionMS()/1000.0f;
 	
@@ -260,6 +260,7 @@ void Scene :: goToTime(float timeSeconds){
 	
 	for(int i = 0; i<commands.size(); i++) {
 		SequenceCommand c = commands[i];
+		if(!c.enabled) return;
 		if((c.time>=lastPosition) && (c.time<timeSeconds)) {
 			
 			lastCommand = &commands[i];

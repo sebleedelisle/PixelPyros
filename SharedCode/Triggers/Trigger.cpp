@@ -19,18 +19,25 @@ Trigger :: Trigger(){
 	stopping = false;
 	active = false;
 	scale = 0;
+	lastScale = 0; 
 	
 	// the power level for the trigger
 	unitPower =1;
 	
-	
 	// SETTINGS :
+	
+	lastSettings = NULL;
+	settings = NULL;
 	// get defaults from the default TriggerSettings object
 	copySettings(TriggerSettings::blank);
+	
 	//rechargeSettings = TriggerRechargeSettings::defaultSettings;
 	
 	motionValueCount = 20;
 	showDebugData = true;
+	
+	angle = 0;
+	triggerCount = 0;
 
 	/*
 	
@@ -67,6 +74,7 @@ void Trigger :: start() {
 	motionLevel = 0;
 	
 	
+	
 	//if(type == TRIGGER_TYPE_FIRE_ON_CHARGE) {
 	//	unitPower = 0;
 	//} else if(type == TRIGGER_TYPE_FIRE_ON_MOTION) {
@@ -86,10 +94,11 @@ void Trigger :: stop() {
 
 bool Trigger::update(float deltaTime) {
 
-	if(!active) return false;
+	//
+	//if((!stopping) && (scale<1)) scale+=0.1;
 
 	elapsedTime+=deltaTime;
-	/*
+	
 	// scale up / down on start stop
 	if(stopping) {
 		scale-=deltaTime*3;
@@ -99,10 +108,25 @@ bool Trigger::update(float deltaTime) {
 			return false;
 		}
 	} else {
-		scale+= (1-scale)*0.1;
-	}*/
+		scale+= (1-scale)*0.2;
+	}
 	
+	if(lastSettings!=NULL) {
+		lastScale-=deltaTime*3;
+		if(lastScale<=0.0) {
+			lastScale = 0;
+			lastSettings  = NULL;
+		}
+		
+	}
 	
+	//angle++;
+	
+	if((settings!=NULL) && (settings->rotationSpeed>0) && (!settings->rotateOnFire)) {
+		angle = (sin(elapsedTime*settings->rotationSpeed)*settings->rotationExtent);
+		
+	}
+		
 	//if(type == TRIGGER_TYPE_FIRE_ON_MOTION) {
 	
 	if(showDebugData) {
@@ -115,7 +139,6 @@ bool Trigger::update(float deltaTime) {
 		 } else {
 		 
 		 float lastlevel = 0;
-		 
 		 
 		 lastlevel = motionValues[motionValues.size()-1];
 		 
@@ -132,11 +155,16 @@ bool Trigger::update(float deltaTime) {
 	unitPower+=rechargeSettings->restoreSpeed * deltaTime;
 	if(unitPower>1) unitPower = 1;
 	
+	if((rechargeSettings->restoreSpeed==0) && (unitPower<=0)) {
+		stopping = true; 
+	
+	}
+	
 	
 	// we need to have sensed motion,
 	// AND we need to have enough unitPower to trigger
 	if( (!stopping) &&
-		//(scale>0.99) &&
+		(scale>0.95) &&
 		(motionLevel >= rechargeSettings->motionTriggerLevel) &&
 		(unitPower>=rechargeSettings->triggerPower) &&
 		(elapsedTime - lastTriggerTime > rechargeSettings->minTriggerInterval) ) {
@@ -157,6 +185,8 @@ bool Trigger::update(float deltaTime) {
 	motionLevel -= rechargeSettings->motionDecay*deltaTime;
 	if(motionLevel<0) motionLevel = 0;
 		
+	
+	
 	//}
 	
 	
@@ -190,13 +220,16 @@ bool Trigger::update(float deltaTime) {
 
 void Trigger :: draw() {
 
+
+//	ofColor c;
+//	c.setSaturation(settings->saturation);
+//	c.setHue(settings->hue);
+
+	if(settings!=NULL) settings->draw(elapsedTime, pos,  unitPower, active, scale, angle);
+	if(lastSettings!=NULL) lastSettings->draw(elapsedTime, pos,  unitPower, active, lastScale, angle);
+	
 	if(!active) return;
 
-	ofColor c;
-	c.setSaturation(settings->saturation);
-	c.setHue(settings->hue);
-
-	if(settings!=NULL) settings->draw(elapsedTime, pos,  c, unitPower, active);
 	//else ofLog(OF_LOG_WARNING, "No renderer for trigger");
 	
 	//ofDrawBitmapString(ofToString(motionLevel), pos);
@@ -375,21 +408,27 @@ void Trigger :: registerMotion(float unitValue) {
 
 bool Trigger::doTrigger() {
 	if(settings!=NULL) {
-		settings->doTrigger(pos);
-		
+		settings->doTrigger(pos,1,angle);
+		triggerCount++;
+		if(settings->rotateOnFire) {
+			angle = (sin(triggerCount*settings->rotationSpeed)*settings->rotationExtent);
+		}
+
 	}
 	return true;//!disabled;
 }
 
 
 void Trigger::copySettings(TriggerSettings* newsettings) {
-	
+	lastSettings = settings;
+	lastScale = scale;
+
 	settings = newsettings;
-	//if(newsettings.rechargeSettings==NULL)
-	//	rechargeSettings = TriggerRechargeSettings::defaultSettings;
-	//else
+	if(newsettings!=NULL)
 		rechargeSettings = newsettings->rechargeSettings;
-		
+
+	scale = 0;
+	angle = 0;
 	/*
 	motionTriggerLevel = settings.motionTriggerLevel;
 	triggerPower = settings.triggerPower;

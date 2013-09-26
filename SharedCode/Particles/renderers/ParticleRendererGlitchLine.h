@@ -52,7 +52,7 @@ public:
 		
 		mesh.draw();
 		
-		ofPushStyle();
+		ofPopStyle();
         
     }
 	

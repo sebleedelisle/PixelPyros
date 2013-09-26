@@ -27,7 +27,7 @@ class ParticleRendererLine : public ParticleRendererBase {
 		if(smooth) ofEnableSmoothing();
 		else ofDisableSmoothing();
 		*/
-			
+		ofPushStyle();
 		ofSetLineWidth(lineWidth);
 		
 		mesh.clear();
@@ -50,7 +50,7 @@ class ParticleRendererLine : public ParticleRendererBase {
 		}
 		
 		mesh.draw();
-		
+		ofPopStyle();
 		
         
     }

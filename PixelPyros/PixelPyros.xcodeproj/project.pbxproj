@@ -107,6 +107,8 @@
 		1254565D17BF880400EF23B7 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565217BF880400EF23B7 /* Camera.cpp */; };
 		1254565E17BF880400EF23B7 /* Grabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565417BF880400EF23B7 /* Grabber.cpp */; };
 		1254565F17BF880400EF23B7 /* PointGrey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254565717BF880400EF23B7 /* PointGrey.cpp */; };
+		126E278617F20D26001763E7 /* SceneRealistic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 126E278417F20D26001763E7 /* SceneRealistic.cpp */; };
+		126E278B17F221ED001763E7 /* SceneSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 126E278817F221ED001763E7 /* SceneSpace.cpp */; };
 		1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */; };
 		129988BA17E1E9CC0044879E /* SceneNadia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129988B817E1E9CC0044879E /* SceneNadia.cpp */; };
 		12A6DE3417DE1F83000D299A /* ParticleSystemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */; };
@@ -543,6 +545,12 @@
 		1254565717BF880400EF23B7 /* PointGrey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointGrey.cpp; sourceTree = "<group>"; };
 		1254565817BF880400EF23B7 /* PointGrey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointGrey.h; sourceTree = "<group>"; };
 		125FB18717CBEA3A00A1CAE6 /* TriggerPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerPattern.h; sourceTree = "<group>"; };
+		126E278417F20D26001763E7 /* SceneRealistic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneRealistic.cpp; sourceTree = "<group>"; };
+		126E278517F20D26001763E7 /* SceneRealistic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneRealistic.h; sourceTree = "<group>"; };
+		126E278817F221ED001763E7 /* SceneSpace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSpace.cpp; sourceTree = "<group>"; };
+		126E278917F221ED001763E7 /* SceneSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneSpace.h; sourceTree = "<group>"; };
+		126E278A17F221ED001763E7 /* Starfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Starfield.h; sourceTree = "<group>"; };
+		126E278C17F2224F001763E7 /* LetterWritingPatternMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LetterWritingPatternMaker.h; sourceTree = "<group>"; };
 		1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
 		1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRechargeSettings.h; sourceTree = "<group>"; };
 		129988B417E1E6610044879E /* ParticleRendererLaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererLaser.h; sourceTree = "<group>"; };
@@ -676,6 +684,9 @@
 		1254501B17BF860500EF23B7 /* SceneData */ = {
 			isa = PBXGroup;
 			children = (
+				126E278C17F2224F001763E7 /* LetterWritingPatternMaker.h */,
+				126E278717F221ED001763E7 /* Space */,
+				126E278317F20D26001763E7 /* Realistic */,
 				129988B717E1E9CC0044879E /* Nadia */,
 				12BD9CC717DF585E00F28A4F /* Vectorizer */,
 				12A6DE3717DE6D57000D299A /* Retro */,
@@ -1598,6 +1609,25 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		126E278317F20D26001763E7 /* Realistic */ = {
+			isa = PBXGroup;
+			children = (
+				126E278417F20D26001763E7 /* SceneRealistic.cpp */,
+				126E278517F20D26001763E7 /* SceneRealistic.h */,
+			);
+			path = Realistic;
+			sourceTree = "<group>";
+		};
+		126E278717F221ED001763E7 /* Space */ = {
+			isa = PBXGroup;
+			children = (
+				126E278817F221ED001763E7 /* SceneSpace.cpp */,
+				126E278917F221ED001763E7 /* SceneSpace.h */,
+				126E278A17F221ED001763E7 /* Starfield.h */,
+			);
+			path = Space;
+			sourceTree = "<group>";
+		};
 		129988B717E1E9CC0044879E /* Nadia */ = {
 			isa = PBXGroup;
 			children = (
@@ -2082,9 +2112,9 @@
 				9E16CA5817E1C20D009867E9 /* ParameterManager.cpp in Sources */,
 				9E16CA5D17E1CE2D009867E9 /* ControlPanels.cpp in Sources */,
 				129988BA17E1E9CC0044879E /* SceneNadia.cpp in Sources */,
-				1256451E17E3063D0056F885 /* Sequencer.cpp in Sources */,
-				1256452217E306720056F885 /* Sequence.cpp in Sources */,
 				9E21DD8517E7631B005D90B9 /* ofParameterQuad.cpp in Sources */,
+				126E278617F20D26001763E7 /* SceneRealistic.cpp in Sources */,
+				126E278B17F221ED001763E7 /* SceneSpace.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

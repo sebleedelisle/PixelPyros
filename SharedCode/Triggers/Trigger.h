@@ -41,7 +41,7 @@ class Trigger {
 	
 	// scale is just used to keep track of whether we're growing or shrinking
 	float scale;
-	//float targetScale;
+	float lastScale;
 		
 	ofVec3f pos;
 	bool fixedPosition;
@@ -60,11 +60,16 @@ class Trigger {
 	int motionValueCount;
 	float lastUpdate;
 	
+	// angle
+	float angle;
+	int triggerCount; 
+	
 	
 	
 	//SETTINGS
 	
 	TriggerSettings* settings;
+	TriggerSettings* lastSettings;
 	TriggerRechargeSettings* rechargeSettings;
 	
 	

@@ -55,6 +55,8 @@ class ParticleSystem {
 	
 	float power;
 	
+	float rotateAmount;
+		
 	ParticleRendererShape defaultRenderer; 
 	
 

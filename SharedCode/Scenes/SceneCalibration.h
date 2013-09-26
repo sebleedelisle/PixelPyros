@@ -62,8 +62,7 @@ class SceneCalibration : public Scene {
 			
 		}
 		
-		ofSetLineWidth(1);
-		
+
 		ofPopStyle(); 
 	}
 	
