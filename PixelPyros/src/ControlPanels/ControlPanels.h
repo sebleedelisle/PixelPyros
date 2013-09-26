@@ -54,5 +54,7 @@ class ControlPanels {
     ofRectangle screen;
     ofVec2f padding;
     
+    int monitorCount;
+    
     
 };

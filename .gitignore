@@ -1,6 +1,7 @@
 .DS_Store
 DerivedData
 PixelPyrosNew/bin/PixelPyrosNewDebug.app
+PixelPyros/bin/PixelPyrosDebug.app
 PixelPyros/bin/data/.DS_Store
 PixelPyros/bin/data/capturedFrames
 Music
