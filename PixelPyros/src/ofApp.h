@@ -88,7 +88,7 @@ public:
 	ofFbo fbo;
 	bool useFbo;
 	
-	ofxAutoControlPanel gui;
+	//ofxAutoControlPanel gui;
 	
 	float lastUpdateTime;
 	

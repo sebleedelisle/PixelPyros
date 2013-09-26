@@ -65,7 +65,6 @@ void QuadWarp :: draw(bool lockAxis) {
 		
 		curPoint.x = round(curPoint.x*10)/10;
 		curPoint.y = round(curPoint.y*10)/10;
-		saveSettings();
 		
 		updateHomography();
 				
@@ -297,7 +296,7 @@ void QuadWarp :: mouseReleased(ofMouseEventArgs &e) {
 		
 		curPointIndex = -1;
 		updateHomography();
-		saveSettings(); 
+		saveSettings();
 	}
 	
 	lastMousePress  = ofGetElapsedTimef() ; 
@@ -308,7 +307,8 @@ void QuadWarp :: mouseReleased(ofMouseEventArgs &e) {
 
 
 bool QuadWarp::loadSettings() {
-	
+	if( !autosave ) return;
+    
 	string filename = "warpdata/"+label+".xml";
 	ofxXmlSettings xml;
 	if(!xml.loadFile(filename)) {
@@ -333,11 +333,12 @@ bool QuadWarp::loadSettings() {
 }
 
 void QuadWarp::saveSettings() {
-	
+	if( !autosave ) return;
+        
 	ofxXmlSettings xml;
 	
 	string filename = "warpdata/"+label+".xml";
-
+    
 	xml.addTag("quad");
 	xml.pushTag("quad");
 	

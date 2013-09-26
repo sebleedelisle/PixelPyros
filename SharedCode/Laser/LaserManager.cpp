@@ -62,15 +62,15 @@ void LaserManager:: setup () {
 	renderLaserPath = true;
 	intensity = 1;
     
-	float x1 = appWidth*0.2;
-	float x2 = appWidth*0.7;
-	float y1 = appHeight*0.2;
-	float y2 = appHeight*0.65;
+	//float x1 = appWidth*0.2;
+	//float x2 = appWidth*0.7;
+	//float y1 = appHeight*0.2;
+	//float y2 = appHeight*0.65;
 	
-    //	float x1 = 0;
-    //	float x2 = APP_WIDTH;
-    //	float y1 = 0;
-    //	float y2 = APP_HEIGHT;
+    float x1 = APP_WIDTH * 0.2;
+    float x2 = APP_WIDTH * 0.8;
+    float y1 = APP_HEIGHT * 0.2;
+    float y2 = APP_HEIGHT * 0.8;
 	
     warp = warpParam;
 	warp.label = "laserWarp";
@@ -80,13 +80,11 @@ void LaserManager:: setup () {
 	warp.setDstPoint(2, ofVec2f(x2,y2));
 	warp.setDstPoint(3, ofVec2f(x1,y2));
 	
-	warp.setSrcPoint(0, ofVec2f(0,0));
-	warp.setSrcPoint(1, ofVec2f(appWidth,0));
-	warp.setSrcPoint(2, ofVec2f(appWidth,appHeight));
-	warp.setSrcPoint(3, ofVec2f(0,appHeight));
+	warp.setSrcPoint(0, ofVec2f(x1,y1));
+	warp.setSrcPoint(1, ofVec2f(x2,y1));
+	warp.setSrcPoint(2, ofVec2f(x1,y2));
+	warp.setSrcPoint(3, ofVec2f(x2,y2));
 	
-	warp.loadSettings();
-    	
 	intensity = 1;
 	dotPreBlank = 3;
 	dotPostBlank = 3;
