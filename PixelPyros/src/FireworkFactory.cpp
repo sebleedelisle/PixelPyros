@@ -751,17 +751,17 @@ ParticleSystemSettings FireworkFactory :: getLaserExplosionParticles(float hue, 
 	explosion.renderer = new ParticleRendererLaser();
 	
 	//pss.directionZVar = 20;
-	explosion.speedMin = 700;
-	explosion.speedMax = 700;
-	explosion.drag = 0.9;
+	explosion.speedMin = 0;
+	explosion.speedMax = 0;
+	explosion.drag = 0;
 	explosion.gravity.y = 0;
 	explosion.directionZ = 0;
-	explosion.directionZVar = 90;
+	explosion.directionZVar = 0;
 	explosion.directionYVar = 0;
 	
-	explosion.sizeStartMin = 25;
-	explosion.sizeStartMax = 25;
-	explosion.sizeChangeRatio = 0;
+	explosion.sizeStartMin = 0.1;
+	explosion.sizeStartMax = 4;
+	explosion.sizeChangeRatio = 30;
 	explosion.hueStartMin = hue;
 	explosion.hueStartMax = hue + 5;
 	explosion.hueChange = -20;
@@ -773,12 +773,12 @@ ParticleSystemSettings FireworkFactory :: getLaserExplosionParticles(float hue, 
 	explosion.brightnessEnd = 0;
 	
 	explosion.shimmerMin = 1;
-	explosion.lifeMin = 0.05;
-	explosion.lifeMax = 0.05;
+	explosion.lifeMin = 0.2;
+	explosion.lifeMax = 0.2;
 	
-	//explosion.emitMode = PARTICLE_EMIT_BURST;
+	explosion.emitMode = PARTICLE_EMIT_BURST;
 	explosion.emitLifeTime = 0.1;
-	explosion.emitCount = 500;
+	explosion.emitCount = 10;
 	
 	explosion.startSound = "SoftExplosion";
 	

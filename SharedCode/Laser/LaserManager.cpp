@@ -46,7 +46,7 @@ void LaserManager:: setup (int width, int height) {
     isConnected = false;
 	showSyncTest = false;
 	
-	minPoints = 600;
+	minPoints = 1000;
     
 	white.set(1,1,1);
 	black.set(0,0,0);
@@ -115,6 +115,7 @@ void LaserManager:: setup (int width, int height) {
 	
 	
 	parameters.add(moveSpeed.set("move speed", 3,0.01,10));
+	parameters.add(circleMoveSpeed.set("circle speed", 3,0.01,10));
 	parameters.add(movePointsPadding.set("move points padding", 0,0,20));
 	
 	parameters.add(dotPreBlank.set("dot pre blank", 3, 0, 20));
@@ -141,6 +142,8 @@ void LaserManager:: setup (int width, int height) {
 }
 
 void LaserManager:: update() {
+	
+	ofPushStyle();
 	
 	if(connectButton!=isConnected) {
 		if(connectButton) {
@@ -173,6 +176,11 @@ void LaserManager:: update() {
 				ofCircle(pmin.x + (v.x*x), pmin.x + (v.x*x), 10); 
 			}
 		}
+		
+		addLaserCircle(ofPoint(appWidth/2, appHeight/2), white, 10);
+		addLaserCircle(ofPoint(appWidth/2, appHeight/2), ofFloatColor(1,0,0), 50);
+		
+		
 		/*
 		addLaserDot(pmin, white, 1);
 		addLaserDot(ofPoint(pmax.x, pmin.y), white, 1);
@@ -183,7 +191,7 @@ void LaserManager:: update() {
 		
 	}
 	
-	drawDots();
+	drawShapes();
 	
 	
 		
@@ -241,6 +249,8 @@ void LaserManager:: update() {
 	
 	warp.draw();
 	
+	ofPopStyle(); 
+	
 }
 
 void LaserManager::addLaserDot(const ofPoint& ofpoint, ofFloatColor colour, float intensity){
@@ -257,7 +267,7 @@ void LaserManager::addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, f
 }
 
 
-void LaserManager:: drawDots() {
+void LaserManager:: drawShapes() {
 	
 	
 	// sort the dots by nearest neighbour
@@ -320,10 +330,6 @@ void LaserManager:: drawDots() {
 	
 	ofDrawBitmapString(ofToString(travelDistanceUnsorted)+"\n" +ofToString(travelDistanceSorted), ofPoint(10,40));
 	
-	//sortedDots = dots;
-	
-	
-	
 	
 	for(int i = 0; i<sortedShapes.size(); i++) {
 		
@@ -335,9 +341,12 @@ void LaserManager:: drawDots() {
 		
 		
 		// CHECK FOR A DOT
-		LaserDot * dot = static_cast<LaserDot*>(shape);
+		LaserDot * dot = dynamic_cast<LaserDot*>(shape);
 		
-		if(dot!=NULL) {
+		
+		if(dot) {
+		
+			//cout << i << " DOT!" << endl;
 			int particlecount = ceil(dotMaxPoints* dot->intensity);
 			 
 			for(int i = 0; i<dotPreBlank; i++) {
@@ -349,6 +358,122 @@ void LaserManager:: drawDots() {
 			for(int i = 0; i<dotPostBlank; i++) {
 				addIldaPoint(dot->startPos, black);
 			}
+		}
+		
+		
+		// CHECK CIRCLES
+		LaserCircle * circle = dynamic_cast<LaserCircle*>(shape);
+		
+		if(circle) {
+			
+			
+			float acceleratedistance = (maxSpeed*maxSpeed) / (2*acceleration);
+			float timetogettospeed = maxSpeed / acceleration;
+			
+			float totaldistance = 2*PI*circle->radius;
+			
+			float constantspeeddistance = totaldistance - (acceleratedistance*2);
+			float constantspeedtime = constantspeeddistance/maxSpeed;
+			
+			if(totaldistance<(acceleratedistance*2)) {
+				
+				constantspeeddistance = 0 ;
+				constantspeedtime = 0;
+				acceleratedistance = totaldistance/2;
+				maxSpeed = sqrt( acceleratedistance * 2 * acceleration);
+				timetogettospeed = maxSpeed / acceleration;
+				
+			}
+			
+			float totaltime = (timetogettospeed*2) + constantspeedtime;
+			
+			float timeincrement = totaltime / (floor(totaltime));
+			
+			float currentdistance;
+			currentdistance = 0;
+			float t = 0;
+			
+			ofNoFill();
+			
+			ofPoint currentpos;
+			
+			for(int i = 0; i<endCount;i++){
+				addIldaPoint(circle->startPos, circle->colour);
+			}
+			
+			ofPoint p;
+			
+			while (t <= totaltime + 0.001) {
+				
+				if(t>totaltime) t = totaltime;
+				
+				if(t <=timetogettospeed) {
+					currentdistance = 0.5 * acceleration * (t*t);
+					ofSetColor(0,255,0);
+				} else if((t>timetogettospeed) && (t<=timetogettospeed+constantspeedtime)){
+					currentdistance = acceleratedistance + ((t-timetogettospeed) * maxSpeed);
+					ofSetColor(255);
+				} else  {
+					float t3 = t - (timetogettospeed + constantspeedtime);
+					
+					currentdistance = (acceleratedistance + constantspeeddistance) + (maxSpeed*t3)+(0.5 *(-acceleration) * (t3*t3));
+					ofSetColor(255,0,0);
+					
+				}
+				
+				//currentpos = (u * currentdistance) + start;
+				
+				//addIldaPoint(currentpos, colour);
+				
+				float angle = ofMap(currentdistance, 0, totaldistance, 0, PI*2);
+				
+				p.set(circle->pos);
+				p.x+=sin(angle)*circle->radius;
+				p.y-=cos(angle)*circle->radius;
+				
+				addIldaPoint(p, circle->colour);
+				
+				
+				
+				t+=timeincrement;
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			//cout << i << " CIRCLE! " << circle->pos << " " << circle->radius <<  endl;
+//			int numPoints = 2*PI*circle->radius / circleMoveSpeed;
+//			
+//			ofPoint p;
+//			
+//			for(int i = 0; i<=numPoints; i++) {
+//					
+//				float angle = ofMap(i, 0, numPoints*0.9, 0, PI*2);
+//				p.set(circle->pos);
+//				p.x+=sin(angle)*circle->radius;
+//				p.y-=cos(angle)*circle->radius;
+//				
+//				addIldaPoint(p, circle->colour);
+//				
+//				//cout << i << " " << circle->radius << " " << p << endl;
+//			}
+//			
+			
 		}
 	
 	}
@@ -392,7 +517,6 @@ void LaserManager :: moveLaser(const ofPoint & targetpoint){
 	float blanknum = v.length()/moveSpeed + movePointsPadding;//max(v.length(), (float)blankCount);
 	
 	for(int j = 0; j<blanknum; j++) {
-		
 		
 		float t = Quint::easeInOut((float)j, 0.0f, 1.0f, blanknum);
 		

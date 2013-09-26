@@ -63,7 +63,7 @@ void SceneManager::draw() {
 	
 	if(!showInterface) return;
 	if(currentScene==NULL) return;
-	
+	if(!currentScene->music.isLoaded()) return;
 	ofPushStyle();
 	ofFill();
 	ofSetColor(100,120,255);
