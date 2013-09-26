@@ -196,7 +196,7 @@
 		1254502117BF860500EF23B7 /* SceneSlideshow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSlideshow.cpp; sourceTree = "<group>"; };
 		1254502217BF860500EF23B7 /* SceneSlideshow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneSlideshow.h; sourceTree = "<group>"; };
 		1254502317BF860500EF23B7 /* SlideShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideShow.h; sourceTree = "<group>"; };
-		1254502B17BF860500EF23B7 /* RocketFountain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocketFountain.h; sourceTree = "<group>"; };
+		1254502B17BF860500EF23B7 /* TriggerSettingsFountain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsFountain.h; sourceTree = "<group>"; };
 		1254502C17BF860500EF23B7 /* SceneFountains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SceneFountains.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1254502D17BF860500EF23B7 /* ScenePatternTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenePatternTest.h; sourceTree = "<group>"; };
 		1254504517BF861C00EF23B7 /* CameraFirewire.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraFirewire.cpp; sourceTree = "<group>"; };
@@ -572,6 +572,8 @@
 		12BD9CCE17DF585E00F28A4F /* StretchyNetPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StretchyNetPoint.h; sourceTree = "<group>"; };
 		12BD9CD017DF5E8A00F28A4F /* TriggerSettingsRocketRotator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettingsRocketRotator.cpp; sourceTree = "<group>"; };
 		12BD9CD117DF5E8A00F28A4F /* TriggerSettingsRocketRotator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsRocketRotator.h; sourceTree = "<group>"; };
+		12CBB01F17F339670078677E /* LaserShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LaserShape.h; sourceTree = "<group>"; };
+		12CBB02017F454A00078677E /* LaserCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserCircle.h; sourceTree = "<group>"; };
 		12D15FCD17CE0044003D9024 /* TriggerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
 		12DBC7B417DDDD280041FA5C /* FireworkFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireworkFactory.cpp; sourceTree = "<group>"; };
 		12DBC7B517DDDD280041FA5C /* FireworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireworkFactory.h; sourceTree = "<group>"; };
@@ -691,7 +693,7 @@
 				12BD9CC717DF585E00F28A4F /* Vectorizer */,
 				12A6DE3717DE6D57000D299A /* Retro */,
 				1254501C17BF860500EF23B7 /* Intro */,
-				1254502B17BF860500EF23B7 /* RocketFountain.h */,
+				1254502B17BF860500EF23B7 /* TriggerSettingsFountain.h */,
 				1254502C17BF860500EF23B7 /* SceneFountains.h */,
 				1254502D17BF860500EF23B7 /* ScenePatternTest.h */,
 			);
@@ -1665,6 +1667,8 @@
 			children = (
 				12EB3B6C17E0EB37002D90A0 /* CubicBezier.h */,
 				12EB3B6D17E0EB37002D90A0 /* LaserDot.h */,
+				12CBB02017F454A00078677E /* LaserCircle.h */,
+				12CBB01F17F339670078677E /* LaserShape.h */,
 				12EB3B6E17E0EB37002D90A0 /* LaserManager.cpp */,
 				12EB3B6F17E0EB37002D90A0 /* LaserManager.h */,
 			);

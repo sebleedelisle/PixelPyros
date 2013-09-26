@@ -38,6 +38,9 @@ class Particle : public PhysicsObject{
 	
 	float renderDelay; 
 	
+	int historyCount;
+	deque <ofVec3f> historyPositions;
+	deque <ofColor> historyColours; 
 	
 	ColourModifier * colourModifier;
 	VelocityModifier velocityModifier;

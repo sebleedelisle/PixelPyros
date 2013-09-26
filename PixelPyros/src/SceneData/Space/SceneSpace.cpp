@@ -12,6 +12,8 @@
 
 SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
+	loadMusicFile("Starlight.aif");
+	
 	starfield.speed = 100;
 	
 	FireworkFactory& fireworkFactory = *FireworkFactory::instance(); 
@@ -19,29 +21,26 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	softWhiteImage.loadImage("img/ParticleWhite.png");
 	
 	TriggerPattern blank;
-	blank.addTriggerSettings(fireworkFactory.getBangerRocket());
 	
 	addTriggerPattern(blank);
 	
-		
-	TriggerSettingsRocket* starTrigger = getStarryRocket();
+	TriggerSettingsRocket* starFountain = getStarryFountain();
 	
 	// USED TO BE ROCKETFOUNTAIN OBJECT
-	TriggerSettingsRocket* fountainTrigger = new RocketFountain(120);
+	TriggerSettingsRocket* softCyanFountain = new TriggerSettingsFountain(120);
 
 	TriggerPattern fountainPattern;
-	fountainPattern.addTriggerSettings(fountainTrigger);
+	fountainPattern.addTriggerSettings(softCyanFountain);
 	fountainPattern.addTriggerSettings();
 	
 	addTriggerPattern(fountainPattern);
 
 	
 	TriggerPattern starryPattern;
-	starryPattern.addTriggerSettings(starTrigger);
+	starryPattern.addTriggerSettings(starFountain);
 	starryPattern.addTriggerSettings();
 	
 	addTriggerPattern(starryPattern);
-	
 	
 	TriggerSettingsRocket* planetTrigger = getPlanetRocket();
 	
@@ -49,27 +48,24 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	planetTrigger->hue = 20;
 	planetTrigger->saturation = 150;
 
-	
 	TriggerPattern pattern;
 	
-	pattern.addTriggerSettings(fountainTrigger);
+	pattern.addTriggerSettings(softCyanFountain);
 	pattern.addTriggerSettings();
-	pattern.addTriggerSettings(fountainTrigger);
+	pattern.addTriggerSettings(softCyanFountain);
 	pattern.addTriggerSettings();
 	pattern.addTriggerSettings(planetTrigger);
 	pattern.addTriggerSettings();
 
 	addTriggerPattern(pattern);
-
-
-	TriggerSettingsRocket* triggerFluffy = fireworkFactory.getFluffyRocket();
-	TriggerSettingsRocket* triggerFountain = new RocketFountain(120);
-
 	
-	TriggerSettingsRocket* triggerFlower = getFlowerRocket(10);
-	triggerFlower->radius = 8;
-	triggerFlower->hue = 10;
-	triggerFlower->saturation = 100;
+	TriggerSettingsRocket* triggerFluffy = fireworkFactory.getFluffyRocket();
+	TriggerSettingsRocket* triggerFountain = new TriggerSettingsFountain(120);
+
+	TriggerSettingsRocket* redFlower = getFlowerRocket(10);
+	redFlower->radius = 8;
+	redFlower->hue = 10;
+	redFlower->saturation = 100;
 
 	TriggerSettingsRocket* triggerBanger = fireworkFactory.getBangerRocket();
 	
@@ -83,7 +79,7 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	
 	// fluffy with added flowers
-	patternFluffy.addTriggerSettings(triggerFlower);
+	patternFluffy.addTriggerSettings(redFlower);
 	patternFluffy.addTriggerSettings();
 	
 	addTriggerPattern(patternFluffy);
@@ -116,10 +112,10 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	
 	
-	TriggerSettingsRocket*  triggerFlowerPurple = getFlowerRocket(220);
-	triggerFlowerPurple->radius = 8;
-	triggerFlowerPurple->hue = 255-20;
-	triggerFlowerPurple->saturation = 200;
+	TriggerSettingsRocket*  purpleFlower = getFlowerRocket(220);
+	purpleFlower->radius = 8;
+	purpleFlower->hue = 255-20;
+	purpleFlower->saturation = 200;
 	
 
 	TriggerPattern patternNewColour;
@@ -127,7 +123,7 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	patternNewColour.addTriggerSettings();
 	patternNewColour.addTriggerSettings(triggerFountain);
 	patternNewColour.addTriggerSettings();
-	patternNewColour.addTriggerSettings(triggerFlowerPurple);
+	patternNewColour.addTriggerSettings(purpleFlower);
 	patternNewColour.addTriggerSettings();
 	
 	addTriggerPattern(patternNewColour);
@@ -135,20 +131,20 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	TriggerPattern endPattern;
 	
-	TriggerSettingsRocket*  bigFlowerRocket = getSphereFlowerRocket(140);
+	TriggerSettingsRocket*  bigCyanFlower = getSphereFlowerRocket(140);
 
-	bigFlowerRocket->hue = 140;
-	bigFlowerRocket->saturation = 200;
-	bigFlowerRocket->radius= 10;
+	bigCyanFlower->hue = 140;
+	bigCyanFlower->saturation = 200;
+	bigCyanFlower->radius= 10;
 	
 	
-	endPattern.addTriggerSettings(triggerFlower);
+	endPattern.addTriggerSettings(redFlower);
 	endPattern.addTriggerSettings();
-	endPattern.addTriggerSettings(bigFlowerRocket);
+	endPattern.addTriggerSettings(bigCyanFlower);
 	endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(triggerBanger);
 	endPattern.addTriggerSettings();
-	//endPattern.addTriggerSettings(triggerFountain);
+	endPattern.addTriggerSettings(triggerFountain);
 	//endPattern.addTriggerSettings(starTrigger);
 	
 	addTriggerPattern(endPattern);
@@ -212,7 +208,7 @@ bool SceneSpace::draw() {
 
 
 
-TriggerSettingsRocket* SceneSpace::getStarryRocket() {
+TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	
 	
 	ParticleRendererStar* starRenderer = new ParticleRendererStar(8);
@@ -369,7 +365,7 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	ps.emitCount = 1000;
 	
 	ps.emitDelay = 0;
-	ps.emitLifeTime= 2.5;
+	ps.emitLifeTime= 1.5;
 	
 	ps.emitStartSizeModifier = 0;
 	ps.emitSpeedModifier = 0;
@@ -450,8 +446,8 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	
 	//APPEARANCE
 	
-	ps3.sizeStartMin = 8;
-	ps3.sizeStartMax = 10;
+	ps3.sizeStartMin = 5;
+	ps3.sizeStartMax = 7;
 	ps3.sizeChangeRatio = 0;
 	
 	ps3.hueStartMin = 10;
@@ -500,11 +496,13 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	rocketSettings.gravity.y = 400;
 	rocketSettings.drag = 0.97;
 	
+	rocketSettings.timeSpeed = 0.5;
+	
+	//ps.timeSpeed = ps2.timeSpeed = ps3.timeSpeed = 0.8;
+
 	rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(ps2);
 	rocketSettings.addParticleSystemSetting(ps3);
-	
-	rocketSettings.timeSpeed = ps.timeSpeed = ps2.timeSpeed = ps3.timeSpeed = 0.4;
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->rocketSettings = &rocketSettings;
@@ -518,25 +516,30 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 }
 
 
-TriggerSettingsRocket* SceneSpace :: getFlowerRocket(float hue , float hueChange ){
+TriggerSettingsRocket* SceneSpace :: getFlowerRocket(float hue , float hueChange){
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
-	rocketSettings.startSpeedMin = 1200;
-	rocketSettings.startSpeedMax = 1500;
+	rocketSettings.startSpeedMin = 1500;
+	rocketSettings.startSpeedMax = 1700;
 	rocketSettings.directionVar = 4;
-	rocketSettings.gravity.y = 300;
-	rocketSettings.drag = 0.95;
+	rocketSettings.gravity.y = 200;
+	rocketSettings.drag = 0.92;
 	
 	ParticleSystemSettings trails = getFlowerTrailParticles(hue, hueChange);
 	ParticleSystemSettings explosion = getFlowerExplosionParticles(hue, hueChange);
+	explosion.drag = 0.88;
 	ParticleSystemSettings explosionLines = getLineExplosionParticles(150, hueChange);
-	
+	//explosion.drag = 0.88;
 	explosion.emitDelay = explosionLines.emitDelay = trails.emitLifeTime = 2;
 	
+
+	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = explosionLines.timeSpeed = 0.7;
+
 	rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
 	rocketSettings.addParticleSystemSetting(explosionLines);
+	
 	
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
@@ -556,8 +559,8 @@ TriggerSettingsRocket* SceneSpace :: getSphereFlowerRocket(float hue , float hue
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
-	rocketSettings.startSpeedMin = 1200;
-	rocketSettings.startSpeedMax = 1500;
+	rocketSettings.startSpeedMin = 1100;
+	rocketSettings.startSpeedMax = 1400;
 	rocketSettings.directionVar = 4;
 	rocketSettings.gravity.y = 200;
 	rocketSettings.drag = 0.95;
@@ -570,6 +573,9 @@ TriggerSettingsRocket* SceneSpace :: getSphereFlowerRocket(float hue , float hue
 	explosion.directionYVar = 180;
 	explosion.speedMin = 900;
 	explosion.speedMax = 1000;
+	explosion.rotateMin = -50;
+	explosion.rotateMax = 50;
+	
 	
 	ParticleSystemSettings explosionLines = getLineExplosionParticles(150, hueChange);
 	ParticleSystemSettings crackles = FireworkFactory::instance()->getBangerCrackles();
@@ -587,6 +593,11 @@ TriggerSettingsRocket* SceneSpace :: getSphereFlowerRocket(float hue , float hue
 	//	crackles.speedMax = 0.5;
 	
 	explosion.emitDelay = explosionLines.emitDelay = crackles.emitDelay = trails.emitLifeTime = 2;
+	
+	//ParticleSystemSettings laserExplosion = FireworkFactory::instance()->getLaserExplosionParticles(hue, hueChange);
+	
+	//laserExplosion.emitDelay = explosion.emitDelay-0.05;
+	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = explosionLines.timeSpeed = crackles.timeSpeed;
 	
 	rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
