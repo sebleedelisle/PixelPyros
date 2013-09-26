@@ -2,7 +2,7 @@
     <val_0>0.000000000</val_0>
 <Laser_Calibration>
 		<Laser_Calibration>
-			<Homography>307.2, 204.8: 1228.8, 204.8: 1228.8, 819.2: 307.2, 819.2: </Homography>
+            <Homography>340.2, 101.8: 1271.2, 96.8: 1301.2, 500.6: 326.2, 499.6: </Homography>
 		</Laser_Calibration>
 	</Laser_Calibration>
 </USB_SHOW_CONTROLS>

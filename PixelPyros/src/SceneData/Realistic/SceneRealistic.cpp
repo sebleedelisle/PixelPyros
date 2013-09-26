@@ -362,7 +362,7 @@ ParticleSystemSettings SceneRealistic :: getFlowerTrailParticles(float hue, floa
 	
 	
 	ParticleSystemSettings trails;
-	trails.renderer = new ParticleRendererLine(1.5, true);
+	trails.renderer = new ParticleRendererLine(1, false, 10);
 	//pss.directionZVar = 20;
 	trails.speedMin = 10;
 	trails.speedMax = 10;
@@ -424,10 +424,8 @@ ParticleSystemSettings SceneRealistic :: getFlowerExplosionParticles(float hue, 
 }
 ParticleSystemSettings SceneRealistic :: getLineExplosionParticles(float hue, float hueChange){
 	
-	
-	
 	ParticleSystemSettings explosion;
-	explosion.renderer = new ParticleRendererLine(2, true);
+	explosion.renderer = new ParticleRendererLine(1, false, 10);
 	
 	//pss.directionZVar = 20;
 	explosion.speedMin = 300;
@@ -444,9 +442,9 @@ ParticleSystemSettings SceneRealistic :: getLineExplosionParticles(float hue, fl
 	explosion.brightnessStartMin = explosion.brightnessStartMin =  255;
 	explosion.brightnessEnd = 0;
 	
-	explosion.shimmerMin = 0.5;
-	explosion.lifeMin = 1;
-	explosion.lifeMax = 2;
+	explosion.shimmerMin = 0.1;
+	explosion.lifeMin = 0.5;
+	explosion.lifeMax = 1;
 	
 	//explosion.emitMode = PARTICLE_EMIT_BURST;
 	explosion.emitLifeTime = 0.1;

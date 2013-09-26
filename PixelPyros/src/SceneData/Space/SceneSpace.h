@@ -14,7 +14,7 @@
 #include "ParticleRendererBitmap.h"
 #include "ParticleRendererCircle.h"
 #include "ParticleRendererSquare.h"
-#include "RocketFountain.h"
+#include "TriggerSettingsFountain.h"
 
 #include "LetterWritingPatternMaker.h"
 
@@ -31,7 +31,7 @@ class SceneSpace : public Scene {
 	bool draw();
 	
 	
-	TriggerSettingsRocket* getStarryRocket();
+	TriggerSettingsRocket* getStarryFountain();
 	TriggerSettingsRocket* getPlanetRocket();
 	
 	TriggerSettingsRocket* getFlowerRocket(float hue = 20, float hueChange = -5);

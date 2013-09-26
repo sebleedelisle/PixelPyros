@@ -14,11 +14,11 @@
 #include "ParticleRendererLine.h"
 #include "ParticleRendererCircle.h"
 
-class RocketTron : public RocketSettings {
+class RocketTron : public TriggerSettingsRocket {
 	
     public :
     
-    RocketTron(float hueStartOffset = 0, float hueChange = 0, float explosionHue = 0, ParticleRendererBase * renderer1 = NULL, ParticleRendererBase * renderer2 = NULL) : RocketSettings() {
+    RocketTron(float hueStartOffset = 0, float hueChange = 0, float explosionHue = 0, ParticleRendererBase * renderer1 = NULL, ParticleRendererBase * renderer2 = NULL) : TriggerSettingsRocket() {
      
 		particleLineRenderer.lineWidth = 2;
 		
@@ -26,6 +26,7 @@ class RocketTron : public RocketSettings {
 		/// ROCKETS WITH CYAN SQUARE BURSTS
 		
 		// STAR ROCKET HEAD
+		
 		
 		//head.renderer = new ParticleRendererStar(30,45);
 		head.renderer = new ParticleRendererCircle(12, false, 2, ofVec3f(100,0,0));
@@ -155,24 +156,27 @@ class RocketTron : public RocketSettings {
 		explosion.startSound = "LaunchTechnoLow";
 		explosion.renderer = new ParticleRendererSquare();
 
+		rocketSettings = new RocketSettings();
 		
-		
-		startSpeedMin = 650;
-		startSpeedMax = 750;
-		direction = -90;
-		directionVar = 1;
-		gravity.y = 400;
-		lifeTime =2.3;
-		
+		rocketSettings->startSpeedMin = 650;
+		rocketSettings->startSpeedMax = 750;
+		rocketSettings->direction = -90;
+		rocketSettings->directionVar = 1;
+		rocketSettings->gravity.y = 400;
+		rocketSettings->lifeTime =2.3;
 		
         
     };
 	
 	void addParticleSystems() {
 		
+		if(rocketSettings==NULL) {
+			//OOPS
+			return;
+		}
 		//addParticleSystemSetting(head);
-		addParticleSystemSetting(trails);
-		addParticleSystemSetting(explosion);
+		rocketSettings->addParticleSystemSetting(trails);
+		rocketSettings->addParticleSystemSetting(explosion);
 		
 		
 	};

@@ -10,6 +10,8 @@
 
 SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), particleSystemManager(*ParticleSystemManager::instance()){
 	
+	loadMusicFile("LightsKlaypex.aif");
+	
 	TriggerPattern empty;
 	addTriggerPattern(empty);
 	
@@ -22,10 +24,10 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	rocketFountainBlue->hue = rocketFountainBlueHigh->hue = 130;
 	rocketFountainPink->hue = rocketFountainPinkHigh->hue = 235;
-	rocketFountainBlueHigh->rocketSettings->startSpeedMin *=2.8;
-	rocketFountainBlueHigh->rocketSettings->startSpeedMax *=2.8;
-	rocketFountainPinkHigh->rocketSettings->startSpeedMin *=2.8;
-	rocketFountainPinkHigh->rocketSettings->startSpeedMax *=2.8;
+	rocketFountainBlueHigh->rocketSettings->startSpeedMin *=2.0;
+	rocketFountainBlueHigh->rocketSettings->startSpeedMax *=2.0;
+	rocketFountainPinkHigh->rocketSettings->startSpeedMin *=2.0;
+	rocketFountainPinkHigh->rocketSettings->startSpeedMax *=2.0;
 	
 	TriggerPattern glitchFountainPattern;
 	
@@ -70,22 +72,23 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	glitchRocket.explosion.drag = 0.99;
 	
-	glitchRocket.startSpeedMin = 700;
+	RocketSettings& rs = *glitchRocket.rocketSettings;
+	rs.startSpeedMin = 700;
 	
-	glitchRocket.startSpeedMax = 800;
-	glitchRocket.directionVar = 6;
+	rs.startSpeedMax = 800;
+	rs.directionVar = 6;
 	
-	glitchRocket.addParticleSystemSetting(glitchRocket.head);
-	glitchRocket.addParticleSystemSetting(glitchRocket.explosion);
-	glitchRocket.timeSpeed = 	glitchRocket.head.timeSpeed = glitchRocket.explosion.timeSpeed= 0.7;
+	rs.addParticleSystemSetting(glitchRocket.head);
+	rs.addParticleSystemSetting(glitchRocket.explosion);
+	rs.timeSpeed = 	glitchRocket.head.timeSpeed = glitchRocket.explosion.timeSpeed= 0.7;
 	
-	glitchRocket.lifeTime = 2.4;
+	rs.lifeTime = 2.4;
 	
 	TriggerSettingsRocket* glitchRocketTrigger = new TriggerSettingsRocket();
-	glitchRocketTrigger->rocketSettings = &glitchRocket;
+	//glitchRocketTrigger->rocketSettings = &glitchRocket;
 	
 	glitchFountainPattern.addTriggerSettings();
-	glitchFountainPattern.addTriggerSettings(glitchRocketTrigger);
+	glitchFountainPattern.addTriggerSettings(&glitchRocket);
 	glitchFountainPattern.addTriggerSettings();
 	
 	addTriggerPattern(glitchFountainPattern);
@@ -103,44 +106,51 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	addTriggerPattern(glitchFountainPatternHigh);
 	
 	
-/*
+
 	
 	TriggerPattern rocketsAndFountainsPattern;
 	
-	RocketTron rocketTron;
-	rocketTron.addParticleSystems();
-	TriggerRocket rocketTronTrigger(particleSystemManager);
-	rocketTronTrigger.addRocketSettings(rocketTron);
-	// makes one shot type
-	//rocketTronTrigger.type = TRIGGER_TYPE_FIRE_ON_MOTION;
-	rocketTronTrigger.triggerLevel = 1;
-	rocketTronTrigger.restoreSpeed = 2;
-	rocketTronTrigger.triggerPower = 0.99;
+	RocketTron* rocketTron = new RocketTron();
+	rocketTron->addParticleSystems();
 	
 	
-	rocketsAndFountainsPattern.addTrigger(rocketTronTrigger);
-	rocketsAndFountainsPattern.addTrigger(fountainTriggerBlue);
-
+	rocketsAndFountainsPattern.addTriggerSettings(rocketTron);
+	rocketsAndFountainsPattern.addTriggerSettings();
+	rocketsAndFountainsPattern.addTriggerSettings(rocketFountainBlue);
+	rocketsAndFountainsPattern.addTriggerSettings();
 	
 	addTriggerPattern(rocketsAndFountainsPattern);
 	
-	
+
 	
 	// Arrangement with only glitch fountains, closer spaced
 	
-	TriggerPattern crazyPattern;
-	TriggerRotator crazyTrigger(particleSystemManager,20,1,false);
-	crazyTrigger.triggerPower = 1;
-	crazyTrigger.restoreSpeed = 1;
-	crazyTrigger.addRocketSettings(rocketFountainBlueHigh);
-	crazyTrigger.addRocketSettings(rocketFountainPinkHigh);
-	crazyPattern.addTrigger(crazyTrigger,0,0,0.3);
+	 
+	TriggerPattern rotatingHighFountains;
+	//TriggerRotator crazyTrigger(particleSystemManager,20,1,false);
+	//crazyTrigger.triggerPower = 1;
+	//crazyTrigger.restoreSpeed = 1;
+	//crazyTrigger.addRocketSettings(rocketFountainBlueHigh);
+	//crazyTrigger.addRocketSettings(rocketFountainPinkHigh);
+	//crazyPattern.addTrigger(crazyTrigger,0,0,0.3);
 	//pattern.addTrigger(trigger2);
 	
-	addTriggerPattern(crazyPattern);
+	TriggerSettingsRocket* rotatingFountainBlueHigh = new TriggerSettingsRocket(*rocketFountainBlueHigh);
+	TriggerSettingsRocket* rotatingFountainPinkHigh = new TriggerSettingsRocket(*rocketFountainPinkHigh);
+	
+	rotatingFountainBlueHigh->rechargeSettings = TriggerRechargeSettings::fastMultiples;
+	rotatingFountainPinkHigh->rechargeSettings = TriggerRechargeSettings::fastMultiples;
+	rotatingFountainPinkHigh->rotateOnFire = false;
+	rotatingFountainBlueHigh->rotateOnFire = false;
+	
+	rotatingHighFountains.addTriggerSettings(rotatingFountainBlueHigh);
+	rotatingHighFountains.addTriggerSettings(rotatingFountainPinkHigh);
 	
 	
+	addTriggerPattern(rotatingHighFountains);
 	
+	
+	/*	
 	
 	RocketTron glitchRocketMore;
 	glitchRocketMore.head.renderer = new ParticleRendererGlitchLine(1, false, false);
@@ -383,10 +393,12 @@ TriggerSettingsRocket* SceneVectorizer :: getRocketTronFountain(float hueStartOf
 	rs->startSpeedMin = 800;
 	rs->startSpeedMax = 950;
 	rs->direction = -90;
-	rs->directionVar = 10;
+	rs->directionVar = 0;
 	rs->gravity.y = 0;
 	rs->lifeTime =1.4;
 	rs->drag = 0.9;
+	
+	ps.timeSpeed = rs->timeSpeed = 0.8;
 	
 	rs->addParticleSystemSetting(ps);
 	

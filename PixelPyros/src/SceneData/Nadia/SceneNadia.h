@@ -12,6 +12,8 @@
 #include "ParticleRendererShape.h"
 #include "ParticleRendererLaser.h"
 
+#include "ParticleRendererLine.h"
+#include "FireworkFactory.h"; 
 class SceneNadia : public Scene {
 
 	public :
@@ -19,6 +21,7 @@ class SceneNadia : public Scene {
 	SceneNadia(string scenename);
 	
 	TriggerSettingsRocket* getLaserRocket(float hue = -30, float hueChange = 40);
+	TriggerSettingsRocket* getLaserSlowRocket(float hue = -30, float hueChange = 40);
 	ParticleSystemSettings getTrailParticles(float hue, float hueChange);
 	ParticleSystemSettings getLaserParticles(float hue, float hueChange);
 	

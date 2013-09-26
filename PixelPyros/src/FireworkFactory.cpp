@@ -467,7 +467,7 @@ TriggerSettingsRocket* FireworkFactory :: getSimpleFountain(float hueStartOffset
 
 
 TriggerSettingsRocket* FireworkFactory :: getFountain(float hueStartOffset , float hueChange){
-	return new RocketFountain(hueStartOffset, hueChange);
+	return new TriggerSettingsFountain(hueStartOffset, hueChange);
 	
 }
 
@@ -661,7 +661,7 @@ ParticleSystemSettings FireworkFactory:: getBangerCrackles() {
 	explosion.hueChange = 0;
 	explosion.saturationMin = explosion.saturationMax = 0;
 	explosion.saturationEnd = 0;
-	explosion.brightnessStartMin = explosion.brightnessStartMin = 255;
+	explosion.brightnessStartMin = explosion.brightnessStartMax = 255;
 	explosion.brightnessEnd = 0;
 	
 	explosion.shimmerMin = 0.0;
@@ -745,7 +745,48 @@ ParticleSystemSettings FireworkFactory:: getSmoke() {
 	
 }
 
-
+ParticleSystemSettings FireworkFactory :: getLaserExplosionParticles(float hue, float hueChange){
+	
+	ParticleSystemSettings explosion;
+	explosion.renderer = new ParticleRendererLaser();
+	
+	//pss.directionZVar = 20;
+	explosion.speedMin = 700;
+	explosion.speedMax = 700;
+	explosion.drag = 0.9;
+	explosion.gravity.y = 0;
+	explosion.directionZ = 0;
+	explosion.directionZVar = 90;
+	explosion.directionYVar = 0;
+	
+	explosion.sizeStartMin = 25;
+	explosion.sizeStartMax = 25;
+	explosion.sizeChangeRatio = 0;
+	explosion.hueStartMin = hue;
+	explosion.hueStartMax = hue + 5;
+	explosion.hueChange = -20;
+	explosion.saturationMin = 0;
+	explosion.saturationMax = 0;
+	explosion.saturationEnd = 0;
+	explosion.brightnessStartMin =
+	explosion.brightnessStartMax = 255;
+	explosion.brightnessEnd = 0;
+	
+	explosion.shimmerMin = 1;
+	explosion.lifeMin = 0.05;
+	explosion.lifeMax = 0.05;
+	
+	//explosion.emitMode = PARTICLE_EMIT_BURST;
+	explosion.emitLifeTime = 0.1;
+	explosion.emitCount = 500;
+	
+	explosion.startSound = "SoftExplosion";
+	
+	
+	return explosion;
+	
+	
+}
 
 
 

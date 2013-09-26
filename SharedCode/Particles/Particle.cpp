@@ -13,8 +13,8 @@ Particle::Particle() : PhysicsObject() {
 	//renderer = new ParticleRendererBase();
 	colourModifier = new ColourModifier();
 	//velocityModifier = new VelocityModifier();
+	
 }
-
 
 void Particle::reset() { 
 	//life.reset();
@@ -32,7 +32,11 @@ void Particle::reset() {
 	velocityModifier.reset(); 
 	
 	enabled = true;
-	startPos = pos; 
+	startPos = pos;
+	
+	historyPositions.clear();
+	historyColours.clear();
+	historyCount = 0; 
 	
 }
 
@@ -65,6 +69,25 @@ bool Particle :: update(float deltaTime) {
 		pos.rotate(rotateAmount*deltaTime, startPos, rotateAxis);
 		
 		
+	}
+	
+	if(historyCount>0) {
+		if(enabled) {
+			historyPositions.push_back(pos);
+			historyColours.push_back(getColour());
+			
+			while(historyPositions.size()>historyCount){
+				historyPositions.pop_front();
+				historyColours.pop_front();
+			}
+		}
+		else {
+			historyPositions.pop_front();
+			historyColours.pop_front();
+			if(historyPositions.size()>0) {
+				enabled = true;
+			}
+		}
 	}
 	
 	return enabled; 

@@ -193,6 +193,10 @@ Particle * ParticleSystem::initParticle(Particle * p) {
 		p->velocityModifier.init(settings.velocityModifierSettings);
 	}
 	
+	if(settings.renderer!=NULL) {
+		p->historyCount = settings.renderer->historyCount;
+	}
+	
 	return p;
 	
 }
