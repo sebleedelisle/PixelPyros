@@ -21,9 +21,14 @@ class ControlPanels {
     ControlPanels():parameterManager(*ParameterManager::instance()){};
     void setup(ParameterManager * parameterManager);
     void draw();
+    void drawPreviewScreen();
     void exit();
     void keyPressed(int key);
     void mouseMoved(int x, int y);
+    
+    ofFbo main;
+    ofFbo camera;
+    ofFbo motion;
     
     protected:
 
@@ -43,12 +48,11 @@ class ControlPanels {
     ofxPanel triggerGui;
     ofxPanel motionGui;
     
+    ofVec2f previewScreenPosition;
+    
     
     ofRectangle screen;
     ofVec2f padding;
     
-    ofFbo main;
-    ofFbo camera;
-    ofFbo motion;
     
 };
