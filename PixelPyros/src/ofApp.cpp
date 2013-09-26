@@ -66,7 +66,7 @@ void ofApp::setup(){
 	
 	// TODO FBO oversamples now so check performance / smoothing
 	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4);
-	
+	controlPanels.main = fbo;
 	fbo.begin();
 	ofClear(0,0,0);
 	fbo.end(); 
