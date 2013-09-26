@@ -19,7 +19,7 @@
 #include "LaserDot.h"
 #include "ofxGui.h"
 #include "ofMain.h"
-
+#include "constants.h"
 
 class LaserManager {
 

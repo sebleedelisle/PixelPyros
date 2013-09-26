@@ -64,13 +64,14 @@ bool CameraManager::update() {
 	}; 
 	
 //	cout << toggleShowUSBControls->value.getValueB() << endl; 
-//	
+//
+    /*
 	if(toggleShowUSBControls->value.getValueB()){
 		
 		cameraVidGrabber->videoSettings(); 
 		toggleShowUSBControls->value.setValue(0); 
 		toggleShowUSBControls->update();
-	}
+	}*/
 	
 	
 	
@@ -199,6 +200,7 @@ bool CameraManager :: changeCamera(CameraWrapper* cam) {
 	return true;
 }
 
+/*
 void CameraManager:: initControlPanel(ofxAutoControlPanel &gui){
 	
 	
@@ -213,9 +215,10 @@ void CameraManager:: initControlPanel(ofxAutoControlPanel &gui){
 	
 	ofAddListener(gui.guiEvent, this, &CameraManager::guiEventsIn);
 	
-	
 }
+ */
 
+/*
 void CameraManager::guiEventsIn(guiCallbackData & data){
 
 	cout << "CameraManager::guiEventsIn " << data.getXmlName() <<" "<< data.getInt(0) << endl;
@@ -239,6 +242,7 @@ void CameraManager::guiEventsIn(guiCallbackData & data){
 	} 
 	
 }
+*/
 
 void CameraManager::close() { 
 	for(int i = 0; i<cameras.size(); i++) {

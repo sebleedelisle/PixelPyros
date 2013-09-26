@@ -60,9 +60,8 @@ void ofApp::setup(){
 
 	motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 	
-	setupControlPanel();
+	//setupControlPanel();
 	
-	gui.hide();
 	
 	// TODO FBO oversamples now so check performance / smoothing
 	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4);
@@ -377,7 +376,8 @@ void ofApp::mouseMoved( int x, int y ){
 }
 
 
-void ofApp::setupControlPanel() { 
+void ofApp::setupControlPanel() {
+    /*
 	gui.setup(450, ofGetHeight());
 	gui.setPosition(1536,0);
 
@@ -449,7 +449,11 @@ void ofApp::setupControlPanel() {
 	
 	//sceneManager.initSceneControls(settingsManager);
 	
-	
+     gui.hide();
+     
+	*/
+    
+    
 }
 
 //void ofApp::eventsIn(guiCallbackData & data){

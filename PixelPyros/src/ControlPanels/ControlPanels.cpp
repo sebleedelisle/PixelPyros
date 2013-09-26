@@ -105,7 +105,6 @@ void ControlPanels::drawPreviewScreen(){
     ofPushMatrix();
     ofTranslate(previewScreenPosition.x, previewScreenPosition.y);
     //ofScale(0.5, 0.5);
-    cout << previewScreenPosition.x << "," << previewScreenPosition.y << endl;
     main.draw(0,0);
     ofPopMatrix();
 }
