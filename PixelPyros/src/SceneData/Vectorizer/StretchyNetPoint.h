@@ -25,8 +25,13 @@ class StretchyNetPoint : public ofVec3f{
 	bool update() {
 		
 		vel*=dampening;
+		if(vel.lengthSquared()<0.01) vel.set(0,0,0);
+		
 		diff = target - *this;
 		diff*=speed; 
+		if(diff.lengthSquared()<0.01) diff.set(0,0,0);
+		
+		
 		vel+=diff;
 		*this+=vel;
 		//set(pos);

@@ -24,7 +24,7 @@ Warper :: Warper() {
 	ofAddListener(ofEvents().mouseDragged, this, &Warper::mouseDragged);
 	ofAddListener(ofEvents().mouseReleased, this, &Warper::mouseReleased);
 
-	dstPreviewScale = 0.2;
+	dstPreviewScale = 0.5;
 	
 	autoSave =true;
 	verbose = false;
@@ -99,8 +99,8 @@ bool Warper :: update(ofPixels& sourcePixels) {
 		// I guess for a moving image we need to warp the pixels every time.
 		// but we could do it with a similar function to "apply" in QuadWarper
 		
-		warpPerspective(sourcePixels, warpedImage, previewHomography, CV_INTER_NN);
-		warpedImage.update();
+		//warpPerspective(sourcePixels, warpedImage, previewHomography, CV_INTER_NN);
+		//warpedImage.update();
 		
 	}
 		

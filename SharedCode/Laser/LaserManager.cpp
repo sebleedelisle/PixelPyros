@@ -162,9 +162,9 @@ void LaserManager:: update() {
 	
 	if(showRegistration) {
 		
-		//addLaserRectEased(pmin, pmax, white);
-		//addLaserLineEased(pmin, pmax, white);
-		//addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
+		addLaserRectEased(pmin, pmax, white);
+		addLaserLineEased(pmin, pmax, white);
+		addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
 		
 		ofPoint v = pmax - pmin;
 		
@@ -177,7 +177,7 @@ void LaserManager:: update() {
 		
 		addLaserCircle(ofPoint(appWidth/2, appHeight/2), white, 10);
 		addLaserCircle(ofPoint(appWidth/2, appHeight/2), ofFloatColor(1,0,0), 50);
-		
+			
 		
 		/*
 		addLaserDot(pmin, white, 1);
@@ -438,39 +438,13 @@ void LaserManager:: drawShapes() {
 			}
 			
 			
+			LaserLine * line = dynamic_cast<LaserLine*>(shape);
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			//cout << i << " CIRCLE! " << circle->pos << " " << circle->radius <<  endl;
-//			int numPoints = 2*PI*circle->radius / circleMoveSpeed;
-//			
-//			ofPoint p;
-//			
-//			for(int i = 0; i<=numPoints; i++) {
-//					
-//				float angle = ofMap(i, 0, numPoints*0.9, 0, PI*2);
-//				p.set(circle->pos);
-//				p.x+=sin(angle)*circle->radius;
-//				p.y-=cos(angle)*circle->radius;
-//				
-//				addIldaPoint(p, circle->colour);
-//				
-//				//cout << i << " " << circle->radius << " " << p << endl;
-//			}
-//			
+			if(line) {
+				drawLaserLine(*line);
+			}
+				
+					
 			
 		}
 	
@@ -478,29 +452,7 @@ void LaserManager:: drawShapes() {
 	
 	
 	
-	/*
-	if(!currentPosition.match(target, 0.01)) {
-		moveLaser(ofpoint);
-	}
-	
-	int particlecount = 10* intensity;
-	
-	for(int i = 0; i<particlecount; i++) {
-		addIldaPoint(target, colour);
-	}
-	*/
-	
-	
 }
-
-/*
-void LaserManager::closeLaserLoop() {
-	
-	// DO WE NEED THIS NOW?
-	
-	//moveLaserToPointAndVel(startPosition, startVel);
-	
-}*/
 
 void LaserManager :: moveLaser(const ofPoint & targetpoint){
 	
@@ -526,45 +478,50 @@ void LaserManager :: moveLaser(const ofPoint & targetpoint){
 }
 
 
-/*
+
 void LaserManager:: addLaserLineEased(const ofPoint&startpoint, const ofPoint&endpoint, ofFloatColor colour) {
 	
-	ofPoint start = startpoint;// warp.getWarpedPoint(startpoint);
-	ofPoint end = endpoint;//warp.getWarpedPoint(endpoint);
+	
+	shapes.push_back(new LaserLine(startpoint, endpoint, colour, intensity));
+	
+	
+}
 
+
+void LaserManager:: drawLaserLine(LaserLine& line) {
+	
+	ofPoint start = line.startPos;// warp.getWarpedPoint(startpoint);
+	ofPoint end = line.endPos;//warp.getWarpedPoint(endpoint);
+	
 	if(!currentPosition.match(start, 0.01)) {
-		moveLaser(startpoint);
+		moveLaser(start);
 		
 	}
-
+	
 	
 	ofPoint vec = end - start;
 	
 	float speed = 8;
 	int iterations = floor(vec.length()/speed) + 10; // arbitrary amount to create enough ease points!
-
-	for(int i = 0; i<endCount;i++)
-		addIldaPoint(start, colour);
 	
-
+	// TODO add start and end blanks for lines?
+	
+	for(int i = 0; i<endCount;i++)
+		addIldaPoint(start, line.colour);
+	
+	
 	for(float i = 0; i<iterations; i++) {
 		
 		float t = Quad::easeInOut(i/iterations, 0, 1, 1);
-
-		addIldaPoint(start + (vec*t), colour);
+		
+		addIldaPoint(start + (vec*t), line.colour);
 		
 	}
 	
 	for(int i = 0; i<blankCount; i++) {
-		addIldaPoint(end, colour);
+		addIldaPoint(end, line.colour);
 	}
-	
-	currentPosition = end;
-	currentVel.set(0,0,0);
-	
-	
 }
-*/
 
 /*
 void LaserManager:: addLaserLine(const ofPoint&startpoint, const ofPoint&endpoint, ofFloatColor colour) {
@@ -666,7 +623,7 @@ void LaserManager::addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions,
 
 }
 */
-/*
+
 void LaserManager::addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour){
 	
 	addLaserLineEased(topLeft, ofPoint(topLeft.x+dimensions.x,topLeft.y), colour);
@@ -675,7 +632,6 @@ void LaserManager::addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimens
 	addLaserLineEased(ofPoint(topLeft.x,topLeft.y+dimensions.y), topLeft, colour);
 	
 }
-*/
 
 ofxIlda::Point LaserManager::ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour){
 	
