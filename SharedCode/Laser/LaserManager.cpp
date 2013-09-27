@@ -74,7 +74,6 @@ void LaserManager:: setup (int width, int height) {
 	
     warp = warpParam;
 	warp.label = "laserWarp";
-	warp.loadSettings();
     
 	warp.setDstPoint(0, ofVec2f(x1,y1));
 	warp.setDstPoint(1, ofVec2f(x2,y1));
@@ -86,6 +85,8 @@ void LaserManager:: setup (int width, int height) {
 	warp.setSrcPoint(2, ofVec2f(x1,y2));
 	warp.setSrcPoint(3, ofVec2f(x2,y2));
 	
+    warp.loadSettings();
+    
 	intensity = 1;
 	dotPreBlank = 3;
 	dotPostBlank = 3;
