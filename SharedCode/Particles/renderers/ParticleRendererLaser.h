@@ -24,8 +24,11 @@ class ParticleRendererLaser : public ParticleRendererShape {
 			Particle& p = **it; // *(particles[i]);
 			if((!p.enabled) || (p.size<0.1)) continue;
 			
-			lm.addLaserDot(p.pos, p.getColour(), 1);
-			
+			if(p.size>2) {
+				lm.addLaserCircle(p.pos, p.getColour(), p.size);
+			} else {
+				lm.addLaserDot(p.pos, p.getColour(), 1);
+			}
 		}
 		
     

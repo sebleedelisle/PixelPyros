@@ -49,10 +49,10 @@ void Scene :: start() {
 	if(music.isLoaded()) {
 		music.setPosition(0);
 		positionSeconds = 0;
-		music.play();
+		//music.play();
 		lastUpdate = 0;
 	
-		playing = true;
+		//playing = true;
 	}
 	active = true;
 }
@@ -107,7 +107,7 @@ bool Scene :: update(float deltaTime) {
 	
 	if((!active)) return false;
 	
-	positionSeconds = (float)music.getPositionMS()/1000.0f;
+	if(playing) positionSeconds = (float)music.getPositionMS()/1000.0f;
 	
 	vector<int> deleteIndices; 
 	
@@ -235,7 +235,10 @@ void Scene:: load(){
 }
 
 bool Scene :: togglePlayPause(){
-	if(playing) music.stop();
+	if(playing) {
+		music.stop();
+		recording = false; 
+	}
 	else {
 		music.play();
 		music.setPositionMS(positionSeconds*1000);

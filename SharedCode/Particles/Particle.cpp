@@ -81,7 +81,7 @@ bool Particle :: update(float deltaTime) {
 				historyColours.pop_front();
 			}
 		}
-		else {
+		else if(historyPositions.size()>0){
 			historyPositions.pop_front();
 			historyColours.pop_front();
 			if(historyPositions.size()>0) {

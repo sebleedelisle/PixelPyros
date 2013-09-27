@@ -1,36 +1,36 @@
 <srcvec>
-    <x>74.4</x>
-    <y>36</y>
+    <x>71.400001526</x>
+    <y>290.100006104</y>
 </srcvec>
 <srcvec>
-    <x>1379.4</x>
-    <y>28.2</y>
+    <x>1502.099975586</x>
+    <y>26.399999619</y>
 </srcvec>
 <srcvec>
-    <x>147.9</x>
-    <y>704.2</y>
+    <x>164.099990845</x>
+    <y>939.400024414</y>
 </srcvec>
 <srcvec>
-    <x>1405.2</x>
-    <y>739.3</y>
+    <x>1516.799804688</x>
+    <y>994.599975586</y>
 </srcvec>
 <dstvec>
-    <x>71.7</x>
-    <y>289.8</y>
+    <x>71.699996948</x>
+    <y>289.799987793</y>
 </dstvec>
 <dstvec>
-    <x>1391.1</x>
-    <y>343.8</y>
+    <x>1502.400024414</x>
+    <y>26.099975586</y>
 </dstvec>
 <dstvec>
-    <x>164.4</x>
-    <y>938.8</y>
+    <x>164.399993896</x>
+    <y>938.799987793</y>
 </dstvec>
 <dstvec>
-    <x>1373.1</x>
-    <y>941.5</y>
+    <x>1517.699951172</x>
+    <y>994.900024414</y>
 </dstvec>
-<srcWidth>1024</srcWidth>
-<srcHeight>768</srcHeight>
-<dstWidth>1536</dstWidth>
-<dstHeight>1024</dstHeight>
+<srcWidth>1024.000000000</srcWidth>
+<srcHeight>768.000000000</srcHeight>
+<dstWidth>1536.000000000</dstWidth>
+<dstHeight>1024.000000000</dstHeight>
