@@ -12,7 +12,7 @@
 LaserManager * LaserManager :: laserManager = NULL;
 
 LaserManager * LaserManager::instance() {
-	if(laserManager ==NULL) {
+	if(laserManager == NULL) {
 		laserManager = new LaserManager();
 	}
 	return laserManager;
@@ -74,7 +74,8 @@ void LaserManager:: setup (int width, int height) {
 	
     warp = warpParam;
 	warp.label = "laserWarp";
-	
+	warp.loadSettings();
+    
 	warp.setDstPoint(0, ofVec2f(x1,y1));
 	warp.setDstPoint(1, ofVec2f(x2,y1));
 	warp.setDstPoint(2, ofVec2f(x2,y2));
