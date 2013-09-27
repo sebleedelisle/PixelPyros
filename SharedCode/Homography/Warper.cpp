@@ -99,8 +99,8 @@ bool Warper :: update(ofPixels& sourcePixels) {
 		// I guess for a moving image we need to warp the pixels every time.
 		// but we could do it with a similar function to "apply" in QuadWarper
 		
-		//warpPerspective(sourcePixels, warpedImage, previewHomography, CV_INTER_NN);
-		//warpedImage.update();
+		warpPerspective(sourcePixels, warpedImage, previewHomography, CV_INTER_NN);
+		warpedImage.update();
 		
 	}
 		

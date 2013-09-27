@@ -40,17 +40,17 @@
 		<Laser_Manager>
 			<Etherdream_connect>0</Etherdream_connect>
 			<status/>
-			<intensity>1</intensity>
-			<colour_change_offset>-7</colour_change_offset>
+			<intensity>0.31</intensity>
+			<colour_change_offset>-6</colour_change_offset>
 			<show_registration>0</show_registration>
 			<show_move_points>0</show_move_points>
 			<show_sync_test>0</show_sync_test>
-			<render_laser_path>1</render_laser_path>
-			<move_speed>8.17682</move_speed>
+			<render_laser_path>0</render_laser_path>
+			<move_speed>6.82818</move_speed>
 			<move_points_padding>0</move_points_padding>
-			<dot_pre_blank>0</dot_pre_blank>
+			<dot_pre_blank>1</dot_pre_blank>
 			<dot_post_blank>0</dot_post_blank>
-			<dot_max_points>2</dot_max_points>
+			<dot_max_points>1</dot_max_points>
 			<acceleration>1.45093</acceleration>
 			<max_speed>4.27001</max_speed>
 		<Homography>182.2, 145.8: 921.2, 120.8: 914.2, 554.6: 177.2, 551.6: </Homography>

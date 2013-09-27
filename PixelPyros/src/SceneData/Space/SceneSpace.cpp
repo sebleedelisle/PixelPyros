@@ -138,14 +138,13 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	bigCyanFlower->radius= 10;
 	
 	
-	endPattern.addTriggerSettings(redFlower);
-	endPattern.addTriggerSettings();
+	//endPattern.addTriggerSettings(redFlower);
+	//endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(bigCyanFlower);
-	endPattern.addTriggerSettings();
-	endPattern.addTriggerSettings(triggerBanger);
-	endPattern.addTriggerSettings();
-	endPattern.addTriggerSettings(triggerFountain);
-	//endPattern.addTriggerSettings(starTrigger);
+	//endPattern.addTriggerSettings();
+	//endPattern.addTriggerSettings(triggerBanger);
+	//endPattern.addTriggerSettings();
+	//endPattern.addTriggerSettings(triggerFountain);
 	
 	addTriggerPattern(endPattern);
 	
