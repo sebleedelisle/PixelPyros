@@ -334,6 +334,8 @@ bool QuadWarp::loadSettings() {
 	
     cout << "Loading Warp: " << filename << " " << dstPoints[0].x << ", " << dstPoints[0].y << endl;
     
+    updateHomography();
+    
 	return true;
 }
 
