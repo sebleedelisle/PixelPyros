@@ -11,12 +11,10 @@
 class LaserShape {
 
 	public :
+
+	LaserShape(){};
 	
-	/*
-	LaserShape(const ofPoint& startPosition,const ofPoint& endPosition) {
-		startPos.set(startPosition);
-		endPos.set(endPosition);
-	}*/
+	virtual void fuckYou(){};
 	
 	bool tested = false;
 	

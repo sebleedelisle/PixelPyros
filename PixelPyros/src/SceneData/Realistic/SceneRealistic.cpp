@@ -329,16 +329,8 @@ TriggerSettingsRocket* SceneRealistic :: getSphereFlowerRocket(float hue , float
 	crackles.brightnessStartMin = 100;
 	crackles.sizeStartMax = 5;
 	crackles.sizeStartMin = 3;
-//	crackles.emitDelay = 0;
-//	crackles.startSound = "";
-//	crackles.emitMode = PARTICLE_EMIT_CONTINUOUS;
-//	crackles.renderDelayMin = 0.01;
-//	crackles.renderDelayMax = 0.2;
-//	crackles.speedMin = 0;
-//	crackles.speedMax = 0.5;
-	
-	
-	
+
+
 	
 	explosion.emitDelay = explosionLines.emitDelay = crackles.emitDelay = trails.emitLifeTime = 2;
 	

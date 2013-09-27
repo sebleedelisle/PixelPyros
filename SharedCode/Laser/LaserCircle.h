@@ -14,18 +14,22 @@ class LaserCircle : public LaserShape{
 	public :
 	
 	LaserCircle(const ofPoint& position, ofFloatColor& colour, float circleRadius, float circleIntensity = 1){
-		set(position, colour, radius, circleIntensity);
+		set(position, colour, circleRadius, circleIntensity);
 	}
 	
 	void set(const ofPoint& position, ofFloatColor& circleColour, float circleRadius, float circleIntensity = 1) {
 		colour = circleColour;
+		
+		radius = circleRadius;
 		
 		pos = position;
 		startPos = pos;
 		startPos.y-=radius;
 		endPos = startPos;
 		
-		circleRadius = radius;
+		
+		//cout<<"CIRCLE SET : " << pos << " " << startPos << " " << endPos << " " << radius<< endl;
+		
 		
 		intensity = circleIntensity;
 		tested = false;
