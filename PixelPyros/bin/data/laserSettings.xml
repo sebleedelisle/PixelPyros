@@ -38,7 +38,7 @@
 	</group>
 <Laser>
 		<Laser_Manager>
-			<Etherdream_connect>1</Etherdream_connect>
+			<Etherdream_connect>0</Etherdream_connect>
 			<status/>
 			<intensity>1</intensity>
 			<colour_change_offset>-6</colour_change_offset>

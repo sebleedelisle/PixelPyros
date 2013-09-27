@@ -13,7 +13,8 @@
 #include "ParticleRendererLaser.h"
 
 #include "ParticleRendererLine.h"
-#include "FireworkFactory.h"; 
+#include "FireworkFactory.h"
+
 class SceneNadia : public Scene {
 
 	public :

@@ -81,8 +81,9 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     motionGui.add( *parameterManager->getParameterGroup("motion") );
     motionGui.load();
     
-    setupPanel( "Laser Calibration", ofRectangle( offset.x, offset.y, 400, 30 ), laserCalibration );
+    setupPanel( "Laser Calibration", "laserCalibrationSettings.xml", ofRectangle( offset.x, offset.y, 400, 30 ), laserCalibration );
     laserCalibration.add( *parameterManager->getParameterGroup("laser calibration") );
+    //laserCalibration.load();
     
 }
 
