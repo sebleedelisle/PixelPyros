@@ -577,6 +577,7 @@
 		12D15FCD17CE0044003D9024 /* TriggerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
 		12DBC7B417DDDD280041FA5C /* FireworkFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireworkFactory.cpp; sourceTree = "<group>"; };
 		12DBC7B517DDDD280041FA5C /* FireworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireworkFactory.h; sourceTree = "<group>"; };
+		12DDCADC17F55C1200484864 /* LaserLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserLine.h; sourceTree = "<group>"; };
 		12EB0A1A17E7D0840045DC0B /* SequenceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequenceCommand.h; sourceTree = "<group>"; };
 		12EB3B6C17E0EB37002D90A0 /* CubicBezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubicBezier.h; sourceTree = "<group>"; };
 		12EB3B6D17E0EB37002D90A0 /* LaserDot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserDot.h; sourceTree = "<group>"; };
@@ -1668,6 +1669,7 @@
 				12EB3B6C17E0EB37002D90A0 /* CubicBezier.h */,
 				12EB3B6D17E0EB37002D90A0 /* LaserDot.h */,
 				12CBB02017F454A00078677E /* LaserCircle.h */,
+				12DDCADC17F55C1200484864 /* LaserLine.h */,
 				12CBB01F17F339670078677E /* LaserShape.h */,
 				12EB3B6E17E0EB37002D90A0 /* LaserManager.cpp */,
 				12EB3B6F17E0EB37002D90A0 /* LaserManager.h */,

@@ -19,6 +19,7 @@
 #include "LaserDot.h"
 #include "LaserShape.h"
 #include "LaserCircle.h"
+#include "LaserLine.h"
 #include "ofxGui.h"
 #include "ofMain.h"
 #include "constants.h"
@@ -45,14 +46,16 @@ class LaserManager {
 	void addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, float radius, float intensity =1);
 
 	//void addLaserLine(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
-	//void addLaserLineEased(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
+	void addLaserLineEased(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
 	//void addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour);
-	//void addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour);
+	void addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour);
 	//void closeLaserLoop();
 	void moveLaser(const ofPoint & target);
 	//void moveLaserToPointAndVel(const ofPoint& targetPos, const ofPoint& targetVel);
 	
 	void drawShapes();
+	
+	void drawLaserLine(LaserLine& line); 
 	
 	void resetIldaPoints();
 	void addIldaPoint(const ofPoint& p, ofFloatColor c);

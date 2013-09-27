@@ -69,6 +69,7 @@ void SceneManager::draw() {
 	ofSetColor(100,120,255);
 	ofRect(0,APP_HEIGHT-4,APP_WIDTH,4);
 	
+	// TODO need this to go on the second screen really
 	float pos = ofMap(currentScene->positionSeconds,0,currentScene->lengthSeconds,0,APP_WIDTH);
 	ofNoFill();
 	ofSetLineWidth(2);
