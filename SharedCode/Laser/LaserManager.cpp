@@ -82,10 +82,10 @@ void LaserManager:: setup (int width, int height) {
 	
 	warp.setSrcPoint(0, ofVec2f(x1,y1));
 	warp.setSrcPoint(1, ofVec2f(x2,y1));
-	warp.setSrcPoint(2, ofVec2f(x1,y2));
-	warp.setSrcPoint(3, ofVec2f(x2,y2));
+	warp.setSrcPoint(2, ofVec2f(x2,y2));
+	warp.setSrcPoint(3, ofVec2f(x1,y2));
 	
-    warp.loadSettings();
+    //warp.loadSettings();
     
 	intensity = 1;
 	dotPreBlank = 3;
