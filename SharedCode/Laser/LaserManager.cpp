@@ -27,7 +27,7 @@ LaserManager:: LaserManager() {
 void LaserManager:: connectToEtherdream() {
 
 	etherdream.setup();
-    etherdream.setPPS(50000);
+    etherdream.setPPS(80000);
 	isConnected = true;
 	
 }
@@ -85,7 +85,7 @@ void LaserManager:: setup (int width, int height) {
 	warp.setSrcPoint(2, ofVec2f(x2,y2));
 	warp.setSrcPoint(3, ofVec2f(x1,y2));
 	
-    //warp.loadSettings();
+    warp.loadSettings();
     
 	intensity = 1;
 	dotPreBlank = 3;
@@ -164,9 +164,9 @@ void LaserManager:: update() {
 	
 	if(showRegistration) {
 		
-		addLaserRectEased(pmin, pmax, white);
-		addLaserLineEased(pmin, pmax, white);
-		addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
+		//addLaserRectEased(pmin, pmax, white);
+		//addLaserLineEased(pmin, pmax, white);
+		//addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
 		
 		ofPoint v = pmax - pmin;
 		
@@ -473,7 +473,7 @@ void LaserManager :: moveLaser(const ofPoint & targetpoint){
 		float t = Quint::easeInOut((float)j, 0.0f, 1.0f, blanknum);
 		
 		ofPoint c = (v* t) + start;
-		addIldaPoint(c, (showMovePoints && j%2==0) ? ofColor::red : ofColor::black);
+		addIldaPoint(c, (showMovePoints && j%2==0) ? ofColor(100,0,0) : ofColor::black);
 		
 	}
 	//currentVel.set(0,0);
