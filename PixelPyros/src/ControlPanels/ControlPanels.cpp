@@ -61,8 +61,12 @@ void ControlPanels::setup(ParameterManager * parameterManager){
 	ofxBaseGui::setDefaultElementIndentation(1);
 	ofxBaseGui::setDefaultTextPadding(7);
     
-    
-    setupPanel( "Laser", "laserSettings.xml", ofRectangle( offset.x, offset.y, 400, 30 ), laserGui );
+  
+	
+	setupPanel( "App", "appSettings.xml", ofRectangle( offset.x, offset.y, 400, 30 ), appGui );
+    appGui.add( *parameterManager->getParameterGroup("app") );
+
+    setupPanel( "Laser", "laserSettings.xml", ofRectangle( offset.x, offset.y+100, 400, 30 ), laserGui );
     laserGui.add( *parameterManager->getParameterGroup("laser") );
     laserGui.load();
     laserGui.getGroup("Laser Manager").getToggle("Etherdream connect") = false;
@@ -77,7 +81,7 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     triggerGui.add( *parameterManager->getParameterGroup("triggers") );
     triggerGui.load();
     
-    setupPanel( "Motion", "motionDetectionSettings.xml", ofRectangle( offset.x, offset.y + 2 * padding.y + laserGui.getHeight(), 400, 30 ), motionGui );
+    setupPanel( "Motion", "motionDetectionSettings.xml", ofRectangle( offset.x, laserGui.getPosition().y + 2 * padding.y + laserGui.getHeight(), 400, 30 ), motionGui );
     motionGui.add( *parameterManager->getParameterGroup("motion") );
     motionGui.load();
     
@@ -95,6 +99,7 @@ void ControlPanels::draw(){
     laserCalibration.draw();
     projectorCalibration.draw();
     
+	appGui.draw();
     laserGui.draw();
     rendererGui.draw();
     triggerGui.draw();
@@ -123,6 +128,7 @@ void ControlPanels::exit(){
 
 void ControlPanels::keyPressed(int key){
     if( key == OF_KEY_TAB ){
+        appGui.toggleVisible();
         laserGui.toggleVisible();
         rendererGui.toggleVisible();
         triggerGui.toggleVisible();

@@ -111,6 +111,8 @@
 		126E278B17F221ED001763E7 /* SceneSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 126E278817F221ED001763E7 /* SceneSpace.cpp */; };
 		1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */; };
 		129988BA17E1E9CC0044879E /* SceneNadia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129988B817E1E9CC0044879E /* SceneNadia.cpp */; };
+		129F2E6C17F757D000206DFB /* Invader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129F2E6A17F757D000206DFB /* Invader.cpp */; };
+		129F2E6F17F778BC00206DFB /* RectangleUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129F2E6D17F778BC00206DFB /* RectangleUI.cpp */; };
 		12A6DE3417DE1F83000D299A /* ParticleSystemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */; };
 		12A6DE3617DE640C000D299A /* SoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3517DE640C000D299A /* SoundPlayer.cpp */; };
 		12A6DE3A17DE6D57000D299A /* SceneRetro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3817DE6D57000D299A /* SceneRetro.cpp */; };
@@ -556,6 +558,11 @@
 		129988B417E1E6610044879E /* ParticleRendererLaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererLaser.h; sourceTree = "<group>"; };
 		129988B817E1E9CC0044879E /* SceneNadia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneNadia.cpp; sourceTree = "<group>"; };
 		129988B917E1E9CC0044879E /* SceneNadia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneNadia.h; sourceTree = "<group>"; };
+		129F2E6A17F757D000206DFB /* Invader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Invader.cpp; sourceTree = "<group>"; };
+		129F2E6B17F757D000206DFB /* Invader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Invader.h; sourceTree = "<group>"; };
+		129F2E6D17F778BC00206DFB /* RectangleUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RectangleUI.cpp; sourceTree = "<group>"; };
+		129F2E6E17F778BC00206DFB /* RectangleUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectangleUI.h; sourceTree = "<group>"; };
+		129F2E7017F8761000206DFB /* LaserSpiral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserSpiral.h; sourceTree = "<group>"; };
 		12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystemManager.cpp; sourceTree = "<group>"; };
 		12A6DE3517DE640C000D299A /* SoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundPlayer.cpp; sourceTree = "<group>"; };
 		12A6DE3817DE6D57000D299A /* SceneRetro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneRetro.cpp; sourceTree = "<group>"; };
@@ -853,6 +860,8 @@
 				1254509417BF861C00EF23B7 /* SceneManager.cpp */,
 				1254509517BF861C00EF23B7 /* SceneManager.h */,
 				12EB0A1A17E7D0840045DC0B /* SequenceCommand.h */,
+				129F2E6D17F778BC00206DFB /* RectangleUI.cpp */,
+				129F2E6E17F778BC00206DFB /* RectangleUI.h */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1645,6 +1654,8 @@
 			children = (
 				12A6DE3817DE6D57000D299A /* SceneRetro.cpp */,
 				12A6DE3917DE6D57000D299A /* SceneRetro.h */,
+				129F2E6A17F757D000206DFB /* Invader.cpp */,
+				129F2E6B17F757D000206DFB /* Invader.h */,
 			);
 			path = Retro;
 			sourceTree = "<group>";
@@ -1669,6 +1680,7 @@
 				12EB3B6C17E0EB37002D90A0 /* CubicBezier.h */,
 				12EB3B6D17E0EB37002D90A0 /* LaserDot.h */,
 				12CBB02017F454A00078677E /* LaserCircle.h */,
+				129F2E7017F8761000206DFB /* LaserSpiral.h */,
 				12DDCADC17F55C1200484864 /* LaserLine.h */,
 				12CBB01F17F339670078677E /* LaserShape.h */,
 				12EB3B6E17E0EB37002D90A0 /* LaserManager.cpp */,
@@ -2121,6 +2133,8 @@
 				9E21DD8517E7631B005D90B9 /* ofParameterQuad.cpp in Sources */,
 				126E278617F20D26001763E7 /* SceneRealistic.cpp in Sources */,
 				126E278B17F221ED001763E7 /* SceneSpace.cpp in Sources */,
+				129F2E6C17F757D000206DFB /* Invader.cpp in Sources */,
+				129F2E6F17F778BC00206DFB /* RectangleUI.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

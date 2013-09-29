@@ -24,17 +24,20 @@ QuadWarp :: QuadWarp (string saveLabel) {
 	pointColour = ofColor :: white;
 	dstPoints.resize(4);
 	srcPoints.resize(4);
+	
 	for(int i = 0; i<4;i++) {
 		srcPoints[i].set( (i%2)*100, floor(i/2)*100);
 		dstPoints[i].set( (i%2)*100, floor(i/2)*100);
 	}
+	/*
+	ofVec3f midpoint = srcPoints[0] + ((srcPoints[3] - srcPoints[0]) / 2);
+	srcPoints[4] = dstPoints[4] = midpoint;
+	*/
 	updateHomography();
 	
-	
-	//defaultDstPoints.resize(4);
 	visible = false;
 	pointRadius = 10;
-	curPointIndex = -1;
+	curDragPointIndex = -1;
 	lastMousePress = 0; 
 
 }
@@ -48,7 +51,7 @@ void QuadWarp :: draw(bool lockAxis) {
 	
 	if(!visible) return;
 	
-	if(curPointIndex>=0) {
+	if(curDragPointIndex>=0) {
 		
 		ofVec3f diff(ofGetMouseX(), ofGetMouseY());
 		diff-=dragStartPoint;
@@ -59,7 +62,7 @@ void QuadWarp :: draw(bool lockAxis) {
 			else if (abs(diff.y)-abs(diff.x)>1) diff.x = 0;
 		}
 
-		ofVec3f& curPoint = dstPoints[curPointIndex];
+		ofVec3f& curPoint = dstPoints[curDragPointIndex];
 		
 		curPoint = dragStartPoint+diff+clickOffset;
 		
@@ -91,7 +94,7 @@ void QuadWarp :: draw(bool lockAxis) {
 		ofCircle(point, pointRadius);
 		ofCircle(point, 1);
 	
-		if(i == curPointIndex){
+		if(i == curDragPointIndex){
 			
 			ofLine(point.x, point.y - 100, point.x, point.y+100); 
 			ofLine(point.x-100, point.y, point.x+100, point.y);
@@ -261,7 +264,7 @@ void QuadWarp :: mousePressed(ofMouseEventArgs &e) {
 	    
 	for(int i = 0; i < dstPoints.size(); i++) {
         if(dstPoints[i].distance(clickPoint) < pointRadius) {
-			curPointIndex = i;
+			curDragPointIndex = i;
 			ofVec3f &curPoint = dstPoints[i];
 			clickOffset = curPoint - clickPoint;
 			dragStartPoint = clickPoint;
@@ -285,16 +288,13 @@ void QuadWarp :: mouseDragged(ofMouseEventArgs &e) {
 void QuadWarp :: mouseReleased(ofMouseEventArgs &e) {
 	if(!visible) return;
 	
-	if(curPointIndex>=0) {
+	if(curDragPointIndex>=0) {
 		
 		if(ofGetElapsedTimef() - lastMousePress < 0.4) {
-			dstPoints[curPointIndex] = srcPoints[curPointIndex];
-			
-			
+			dstPoints[curDragPointIndex] = srcPoints[curDragPointIndex];			
 		}
 
-		
-		curPointIndex = -1;
+		curDragPointIndex = -1;
 		updateHomography();
 		saveSettings();
 	}
@@ -380,7 +380,7 @@ void QuadWarp::saveSettings() {
 
 std::ostream& operator<< (std::ostream& stream, const QuadWarp& warp){
 
-    for(int i=0;i<4;i++){
+    for(int i=0;i<warp.dstPoints.size();i++){
         stream << (float) warp.dstPoints[i].x << ", ";
         stream << (float) warp.dstPoints[i].y << ": ";
     }
@@ -390,7 +390,7 @@ std::ostream& operator<< (std::ostream& stream, const QuadWarp& warp){
 
 std::istream& operator>> (std::istream& stream, QuadWarp& warp){
     float component;
-    for(int i=0;i<4;i++){
+    for(int i=0;i<warp.dstPoints.size();i++){
         stream >> component;
         warp.dstPoints[i].x = component;
         stream.ignore(2);

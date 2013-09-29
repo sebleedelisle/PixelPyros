@@ -64,7 +64,7 @@ void ofApp::setup(){
 	
 	
 	// TODO FBO oversamples now so check performance / smoothing
-	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4);
+	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); // was 4
 	controlPanels.main = fbo;
 	fbo.begin();
 	ofClear(0,0,0);
@@ -87,7 +87,11 @@ void ofApp::setup(){
 	
 	laserManager.setup(APP_WIDTH, APP_HEIGHT);
 	//laserManager.renderLaserPath = true;
+	appParams.setName("App settings");
 	
+	appParams.add(timeSpeed.set("time speed", 1, 0,2));
+	
+	parameterManager.registerParameterGroup("app", &appParams );
     parameterManager.registerParameterGroup("laser", &laserManager.parameters );
     parameterManager.registerParameterGroup("renderer", &renderer.paramters );
     parameterManager.registerParameterGroup("triggers", &triggerManager.parameters);
@@ -100,6 +104,7 @@ void ofApp::setup(){
         ParameterManager, setup the control gui
      */
     controlPanels.setup( &parameterManager );
+	
 
 }
 
@@ -125,6 +130,7 @@ void ofApp::update(){
 	
 	float time = ofGetElapsedTimef(); 
 	float deltaTime =  time - lastUpdateTime;
+	deltaTime*=timeSpeed;
 
 	lastUpdateTime = time;
 	
@@ -146,6 +152,9 @@ void ofApp::update(){
         particleSystemManager.update(deltaTime);
 		//sequencer.update();
     }
+	
+	laserManager.update();
+	
 }
 
 //--------------------------------------------------------------
@@ -165,17 +174,16 @@ void ofApp::draw(){
 	if(drawCameraIntoFBO)
 		cameraManager.draw();
 
-
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
 	
 	particleSystemManager.draw();
-	laserManager.update();
 	
-	    
 	sceneManager.draw();
 	triggerManager.draw();
 
-		
+	laserManager.draw();
+
+	
 	if(useFbo) {
 		fbo.end();
         
@@ -267,6 +275,9 @@ void ofApp::keyPressed(int key){
         {
             //sequencer.runSequence("Intro");
         }
+	else if(key == 'f') {
+		ofToggleFullscreen();
+	}
    // }
     
     controlPanels.keyPressed(key);
@@ -303,7 +314,7 @@ void ofApp:: setupScenes() {
 	
 	sceneManager.addScene(new SceneSpace("Space"));
 	
-	sceneManager.changeScene(6);
+	sceneManager.changeScene("Nadia");
 	
 	
 	

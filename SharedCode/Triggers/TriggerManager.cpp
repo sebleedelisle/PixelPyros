@@ -167,7 +167,7 @@ void TriggerManager::setTriggersDisabled(bool disabled){
 
 void TriggerManager :: updateLayout() {
 	
-	cout << " ____________________________________ UPDATE LAYOUT _______________" << endl; 
+	//cout << " ____________________________________ UPDATE LAYOUT _______________" << endl;
 	
 	//triggers.clear();
 	//triggerCount = 0;
@@ -325,8 +325,8 @@ void TriggerManager :: updateLayout() {
 	// and subtract one to get rid of double in middle
 	triggerCount--;
 	
-	for(int i = triggerCount+1; i<triggers.size(); i++) {
-		triggers[i]->active = false;
+	for(int i = triggerCount; i<triggers.size(); i++) {
+		triggers[i]->stop();
 		
 	}
 	
