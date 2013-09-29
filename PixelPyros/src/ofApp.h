@@ -85,6 +85,9 @@ public:
     ControlPanels controlPanels;
 	//Sequencer sequencer;
 	
+	ofParameterGroup appParams; 
+	ofParameter<float> timeSpeed;
+	
 	ofFbo fbo;
 	bool useFbo;
 	
@@ -112,6 +115,7 @@ public:
 	PyrosRenderer renderer;
 	
 	float testValue;
+	
     
 private:
     

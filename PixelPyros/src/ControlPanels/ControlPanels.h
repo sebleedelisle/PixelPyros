@@ -39,6 +39,7 @@ class ControlPanels {
     
     ParameterManager& parameterManager;
     
+    ofxPanel appGui; 
     ofxPanel laserCalibration;
     ofxPanel projectorCalibration;
     ofxPanel cameraCalibration;

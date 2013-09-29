@@ -27,7 +27,7 @@ class LaserLine : public LaserShape{
 		intensity = lineintensity;
 		tested = false;
 		
-		cout<<"LINE SET : " << startPos << " " << endPos << " " <<endl;
+	//cout<<"LINE SET : " << startPos << " " << endPos << " " <<endl;
 		
 	}
 	

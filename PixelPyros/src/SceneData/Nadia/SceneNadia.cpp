@@ -101,9 +101,9 @@ TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange
 	smoke.brightnessStartMin *=0.5;
 	
 
-	rocketSettings.addParticleSystemSetting(ps);
+	//rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(laser);
-	rocketSettings.addParticleSystemSetting(smoke);
+	//rocketSettings.addParticleSystemSetting(smoke);
 	
 	
 	ts.rocketSettings = &rocketSettings;
@@ -161,11 +161,10 @@ TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	explosion.brightnessEnd = 0; 
 	
 	
-	
 	//explosion.emitDelay = trails.emitLifeTime;
 	
 	rocketSettings.addParticleSystemSetting(laserTrails);
-	rocketSettings.addParticleSystemSetting(trails);
+	//rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
 	
 	ts.rocketSettings = &rocketSettings;

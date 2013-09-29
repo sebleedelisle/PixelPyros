@@ -647,7 +647,8 @@ ParticleSystemSettings FireworkFactory:: getBangerBang() {
 ParticleSystemSettings FireworkFactory:: getBangerCrackles() {
 	
 	ParticleSystemSettings explosion;
-	explosion.renderer = new ParticleRendererCircle();
+	//explosion.renderer = new ParticleRendererCircle();
+	explosion.renderer = new ParticleRendererLaser();
 	
 	
 	explosion.directionYVar= 90;

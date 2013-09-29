@@ -61,16 +61,14 @@ void LaserManager:: setup (int width, int height) {
 	showMovePoints = false;
 	renderLaserPath = true;
 	intensity = 1;
-    
-	//float x1 = appWidth*0.2;
-	//float x2 = appWidth*0.7;
-	//float y1 = appHeight*0.2;
-	//float y2 = appHeight*0.65;
 	
     float x1 = APP_WIDTH * 0.2;
     float x2 = APP_WIDTH * 0.8;
     float y1 = APP_HEIGHT * 0.2;
     float y2 = APP_HEIGHT * 0.8;
+	
+	maskRectangle.set(0, 0, APP_WIDTH, y2);
+	maskRectangle.initUI();
 	
     warp = warpParam;
 	warp.label = "laserWarp";
@@ -95,7 +93,8 @@ void LaserManager:: setup (int width, int height) {
 	
 	//p1.setName("Etherdream");
 	parameters.add(connectButton.set("Etherdream connect", false));
-	parameters.add(etherdreamStatus.set("status", ""));
+	parameters.add(etherdreamStatus.set("status", "test"));
+	parameters.add(showWarpPoints.set("show warp points", false)); 
 	
 	//p2.setName("laser");
     
@@ -107,6 +106,7 @@ void LaserManager:: setup (int width, int height) {
 	parameters.add(showMovePoints.set("show move points", false));
 	parameters.add(showSyncTest.set("show sync test", false));
 	parameters.add(renderLaserPath.set("render laser path", true));
+	parameters.add(renderLaserPreview.set("render laser preview", true));
 	
     calibrationParameters.setName("Laser Calibration");
     calibrationParameters.add(warpParam.set("Homography", warp) );
@@ -143,7 +143,12 @@ void LaserManager:: setup (int width, int height) {
 
 void LaserManager:: update() {
 	
-	ofPushStyle();
+	etherdreamStatus = etherdream.stateIsFound() ? "connected" : "disconnected";
+	
+	resetIldaPoints();
+	previewMesh.clear();
+	pathMesh.clear();
+	
 	
 	if(connectButton!=isConnected) {
 		if(connectButton) {
@@ -151,29 +156,24 @@ void LaserManager:: update() {
 		} else {
 			disconnectFromEtherdream();
 		}
-		
-		
 	}
 	
 	if(showSyncTest) {
 		addDelayTest();
-		
-		
 	}
 	
 	
 	if(showRegistration) {
 		
-		//addLaserRectEased(pmin, pmax, white);
-		//addLaserLineEased(pmin, pmax, white);
-		//addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
+		addLaserRectEased(pmin, pmax, white);
+		addLaserLineEased(pmin, pmax, white);
+		addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
 		
 		ofPoint v = pmax - pmin;
 		
 		for(float x =0 ; x<=1; x+=0.2) {
 			for(float y = 0; y<=1; y+=0.2) {
 				addLaserDot(ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*y)), white, 1);
-				ofCircle(pmin.x + (v.x*x), pmin.x + (v.x*x), 10); 
 			}
 		}
 		
@@ -191,10 +191,16 @@ void LaserManager:: update() {
 		
 	}
 	
+	
+}
+
+void LaserManager::draw() {
+	
+	
 	drawShapes();
 	
 	
-		
+	
 	
 	while(ildaPoints.size()<minPoints) {
 		
@@ -203,7 +209,7 @@ void LaserManager:: update() {
 	}
 	
 	
-	// SORT OUT COLOUR CHANGE DELAY. 
+	// SORT OUT COLOUR CHANGE DELAY.
 	vector<ofxIlda::Point> adjustedPoints;
 	
 	for(int i = 0; i<ildaPoints.size(); i++) {
@@ -219,7 +225,7 @@ void LaserManager:: update() {
 		p.g = round(colourPoint.g);
 		p.b = round(colourPoint.b);
 		
-		adjustedPoints.push_back(p); 
+		adjustedPoints.push_back(p);
 		
 		
 	}
@@ -229,27 +235,65 @@ void LaserManager:: update() {
 		etherdream.checkConnection(true);
 		//etherdream.setPPS(50000);
 	}
-    
-	if((renderLaserPath)||(showRegistration)) {
+	
+	
+	warp.visible = showWarpPoints;
+	ofPushStyle();
+
+	if((renderLaserPath)){//||(showRegistration)) {
 		
 		ofNoFill();
+		ofSetLineWidth(1);
 		
-		ofSetColor(50,0,0);
-		previewMesh.setMode(OF_PRIMITIVE_LINE_LOOP);
-		previewMesh.draw();
+		ofSetColor(155,0,0);
+		pathMesh.setMode(OF_PRIMITIVE_LINE_LOOP);
+		pathMesh.draw();
 		ofSetColor(255,255,255);
-		previewMesh.setMode(OF_PRIMITIVE_POINTS);
-		previewMesh.draw();
+		pathMesh.setMode(OF_PRIMITIVE_POINTS);
+		pathMesh.draw();
 		
 	}
-	//ofDrawBitmapString("POINTS : "+ofToString(ildaPoints.size())+" "+ofToString(colourChangeDelay), ofPoint(10,10));
-
 	
-	resetIldaPoints();
+	if(renderLaserPreview) {
+		
+		
+		ofNoFill();
+		ofSetLineWidth(3);
+		//ofSetColor(50,0,0);
+		ofSetColor(255,255,255);
+		previewMesh.setMode(OF_PRIMITIVE_LINE_LOOP);
+	
+		previewMesh.draw();
+	}
+	//ofDrawBitmapString("POINTS : "+ofToString(ildaPoints.size())+" "+ofToString(colourChangeDelay), ofPoint(10,10));
 	
 	warp.draw();
 	
-	ofPopStyle(); 
+	maskRectangle.draw();
+	
+	ofPopStyle();
+	
+	// PATH TEST
+	
+	/*
+	 ofPath laserPath;
+	 laserPath.setMode(ofPath::COMMANDS);
+	 laserPath.setStrokeWidth(2);
+	 laserPath.setPolyWindingMode(OF_POLY_WINDING_POSITIVE);
+	 laserPath.circle(100, 100, 100);
+	 laserPath.circle(150, 100, 100);
+	 //
+	 laserPath.draw(300,300);
+	 vector<ofPolyline> outlines = laserPath.getOutline();
+	 
+	 if(outlines.size()>0) {
+	 ofPolyline line = outlines[0];
+		 line.simplify(5);
+		 line.draw();
+	 }
+	*/
+	
+	
 	
 }
 
@@ -264,6 +308,11 @@ void LaserManager::addLaserDot(const ofPoint& ofpoint, ofFloatColor colour, floa
 void LaserManager::addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, float radius, float intensity){
 	
 	shapes.push_back(new LaserCircle(ofpoint, colour, radius, intensity));
+}
+
+void LaserManager::addLaserSpiral(const ofPoint& position, ofFloatColor& col, float rad1,float rad2, float fadeoutpoint,  float intens){
+	shapes.push_back(new LaserSpiral(position, col, rad1, rad2,  fadeoutpoint,intens));
+	
 }
 
 
@@ -282,7 +331,6 @@ void LaserManager:: drawShapes() {
 	int nextDotIndex = NULL;
 	
 	float travelDistanceSorted = 0; 
-	
 	
 	do {
 		
@@ -330,6 +378,7 @@ void LaserManager:: drawShapes() {
 	
 	ofDrawBitmapString(ofToString(travelDistanceUnsorted)+"\n" +ofToString(travelDistanceSorted), ofPoint(10,40));
 	
+	ofPoint startPosition = sortedShapes[0]->startPos;
 	
 	for(int i = 0; i<sortedShapes.size(); i++) {
 		
@@ -340,120 +389,29 @@ void LaserManager:: drawShapes() {
 		}
 		
 		
-		// CHECK FOR A DOT
+		// Is it a dot?
 		LaserDot * dot = dynamic_cast<LaserDot*>(shape);
-		
-		
 		if(dot) {
-		
-			//cout << i << " DOT!" << endl;
-			int particlecount = ceil(dotMaxPoints* dot->intensity);
-			 
-			for(int i = 0; i<dotPreBlank; i++) {
-				addIldaPoint(dot->startPos, black);
-			}
-			for(int i = 0; i<particlecount; i++) {
-				addIldaPoint(dot->startPos, dot->colour);
-			}
-			for(int i = 0; i<dotPostBlank; i++) {
-				addIldaPoint(dot->startPos, black);
-			}
+			drawLaserDot(*dot); 
 		}
 		
-		
-		// CHECK CIRCLES
+		// Is it a circle?
 		LaserCircle * circle = dynamic_cast<LaserCircle*>(shape);
-		
 		if(circle) {
-			
-			
-			float acceleratedistance = (maxSpeed*maxSpeed) / (2*acceleration);
-			float timetogettospeed = maxSpeed / acceleration;
-			
-			float totaldistance = 2*PI*circle->radius;
-			
-			float constantspeeddistance = totaldistance - (acceleratedistance*2);
-			float constantspeedtime = constantspeeddistance/maxSpeed;
-			
-			if(totaldistance<(acceleratedistance*2)) {
-				
-				constantspeeddistance = 0 ;
-				constantspeedtime = 0;
-				acceleratedistance = totaldistance/2;
-				maxSpeed = sqrt( acceleratedistance * 2 * acceleration);
-				timetogettospeed = maxSpeed / acceleration;
-				
-			}
-			
-			float totaltime = (timetogettospeed*2) + constantspeedtime;
-			
-			float timeincrement = totaltime / (floor(totaltime));
-			
-			float currentdistance;
-			currentdistance = 0;
-			float t = 0;
-			
-			ofNoFill();
-			
-			ofPoint currentpos;
-			
-			for(int i = 0; i<endCount;i++){
-				addIldaPoint(circle->startPos, circle->colour);
-			}
-			
-			ofPoint p;
-			
-			while (t <= totaltime + 0.001) {
-				
-				if(t>totaltime) t = totaltime;
-				
-				if(t <=timetogettospeed) {
-					currentdistance = 0.5 * acceleration * (t*t);
-					ofSetColor(0,255,0);
-				} else if((t>timetogettospeed) && (t<=timetogettospeed+constantspeedtime)){
-					currentdistance = acceleratedistance + ((t-timetogettospeed) * maxSpeed);
-					ofSetColor(255);
-				} else  {
-					float t3 = t - (timetogettospeed + constantspeedtime);
-					
-					currentdistance = (acceleratedistance + constantspeeddistance) + (maxSpeed*t3)+(0.5 *(-acceleration) * (t3*t3));
-					ofSetColor(255,0,0);
-					
-				}
-				
-				//currentpos = (u * currentdistance) + start;
-				
-				//addIldaPoint(currentpos, colour);
-				
-				float angle = ofMap(currentdistance, 0, totaldistance, 0, PI*2);
-				
-				p.set(circle->pos);
-				p.x+=sin(angle)*circle->radius;
-				p.y-=cos(angle)*circle->radius;
-				
-				addIldaPoint(p, circle->colour);
-				
-				
-				
-				t+=timeincrement;
-				
-			}
-			
-			
-			LaserLine * line = dynamic_cast<LaserLine*>(shape);
-			
-			if(line) {
-				drawLaserLine(*line);
-			}
-				
-					
-			
+			drawLaserCircle(*circle);
+		}
+		
+		// Is it a line?
+		LaserLine * line = dynamic_cast<LaserLine*>(shape);
+		if(line) {
+			drawLaserLine(*line);
 		}
 	
 	}
 	
+	moveLaser(startPosition);
 	
-	
+		
 }
 
 void LaserManager :: moveLaser(const ofPoint & targetpoint){
@@ -482,69 +440,31 @@ void LaserManager :: moveLaser(const ofPoint & targetpoint){
 
 
 void LaserManager:: addLaserLineEased(const ofPoint&startpoint, const ofPoint&endpoint, ofFloatColor colour) {
-	
-	
-	shapes.push_back(new LaserLine(startpoint, endpoint, colour, intensity));
-	
-	
+	shapes.push_back(new LaserLine(startpoint, endpoint, colour, 1));
 }
 
 
-void LaserManager:: drawLaserLine(LaserLine& line) {
-	
-	ofPoint start = line.startPos;// warp.getWarpedPoint(startpoint);
-	ofPoint end = line.endPos;//warp.getWarpedPoint(endpoint);
-	
-	if(!currentPosition.match(start, 0.01)) {
-		moveLaser(start);
-		
+void LaserManager:: drawLaserDot(LaserDot &dot) {
+	//cout << i << " DOT!" << endl;
+	int particlecount = dotMaxPoints;// ceil(dotMaxPoints* dot->intensity);
+
+	for(int i = 0; i<dotPreBlank; i++) {
+		addIldaPoint(dot.startPos, black, dot.intensity);
 	}
-	
-	
-	ofPoint vec = end - start;
-	
-	float speed = 8;
-	int iterations = floor(vec.length()/speed) + 10; // arbitrary amount to create enough ease points!
-	
-	// TODO add start and end blanks for lines?
-	
-	for(int i = 0; i<endCount;i++)
-		addIldaPoint(start, line.colour);
-	
-	
-	for(float i = 0; i<iterations; i++) {
-		
-		float t = Quad::easeInOut(i/iterations, 0, 1, 1);
-		
-		addIldaPoint(start + (vec*t), line.colour);
-		
+	for(int i = 0; i<particlecount; i++) {
+		addIldaPoint(dot.startPos, dot.colour, dot.intensity);
 	}
-	
-	for(int i = 0; i<blankCount; i++) {
-		addIldaPoint(end, line.colour);
+	for(int i = 0; i<dotPostBlank; i++) {
+		addIldaPoint(dot.startPos, black, dot.intensity);
 	}
 }
 
-/*
-void LaserManager:: addLaserLine(const ofPoint&startpoint, const ofPoint&endpoint, ofFloatColor colour) {
-	
-	ofPoint start = warp.getWarpedPoint(startpoint);
-	ofPoint end = warp.getWarpedPoint(endpoint);
-	//ofPoint start = startpoint;
-	//ofPoint end = endpoint;
-	if(!currentPosition.match(start, 0.01)) {
-		moveLaser(startpoint);
-		
-	}
+void LaserManager:: drawLaserCircle(LaserCircle &circle){
 	
 	float acceleratedistance = (maxSpeed*maxSpeed) / (2*acceleration);
 	float timetogettospeed = maxSpeed / acceleration;
-
 	
-	ofPoint u = end-start;
-	
-	
-	float totaldistance = u.length();
+	float totaldistance = 2*PI*circle.radius;
 	
 	float constantspeeddistance = totaldistance - (acceleratedistance*2);
 	float constantspeedtime = constantspeeddistance/maxSpeed;
@@ -563,8 +483,6 @@ void LaserManager:: addLaserLine(const ofPoint&startpoint, const ofPoint&endpoin
 	
 	float timeincrement = totaltime / (floor(totaltime));
 	
-	u.normalize();
-	
 	float currentdistance;
 	currentdistance = 0;
 	float t = 0;
@@ -573,9 +491,11 @@ void LaserManager:: addLaserLine(const ofPoint&startpoint, const ofPoint&endpoin
 	
 	ofPoint currentpos;
 	
-	for(int i = 0; i<endCount;i++)
-		addIldaPoint(start, colour);
-		
+	for(int i = 0; i<endCount;i++){
+		addIldaPoint(circle.startPos, black);
+	}
+	
+	ofPoint p;
 	
 	while (t <= totaltime + 0.001) {
 		
@@ -595,36 +515,57 @@ void LaserManager:: addLaserLine(const ofPoint&startpoint, const ofPoint&endpoin
 			
 		}
 		
-		currentpos = (u * currentdistance) + start;
+		//currentpos = (u * currentdistance) + start;
 		
-		addIldaPoint(currentpos, colour);
+		//addIldaPoint(currentpos, colour);
 		
-					 
+		float angle = ofMap(currentdistance, 0, totaldistance, 0, PI*2);
 		
+		p.set(circle.pos);
+		p.x+=sin(angle)*circle.radius;
+		p.y-=cos(angle)*circle.radius;
 		
+		addIldaPoint(p, circle.colour, circle.intensity);
+	
 		t+=timeincrement;
 		
 	}
 
-	for(int i = 0; i<blankCount; i++) {
-		addIldaPoint(end, colour);
+	
+	
+}
+
+void LaserManager:: drawLaserLine(LaserLine& line) {
+	
+	ofPoint start = line.startPos;// warp.getWarpedPoint(startpoint);
+	ofPoint end = line.endPos;//warp.getWarpedPoint(endpoint);
+	
+	ofPoint vec = end - start;
+	
+	float speed = 8;
+	int iterations = floor(vec.length()/speed) + 10; // arbitrary amount to create enough ease points!
+	
+	// TODO add start and end blanks for lines?
+	
+	for(int i = 0; i<endCount;i++)
+		addIldaPoint(start, black);
+	
+	 
+	for(float i = 0; i<iterations; i++) {
+		
+		float t = Quad::easeInOut(i/iterations, 0, 1, 1);
+		
+		addIldaPoint(start + (vec*t), line.colour, line.intensity);
+		
 	}
 	
-	
-
-	
+	for(int i = 0; i<blankCount; i++) {
+		addIldaPoint(end, black);
+	}
 }
-*/
-/*
-void LaserManager::addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour){
-	
-	addLaserLine(topLeft, ofPoint(topLeft.x+dimensions.x,topLeft.y), colour);
-	addLaserLine(ofPoint(topLeft.x+dimensions.x,topLeft.y), topLeft+dimensions, colour);
-	addLaserLine(topLeft+dimensions, ofPoint(topLeft.x,topLeft.y+dimensions.y), colour);
-	addLaserLine(ofPoint(topLeft.x,topLeft.y+dimensions.y), topLeft, colour);
 
-}
-*/
+
+
 
 void LaserManager::addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour){
 	
@@ -653,17 +594,29 @@ ofPoint LaserManager::ildaPointToOfPoint(const ofxIlda::Point& ildapoint){
 }
 
 
-void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c){
+void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c, float pointIntensity){
+	
+	bool offScreen = false;
+	
+	if(!maskRectangle.inside(p)) {
+		offScreen = true;
+	}
+	
+	if(offScreen) c = ofFloatColor::black;
+	
+	previewMesh.addVertex(p);
+	previewMesh.addColor(c);
+	
+	pathMesh.addVertex(p);
+	//pathMesh.addColor(c);
 	
 	ofPoint warpedpoint = warp.getWarpedPoint(p);;
 	
-	ofPoints.push_back(warpedpoint);
+	//ofPoints.push_back(warpedpoint);
 
-	previewMesh.addVertex(warp.getUnWarpedPoint(warpedpoint));
-	//previewMesh.addColor(c);
-	c.r*=intensity;
-	c.g*=intensity;
-	c.b*=intensity; 
+	c.r*=intensity*pointIntensity;
+	c.g*=intensity*pointIntensity;
+	c.b*=intensity*pointIntensity;
 	
 	ildaPoints.push_back(ofPointToIldaPoint(warpedpoint, c));
 	
@@ -674,9 +627,9 @@ void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c){
 void LaserManager::resetIldaPoints() {
 	
 	ildaPoints.clear();
-	previewMesh.clear();
-	previewMesh.setMode(OF_PRIMITIVE_LINES);
-	ofPoints.clear();
+
+	
+	//ofPoints.clear();
 	
 	for(int i = 0; i<shapes.size(); i++) {
 		delete shapes[i];
@@ -754,6 +707,109 @@ bool LaserManager:: toggleRegistration() {
  //}
  }
  currentVel.set(targetVel);
+ 
+ }
+ */
+
+
+
+/*
+ void LaserManager:: addLaserLine(const ofPoint&startpoint, const ofPoint&endpoint, ofFloatColor colour) {
+ 
+ ofPoint start = warp.getWarpedPoint(startpoint);
+ ofPoint end = warp.getWarpedPoint(endpoint);
+ //ofPoint start = startpoint;
+ //ofPoint end = endpoint;
+ if(!currentPosition.match(start, 0.01)) {
+ moveLaser(startpoint);
+ 
+ }
+ 
+ float acceleratedistance = (maxSpeed*maxSpeed) / (2*acceleration);
+ float timetogettospeed = maxSpeed / acceleration;
+ 
+ 
+ ofPoint u = end-start;
+ 
+ 
+ float totaldistance = u.length();
+ 
+ float constantspeeddistance = totaldistance - (acceleratedistance*2);
+ float constantspeedtime = constantspeeddistance/maxSpeed;
+ 
+ if(totaldistance<(acceleratedistance*2)) {
+ 
+ constantspeeddistance = 0 ;
+ constantspeedtime = 0;
+ acceleratedistance = totaldistance/2;
+ maxSpeed = sqrt( acceleratedistance * 2 * acceleration);
+ timetogettospeed = maxSpeed / acceleration;
+ 
+ }
+ 
+ float totaltime = (timetogettospeed*2) + constantspeedtime;
+ 
+ float timeincrement = totaltime / (floor(totaltime));
+ 
+ u.normalize();
+ 
+ float currentdistance;
+ currentdistance = 0;
+ float t = 0;
+ 
+ ofNoFill();
+ 
+ ofPoint currentpos;
+ 
+ for(int i = 0; i<endCount;i++)
+ addIldaPoint(start, colour);
+ 
+ 
+ while (t <= totaltime + 0.001) {
+ 
+ if(t>totaltime) t = totaltime;
+ 
+ if(t <=timetogettospeed) {
+ currentdistance = 0.5 * acceleration * (t*t);
+ ofSetColor(0,255,0);
+ } else if((t>timetogettospeed) && (t<=timetogettospeed+constantspeedtime)){
+ currentdistance = acceleratedistance + ((t-timetogettospeed) * maxSpeed);
+ ofSetColor(255);
+ } else  {
+ float t3 = t - (timetogettospeed + constantspeedtime);
+ 
+ currentdistance = (acceleratedistance + constantspeeddistance) + (maxSpeed*t3)+(0.5 *(-acceleration) * (t3*t3));
+ ofSetColor(255,0,0);
+ 
+ }
+ 
+ currentpos = (u * currentdistance) + start;
+ 
+ addIldaPoint(currentpos, colour);
+ 
+ 
+ 
+ 
+ t+=timeincrement;
+ 
+ }
+ 
+ for(int i = 0; i<blankCount; i++) {
+ addIldaPoint(end, colour);
+ }
+ 
+ 
+ 
+ 
+ }
+ */
+/*
+ void LaserManager::addLaserRect(const ofPoint&topLeft, const ofPoint&dimensions, ofFloatColor colour){
+ 
+ addLaserLine(topLeft, ofPoint(topLeft.x+dimensions.x,topLeft.y), colour);
+ addLaserLine(ofPoint(topLeft.x+dimensions.x,topLeft.y), topLeft+dimensions, colour);
+ addLaserLine(topLeft+dimensions, ofPoint(topLeft.x,topLeft.y+dimensions.y), colour);
+ addLaserLine(ofPoint(topLeft.x,topLeft.y+dimensions.y), topLeft, colour);
  
  }
  */
