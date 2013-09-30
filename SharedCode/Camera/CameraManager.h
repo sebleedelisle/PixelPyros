@@ -16,7 +16,7 @@
 #include "CameraVidPlayer.h"
 //#include "CameraCanon.h"
 
-#include "ofxAutoControlPanel.h"
+//#include "ofxAutoControlPanel.h"
 
 #define CAPTURE_FPS 30
 
@@ -47,14 +47,15 @@ class CameraManager : public ofBaseDraws{
 	bool changeCamera(string camname);
 	virtual bool changeCamera(CameraWrapper* cam);
 	
-	void initControlPanel(ofxAutoControlPanel& gui); 
-	void guiEventsIn(guiCallbackData & data);
+	//void initControlPanel(ofxAutoControlPanel& gui);
+	//void guiEventsIn(guiCallbackData & data);
     
     void beginCapture();
     void endCapture();
 	
-	guiTypeToggle* toggleShowUSBControls;
-	guiTypeDrawable* cameraPreview;
+	// TODO - ADD CAMERA PREVIEWS
+	//guiTypeToggle* toggleShowUSBControls;
+	//guiTypeDrawable* cameraPreview;
 	
 	CameraVidPlayer * addVidPlayer(string filename, int width = 1024, int height = 768);
 	CameraWrapper* camera; 
@@ -65,16 +66,15 @@ class CameraManager : public ofBaseDraws{
 	CameraVidPlayer*	cameraVidPlayer;
 	//CameraCanon*		cameraCanon;
 	
-    int gain; 
-	int gamma;
-	int shutter; 
-	int brightness;
-    
-//    Unimplemented currently
-//    ofParameter<int> gainParam;
-//    ofParameter<int> gammaParam;
-//    ofParameter<int> shutterParam;
-//    ofParameter<int> brightnessParam;
+//    int gain; 
+//	int gamma;
+//	int shutter; 
+//	int brightness;
+//    
+    ofParameter<int> gainParam;
+    ofParameter<int> gammaParam;
+    ofParameter<int> shutterParam;
+    ofParameter<int> brightnessParam;
 	ofParameterGroup parameters;
     
     bool capturing;

@@ -127,7 +127,7 @@ TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	rocketSettings.startSpeedMax = 900;
 	rocketSettings.drag = 0.96;
 	rocketSettings.gravity.y = 100;
-	rocketSettings.lifeTime = 1.7;
+	rocketSettings.setLifeTime(1.7);
 	
 	ParticleSystemSettings laserTrails = getLaserParticles(hue, hueChange);
 	ParticleSystemSettings trails = getTrailParticles(hue, hueChange);
@@ -140,14 +140,15 @@ TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	laserTrails.drag = rocketSettings.drag;
 	laserTrails.gravity = rocketSettings.gravity;
 	
-	laserTrails.lifeMin = laserTrails.lifeMax = rocketSettings.lifeTime;
-	
+	laserTrails.lifeMin = laserTrails.lifeMax = rocketSettings.getLifeTime();
+
+		
 	laserTrails.emitCount = 1;
 	laserTrails.emitMode = PARTICLE_EMIT_BURST;
-	trails.emitLifeTime = rocketSettings.lifeTime;
+	trails.emitLifeTime = rocketSettings.getLifeTime();
 	
 	ParticleSystemSettings explosion(laserTrails);
-	explosion.emitDelay = rocketSettings.lifeTime;
+	explosion.emitDelay = rocketSettings.getLifeTime();
 	explosion.emitCount = 15;
 	explosion.speedMax = 500;
 	explosion.speedMin = 800;
@@ -169,7 +170,7 @@ TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	
 	ts.rocketSettings = &rocketSettings;
 	
-	ts.rechargeSettings = TriggerRechargeSettings::fastMultiples;
+	ts.rechargeSettings = TriggerRechargeSettings::medium;
 	
 	return &ts;
 	

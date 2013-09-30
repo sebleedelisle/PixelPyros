@@ -20,6 +20,7 @@ void ParameterManager::registerParameterGroup(string groupName, ofParameterGroup
 }
 
 ofParameterGroup * ParameterManager::getParameterGroup(string groupName){
+	//TODO Requires error checking
     return paramGroups[groupName];
 }
 

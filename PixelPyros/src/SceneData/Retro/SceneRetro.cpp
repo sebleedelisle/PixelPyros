@@ -156,7 +156,8 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 
 bool SceneRetro::update(float deltaTime) {
 	
-	
+	if(!Scene::update(deltaTime)) return false;
+
 	ParticleSystemManager& psm = *ParticleSystemManager::instance();
 	
 	activeInvaders = 0;
@@ -205,12 +206,12 @@ bool SceneRetro::update(float deltaTime) {
 		
 		for(int j = 0; j<rockets.size(); j++) {
 			PhysicsObject& rocket = *rockets[j];
-			if(!rocket.enabled) continue;
+			if(!rocket.isEnabled()) continue;
 			
 			//ofRectangle invaderRect(invader.pos, invader.width, invader.height);
 			if(invader.getRect().inside(rocket.pos)) {
 				invader.enabled = false;
-				rocket.life.end();
+				//rocket.life.end();
 				break;
 			}
 			
@@ -370,7 +371,7 @@ TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueC
 	
 	rocketSettings.startSpeedMin = minSpeed;
 	rocketSettings.startSpeedMax = maxSpeed;
-	rocketSettings.lifeTime = 0.5; 
+	rocketSettings.setLifeTime(0.5);
 	rocketSettings.drag = 0.99;
 	rocketSettings.gravity.y = 1000;
 	rocketSettings.addParticleSystemSetting(pss);
@@ -451,7 +452,7 @@ ParticleSystemSettings SceneRetro::  getPixelExplosionParticles(float hue, float
 	ParticleSystemSettings explosion;
 	explosion.renderer = new ParticleRendererLowRes(pixelSize);
 	
-	//pss.directionZVar = 20;
+
 	explosion.speedMin = 250;
 	explosion.speedMax = 300;
 
@@ -466,9 +467,20 @@ ParticleSystemSettings SceneRetro::  getPixelExplosionParticles(float hue, float
 	explosion.lifeMin = explosion.lifeMax = 0.6;
 	
 	
+	ofMesh* circleMesh = new ofMesh();
+	for(int i = 0; i<30; i++) {
+		ofVec3f v(1,0,0);
+		v.rotate(ofMap(i,0,30,0,360), ofVec3f(0,0,1));
+		circleMesh->addVertex(v);
+	}
+	
+	explosion.directionYVar = 0;
+	explosion.directionZVar = 0;
+	
 	//explosion.emitMode = PARTICLE_EMIT_BURST;
 	explosion.emitLifeTime = 0.1;
-	explosion.emitCount = 500;
+	explosion.emitShape = circleMesh; 
+	explosion.emitCount = 1200;
 	explosion.startSound = "RetroExplosion";
 
 	

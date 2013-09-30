@@ -411,7 +411,14 @@ bool Trigger::doTrigger() {
 		settings->doTrigger(pos,1,angle);
 		triggerCount++;
 		if(settings->rotateOnFire) {
-			angle = (sin(triggerCount*settings->rotationSpeed)*settings->rotationExtent);
+			angle += settings->rotationSpeed * rotateDirection;
+			if(angle >= settings->rotationExtent) {
+				angle = settings->rotationExtent;
+				rotateDirection = -1;
+			} else if (angle <= -settings->rotationExtent) {
+				angle = -settings->rotationExtent;
+				rotateDirection = 1;
+			}
 		}
 
 	}
@@ -429,6 +436,7 @@ void Trigger::copySettings(TriggerSettings* newsettings) {
 
 	scale = 0;
 	angle = 0;
+	rotateDirection = 1; 
 	/*
 	motionTriggerLevel = settings.motionTriggerLevel;
 	triggerPower = settings.triggerPower;

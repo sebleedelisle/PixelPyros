@@ -250,7 +250,7 @@ TriggerSettingsRocket*  SceneRealistic :: getFountain(float hueStartOffset , flo
 	rocketSettings.directionVar = 5;
 	rocketSettings.gravity.y = 300;
 	rocketSettings.drag = 0.9;
-	rocketSettings.lifeTime = 1;
+	rocketSettings.setLifeTime(1);
 	
 	rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(ps2);

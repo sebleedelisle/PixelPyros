@@ -10,8 +10,6 @@
 
 #include "ofMain.h"
 #include "ofxCv.h"
-#include "ofxAutoControlPanel.h"
-
 using namespace cv; 
 using namespace ofxCv; 
 
@@ -30,8 +28,8 @@ class MotionManager {
 	float getMotionAtPosition(ofVec2f topleft, ofVec2f botright);
 
 	
-	void initControlPanel(ofxAutoControlPanel& gui); 
-	void guiEventsIn(guiCallbackData & data);
+	//void initControlPanel(ofxAutoControlPanel& gui);
+	//void guiEventsIn(guiCallbackData & data);
 
 	
 	

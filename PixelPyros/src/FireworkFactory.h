@@ -11,7 +11,6 @@
 #include "ofMain.h"
 #include "TriggerSettings.h"
 #include "TriggerSettingsRocket.h"
-#include "TriggerSettingsRocketRotator.h"
 #include "ParticleSystemSettings.h"
 #include "ParticleRendererBitmap.h"
 #include "ParticleRendererLine.h"

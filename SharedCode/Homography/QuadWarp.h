@@ -17,6 +17,7 @@ class QuadWarp {
 	public :
 	
 	QuadWarp (string saveLabel = "default");
+	~QuadWarp();
 	
 	void draw();
 	void draw(bool lockAxis);
