@@ -16,9 +16,6 @@
 
 QuadWarp :: QuadWarp (string saveLabel) {
 	
-	ofAddListener(ofEvents().mousePressed, this, &QuadWarp::mousePressed);
-	ofAddListener(ofEvents().mouseDragged, this, &QuadWarp::mouseDragged);
-	ofAddListener(ofEvents().mouseReleased, this, &QuadWarp::mouseReleased);
 	label = saveLabel;
 
 	pointColour = ofColor :: white;
@@ -38,7 +35,20 @@ QuadWarp :: QuadWarp (string saveLabel) {
 	visible = false;
 	pointRadius = 10;
 	curDragPointIndex = -1;
-	lastMousePress = 0; 
+	lastMousePress = 0;
+	
+	ofAddListener(ofEvents().mousePressed, this, &QuadWarp::mousePressed);
+	ofAddListener(ofEvents().mouseDragged, this, &QuadWarp::mouseDragged);
+	ofAddListener(ofEvents().mouseReleased, this, &QuadWarp::mouseReleased);
+
+
+}
+
+QuadWarp :: ~QuadWarp() {
+	
+	ofRemoveListener(ofEvents().mousePressed, this, &QuadWarp::mousePressed);
+	ofRemoveListener(ofEvents().mouseDragged, this, &QuadWarp::mouseDragged);
+	ofRemoveListener(ofEvents().mouseReleased, this, &QuadWarp::mouseReleased);
 
 }
 
@@ -202,6 +212,11 @@ void QuadWarp::updateHomography() {
 	
 	
 	vector<Point2f> srcCVPoints, dstCVPoints;
+	if(srcPoints.size()!=dstPoints.size()) {
+		cout << "RUH ROH" << endl;
+	}
+		
+	
 	for(int i = 0; i < srcPoints.size(); i++) {
 		srcCVPoints.push_back(Point2f(srcPoints[i].x , srcPoints[i].y));
 		dstCVPoints.push_back(Point2f(dstPoints[i].x, dstPoints[i].y));
@@ -390,6 +405,9 @@ std::ostream& operator<< (std::ostream& stream, const QuadWarp& warp){
 
 std::istream& operator>> (std::istream& stream, QuadWarp& warp){
     float component;
+	
+	// TODO I'm pretty sure we need some error checking here
+	
     for(int i=0;i<warp.dstPoints.size();i++){
         stream >> component;
         warp.dstPoints[i].x = component;

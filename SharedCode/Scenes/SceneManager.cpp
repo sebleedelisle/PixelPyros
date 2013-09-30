@@ -342,35 +342,3 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 
 
 
-
-
-// Here's the bit that gets all the patterns out of the scenes for the old OSC controller.
-// Don't think we need it now, but keeping it just in case.
-
-/*
-void SceneManager::initSceneControls(SettingsManager & settingsManager) {
-	
-	settingsManager.addSettingString(&currentSceneName, "/PixelPyros/SceneData/content" );
-	settingsManager.addSettingString(&currentSceneArrangement, "/PixelPyros/SceneArrangement/content" );
-	
-	settingsManager.addSettingBool(&showSlideShow, "", "/PixelPyros/Scenes/Restart/x", true, true);
-	
-	for(int i = 0; i<scenes.size(); i++) {
-
-		Scene & scene = *scenes[i];
-		
-		
-		for(int j = 0; j<scene.triggerPatterns.size(); j++) {
-		
-			settingsManager.addSettingBool(scene.triggerPatternChangeTriggers[j], "", "/PixelPyros/Scenes/"+scene.name+"Arr"+ofToString(j+1)+"/x", true, true);
-			cout << "adding " << "/PixelPyros/Scenes/"+scene.name+"Arr"+ofToString(j+1)+"/x control"<< endl;
-	
-		}
-		
-		
-	}
-	
-	
-}
-
-*/

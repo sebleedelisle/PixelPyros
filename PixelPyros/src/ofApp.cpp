@@ -10,7 +10,7 @@ void ofApp::setup(){
 	fboWarper1.label = "leftScreen";
 	fboWarper2.label = "rightScreen";
 	
-	triggerArea.set(APP_WIDTH*0.15,APP_HEIGHT*0.85,APP_WIDTH*0.7,APP_HEIGHT*0.5); 
+	//triggerArea.set(APP_WIDTH*0.15,APP_HEIGHT*0.85,APP_WIDTH*0.7,APP_HEIGHT*0.5);
     
 	fboWarper1.setDstPoint(0, ofVec2f(0,0));
 	fboWarper1.setDstPoint(1, ofVec2f(APP_WIDTH/2,0));
@@ -29,10 +29,6 @@ void ofApp::setup(){
 	fboWarper2.setSrcPoint(1, ofVec2f(APP_WIDTH,0));
 	fboWarper2.setSrcPoint(2, ofVec2f(APP_WIDTH,APP_HEIGHT));
 	fboWarper2.setSrcPoint(3, ofVec2f(APP_WIDTH/2,APP_HEIGHT));
-//	fboWarper2.setSrcPoint(0, ofVec2f(0,0));
-//	fboWarper2.setSrcPoint(1, ofVec2f(APP_WIDTH/2,0));
-//	fboWarper2.setSrcPoint(2, ofVec2f(APP_WIDTH/2,APP_HEIGHT));
-//	fboWarper2.setSrcPoint(3, ofVec2f(0,APP_HEIGHT));
 
   
 	fboWarper1.loadSettings();
@@ -44,11 +40,11 @@ void ofApp::setup(){
 	triggerShowDebug = false;
 	triggersDisabled = false;
     
-    drawCameraIntoFBO = true;
+    drawCameraIntoFBO = false;
     renderer.load("shaders/default");
     
-	ofSetFrameRate(60);
-	//ofSetVerticalSync(true); // now on by default
+	//ofSetFrameRate(60);
+	
 	lastUpdateTime = ofGetElapsedTimef();
   
     ofBackground(0);
@@ -60,35 +56,21 @@ void ofApp::setup(){
 
 	motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 	
-	//setupControlPanel();
-	
-	
-	// TODO FBO oversamples now so check performance / smoothing
-	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); // was 4
+	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); 
 	controlPanels.main = fbo;
 	fbo.begin();
 	ofClear(0,0,0);
 	fbo.end(); 
-
-	//oscManager.setup () ;
 	
     paused = false;
     altPressed = false;
 	shiftPressed = false;
 
     triggerManager.setDisplaySize(APP_WIDTH, APP_HEIGHT);
-	//triggerManager.updateTriggerSettings(triggerArea, triggerSpacing);
-	/*
-	Trigger trigger;
-	TriggerPattern pattern;
-	pattern.addTrigger(trigger);
-	triggerManager.setPattern(pattern);
-	*/
 	
 	laserManager.setup(APP_WIDTH, APP_HEIGHT);
-	//laserManager.renderLaserPath = true;
-	appParams.setName("App settings");
-	
+
+	appParams.setName("App settings");	
 	appParams.add(timeSpeed.set("time speed", 1, 0,2));
 	
 	parameterManager.registerParameterGroup("app", &appParams );
@@ -98,24 +80,22 @@ void ofApp::setup(){
     parameterManager.registerParameterGroup("motion", &motionManager.parameters);
     parameterManager.registerParameterGroup("particles", &particleSystemManager.parameters);
     parameterManager.registerParameterGroup("laser calibration", &laserManager.calibrationParameters );
+    parameterManager.registerParameterGroup("camera", &cameraManager.parameters );
 
-    /*
-        Now that all of the parameters should be registered with the 
-        ParameterManager, setup the control gui
-     */
-    controlPanels.setup( &parameterManager );
-	
+    
+    // Now that all of the parameters should be registered with the
+	// ParameterManager, setup the control gui
+    
+	updateScreenSizes();
+	controlPanels.setup( &parameterManager, screens);
+
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
-	
-	
-	//oscManager.update () ;
-	//settingsManager.update();
-	
+		
 	if(cameraManager.update()){
 		
 		ofImage image(cameraManager.getPixelsRef()); 
@@ -134,11 +114,6 @@ void ofApp::update(){
 
 	lastUpdateTime = time;
 	
-	/*
-	if ( triggerShowDebug != triggerManager.triggerShowDebug ) {
-		triggerManager.setShowTriggerDebug(triggerShowDebug) ;
-		
-	}*/
 	
 	if ( triggersDisabled != triggerManager.triggersDisabled ) {
 		triggerManager.setTriggersDisabled(triggersDisabled) ;
@@ -150,7 +125,6 @@ void ofApp::update(){
 		triggerManager.update(deltaTime);
 	    sceneManager.update(deltaTime);
         particleSystemManager.update(deltaTime);
-		//sequencer.update();
     }
 	
 	laserManager.update();
@@ -179,6 +153,7 @@ void ofApp::draw(){
 	particleSystemManager.draw();
 	
 	sceneManager.draw();
+
 	triggerManager.draw();
 
 	laserManager.draw();
@@ -277,6 +252,7 @@ void ofApp::keyPressed(int key){
         }
 	else if(key == 'f') {
 		ofToggleFullscreen();
+		updateScreenSizes();
 	}
    // }
     
@@ -361,139 +337,54 @@ void ofApp::initSounds() {
 void ofApp::mouseMoved( int x, int y ){
 	
 	triggerManager.mouseMoved(x, y);
-	
-	// TO DO
-	// this stuff is so we can manually trigger fireworks with the mouse.
-//	
-//	vector <Scene*>& scenes = sceneManager.scenes;
-//	for(int j = 0 ; j<scenes.size(); j++ ) { 
-//		Scene* scene1 = scenes[j];
-//		vector<Arrangement*> * triggerPatterns = &scene1->triggerPatterns;
-//		for(int k = 0; k<triggerPatterns->size(); k++)
-//		{
-//			vector <TriggerBase*> triggers = triggerPatterns->at(k)->triggers;
-//			for(int i = 0; i<triggers.size(); i++) { 
-//				TriggerBase * trigger = triggers[i]; 
-//				float distance = trigger->pos.distance(ofVec3f(x,y));
-//				if(distance<20) {
-//					trigger->registerMotion(1.0f-(distance/20.0f)); 
-//					
-//				}
-//				
-//			}
-//		}
-//	}
+
 }
 
 
-void ofApp::setupControlPanel() {
-    /*
-	gui.setup(450, ofGetHeight());
-	gui.setPosition(1536,0);
-
-	ofxControlPanel::setBackgroundColor(simpleColor(30, 30, 60, 200));
-	ofxControlPanel::setTextColor(simpleColor(240, 50, 50, 255));
+void ofApp::updateScreenSizes() {
 	
-//	gui.loadFont("Andale Mono.ttf", 8);		
-	gui.bIgnoreLayout = true;   // doesn't seem to do anything.
-                                // and hungarian notation? Ew! 
-	gui.addPanel("Cameras");
+//	ofToggleFullscreen();
+	//cout << ofGetWindowMode()<< endl;
 	
-	cameraManager.initControlPanel(gui);
-
-//	gui.setWhichColumn(1);
+	int monitorCount;
+	
+	GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
+	
+	cout << "RESIZE" << " " << ofGetWindowMode()<< endl;
+    screens.clear();
     
-//	gui.addPanel("Motion");
-//	
-//	motionManager.initControlPanel(gui);
-//	
-//	gui.addPanel("Triggers");
-//	gui.addSlider("Area width", "TRIGGER_AREA_WIDTH", 0, 0, 1.0, false);//->setDimensions(400, 10);
-//	gui.addSlider("Area height", "TRIGGER_AREA_HEIGHT", 0, 0, 0.5, false);//->setDimensions(400, 10);
-//	gui.addSlider("Area y pos", "TRIGGER_AREA_Y", 0, 0.5, 1, false);//->setDimensions(400, 10);
-//	gui.addSlider("Spacing", "TRIGGER_SPACING", 0, 0, 400, false);//->setDimensions(400, 10);
-//	
-
-	//ofAddListener(gui.guiEvent, this, &ofApp::eventsIn);
-	
-	
-	//gui.setupEvents();
-	//gui.enableEvents();
-	//gui.loadSettings("controlPanelSettings.xml");
-
-	
-	
-	settingsManager.setup(&oscManager, &gui) ;
-	
-	
-//	settingsManager.addSettingFloat(&motionManager.thresholdLevel, "THRESHOLD", "/PixelPyros/Setup/Threshold/x", 0, 255);
-//	settingsManager.addSettingFloat(&motionManager.motionSensitivity, "MOTION_SENSITIVITY", "/PixelPyros/Setup/Sensitivity/x", 1, 5);
-//	
-//	settingsManager.addSettingFloat(&triggerAreaWidth, "TRIGGER_AREA_WIDTH", "/PixelPyros/Setup/Width/x", 0, 1);
-//	settingsManager.addSettingFloat(&triggerAreaHeight, "TRIGGER_AREA_HEIGHT", "/PixelPyros/Setup/Height/x",0, 0.5);
-//	settingsManager.addSettingFloat(&triggerAreaCentreY, "TRIGGER_AREA_Y", "/PixelPyros/Setup/VPOS/x",0.5, 1);
-//	settingsManager.addSettingFloat(&triggerSpacing, "TRIGGER_SPACING", "/PixelPyros/Setup/Spacing/x",0, 400);
-//	settingsManager.addSettingFloat(&triggerSpacing, "TRIGGER_SPACING", "/PixelPyros/Spacing/x",0, 400);
-//	
-	settingsManager.addSettingBool(&showDiffImage, "", "/PixelPyros/Setup/ShowDiff/x", true);
-	
-	settingsManager.addSettingBool(&triggersDisabled, "", "/PixelPyros/Setup/MotionDisable/x", true);
-	settingsManager.addSettingBool(&triggerShowDebug, "", "/PixelPyros/Setup/TriggerDebug/x", true);
-	settingsManager.addSettingBool(&triggersDisabled, "", "/PixelPyros/MotionDisable/x", true);
-	settingsManager.addSettingBool(&triggerShowDebug, "", "/PixelPyros/TriggerDebug/x", true);
-	
-//	settingsManager.addSettingFloat(&renderer.blackPoint, "SHADER_BLACK", "/PixelPyros/Setup/BlackLevel/x",0, 1);
-//	settingsManager.addSettingFloat(&renderer.whitePoint, "SHADER_WHITE", "/PixelPyros/Setup/WhiteLevel/x",0, 1);
-//	settingsManager.addSettingFloat(&renderer.gammaValue, "SHADER_GAMMA", "/PixelPyros/Setup/GammaLevel/x",0, 10);
-//	settingsManager.addSettingFloat(&renderer.bloomValue, "SHADER_BLOOM", "/PixelPyros/Setup/BloomLevel/x",0, 3);
-//	settingsManager.addSettingFloat(&renderer.bloomValue, "SHADER_BLOOM", "/PixelPyros/BloomLevel/x",0, 3);
-	
-//	settingsManager.addSettingBool(&particleSystemManager.killAllParticlesFlag, "", "/PixelPyros/KillParticles/x", false );
-	
-	settingsManager.addSettingBool(&renderer.resetFlag, "", "/PixelPyros/Setup/ResetDefault/x", true);
-
-	settingsManager.addSettingBool(&sceneManager.nextFlag, "", "/PixelPyros/SceneNext/x", true, false);
-	settingsManager.addSettingBool(&sceneManager.previousFlag, "", "/PixelPyros/ScenePrevious/x", true, true);
-	settingsManager.addSettingBool(&sceneManager.nextPatternFlag, "", "/PixelPyros/ArrNext/x", true, true);
-	settingsManager.addSettingBool(&sceneManager.previousPatternFlag, "", "/PixelPyros/ArrPrevious/x", true, true);
-	
-	//sceneManager.initSceneControls(settingsManager);
-	
-     gui.hide();
-     
-	*/
-    
-    
-}
-
-//void ofApp::eventsIn(guiCallbackData & data){
-
-	
-//	if( data.getXmlName() == "SHADER_BLACK" ) {
-//        renderer.blackPoint = data.getFloat(0);
-//    }
-//	else if( data.getXmlName() == "SHADER_WHITE" ) {
-//         renderer.whitePoint = data.getFloat(0);
-//    }
-//	else if( data.getXmlName() == "SHADER_GAMMA" ) {
-//        renderer.gammaValue = data.getFloat(0);
-//    }
-//	else if( data.getXmlName() == "SHADER_BLOOM" ) {
-//        renderer.bloomValue = data.getFloat(0);
-//    } else if( data.getXmlName() == "TRIGGER_AREA_WIDTH" ) {
-//        triggerAreaWidth = data.getFloat(0);
-//    } else if( data.getXmlName() == "TRIGGER_AREA_HEIGHT" ) {
-//        triggerAreaHeight = data.getFloat(0);
-//    } else if( data.getXmlName() == "TRIGGER_AREA_Y" ) {
-//        triggerAreaCentreY = data.getFloat(0);
-//    } else if( data.getXmlName() == "TRIGGER_SPACING" ) {
-//        triggerSpacing = data.getFloat(0);
-//    }
+    for(int i = 0; i < monitorCount; i++){
 		
-	//gui.saveSettings();
-//}
+		ofRectangle screen;
+		
+		int x=0,
+		y=0,
+		w=0,
+		h=0;
+		
+        glfwGetMonitorPos(monitors[i],&x,&y);
+        const GLFWvidmode * desktopMode = glfwGetVideoMode(monitors[i]);
+		screen.x = x;
+		screen.y = y;
+        screen.width = desktopMode->width;
+        screen.height = desktopMode->height;
+        
+        screens.push_back(screen);
+        cout << i << " " << screen << endl;
+		
+    }
+	
 
+	controlPanels.updatePositions(screens);
+	
 
+}
+//--------------------------------------------------------------
+void ofApp::windowResized(int width, int height){
+	
+	updateScreenSizes();
+	
+}
 
 
 void ofApp::exit() { 

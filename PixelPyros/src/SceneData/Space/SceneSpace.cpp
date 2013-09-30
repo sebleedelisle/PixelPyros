@@ -138,13 +138,13 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	bigCyanFlower->radius= 10;
 	
 	
-	//endPattern.addTriggerSettings(redFlower);
-	//endPattern.addTriggerSettings();
+	endPattern.addTriggerSettings(redFlower);
+	endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(bigCyanFlower);
-	//endPattern.addTriggerSettings();
-	//endPattern.addTriggerSettings(triggerBanger);
-	//endPattern.addTriggerSettings();
-	//endPattern.addTriggerSettings(triggerFountain);
+	endPattern.addTriggerSettings();
+	endPattern.addTriggerSettings(triggerBanger);
+	endPattern.addTriggerSettings();
+	endPattern.addTriggerSettings(triggerFountain);
 	
 	addTriggerPattern(endPattern);
 	
@@ -301,7 +301,7 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	rocketSettings.directionVar = 5;
 	rocketSettings.gravity.y = 800;
 	rocketSettings.drag = 0.96;
-	rocketSettings.lifeTime = 1.5;
+	rocketSettings.setLifeTime(1.5);
 	rocketSettings.timeSpeed = stars.timeSpeed =  ps.timeSpeed = 0.8;
 	
 	rocketSettings.addParticleSystemSetting(stars);
@@ -322,6 +322,8 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	
 	renderer = new ParticleRendererShape();
+	
+	// ps = trails
 	ParticleSystemSettings ps;
 	// PHYSICS
 	ps.speedMin = 20;
@@ -381,13 +383,15 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	
 	// optional colour modifier
 	
+	// PLANET PARTICLES PS2
+	
 	ParticleSystemSettings ps2;
 	// PHYSICS
 	ps2.speedMin = 650;
 	ps2.speedMax = 700;
 	ps2.directionZ = 0;
-	ps2.directionZVar = 90;
-	ps2.directionYVar = 180;
+	ps2.directionZVar = 3; //90;
+	ps2.directionYVar = 3; //180;
 	ps2.drag = 0.86;
 	ps2.gravity.set(0,30);
 	
@@ -397,8 +401,8 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	
 	//APPEARANCE
 	
-	ps2.sizeStartMin = 5;
-	ps2.sizeStartMax = 7;
+	ps2.sizeStartMin = 3;
+	ps2.sizeStartMax = 6;
 	ps2.sizeChangeRatio = 0;
 	
 	ps2.hueStartMin = 20;
@@ -419,16 +423,19 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	// lifeExpectancy
 	// delay
 	
-	//ps2.emitMode = PARTICLE_EMIT_BURST;
 	ps2.emitCount = 20000;
 	
 	ps2.emitDelay = ps.emitLifeTime+0.2;
 	ps2.emitLifeTime= 0.05;
 	
-	ps2.renderer = renderer;
 	
-	// optional colour modifier
+	ps2.emitMode = PARTICLE_EMIT_BURST;
+	ps2.emitShape = new ofMesh(ofMesh::icosphere(1,3));
 	
+	ps2.renderer = new ParticleRendererDoubleCircle();
+		
+	
+	// RINGS PS3
 	ParticleSystemSettings ps3;
 	// PHYSICS
 	ps3.speedMin = 550;
@@ -481,8 +488,8 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	ps3.renderer = new ParticleRendererCircle(7, true, 1, ofVec3f(90,0,0)); 
 	
 	
-	ps2.rotateMin = -10;
-	ps2.rotateMax = 10;
+	ps2.rotateMin = -20;
+	ps2.rotateMax = 20;
 	ps3.rotateMin = -20;
 	ps3.rotateMax = 20;
 	

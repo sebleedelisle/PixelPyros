@@ -45,7 +45,7 @@ class ParticleRendererLine : public ParticleRendererBase {
 			int size = p.historyPositions.size();
 			
 			// for soft tips to the line
-			float brightness = 0;
+			float brightness = 1;
 			
 			for(int i =0; i<size-1; i++) {
 				ofColor colour = p.historyColours[size-1];
@@ -56,7 +56,7 @@ class ParticleRendererLine : public ParticleRendererBase {
 				
 				mesh.addVertex(p.historyPositions[i+1]);
 				mesh.addColor(colour);
-				brightness+=0.1;
+				brightness+=0.5;
 				if(brightness>1) brightness = 1;
 
 			}

@@ -5,7 +5,6 @@
 #include "Scene.h"
 #include "ParticleSystemManager.h"
 #include "TriggerManager.h"
-#include "SettingsManager.h"
 
 class SceneManager {
 

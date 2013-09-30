@@ -46,6 +46,9 @@ void CameraManager::init() {
 		camera = cameras[0]; 
 	}
 	
+	
+	
+	
 //	cameraPreview->vid = ofBaseDraws(camera->getPixelsRef());
 		
 	
@@ -54,6 +57,11 @@ void CameraManager::init() {
 
 void CameraManager::initParams(){
     parameters.setName("Camera Manager");
+	parameters.add(gainParam.set("gain", 500,200,1024));
+	parameters.add(gammaParam.set("gamma", 15, 10,22));
+    parameters.add(shutterParam.set("shutter speed", 30,1,500));
+    parameters.add(brightnessParam.set("brightness", 0,0,255));
+
 }
 
 
@@ -75,10 +83,10 @@ bool CameraManager::update() {
 	
 	
 	
-//	if(camera->getGain()!=gain) camera->setGain(gain); 
-//	if(camera->getGamma()!=gamma) camera->setGamma(gamma); 
-//	if(camera->getShutter()!=shutter) camera->setShutter(shutter); 
-//	if(camera->getBrightness()!=brightness) camera->setBrightness(brightness); 
+	if(camera->getGain()!=gainParam) camera->setGain(gainParam);
+	if(camera->getGamma()!=gammaParam) camera->setGamma(gammaParam);
+	if(camera->getShutter()!=shutterParam) camera->setShutter(shutterParam);
+	if(camera->getBrightness()!=brightnessParam) camera->setBrightness(brightnessParam);
 	
 	bool updateCamera = camera->update();
     if( updateCamera && capturing ) {

@@ -62,6 +62,7 @@ class Trigger {
 	
 	// angle
 	float angle;
+	int rotateDirection; 
 	int triggerCount; 
 	
 	

@@ -21,7 +21,13 @@ class LaserSpiral : public LaserShape{
 		intensity = intens;
 		fadeOutPoint = fadeoutpoint; 
 		
-		tested = false; 
+		tested = false;
+		
+		startPos.set(rad1, 0);
+		endPos.set(rad2, 0);
+		
+		startPos+=pos;
+		endPos+=pos; 
 		
 	}
 			

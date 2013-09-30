@@ -163,7 +163,7 @@ class RocketTron : public TriggerSettingsRocket {
 		rocketSettings->direction = -90;
 		rocketSettings->directionVar = 1;
 		rocketSettings->gravity.y = 400;
-		rocketSettings->lifeTime =2.3;
+		rocketSettings->setLifeTime(2.3);
 		
         
     };

@@ -48,7 +48,7 @@ class LaserManager {
 	
 	void addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, float radius, float intensity =1);
 	
-	void addLaserSpiral(const ofPoint& position, ofFloatColor& col, float rad1,float rad2, float fadeoutpoint = 1,  float intens = 1);
+	void addLaserSpiral(const ofPoint& position, ofFloatColor col, float rad1,float rad2, float fadeoutpoint = 1,  float intens = 1);
 
 	//void addLaserLine(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
 	void addLaserLineEased(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
@@ -71,6 +71,8 @@ class LaserManager {
 	ofxIlda::Point ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour);
 	ofPoint ildaPointToOfPoint(const ofxIlda::Point& ildapoint);
 	
+	vector<float> getPointsAlongDistance(float distance, float acceleration, float maxspeed);
+	
 	
 	void connectToEtherdream();
 	void disconnectFromEtherdream();
@@ -87,16 +89,12 @@ class LaserManager {
 	ofFloatColor white;
 	ofFloatColor black;
 	
-	//ofPoint startPosition;
-	//ofPoint startVel;
 	ofPoint currentPosition;
-	//ofPoint currentVel;
 	
-	ofParameter<float> maxSpeed;
-	ofParameter<float> acceleration;
 	
-	int endCount;
-	int blankCount;
+	
+	//int endCount;
+	//int blankCount;
 	
 	// overall brightness applied to any laser colour
 	ofParameter<float> intensity;
@@ -105,17 +103,29 @@ class LaserManager {
 	ofParameter<int> colourChangeDelay;
 	
 	// how many blank points before and after drawing a dot
-	ofParameter<int> dotPreBlank;
-	ofParameter<int> dotPostBlank;
+	ofParameter<int> shapePreBlank;
+	ofParameter<int> shapePostBlank;
 	// the number of points for a dot
 	ofParameter<int> dotMaxPoints;
 	
 	// show the movement between shapes as a dotted red line
 	ofParameter<bool> showMovePoints;
-	// the speed for movement and 
+	
+	// the speed for movement and acceleration
 	ofParameter<float> moveSpeed;
-	ofParameter<float> circleMoveSpeed;
-	ofParameter<float> movePointsPadding;
+	ofParameter<int> movePointsPadding;
+	
+	ofParameter<float> speedLine;
+	ofParameter<float> accelerationLine;
+	
+	ofParameter<float> speedEasedLine;
+	ofParameter<int> paddingEasedLine;
+	
+	ofParameter<float>spiralSpacing; 
+	
+
+	
+	
 	ofParameter<bool> connectButton;
 	ofParameter<string> etherdreamStatus;
 	ofParameter<bool> showWarpPoints;
