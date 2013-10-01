@@ -93,7 +93,7 @@ void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 
 void ControlPanels::draw(){
     
-    if( monitorCount > 0 ) drawPreviewScreen();
+    if( monitorCount > 1 ) drawPreviewScreen();
     
 //    cameraCalibration.draw();
 //    laserCalibration.draw();

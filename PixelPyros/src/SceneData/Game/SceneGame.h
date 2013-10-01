@@ -6,13 +6,14 @@
 #include "ParticleRendererLowRes.h"
 #include "RocketSettings.h"
 #include "ParticleSystemSettings.h"
+#include "Invader.h"
 
 
-class SceneRetro : public Scene {
+class SceneGame : public Scene {
 
 	public :
 
-	SceneRetro (string scenename) ;
+	SceneGame (string scenename) ;
 
 	bool draw();
 	bool update(float deltaTime); 
@@ -27,9 +28,12 @@ class SceneRetro : public Scene {
 	
 	TriggerSettingsRocket* getPixelRocket(float hue = 0);
     
-		
+	vector<Invader*> invaders;
+	vector<Invader*> spareInvaders; 
+	int activeInvaders; 
+	ofImage invaderImage1;
+	
 	unsigned int pixelSize;
-	ofMesh pixelMesh; 
     
    
 };

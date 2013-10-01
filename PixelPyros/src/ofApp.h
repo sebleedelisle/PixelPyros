@@ -24,6 +24,7 @@
 #include "SceneRealistic.h"
 #include "SceneCalibration.h"
 #include "SceneSlideshow.h"
+#include "SceneGame.h"
 #include "SceneNadia.h"
 
 #include "PyrosRenderer.h"

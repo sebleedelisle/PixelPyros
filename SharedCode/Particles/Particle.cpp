@@ -85,7 +85,7 @@ bool Particle :: update(float deltaTime) {
 			historyPositions.pop_front();
 			historyColours.pop_front();
 			if(historyPositions.size()>0) {
-				enabled = true;
+				//enabled = true;
 			}
 		}
 	}
