@@ -1,38 +1,16 @@
 
 
-#include "SceneRetro.h"
+#include "SceneGame.h"
 
 
-SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
+SceneGame :: SceneGame(string scenename ) : Scene(scenename) {
 
 	pixelSize = 2;
 	loadMusicFile("1-05 TECHNOPOLIS.aif");
 	
-	pixelMesh.setMode(OF_PRIMITIVE_LINES);
-	ofSetLineWidth(1);
-	// TODO This brightness needs to be adjustable
-	ofColor lineColour(0,0,0,100);
-	
-	
-	for(int x = 0; x<APP_WIDTH; x+=pixelSize) {
-		
-		pixelMesh.addVertex(ofVec3f(x+0.5,0));
-		pixelMesh.addVertex(ofVec3f(x+0.5,APP_HEIGHT));
-		pixelMesh.addColor(lineColour);
-		pixelMesh.addColor(lineColour);
-		
-		
-	}
-	for(int y = 0; y<APP_HEIGHT; y+=pixelSize) {
-		
-		pixelMesh.addVertex(ofVec3f(0,y+0.5));
-		pixelMesh.addVertex(ofVec3f(APP_WIDTH,y+0.5));
-		pixelMesh.addColor(lineColour);
-		pixelMesh.addColor(lineColour);
-		
-		
-	}
-
+	invaderImage1.loadImage("img/Invader.png");
+	invaderImage1.getTextureReference().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
+	activeInvaders = 0; 
 
 	//TODO this should really be somewhere else - but where! 
 	TriggerRechargeSettings::fastMultiples->minTriggerInterval = 0.2;
@@ -95,8 +73,14 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 		pixelRockets.addTriggerSettings(); 
 	}
 	
+	
 	addTriggerPattern(pixelRockets);
 
+	
+	
+
+	
+	
 	TriggerPattern pixelRockets2;
 	float colours2 [4] = {220, 180, 120, 180};
 	
@@ -112,6 +96,7 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	
 	addTriggerPattern(pixelRockets2);
 
+	
 	TriggerPattern patternCyanMix;
 	patternCyanMix.addTriggerSettings(cyanRocket);
 	patternCyanMix.addTriggerSettings();
@@ -119,45 +104,106 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	patternCyanMix.addTriggerSettings();
 	addTriggerPattern(patternCyanMix);
 	
+	
 	TriggerPattern patternRedMix;
 	patternRedMix.addTriggerSettings(redRocket);
 	patternRedMix.addTriggerSettings();
 	patternRedMix.addTriggerSettings(redFountainLow);
 	patternRedMix.addTriggerSettings();
 	addTriggerPattern(patternRedMix);
-	
-	/*
-	TriggerPattern patternRedMix;
-	patternRedMix.addTrigger(triggerRocketRed);
-	patternRedMix.addTrigger(triggerFountainRed);
-	patternRedMix.addTrigger(triggerFountainRed);
-	addTriggerPattern(patternRedMix);
 
 	
-	TriggerPattern patternCyanRockets;
-	patternCyanRockets.addTrigger(triggerRocketCyan);
-	patternCyanRockets.addTrigger(triggerRocketCyan);
 	
-	patternCyanRockets.addTrigger(triggerFountainCyan);
-	addTriggerPattern(patternCyanRockets);
-	
-	
-	TriggerPattern patternRedRockets;
-	patternRedRockets.addTrigger(triggerRocketRed);
-	patternRedRockets.addTrigger(triggerRocketRed);
-	patternRedRockets.addTrigger(triggerFountainRed);
-	
-	addTriggerPattern(patternRedRockets);
-	
-	
-*/
+	for(int x = 200; x<APP_WIDTH-200; x+=48) {
+		for(int y = 200; y<APP_HEIGHT-500; y+=60) {
 		
+			Invader* invader = new Invader(&invaderImage1, 12, 12);
+			invader->pos.set(x, y);
+			invader->vel.set(4,0);
+			invader->scale = 3;
+			invader->colour.setSaturation(255);
+			invader->colour.setHue(colours[(int)floor(ofMap(y,200,APP_HEIGHT-500, 0,3.9,true))]);
+			
+			invaders.push_back(invader);
+		}
+	}
+
+	
+	
+	
 };
 
 
-bool SceneRetro::update(float deltaTime) {
+bool SceneGame::update(float deltaTime) {
 	
 	if(!Scene::update(deltaTime)) return false;
+
+	ParticleSystemManager& psm = *ParticleSystemManager::instance();
+	
+	activeInvaders = 0;
+	int rightEdge = 0;
+	int leftEdge = APP_WIDTH; 
+
+	for(int i = 0; i<invaders.size(); i++) {
+		
+		Invader& invader = *invaders[i];
+		
+		if(!invader.enabled) continue;
+		
+		invader.update();
+		
+		if(invader.pos.x+invader.width>rightEdge) rightEdge = invader.pos.x+invader.width;
+		if(invader.pos.x<leftEdge) leftEdge = invader.pos.x;
+		
+		
+		activeInvaders++; 
+		
+	}
+	
+	if(rightEdge>APP_WIDTH-50) {
+		for(int i = 0; i<invaders.size(); i++) {
+			
+			Invader& invader = *invaders[i];
+			invader.vel.x = -4;
+		}
+	}
+			
+	if(leftEdge<50) {
+		for(int i = 0; i<invaders.size(); i++) {
+			
+			Invader& invader = *invaders[i];
+			invader.vel.x = 4;
+		}
+	}
+	
+	vector<PhysicsObject*>& rockets = psm.physicsObjects;
+	
+	for(int i = 0; i<invaders.size(); i++) {
+		
+		Invader& invader = *invaders[i];
+		
+		if(!invader.enabled) continue;
+		
+		for(int j = 0; j<rockets.size(); j++) {
+			PhysicsObject& rocket = *rockets[j];
+			if(!rocket.isEnabled()) continue;
+			
+			//ofRectangle invaderRect(invader.pos, invader.width, invader.height);
+			if(invader.getRect().inside(rocket.pos)) {
+				invader.enabled = false;
+				//rocket.life.end();
+				break;
+			}
+			
+			
+			
+			
+			
+		}
+		
+		
+		
+	}
 	
 	
 }
@@ -165,24 +211,31 @@ bool SceneRetro::update(float deltaTime) {
 
 
 
-bool SceneRetro :: draw() {
+bool SceneGame :: draw() {
 	if(!Scene::draw()) return false;
 	
+	
+	for(int i = 0; i<invaders.size(); i++) {
+		
+		Invader& invader = *invaders[i];
+		
+		if(!invader.enabled) continue;
+		
+		invader.draw();
+		activeInvaders++;
+		
+	}
 		
 	ofPushStyle();
 	ofDisableSmoothing();
 	ofDisableBlendMode();
 	ofEnableAlphaBlending();
-	
-	
-	pixelMesh.draw();
-	
-	ofPopStyle();
+		ofPopStyle();
 	
 }
 
 
-TriggerSettingsRocket* SceneRetro:: getPixelRocket(float hue) {
+TriggerSettingsRocket* SceneGame:: getPixelRocket(float hue) {
 
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
@@ -224,7 +277,7 @@ TriggerSettingsRocket* SceneRetro:: getPixelRocket(float hue) {
 
 };
 
-TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueChange, float minSpeed, float maxSpeed ) {
+TriggerSettingsRocket* SceneGame:: getRetroFountain(float hueOffset, float hueChange, float minSpeed, float maxSpeed ) {
 	
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
@@ -284,7 +337,7 @@ TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueC
 
 
 
-TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
+TriggerSettingsRocket* SceneGame::getRetroRocket(float hue, float hueChange) {
 	
 	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
 	
@@ -318,7 +371,7 @@ TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
 
 
 
-ParticleSystemSettings SceneRetro::  getPixelTrailParticles(float hue, float hueChange){
+ParticleSystemSettings SceneGame::  getPixelTrailParticles(float hue, float hueChange){
 	
 	ParticleSystemSettings trails;
 	trails.renderer = new ParticleRendererLowRes(pixelSize);
@@ -342,7 +395,7 @@ ParticleSystemSettings SceneRetro::  getPixelTrailParticles(float hue, float hue
 	
 };
 
-ParticleSystemSettings SceneRetro::  getPixelExplosionParticles(float hue, float hueChange){
+ParticleSystemSettings SceneGame::  getPixelExplosionParticles(float hue, float hueChange){
 	
 	ParticleSystemSettings explosion;
 	explosion.renderer = new ParticleRendererLowRes(pixelSize);

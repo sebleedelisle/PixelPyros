@@ -1,9 +1,9 @@
 <Triggers>
 	<Trigger_Positioning>
-		<width>0.71</width>
+		<width>0.85</width>
 		<height>0.15</height>
 		<centre_y>0.89125</centre_y>
-		<spacing>40</spacing>
+		<spacing>28</spacing>
 	</Trigger_Positioning>
 <Triggers/>
 </Triggers>

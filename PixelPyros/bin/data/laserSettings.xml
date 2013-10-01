@@ -38,8 +38,8 @@
 	</group>
 <Laser>
 		<Laser_Manager>
-			<Etherdream_connect>1</Etherdream_connect>
-			<status>connected</status>
+			<Etherdream_connect>0</Etherdream_connect>
+			<status>disconnected</status>
 			<intensity>1</intensity>
 			<colour_change_offset>-3</colour_change_offset>
 			<show_registration>0</show_registration>
@@ -55,7 +55,7 @@
 			<max_speed>4.27</max_speed>
 		<Homography>182.2, 145.8: 921.2, 120.8: 914.2, 554.6: 177.2, 551.6: </Homography>
 		<circle_speed>3.9061</circle_speed>
-		<show_warp_points>1</show_warp_points>
+		<show_warp_points>0</show_warp_points>
 		<render_laser_preview>0</render_laser_preview>
 		<line_acceleration>0.500975</line_acceleration>
 			<line_max_speed>18.3318</line_max_speed>

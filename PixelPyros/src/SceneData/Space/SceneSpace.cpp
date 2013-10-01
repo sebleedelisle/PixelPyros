@@ -277,7 +277,7 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	// delay
 	
 	ps.emitMode = PARTICLE_EMIT_CONTINUOUS;
-	ps.emitCount = 100;
+	ps.emitCount = 50;
 	
 	ps.emitDelay = 0;
 	ps.emitLifeTime= stars.emitLifeTime;
@@ -288,7 +288,7 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	
 	//ps.emitAttachedPhysicsObject = &rocket;
 	ps.emitInheritVelocity = 0.3;
-	ps.renderer = new ParticleRendererLine(2, true);
+	ps.renderer = new ParticleRendererLine(1, true, 10);
 	
 	
 	
@@ -387,8 +387,8 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	
 	ParticleSystemSettings ps2;
 	// PHYSICS
-	ps2.speedMin = 650;
-	ps2.speedMax = 700;
+	ps2.speedMin = 550;
+	ps2.speedMax = 600;
 	ps2.directionZ = 0;
 	ps2.directionZVar = 3; //90;
 	ps2.directionYVar = 3; //180;
@@ -438,8 +438,8 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	// RINGS PS3
 	ParticleSystemSettings ps3;
 	// PHYSICS
-	ps3.speedMin = 550;
-	ps3.speedMax = 800;
+	ps3.speedMin = 650;
+	ps3.speedMax = 750;
 	ps3.directionZ = 0;
 	ps3.directionZVar = 0;
 	ps3.directionYVar = 180;
@@ -527,7 +527,7 @@ TriggerSettingsRocket* SceneSpace :: getFlowerRocket(float hue , float hueChange
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
 	rocketSettings.startSpeedMin = 1500;
-	rocketSettings.startSpeedMax = 1700;
+	rocketSettings.startSpeedMax = 1900;
 	rocketSettings.directionVar = 4;
 	rocketSettings.gravity.y = 200;
 	rocketSettings.drag = 0.92;
@@ -626,7 +626,7 @@ ParticleSystemSettings SceneSpace :: getFlowerTrailParticles(float hue, float hu
 	
 	
 	ParticleSystemSettings trails;
-	trails.renderer = new ParticleRendererLine(1.5, true);
+	trails.renderer = new ParticleRendererLine(1.5, true, 3);
 	//pss.directionZVar = 20;
 	trails.speedMin = 10;
 	trails.speedMax = 10;
@@ -658,8 +658,8 @@ ParticleSystemSettings SceneSpace :: getFlowerExplosionParticles(float hue, floa
 	explosion.renderer = new ParticleRendererBitmap(&softWhiteImage);
 	
 	//pss.directionZVar = 20;
-	explosion.speedMin = 650;
-	explosion.speedMax = 700;
+	explosion.speedMin = 550;
+	explosion.speedMax = 600;
 	explosion.directionZ = 0;
 	explosion.directionZVar = 90;
 	explosion.directionYVar = 180;
@@ -696,11 +696,11 @@ ParticleSystemSettings SceneSpace :: getLineExplosionParticles(float hue, float 
 	
 	
 	ParticleSystemSettings explosion;
-	explosion.renderer = new ParticleRendererLine(2, true);
+	explosion.renderer = new ParticleRendererLine(2, true, 4);
 	
 	//pss.directionZVar = 20;
 	explosion.speedMin = 300;
-	explosion.speedMax = 500;
+	explosion.speedMax = 400;
 	explosion.drag = 0.95;
 	explosion.gravity.y = 100;
 	
@@ -714,8 +714,8 @@ ParticleSystemSettings SceneSpace :: getLineExplosionParticles(float hue, float 
 	explosion.brightnessEnd = 0;
 	
 	explosion.shimmerMin = 0.5;
-	explosion.lifeMin = 1;
-	explosion.lifeMax = 2;
+	explosion.lifeMin = 0.8;
+	explosion.lifeMax = 1.2;
 	
 	//explosion.emitMode = PARTICLE_EMIT_BURST;
 	explosion.emitLifeTime = 0.1;

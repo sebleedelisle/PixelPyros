@@ -289,6 +289,7 @@ void ofApp:: setupScenes() {
 	sceneManager.addScene(new SceneNadia("Nadia"));
 	
 	sceneManager.addScene(new SceneSpace("Space"));
+	sceneManager.addScene(new SceneGame("Game"));
 	
 	sceneManager.changeScene("Nadia");
 	
