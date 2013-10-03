@@ -72,9 +72,7 @@ void LaserManager:: setup (int width, int height) {
     float y1 = APP_HEIGHT * 0.2;
     float y2 = APP_HEIGHT * 0.8;
 	
-    warp = warpParam;
-	warp.label = "laserWarp";
-    
+    warp.label = "laserWarp";
 	warp.setDstPoint(0, ofVec2f(x1,y1));
 	warp.setDstPoint(1, ofVec2f(x2,y1));
 	warp.setDstPoint(2, ofVec2f(x2,y2));
@@ -85,7 +83,7 @@ void LaserManager:: setup (int width, int height) {
 	warp.setSrcPoint(2, ofVec2f(x2,y2));
 	warp.setSrcPoint(3, ofVec2f(x1,y2));
 	
-    //warp.loadSettings();
+    warp.loadSettings();
     
 	intensity = 1;
 	dotPreBlank = 3;
@@ -109,7 +107,6 @@ void LaserManager:: setup (int width, int height) {
 	parameters.add(renderLaserPath.set("render laser path", true));
 	
     calibrationParameters.setName("Laser Calibration");
-    calibrationParameters.add(warpParam.set("Homography", warp) );
     
 	//p3.setName("laser graphics");
 	
@@ -247,7 +244,7 @@ void LaserManager:: update() {
 	
 	resetIldaPoints();
 	
-	warp.draw();
+	//warp.draw();
 	
 	ofPopStyle(); 
 	
@@ -654,7 +651,7 @@ ofPoint LaserManager::ildaPointToOfPoint(const ofxIlda::Point& ildapoint){
 
 
 void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c){
-	
+	   
 	ofPoint warpedpoint = warp.getWarpedPoint(p);;
 	
 	ofPoints.push_back(warpedpoint);
@@ -688,7 +685,6 @@ void LaserManager::resetIldaPoints() {
 
 
 void LaserManager::addDelayTest() {
-	
 	
 	ofFloatColor pointcolour;
 	
