@@ -61,6 +61,7 @@ void ControlPanels::setup(ParameterManager * parameterManager){
 	ofxBaseGui::setDefaultElementIndentation(1);
 	ofxBaseGui::setDefaultTextPadding(7);
     
+    laserWarp->setOffset( offset.x, offset.y );
     
     setupPanel( "Laser", "laserSettings.xml", ofRectangle( offset.x, offset.y, 400, 30 ), laserGui );
     laserGui.add( *parameterManager->getParameterGroup("laser") );
@@ -83,13 +84,27 @@ void ControlPanels::setup(ParameterManager * parameterManager){
     
     setupPanel( "Laser Calibration", "laserCalibrationSettings.xml", ofRectangle( offset.x, offset.y, 400, 30 ), laserCalibration );
     laserCalibration.add( *parameterManager->getParameterGroup("laser calibration") );
+    
+    /*
+     Horrible, didn't work. Attempt to get quad warp out of param
+    ofParameterGroup * laserCalbirationGroup = parameterManager->getParameterGroup("laser calibration");
+    ofAbstractParameter * laserWarpParam = &laserCalbirationGroup->get("laserWarp");
+    ofParameter<QuadWarp> * laserWarpParam2 = dynamic_cast<ofParameter<QuadWarp>*>( laserWarpParam );
+     laserWarp = &( (QuadWarp&)laserWarpParam2 );
+    */
+    
+    
     //laserCalibration.load();
     
 }
 
 void ControlPanels::draw(){
     
+    
     if( monitorCount > 1 ) drawPreviewScreen();
+    
+    laserWarp->draw();
+
     
     cameraCalibration.draw();
     laserCalibration.draw();
@@ -107,6 +122,8 @@ void ControlPanels::drawPreviewScreen(){
     ofTranslate(previewScreenPosition.x, previewScreenPosition.y);
     //ofScale(0.5, 0.5);
     main.draw(0,0);
+    
+    
     ofPopMatrix();
 }
 

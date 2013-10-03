@@ -29,7 +29,7 @@ class QuadWarp {
 	bool hitTestPoints(vector<ofVec2f>& points, ofVec2f& point);
 	void drawPoints(vector<ofVec2f>& points, ofColor colour = ofColor::white);
 
-	
+	void setOffset(float x, float y);
 	void setDstPoint(int index, ofVec3f point);
 	void setSrcPoint(int index, ofVec3f point);
 	
@@ -72,6 +72,7 @@ class QuadWarp {
 	ofRectangle bounds;
 	string label;
 	float pointRadius;
+    ofVec2f offset;
 	   
 };
 
