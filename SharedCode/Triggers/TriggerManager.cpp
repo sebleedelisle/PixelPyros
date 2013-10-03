@@ -268,3 +268,11 @@ void TriggerManager::triggerParamChanged(float &value){
     updateLayout();
 }
 
+void TriggerManager::emptyTriggers() {
+	for(int i = 0; i<triggers.size(); i++) {
+		Trigger * trigger = triggers[i];
+		trigger->unitPower = 0; 
+	}
+	
+	
+}

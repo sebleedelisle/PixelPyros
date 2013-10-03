@@ -13,15 +13,21 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 	invaderImage1.getTextureReference().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
 	activeInvaders = 0; 
 	
-	
-	//resetInvaders();
-	
 	addTriggerPattern();
+
+	
+	TriggerSettingsRocket* ts = getInvaderBulletRocket(170);
+	ts->rechargeSettings = new TriggerRechargeSettings();
+	ts->rechargeSettings->restoreSpeed = 0.000001;
+	
+	TriggerPattern tp;
+	tp.addTriggerSettings(ts);
+	addTriggerPattern(tp);
 	
 	TriggerPattern bulletsPattern;
 	
 	bulletsPattern.addTriggerSettings(getInvaderBulletRocket(170));
-	bulletsPattern.addTriggerSettings();
+	//bulletsPattern.addTriggerSettings();
 	
 	addTriggerPattern(bulletsPattern);
 	
@@ -34,7 +40,8 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 	explodeMesh.addVertex(ofPoint(-0.8,0.8));
 	explodeMesh.addVertex(ofPoint(-0.8,-0.8));
 	explodeMesh.addVertex(ofPoint(0.8,-0.8));
-	
+	currentGame = GAME_NONE;
+	gameState = STATE_INTRO;
 	
 };
 
@@ -42,7 +49,49 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 void SceneGame::start() {
 	
 	Scene::start();
-	resetInvaders();
+	
+	changeGame(GAME_INVADERS);
+	changeState(STATE_INTRO); 
+	
+	
+}
+
+
+void SceneGame::changeGame(int newgame) {
+	
+	if(currentGame == newgame) return;
+	
+	if(newgame == GAME_INVADERS) {
+		//resetInvaders();
+		gameState = -1;
+		changeState(STATE_INTRO);
+
+	}
+	
+	currentGame = newgame;
+	
+	
+}
+
+void SceneGame::changeState(int newstate) {
+	if(gameState == newstate) return;
+	
+	lastStateChangeTime = ofGetElapsedTimef();
+	gameState = newstate;
+	
+	if(currentGame == GAME_INVADERS) {
+		if(gameState == STATE_PLAYING) {
+			resetInvaders();
+			
+			changeTriggerPattern(2);
+		} else {
+			changeTriggerPattern(1);
+			triggerManager->emptyTriggers();
+		}
+		
+		
+	}
+	
 	
 }
 
@@ -61,16 +110,70 @@ bool SceneGame::update(float deltaTime) {
 	
 	if(!Scene::update(deltaTime)) return false;
 
-	updateInvaders();
-	updateInvaders();
-	updateInvaders();
-	updateInvaders();
 	
-	checkInvaderCollisions(); 
-	
+	if(currentGame == GAME_INVADERS) {
+		
+			
+		if((gameState == STATE_INTRO) || (gameState == STATE_WAITING)) {
+			if(ofGetElapsedTimef()-lastStateChangeTime>5) {
+				changeState(STATE_PLAYING);
+			}
+		} else if(gameState == STATE_PLAYING) {
+			if(activeInvaders==0) {
+				changeState(STATE_WAITING);
+				
+				
+			} else {
+				updateInvaders();
+				updateInvaders();
+				updateInvaders();
+				updateInvaders();
+
+				checkInvaderCollisions();
+			}
+		}
+	}
 }
 
+
+
+bool SceneGame :: draw() {
+	if(!Scene::draw()) return false;
+	
+	ofPushStyle();
+	if(currentGame == GAME_INVADERS) {
+		
+		for(int i = 0; i<invaders.size(); i++) {
+			
+			Invader& invader = *invaders[i];
+			
+			if(!invader.enabled) continue;
+			
+			invader.draw();
+			activeInvaders++;
+			
+		}
+		
+		if(gameState == STATE_INTRO) {
+			ofSetColor(255); 
+			ofDrawBitmapString("READY TO PLAY " + ofToString(ofGetElapsedTimef()-lastStateChangeTime), 500,500);
+			
+		}
+	}
+	
+	
+	ofDrawBitmapString("GAME: " + ofToString(currentGame), 10,500);
+	ofDrawBitmapString("STATE: " + ofToString(gameState), 10,550);
+	ofDrawBitmapString("TIME SINCE CHANGE: " + ofToString(ofGetElapsedTimef()-lastStateChangeTime), 10,600);
+	
+	ofPopStyle();
+			
+}
+
+
 void SceneGame::updateInvaders() {
+	
+
 	activeInvaders = 0;
 	int rightEdge = 0;
 	int leftEdge = APP_WIDTH;
@@ -115,8 +218,9 @@ void SceneGame::updateInvaders() {
 	}
 	
 	
-	if(activeInvaders == 0 ) resetInvaders();
-	else {
+	if(activeInvaders == 0 ) {
+		currentUpdateInvader = 0; 
+	} else {
 		
 		do {
 			currentUpdateInvader = (currentUpdateInvader+1) % invaders.size();
@@ -124,6 +228,7 @@ void SceneGame::updateInvaders() {
 		} while(invaders[currentUpdateInvader]->enabled == false);
 		
 	}
+
 	
 }
 
@@ -154,56 +259,36 @@ void SceneGame :: checkInvaderCollisions() {
 	
 }
 
-
-bool SceneGame :: draw() {
-	if(!Scene::draw()) return false;
-	
-	
-	for(int i = 0; i<invaders.size(); i++) {
-		
-		Invader& invader = *invaders[i];
-		
-		if(!invader.enabled) continue;
-		
-		invader.draw();
-		activeInvaders++;
-		
-	}
-		
-	ofPushStyle();
-	ofDisableSmoothing();
-	ofDisableBlendMode();
-	ofEnableAlphaBlending();
-		ofPopStyle();
-	
-}
-
-
 void SceneGame :: resetInvaders() {
 	
 	
-	float colours [4] = {170, 0, 220, 0};
-	int invadercount = 0; 
+	float colours [4] = {128, 0, 220, 0};
+	int invadercount = 0;
 	
-	for(int y = 300; y<APP_HEIGHT-400; y+=48) {
-		for(int x = 200; x<APP_WIDTH-200; x+=32) {
+	spareInvaders.clear();
+	invaders.clear();
+	int numRows = 6;
+	int numCols = 30;
+	for(int y = 0; y<numRows; y++) {
+		for(int x = 0; x<numCols; x++) {
 		
 			Invader* invader = getNewInvader();
-			invader->pos.set(x, y);
+			invader->pos.set(ofMap(x, 0, numCols, APP_WIDTH/6, APP_WIDTH/6*5), ofMap(y,0,numRows, APP_HEIGHT*0.3, APP_HEIGHT*0.6));
 			invader->vel.set(10,0);
 			invader->scale = 2;
 			invader->colour.setSaturation(255);
-			invader->colour.setHue(colours[(int)floor(ofMap(y,200,APP_HEIGHT-500, 0,3.9,true))]);
-			invader->hue = colours[(int)floor(ofMap(y,300,APP_HEIGHT-400, 0,3.9,true))];
+
+			invader->hue = colours[(int)floor(ofMap(y, 0, numRows, 0, 3.99))];
 			invader->colour.setHue(invader->hue);
+
 			invader->delay = invadercount*5 + 100;
-			invadercount++; 
-			
+			invader->update(false); 
+			invadercount++;
 		}
 	}
 
 	currentUpdateInvader = 0; 
-	
+	activeInvaders = invadercount;
 }
 
 void SceneGame::explodeInvader(Invader &invader){
@@ -235,6 +320,7 @@ Invader* SceneGame :: getNewInvader() {
 	Invader* invader;
 	if(spareInvaders.size()>0) {
 		invader = spareInvaders.back();
+		invader->enabled = true;
 		spareInvaders.pop_back(); 
 	} else {
 		invader = new Invader(&invaderImage1, 12, 12);
@@ -286,7 +372,9 @@ TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
 
 	return ts;
 
-};
+}
+
+// ---------------- OLD ROCKETS
 
 TriggerSettingsRocket* SceneGame:: getRetroFountain(float hueOffset, float hueChange, float minSpeed, float maxSpeed ) {
 	
