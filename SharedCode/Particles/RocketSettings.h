@@ -47,6 +47,24 @@ class RocketSettings {
 		
 	};
 	
+	ParticleSystemSettings* addParticleRenderer(ParticleRendererBase* renderer) {
+		ParticleSystemSettings pss;
+		pss.renderer = renderer;
+		pss.gravity = gravity;
+		pss.timeSpeed = timeSpeed;
+		pss.emitMode = PARTICLE_EMIT_BURST;
+		pss.emitCount = 1;
+		pss.drag = drag;
+		pss.emitInheritVelocity = 1;
+		pss.speedMax = pss.speedMin = 0;
+		pss.directionYVar = pss.directionZVar = 0;
+		pss.lifeMin = pss.lifeMax = lifeTime; 
+		
+		ParticleSystemSettings * pssref = addParticleSystemSetting(pss);
+		return pssref; 
+
+	}
+	
 	void setLifeTime(float lifetime) {
 		
 		lifeTime = lifetime;

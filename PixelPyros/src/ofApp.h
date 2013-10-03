@@ -84,6 +84,7 @@ public:
 	
 	ofParameterGroup appParams; 
 	ofParameter<float> timeSpeed;
+	ofParameter<int> edgeBlendSize; 
 	
 	ofFbo fbo;
 	bool useFbo;

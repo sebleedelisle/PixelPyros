@@ -226,7 +226,7 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	stars.lifeMin = 1;
 	stars.lifeMin = 1.2;
 	
-	stars.emitLifeTime =1.6;
+	stars.emitLifeTime =1.1;
 	stars.emitDelay = 0;
 	stars.emitCount = 200;
 	stars.emitStartSizeModifier = 0;
@@ -289,19 +289,16 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	//ps.emitAttachedPhysicsObject = &rocket;
 	ps.emitInheritVelocity = 0.3;
 	ps.renderer = new ParticleRendererLine(1, true, 10);
-	
-	
-	
-	
+		
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
-	rocketSettings.startSpeedMin = 1200;
-	rocketSettings.startSpeedMax = 1600;
+	rocketSettings.startSpeedMin = 900;
+	rocketSettings.startSpeedMax = 1300;
 	rocketSettings.direction = -90;
 	rocketSettings.directionVar = 5;
 	rocketSettings.gravity.y = 800;
 	rocketSettings.drag = 0.96;
-	rocketSettings.setLifeTime(1.5);
+	rocketSettings.setLifeTime(stars.emitLifeTime);
 	rocketSettings.timeSpeed = stars.timeSpeed =  ps.timeSpeed = 0.8;
 	
 	rocketSettings.addParticleSystemSetting(stars);

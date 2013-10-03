@@ -14,7 +14,7 @@ ParticleSystem::ParticleSystem (SoundPlayer& sp) : soundPlayer(sp){
 	life.delay = 0; 
 	reset();
 	
-	attachedPhysicsObject = NULL;
+//	attachedPhysicsObject = NULL;
 	
 }
 
@@ -24,6 +24,7 @@ void ParticleSystem::reset(){
 	numParticlesCreated = 0; 
 	finished = false;
 	power = 1;
+	attachedPhysicsObject = NULL; 
 	
 	rotateAmount = 0;
 }

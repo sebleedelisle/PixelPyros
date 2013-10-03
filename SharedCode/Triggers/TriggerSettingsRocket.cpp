@@ -85,10 +85,10 @@ void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower
 		
 		
 	}*/
-	
-	ofRotate(angle);
-	ofLine(0,0,0,-20);
-
+	if((rotateOnFire) || (rotationSpeed!=0)) {
+		ofRotate(angle);
+		ofLine(0,0,0,-20);
+	}
 	
 	ofPopStyle();
 	ofPopMatrix();

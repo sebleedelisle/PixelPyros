@@ -40,7 +40,7 @@ void ofApp::setup(){
 	triggerShowDebug = false;
 	triggersDisabled = false;
     
-    drawCameraIntoFBO = false;
+    drawCameraIntoFBO = true;
     renderer.load("shaders/default");
     
 	//ofSetFrameRate(60);
@@ -72,6 +72,11 @@ void ofApp::setup(){
 
 	appParams.setName("App settings");	
 	appParams.add(timeSpeed.set("time speed", 1, 0,2));
+	// these should be loaded and saved, but not time speed
+	appParams.add(edgeBlendSize.set("edge blend size", 0, 0, 50));
+	appParams.add(sceneManager.musicVolume);
+	appParams.add(soundPlayer.globalVolume);
+	
 	
 	parameterManager.registerParameterGroup("app", &appParams );
     parameterManager.registerParameterGroup("laser", &laserManager.parameters );
@@ -81,8 +86,7 @@ void ofApp::setup(){
     parameterManager.registerParameterGroup("particles", &particleSystemManager.parameters);
     parameterManager.registerParameterGroup("laser calibration", &laserManager.calibrationParameters );
     parameterManager.registerParameterGroup("camera", &cameraManager.parameters );
-
-    
+       
     // Now that all of the parameters should be registered with the
 	// ParameterManager, setup the control gui
     
@@ -162,9 +166,8 @@ void ofApp::draw(){
 	if(useFbo) {
 		fbo.end();
         
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
 			
-		renderer.draw(fbo, fboWarper1, fboWarper2);
+		renderer.draw(fbo, fboWarper1, fboWarper2, edgeBlendSize);
 	}
 	
 	ofDrawBitmapString(ofToString(ofGetFrameRate()),20,20);
@@ -291,7 +294,7 @@ void ofApp:: setupScenes() {
 	sceneManager.addScene(new SceneSpace("Space"));
 	sceneManager.addScene(new SceneGame("Game"));
 	
-	sceneManager.changeScene("Nadia");
+	sceneManager.changeScene("Game");
 	
 	
 	
