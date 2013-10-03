@@ -187,7 +187,7 @@ void ControlPanels::setupPanel( string name, string filename, ofRectangle rect, 
 	panel.clear();
 	
     panel.setup( name, filename );
-    panel.useFrameBuffer(false);
+    panel.useFrameBuffer(true);
 	panel.loadFont("Verdana.ttf", 10, false);
 	
     panel.setSize( rect.width, rect.height );
