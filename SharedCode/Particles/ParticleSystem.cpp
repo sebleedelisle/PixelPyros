@@ -14,7 +14,7 @@ ParticleSystem::ParticleSystem (SoundPlayer& sp) : soundPlayer(sp){
 	life.delay = 0; 
 	reset();
 	
-	attachedPhysicsObject = NULL;
+//	attachedPhysicsObject = NULL;
 	
 }
 
@@ -24,6 +24,7 @@ void ParticleSystem::reset(){
 	numParticlesCreated = 0; 
 	finished = false;
 	power = 1;
+	attachedPhysicsObject = NULL; 
 	
 	rotateAmount = 0;
 }
@@ -40,6 +41,12 @@ bool ParticleSystem::update(float deltaTime) {
 	if(attachedPhysicsObject!=NULL) { 
 		
 		pos = attachedPhysicsObject->pos; 
+		if(!attachedPhysicsObject->isEnabled()) {
+			
+			//cout << "WHAT THE ACTUAL? " <<endl;
+			
+			
+		}
 		
 	}
 	
@@ -69,23 +76,24 @@ bool ParticleSystem::update(float deltaTime) {
 			newparticlecount = (life.elapsedTime-life.delay)*settings.emitCount;
 		} else if (settings.emitMode == PARTICLE_EMIT_BURST) {
 			newparticlecount = settings.emitCount;
+			if(settings.emitShape!=NULL) {
+				newparticlecount = settings.emitShape->getNumVertices(); 
+			}
 			life.end();
 		}
 		
 		while(numParticlesCreated<newparticlecount){
 			Particle& p = *addParticle();
 			
-			if(settings.emitShape!=NULL) {
 				
-				p.pos = settings.emitShape->getVertex(ofRandom(0,settings.emitShape->getNumVertices()));
-				
-				
-			} else if(attachedPhysicsObject!=NULL) {
+			if(attachedPhysicsObject!=NULL) {
 				if(settings.emitMode == PARTICLE_EMIT_CONTINUOUS) {
 					p.pos = ((attachedPhysicsObject->pos - attachedPhysicsObject->lastPos) * ofMap(numParticlesCreated/settings.emitCount, life.lastUpdateTime, life.elapsedTimeActual,0,1)) + attachedPhysicsObject->lastPos;
 				} else {
 					p.pos = attachedPhysicsObject->pos;
 				}
+			} else {
+				p.pos = pos;
 			}
 		}
 	
@@ -149,7 +157,7 @@ Particle * ParticleSystem::initParticle(Particle * p) {
 	p->startPos = p->pos;
 
 	
-	settings.initVelocity(p->vel); 
+	settings.initVelocity(p->vel, numParticlesCreated);
 	
 	if(settings.emitSpeedModifier!=1) { 
 		p->vel *= ofMap(life.unitLifeProgress, 0, 1, 1, settings.emitSpeedModifier);

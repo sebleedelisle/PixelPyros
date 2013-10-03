@@ -32,7 +32,7 @@ bool CameraFirewire::videoSettings(){
 	
 }
 
-
+/*
 void CameraFirewire :: initControlPanel(ofxAutoControlPanel &gui, float w) { 
 	
 	gui.addLabel("Firewire camera");
@@ -50,7 +50,7 @@ void CameraFirewire :: initControlPanel(ofxAutoControlPanel &gui, float w) {
 
 	
 }
-
+*/
 
 int CameraFirewire::getGain() { 
 	return camera.getGainRaw(); 

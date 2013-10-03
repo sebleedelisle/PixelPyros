@@ -44,6 +44,9 @@ class Trigger {
 	float lastScale;
 		
 	ofVec3f pos;
+	//ofVec3f targetPos;
+	//ofVec3f vel;
+	
 	bool fixedPosition;
 	
 	//vector <RocketSettings> rocketSettings;
@@ -62,6 +65,7 @@ class Trigger {
 	
 	// angle
 	float angle;
+	int rotateDirection; 
 	int triggerCount; 
 	
 	

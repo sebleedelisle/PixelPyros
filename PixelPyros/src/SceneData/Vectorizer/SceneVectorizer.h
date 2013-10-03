@@ -14,8 +14,6 @@
 #include "TriggerSettingsRocket.h"
 #include "StretchyNet.h"
 #include "ParticleRendererSquare.h"
-#include "TriggerSettingsRocketRotator.h"
-
 
 class SceneVectorizer : public Scene {
 	

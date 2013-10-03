@@ -39,6 +39,8 @@ class TriggerManager {
 	
 	void mouseMoved(int x, int y); 
 	void triggerParamChanged(float & value);
+	
+	void emptyTriggers();
     
 	TriggerPattern triggerPattern;
 	

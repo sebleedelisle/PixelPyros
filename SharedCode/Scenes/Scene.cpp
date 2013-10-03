@@ -31,8 +31,8 @@ void Scene :: loadMusicFile(string musicfile){
 	
 	musicFile = "../../../Music/"+musicfile;
 	
-	music.loadSound(musicFile);
-	// riddiculous hack to get the sound file length #facepalm
+	music.loadSoundWithTarget(musicFile,5);
+	// ridiculous hack to get the sound file length #facepalm
 	music.play();
 	music.setPosition(0.9999999f);
 	int ms = music.getPositionMS();
@@ -234,6 +234,12 @@ void Scene:: load(){
     
 }
 
+void Scene::setMusicVolume(float volume){
+	
+	music.setVolume(volume);
+
+}
+
 bool Scene :: togglePlayPause(){
 	if(playing) {
 		music.stop();
@@ -248,6 +254,7 @@ bool Scene :: togglePlayPause(){
 	playing = !playing;
 	return playing;
 }
+
 bool Scene::toggleRecord() {
 	recording = !recording;
 	return recording; 
@@ -288,6 +295,12 @@ TriggerPattern Scene :: getCurrentTriggerPattern() {
 	
 }
 
+void Scene ::addTriggerPattern() {
+	TriggerPattern emptyPattern;
+	addTriggerPattern(emptyPattern);
+	
+	//triggerPatternChangeTriggers.push_back(new bool(false));
+}
 void Scene ::addTriggerPattern(TriggerPattern& pattern) {
 	addTriggerPattern(pattern, "");
 	
@@ -301,6 +314,7 @@ void Scene ::addTriggerPattern(TriggerPattern& pattern, string label) {
 
 bool Scene :: changeTriggerPattern(int num) {
 
+	if(triggerPatterns.size()==0) addTriggerPattern();
 	if(num>=triggerPatterns.size())  return false;
 	
 	//TODO this needs to tell the triggerManager to change stuff

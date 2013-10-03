@@ -10,13 +10,12 @@
 
 TriggerSettingsRocket :: TriggerSettingsRocket() : particleSystemManager(*ParticleSystemManager::instance()) {
 	
-	//rocketSettings = NULL;
+	rocketSettings = NULL;
 	
 	rotationExtent = 0;
 	rotationSpeed = 0;
 	rotateOnFire = false;
 	
-	//rocketCount = 0;
 	
 }
 
@@ -28,8 +27,7 @@ void TriggerSettingsRocket ::doTrigger(ofVec3f& pos, float power, float directio
 	
 	if(rocketSettings!=NULL) {
 		rocket = particleSystemManager.addRocket(*rocketSettings, pos);
-		
-		//rocket->vel.set(0,ofMap(ofRandom(1), 0, 1, -rocketSettings->startSpeedMin, -rocketSettings->startSpeedMax),0);
+
 		rocket->vel.rotate(0,0, direction );
 		
 	}
@@ -39,19 +37,6 @@ void TriggerSettingsRocket ::doTrigger(ofVec3f& pos, float power, float directio
 
 }
 
-
-/*
-PhysicsObject * TriggerSettingsRocket:: makeNewRocket(ofVec3f& pos) {
-	PhysicsObject* rocket = NULL;
-	
-	if(rocketSettings!=NULL) {
-		rocket = particleSystemManager.addRocket(*rocketSettings, pos);
-	}
-
-	
-	return rocket;
-	
-}*/
 
 
 void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale, float angle) {
@@ -100,10 +85,10 @@ void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower
 		
 		
 	}*/
-	
-	ofRotate(angle);
-	ofLine(0,0,0,-20);
-
+	if((rotateOnFire) || (rotationSpeed!=0)) {
+		ofRotate(angle);
+		ofLine(0,0,0,-20);
+	}
 	
 	ofPopStyle();
 	ofPopMatrix();

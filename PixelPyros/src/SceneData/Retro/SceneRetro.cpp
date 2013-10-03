@@ -7,6 +7,32 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 
 	pixelSize = 2;
 	loadMusicFile("1-05 TECHNOPOLIS.aif");
+	
+	pixelMesh.setMode(OF_PRIMITIVE_LINES);
+	ofSetLineWidth(1);
+	// TODO This brightness needs to be adjustable
+	ofColor lineColour(0,0,0,100);
+	
+	
+	for(int x = 0; x<APP_WIDTH; x+=pixelSize) {
+		
+		pixelMesh.addVertex(ofVec3f(x+0.5,0));
+		pixelMesh.addVertex(ofVec3f(x+0.5,APP_HEIGHT));
+		pixelMesh.addColor(lineColour);
+		pixelMesh.addColor(lineColour);
+		
+		
+	}
+	for(int y = 0; y<APP_HEIGHT; y+=pixelSize) {
+		
+		pixelMesh.addVertex(ofVec3f(0,y+0.5));
+		pixelMesh.addVertex(ofVec3f(APP_WIDTH,y+0.5));
+		pixelMesh.addColor(lineColour);
+		pixelMesh.addColor(lineColour);
+		
+		
+	}
+
 
 	//TODO this should really be somewhere else - but where! 
 	TriggerRechargeSettings::fastMultiples->minTriggerInterval = 0.2;
@@ -39,10 +65,22 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	TriggerPattern patternCyanChevrons;
 	patternCyanChevrons.addTriggerSettings(cyanFountainLow);
 	patternCyanChevrons.addTriggerSettings();
+	addTriggerPattern(patternCyanChevrons);
+
+	
 	patternCyanChevrons.addTriggerSettings(cyanFountainHigh);
 	patternCyanChevrons.addTriggerSettings();
 	addTriggerPattern(patternCyanChevrons);
+
 	
+	TriggerPattern patternRedChevrons;
+	patternRedChevrons.addTriggerSettings(redFountainLow);
+	patternRedChevrons.addTriggerSettings();
+	addTriggerPattern(patternRedChevrons);
+
+	patternRedChevrons.addTriggerSettings(redFountainHigh);
+	patternRedChevrons.addTriggerSettings();
+	addTriggerPattern(patternRedChevrons);
 	
 	
 	
@@ -57,21 +95,8 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 		pixelRockets.addTriggerSettings(); 
 	}
 	
-	
 	addTriggerPattern(pixelRockets);
 
-	
-	
-	TriggerPattern patternRedChevrons;
-	patternRedChevrons.addTriggerSettings(redFountainLow);
-	patternRedChevrons.addTriggerSettings();
-	patternRedChevrons.addTriggerSettings(redFountainHigh);
-	patternRedChevrons.addTriggerSettings();
-
-	addTriggerPattern(patternRedChevrons);
-
-	
-	
 	TriggerPattern pixelRockets2;
 	float colours2 [4] = {220, 180, 120, 180};
 	
@@ -87,14 +112,12 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	
 	addTriggerPattern(pixelRockets2);
 
-	
 	TriggerPattern patternCyanMix;
 	patternCyanMix.addTriggerSettings(cyanRocket);
 	patternCyanMix.addTriggerSettings();
 	patternCyanMix.addTriggerSettings(cyanFountainLow);
 	patternCyanMix.addTriggerSettings();
 	addTriggerPattern(patternCyanMix);
-	
 	
 	TriggerPattern patternRedMix;
 	patternRedMix.addTriggerSettings(redRocket);
@@ -128,43 +151,31 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	
 	
 */
-	
+		
 };
+
+
+bool SceneRetro::update(float deltaTime) {
+	
+	if(!Scene::update(deltaTime)) return false;
+	
+	
+}
+
+
 
 
 bool SceneRetro :: draw() {
 	if(!Scene::draw()) return false;
 	
+		
 	ofPushStyle();
 	ofDisableSmoothing();
 	ofDisableBlendMode();
 	ofEnableAlphaBlending();
 	
-	ofMesh mesh;
-	mesh.setMode(OF_PRIMITIVE_LINES);
-	ofSetLineWidth(1);
-	ofColor lineColour(0,0,0,100);
 	
-	
-	for(int x = 0; x<APP_WIDTH; x+=pixelSize) {
-		
-		mesh.addVertex(ofVec3f(x+0.5,0));
-		mesh.addVertex(ofVec3f(x+0.5,APP_HEIGHT));
-		mesh.addColor(lineColour);
-		mesh.addColor(lineColour);
-		
-		
-	}
-	for(int y = 0; y<APP_HEIGHT; y+=pixelSize) {
-		
-		mesh.addVertex(ofVec3f(0,y+0.5));
-		mesh.addVertex(ofVec3f(APP_WIDTH,y+0.5));
-		mesh.addColor(lineColour);
-		mesh.addColor(lineColour);
-		
-		
-	}
-	mesh.draw(); 
+	pixelMesh.draw();
 	
 	ofPopStyle();
 	
@@ -255,7 +266,7 @@ TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueC
 	
 	rocketSettings.startSpeedMin = minSpeed;
 	rocketSettings.startSpeedMax = maxSpeed;
-	rocketSettings.lifeTime = 0.5; 
+	rocketSettings.setLifeTime(0.5);
 	rocketSettings.drag = 0.99;
 	rocketSettings.gravity.y = 1000;
 	rocketSettings.addParticleSystemSetting(pss);
@@ -336,7 +347,7 @@ ParticleSystemSettings SceneRetro::  getPixelExplosionParticles(float hue, float
 	ParticleSystemSettings explosion;
 	explosion.renderer = new ParticleRendererLowRes(pixelSize);
 	
-	//pss.directionZVar = 20;
+
 	explosion.speedMin = 250;
 	explosion.speedMax = 300;
 
@@ -351,9 +362,20 @@ ParticleSystemSettings SceneRetro::  getPixelExplosionParticles(float hue, float
 	explosion.lifeMin = explosion.lifeMax = 0.6;
 	
 	
+	ofMesh* circleMesh = new ofMesh();
+	for(int i = 0; i<30; i++) {
+		ofVec3f v(1,0,0);
+		v.rotate(ofMap(i,0,30,0,360), ofVec3f(0,0,1));
+		circleMesh->addVertex(v);
+	}
+	
+	explosion.directionYVar = 0;
+	explosion.directionZVar = 0;
+	
 	//explosion.emitMode = PARTICLE_EMIT_BURST;
 	explosion.emitLifeTime = 0.1;
-	explosion.emitCount = 500;
+	explosion.emitShape = circleMesh; 
+	explosion.emitCount = 1200;
 	explosion.startSound = "RetroExplosion";
 
 	

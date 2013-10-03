@@ -27,8 +27,6 @@ class TriggerSettingsRocket : public TriggerSettings {
 	
 	ofPath path;
 
-	//virtual PhysicsObject *  makeNewRocket(ofVec3f& pos);
-
 	ParticleSystemManager & particleSystemManager;
 	
 	RocketSettings* rocketSettings;

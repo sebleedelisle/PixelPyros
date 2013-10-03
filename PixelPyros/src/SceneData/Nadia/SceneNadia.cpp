@@ -101,9 +101,9 @@ TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange
 	smoke.brightnessStartMin *=0.5;
 	
 
-	rocketSettings.addParticleSystemSetting(ps);
+	//rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(laser);
-	rocketSettings.addParticleSystemSetting(smoke);
+	//rocketSettings.addParticleSystemSetting(smoke);
 	
 	
 	ts.rocketSettings = &rocketSettings;
@@ -127,7 +127,7 @@ TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	rocketSettings.startSpeedMax = 900;
 	rocketSettings.drag = 0.96;
 	rocketSettings.gravity.y = 100;
-	rocketSettings.lifeTime = 1.7;
+	rocketSettings.setLifeTime(1.7);
 	
 	ParticleSystemSettings laserTrails = getLaserParticles(hue, hueChange);
 	ParticleSystemSettings trails = getTrailParticles(hue, hueChange);
@@ -140,15 +140,33 @@ TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	laserTrails.drag = rocketSettings.drag;
 	laserTrails.gravity = rocketSettings.gravity;
 	
-	laserTrails.lifeMin = laserTrails.lifeMax = rocketSettings.lifeTime;
-	
+	laserTrails.lifeMin = laserTrails.lifeMax = rocketSettings.getLifeTime();
+
+		
 	laserTrails.emitCount = 1;
 	laserTrails.emitMode = PARTICLE_EMIT_BURST;
-	trails.emitLifeTime = rocketSettings.lifeTime;
+	trails.emitLifeTime = rocketSettings.getLifeTime();
+	
+	ParticleSystemSettings explosion(laserTrails);
+	explosion.emitDelay = rocketSettings.getLifeTime();
+	explosion.emitCount = 15;
+	explosion.speedMax = 500;
+	explosion.speedMin = 800;
+	explosion.directionZVar = 180;
+	explosion.sizeStartMin = 1;
+	explosion.sizeStartMax = 1;
+	explosion.lifeMin = 0.3;
+	explosion.lifeMin = 0.5;
+	explosion.drag = 0.9;
+	explosion.hueChange = 0;
+	explosion.brightnessEnd = 0; 
+	
+	
 	//explosion.emitDelay = trails.emitLifeTime;
 	
 	rocketSettings.addParticleSystemSetting(laserTrails);
-	rocketSettings.addParticleSystemSetting(trails);
+	//rocketSettings.addParticleSystemSetting(trails);
+	rocketSettings.addParticleSystemSetting(explosion);
 	
 	ts.rocketSettings = &rocketSettings;
 	

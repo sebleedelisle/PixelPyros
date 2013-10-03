@@ -20,6 +20,8 @@ SceneManager :: SceneManager() : particleSystemManager(*ParticleSystemManager::i
 	ofAddListener(ofEvents().mouseReleased, this, &SceneManager::mouseReleased);
 	ofAddListener(ofEvents().keyPressed, this, &SceneManager::keyPressed);
 	
+	parameters.add(musicVolume.set("music volume", 0.7,0,1));
+	
 	playHeadRect = ofRectangle(0,0,20,20);
 
 }
@@ -52,7 +54,10 @@ bool SceneManager ::update(float deltaTime){
 	
 	for(int i = 0; i<scenes.size(); i++) {
 		scenes[i]->update(deltaTime);
+		scenes[i]->setMusicVolume(musicVolume);
 	}
+	
+	
 }
 
 void SceneManager::draw() {
@@ -145,7 +150,9 @@ bool SceneManager :: changeScene (Scene* scene) {
 			currentSceneIndex = newSceneIndex;
 			currentScene = scene;
 			currentSceneName = scene->name ;
-			triggerManager.setPattern(currentScene->getCurrentTriggerPattern());
+			//triggerManager.setPattern(currentScene->getCurrentTriggerPattern());
+			currentScene->changeTriggerPattern(0);
+
 
 		} else {
 			scenes[i]->stop();
@@ -342,35 +349,3 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 
 
 
-
-
-// Here's the bit that gets all the patterns out of the scenes for the old OSC controller.
-// Don't think we need it now, but keeping it just in case.
-
-/*
-void SceneManager::initSceneControls(SettingsManager & settingsManager) {
-	
-	settingsManager.addSettingString(&currentSceneName, "/PixelPyros/SceneData/content" );
-	settingsManager.addSettingString(&currentSceneArrangement, "/PixelPyros/SceneArrangement/content" );
-	
-	settingsManager.addSettingBool(&showSlideShow, "", "/PixelPyros/Scenes/Restart/x", true, true);
-	
-	for(int i = 0; i<scenes.size(); i++) {
-
-		Scene & scene = *scenes[i];
-		
-		
-		for(int j = 0; j<scene.triggerPatterns.size(); j++) {
-		
-			settingsManager.addSettingBool(scene.triggerPatternChangeTriggers[j], "", "/PixelPyros/Scenes/"+scene.name+"Arr"+ofToString(j+1)+"/x", true, true);
-			cout << "adding " << "/PixelPyros/Scenes/"+scene.name+"Arr"+ofToString(j+1)+"/x control"<< endl;
-	
-		}
-		
-		
-	}
-	
-	
-}
-
-*/

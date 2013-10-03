@@ -8,6 +8,7 @@
 
 
 #include "ofMain.h"
+#include "ofMultiDeviceSoundPlayer.h"
 
 class Sound {
 	
@@ -38,9 +39,9 @@ class Sound {
 		
 		if(file.doesFileExist(path+filename+"."+type)){
 		
-			sounds.push_back(ofSoundPlayer());
-			ofSoundPlayer& newsound = sounds.back();
-			newsound.loadSound(path+filename+"."+type);
+			sounds.push_back(new ofMultiDeviceSoundPlayer());
+			ofMultiDeviceSoundPlayer& newsound = *sounds.back();
+			newsound.loadSoundWithTarget(path+filename+"."+type, 5);
 			newsound.setMultiPlay(true);
 		} else {
 			int filenum = 1;
@@ -50,10 +51,7 @@ class Sound {
 				
 				addSound(path, filename+"."+ofToString(filenum), vol, type);
 				filenum++;
-				
 			}
-			
-			
 		}
 		
 		int numsounds = sounds.size();
@@ -77,7 +75,7 @@ class Sound {
 		
 		
 		if(currentSoundIndex>=sounds.size()) currentSoundIndex = 0;
-		ofSoundPlayer& sound = sounds[currentSoundIndex];
+		ofMultiDeviceSoundPlayer& sound = *sounds[currentSoundIndex];
 		
 		sound.setVolume(vol*masterVolume);
 		sound.setPan(pan);
@@ -100,7 +98,7 @@ class Sound {
 	//string soundName;
 	
 	float masterVolume ;
-	vector <ofSoundPlayer> sounds;
+	vector <ofMultiDeviceSoundPlayer*> sounds;
 	int currentSoundIndex;
 	float lastPlayedTime;
 	float minRetriggerTime;

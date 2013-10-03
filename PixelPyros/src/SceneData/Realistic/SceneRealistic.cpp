@@ -250,7 +250,7 @@ TriggerSettingsRocket*  SceneRealistic :: getFountain(float hueStartOffset , flo
 	rocketSettings.directionVar = 5;
 	rocketSettings.gravity.y = 300;
 	rocketSettings.drag = 0.9;
-	rocketSettings.lifeTime = 1;
+	rocketSettings.setLifeTime(1);
 	
 	rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(ps2);
@@ -409,15 +409,15 @@ ParticleSystemSettings SceneRealistic :: getFlowerExplosionParticles(float hue, 
 	
 	explosion.startSound = "SoftExplosion";
 	
-	
 	return explosion;
 	
-	
 }
+
+
 ParticleSystemSettings SceneRealistic :: getLineExplosionParticles(float hue, float hueChange){
 	
 	ParticleSystemSettings explosion;
-	explosion.renderer = new ParticleRendererLine(1, false, 10);
+	explosion.renderer = new ParticleRendererLine(1, false, 4);
 	
 	//pss.directionZVar = 20;
 	explosion.speedMin = 300;

@@ -96,7 +96,7 @@ class StretchyNet {
 				//}
 				for(std::vector<PhysicsObject*>::iterator it2 = physicsObjects.begin(); it2 != physicsObjects.end(); ++it2) {
 					PhysicsObject* po = *it2;
-					if((!po->enabled) || (!po->life.active)) continue;
+					if((!po->isEnabled()) || (!po->life.active)) continue;
 					
 					float distsquared = po->pos.distanceSquared(p);
 					if(distsquared<(area*area)){

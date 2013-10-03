@@ -145,7 +145,6 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	endPattern.addTriggerSettings(triggerBanger);
 	endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(triggerFountain);
-	//endPattern.addTriggerSettings(starTrigger);
 	
 	addTriggerPattern(endPattern);
 	
@@ -227,7 +226,7 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	stars.lifeMin = 1;
 	stars.lifeMin = 1.2;
 	
-	stars.emitLifeTime =1.6;
+	stars.emitLifeTime =1.1;
 	stars.emitDelay = 0;
 	stars.emitCount = 200;
 	stars.emitStartSizeModifier = 0;
@@ -278,7 +277,7 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	// delay
 	
 	ps.emitMode = PARTICLE_EMIT_CONTINUOUS;
-	ps.emitCount = 100;
+	ps.emitCount = 50;
 	
 	ps.emitDelay = 0;
 	ps.emitLifeTime= stars.emitLifeTime;
@@ -289,20 +288,17 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	
 	//ps.emitAttachedPhysicsObject = &rocket;
 	ps.emitInheritVelocity = 0.3;
-	ps.renderer = new ParticleRendererLine(2, true);
-	
-	
-	
-	
+	ps.renderer = new ParticleRendererLine(1, true, 10);
+		
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
-	rocketSettings.startSpeedMin = 1200;
-	rocketSettings.startSpeedMax = 1600;
+	rocketSettings.startSpeedMin = 900;
+	rocketSettings.startSpeedMax = 1300;
 	rocketSettings.direction = -90;
 	rocketSettings.directionVar = 5;
 	rocketSettings.gravity.y = 800;
 	rocketSettings.drag = 0.96;
-	rocketSettings.lifeTime = 1.5;
+	rocketSettings.setLifeTime(stars.emitLifeTime);
 	rocketSettings.timeSpeed = stars.timeSpeed =  ps.timeSpeed = 0.8;
 	
 	rocketSettings.addParticleSystemSetting(stars);
@@ -323,6 +319,8 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	
 	renderer = new ParticleRendererShape();
+	
+	// ps = trails
 	ParticleSystemSettings ps;
 	// PHYSICS
 	ps.speedMin = 20;
@@ -382,13 +380,15 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	
 	// optional colour modifier
 	
+	// PLANET PARTICLES PS2
+	
 	ParticleSystemSettings ps2;
 	// PHYSICS
-	ps2.speedMin = 650;
-	ps2.speedMax = 700;
+	ps2.speedMin = 550;
+	ps2.speedMax = 600;
 	ps2.directionZ = 0;
-	ps2.directionZVar = 90;
-	ps2.directionYVar = 180;
+	ps2.directionZVar = 3; //90;
+	ps2.directionYVar = 3; //180;
 	ps2.drag = 0.86;
 	ps2.gravity.set(0,30);
 	
@@ -398,8 +398,8 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	
 	//APPEARANCE
 	
-	ps2.sizeStartMin = 5;
-	ps2.sizeStartMax = 7;
+	ps2.sizeStartMin = 3;
+	ps2.sizeStartMax = 6;
 	ps2.sizeChangeRatio = 0;
 	
 	ps2.hueStartMin = 20;
@@ -420,20 +420,23 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	// lifeExpectancy
 	// delay
 	
-	//ps2.emitMode = PARTICLE_EMIT_BURST;
 	ps2.emitCount = 20000;
 	
 	ps2.emitDelay = ps.emitLifeTime+0.2;
 	ps2.emitLifeTime= 0.05;
 	
-	ps2.renderer = renderer;
 	
-	// optional colour modifier
+	ps2.emitMode = PARTICLE_EMIT_BURST;
+	ps2.emitShape = new ofMesh(ofMesh::icosphere(1,3));
 	
+	ps2.renderer = new ParticleRendererDoubleCircle();
+		
+	
+	// RINGS PS3
 	ParticleSystemSettings ps3;
 	// PHYSICS
-	ps3.speedMin = 550;
-	ps3.speedMax = 800;
+	ps3.speedMin = 650;
+	ps3.speedMax = 750;
 	ps3.directionZ = 0;
 	ps3.directionZVar = 0;
 	ps3.directionYVar = 180;
@@ -482,8 +485,8 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	ps3.renderer = new ParticleRendererCircle(7, true, 1, ofVec3f(90,0,0)); 
 	
 	
-	ps2.rotateMin = -10;
-	ps2.rotateMax = 10;
+	ps2.rotateMin = -20;
+	ps2.rotateMax = 20;
 	ps3.rotateMin = -20;
 	ps3.rotateMax = 20;
 	
@@ -521,7 +524,7 @@ TriggerSettingsRocket* SceneSpace :: getFlowerRocket(float hue , float hueChange
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
 	rocketSettings.startSpeedMin = 1500;
-	rocketSettings.startSpeedMax = 1700;
+	rocketSettings.startSpeedMax = 1900;
 	rocketSettings.directionVar = 4;
 	rocketSettings.gravity.y = 200;
 	rocketSettings.drag = 0.92;
@@ -620,7 +623,7 @@ ParticleSystemSettings SceneSpace :: getFlowerTrailParticles(float hue, float hu
 	
 	
 	ParticleSystemSettings trails;
-	trails.renderer = new ParticleRendererLine(1.5, true);
+	trails.renderer = new ParticleRendererLine(1.5, true, 3);
 	//pss.directionZVar = 20;
 	trails.speedMin = 10;
 	trails.speedMax = 10;
@@ -652,8 +655,8 @@ ParticleSystemSettings SceneSpace :: getFlowerExplosionParticles(float hue, floa
 	explosion.renderer = new ParticleRendererBitmap(&softWhiteImage);
 	
 	//pss.directionZVar = 20;
-	explosion.speedMin = 650;
-	explosion.speedMax = 700;
+	explosion.speedMin = 550;
+	explosion.speedMax = 600;
 	explosion.directionZ = 0;
 	explosion.directionZVar = 90;
 	explosion.directionYVar = 180;
@@ -690,11 +693,11 @@ ParticleSystemSettings SceneSpace :: getLineExplosionParticles(float hue, float 
 	
 	
 	ParticleSystemSettings explosion;
-	explosion.renderer = new ParticleRendererLine(2, true);
+	explosion.renderer = new ParticleRendererLine(2, true, 4);
 	
 	//pss.directionZVar = 20;
 	explosion.speedMin = 300;
-	explosion.speedMax = 500;
+	explosion.speedMax = 400;
 	explosion.drag = 0.95;
 	explosion.gravity.y = 100;
 	
@@ -708,8 +711,8 @@ ParticleSystemSettings SceneSpace :: getLineExplosionParticles(float hue, float 
 	explosion.brightnessEnd = 0;
 	
 	explosion.shimmerMin = 0.5;
-	explosion.lifeMin = 1;
-	explosion.lifeMax = 2;
+	explosion.lifeMin = 0.8;
+	explosion.lifeMax = 1.2;
 	
 	//explosion.emitMode = PARTICLE_EMIT_BURST;
 	explosion.emitLifeTime = 0.1;

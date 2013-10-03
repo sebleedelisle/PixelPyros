@@ -13,6 +13,7 @@
 #include "ParticleRendererStar.h"
 #include "ParticleRendererBitmap.h"
 #include "ParticleRendererCircle.h"
+#include "ParticleRendererDoubleCircle.h"
 #include "ParticleRendererSquare.h"
 #include "TriggerSettingsFountain.h"
 

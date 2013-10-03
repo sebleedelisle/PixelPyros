@@ -15,6 +15,7 @@ class SceneRetro : public Scene {
 	SceneRetro (string scenename) ;
 
 	bool draw();
+	bool update(float deltaTime); 
 	
 	TriggerSettingsRocket* getRetroRocket(float hue = -30, float hueChange = 40);
 	TriggerSettingsRocket* getRetroFountain(float hueOffset = 0, float hueChange = -128, float minSpeed = 600, float maxSpeed = 900);
@@ -26,7 +27,9 @@ class SceneRetro : public Scene {
 	
 	TriggerSettingsRocket* getPixelRocket(float hue = 0);
     
+		
 	unsigned int pixelSize;
+	ofMesh pixelMesh; 
     
    
 };

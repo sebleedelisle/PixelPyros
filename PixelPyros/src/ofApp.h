@@ -8,27 +8,23 @@
 
 #include "ofMain.h"
 #include "SceneManager.h"
-#include "SettingsManager.h"
 #include "ParticleSystemManager.h"
 #include "CameraManagerWarped.h"
 #include "MotionManager.h"
 #include "TriggerManager.h"
-#include "ofxAutoControlPanel.h"
 
 #include "LaserManager.h"
 #include "ControlPanels.h"
 #include "SoundPlayer.h"
-//#include "Sequencer.h"
 
-//
 #include "SceneSpace.h"
 #include "SceneVectorizer.h"
-//#include "SceneLaunch.h"
 #include "SceneIntro.h"
 #include "SceneRetro.h"
 #include "SceneRealistic.h"
 #include "SceneCalibration.h"
 #include "SceneSlideshow.h"
+#include "SceneGame.h"
 #include "SceneNadia.h"
 
 #include "PyrosRenderer.h"
@@ -42,6 +38,12 @@
 #include "ofShader.h"
 
 #include "TextWriter.h"
+
+
+#include <GLFW/glfw3.h>
+#define GLFW_EXPOSE_NATIVE_COCOA
+#define GLFW_EXPOSE_NATIVE_NSGL
+#include "GLFW/glfw3native.h"
 
 class ofApp :public ofBaseApp{
 	
@@ -61,43 +63,42 @@ public:
 	void keyPressed( int key );
 	void keyReleased( int key );
 	
-	void setupControlPanel();
-	void eventsIn(guiCallbackData & data);
-	
 	void setupScenes();
 	void initSounds();
 	
-//  void mousePressed(ofMouseEventArgs &e);
-//	void mouseDragged(ofMouseEventArgs &e);
-//	void mouseReleased(ofMouseEventArgs &e);
-//	void mouseMoved(ofMouseEventArgs &e);
+	void updateScreenSizes(); 
+	void windowResized(int w, int h);
+
 	
   	ParticleSystemManager& particleSystemManager;
 	LaserManager& laserManager;
 	SceneManager sceneManager;
 	TriggerManager& triggerManager;
-	//OscManager oscManager;
-    //SettingsManager settingsManager;
+
 	CameraManagerWarped cameraManager;
 	MotionManager motionManager;
 	SoundPlayer& soundPlayer;
     ParameterManager& parameterManager;
     ControlPanels controlPanels;
-	//Sequencer sequencer;
+
+	
+	ofParameterGroup appParams; 
+	ofParameter<float> timeSpeed;
+	ofParameter<int> edgeBlendSize; 
 	
 	ofFbo fbo;
 	bool useFbo;
-	
-	//ofxAutoControlPanel gui;
 	
 	float lastUpdateTime;
 	
 	QuadWarp fboWarper1;
 	QuadWarp fboWarper2;
 	
-	//bool shiftPressed;
 	
-	ofRectangle triggerArea;
+	vector<ofRectangle> screens;
+	
+	
+	//ofRectangle triggerArea;
 	float triggerAreaCentreY;
 	float triggerAreaWidth;
 	float triggerAreaHeight;
@@ -109,9 +110,11 @@ public:
 	bool shiftPressed;
     bool altPressed;
 	
+	
+	
 	PyrosRenderer renderer;
 	
-	float testValue;
+	
     
 private:
     
