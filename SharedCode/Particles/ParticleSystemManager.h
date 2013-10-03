@@ -34,13 +34,14 @@ public:
 	void killAllParticles ();
 	ParticleSystem * getParticleSystem();
 	PhysicsObject * getPhysicsObject() ;
+	void killPhysicsObject(PhysicsObject * po); 
 	
 	PhysicsObject * addRocket(RocketSettings& rs, ofVec3f& pos);
-	vector <ParticleSystem *> particleSystems; 
-	vector <ParticleSystem *> spareParticleSystems; 
+	vector <ParticleSystem*> particleSystems; 
+	vector <ParticleSystem*> spareParticleSystems;
 
-	vector <PhysicsObject *> physicsObjects; 
-	vector <PhysicsObject *> sparePhysicsObjects; 
+	vector <PhysicsObject*> physicsObjects;
+	vector <PhysicsObject*> sparePhysicsObjects;
     bool killAllParticlesFlag;
     
 	ofParameter<bool> killAllParticlesParam;

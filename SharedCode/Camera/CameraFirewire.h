@@ -11,7 +11,7 @@
 #include "ofMain.h"
 #include "CameraWrapper.h"
 #include "ofxLibdc.h"
-#include "ofxAutoControlPanel.h"
+//#include "ofxAutoControlPanel.h"
 
 class CameraFirewire : public CameraWrapper{ 
 
@@ -32,7 +32,8 @@ class CameraFirewire : public CameraWrapper{
 	int getBrightness();
 	void setBrightness(int value); 
 
-	void initControlPanel(ofxAutoControlPanel& gui, float w); 
+	//TODO : ADD PARAMS
+	//void initControlPanel(ofxAutoControlPanel& gui, float w);
 	
     ofxLibdc::Grabber camera;	
 	

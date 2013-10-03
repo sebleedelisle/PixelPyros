@@ -5,7 +5,6 @@
 #include "Scene.h"
 #include "ParticleSystemManager.h"
 #include "TriggerManager.h"
-#include "SettingsManager.h"
 
 class SceneManager {
 
@@ -54,6 +53,9 @@ public :
 		
 	ParticleSystemManager & particleSystemManager;
 	TriggerManager & triggerManager;
+	
+	ofParameter<float> musicVolume;
+	ofParameterGroup parameters;
 	
 	
 	bool showInterface;

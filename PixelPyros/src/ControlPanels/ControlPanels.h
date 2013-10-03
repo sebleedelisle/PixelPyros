@@ -20,7 +20,8 @@ class ControlPanels {
     public:
     
     ControlPanels():parameterManager(*ParameterManager::instance()){};
-    void setup(ParameterManager * parameterManager);
+    void setup(ParameterManager * parameterManager, vector<ofRectangle> screens);
+	void updatePositions(vector<ofRectangle> screens); 
     void draw();
     void drawPreviewScreen();
     void exit();
@@ -42,6 +43,7 @@ class ControlPanels {
     
     ParameterManager& parameterManager;
     
+    ofxPanel appGui; 
     ofxPanel laserCalibration;
     ofxPanel projectorCalibration;
     ofxPanel cameraCalibration;
@@ -50,11 +52,19 @@ class ControlPanels {
     ofxPanel rendererGui;
     ofxPanel triggerGui;
     ofxPanel motionGui;
+	ofxPanel cameraGui;
+	
+	int panelMode;
+	int PANEL_MODE_NONE = 0;
+	int PANEL_MODE_APP = 1;
+	int PANEL_MODE_MOTION = 2;
+	int PANEL_MODE_LASER = 3; 
+	
+	vector<ofxPanel*> panels; 
     
-    ofVec2f previewScreenPosition;
-    
-    
+    ofRectangle previewScreenRect;
     ofRectangle screen;
+	
     ofVec2f padding;
     
     

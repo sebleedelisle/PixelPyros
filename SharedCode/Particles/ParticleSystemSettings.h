@@ -60,6 +60,7 @@ class ParticleSystemSettings{
 		// EMISSION MODE AND PARTICLE COUNT
 		emitMode = PARTICLE_EMIT_CONTINUOUS;
 		emitCount = 100; // number of Particles per second
+		emitShape = NULL;
 		
 		// EMISSION CHANGE OVER TIME 
 		// This will change the start size and hue of emitted
@@ -82,12 +83,18 @@ class ParticleSystemSettings{
 
 	
 	
-	void initVelocity(ofVec3f& vel) {
+	void initVelocity(ofVec3f& vel, int particleCount = 0) {
 		
-		vel.set(ofRandom(speedMin, speedMax), 0); 
-		vel.rotate(0,0,ofRandom(directionZ-directionZVar, directionZ+directionZVar)); 
-		vel.rotate(0,ofRandom(directionY-directionYVar, directionY+directionYVar), 0 ); 
-		
+		if(emitShape==NULL) {
+			vel.set(ofRandom(speedMin, speedMax), 0);
+			vel.rotate(0,0,ofRandom(directionZ-directionZVar, directionZ+directionZVar));
+			vel.rotate(0,ofRandom(directionY-directionYVar, directionY+directionYVar), 0 );
+		} else {
+			vel = emitShape->getVertex(particleCount%emitShape->getNumVertices());
+			vel*=ofRandom(speedMin, speedMax);
+			vel.rotate(0,ofRandom(-directionYVar, directionYVar),ofRandom(-directionZVar, directionZVar) );
+			
+		}
 	};
 	
 	void initColourModifier (ColourModifier* c, LifeCycle& life) { 

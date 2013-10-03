@@ -19,7 +19,7 @@ SoundPlayer* SoundPlayer::instance() {
 }
 
 SoundPlayer::SoundPlayer(){
-	globalVolume = 1;
+	globalVolume.set("sfx volume", 0.7,0,1);
 }
 
 bool SoundPlayer:: addSound(string filename, string reference, float vol, float speed, float speedVar, string fileType, float retriggerMin){

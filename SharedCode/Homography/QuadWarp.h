@@ -17,6 +17,7 @@ class QuadWarp {
 	public :
 	
 	QuadWarp (string saveLabel = "default");
+	~QuadWarp();
 	
 	void draw();
 	void draw(bool lockAxis);
@@ -63,7 +64,7 @@ class QuadWarp {
 	
 	
 	//ofVec3f *curPoint;
-	int curPointIndex; 
+	int curDragPointIndex;
 	
 	ofVec3f clickOffset;
 	ofVec3f dragStartPoint;

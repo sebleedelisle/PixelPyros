@@ -94,7 +94,7 @@ TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue ,
 	ts->hue = hue;
 	ts->saturation = saturation * 0.7;
 	ts->rocketSettings = &rocketSettings;
-	ts->rechargeSettings = TriggerRechargeSettings::medium;
+	ts->rechargeSettings = TriggerRechargeSettings::fastMultiples;
 	
 	return ts;
 	
@@ -276,8 +276,6 @@ ParticleSystemSettings FireworkFactory :: getFlowerExplosionParticles(float hue,
 	explosion.directionZVar = 90;
 	explosion.directionYVar = 180;
 	
-	
-	
 	explosion.sizeStartMin = 15;
 	explosion.sizeStartMax = 25;
 	explosion.sizeChangeRatio = 0;
@@ -299,6 +297,12 @@ ParticleSystemSettings FireworkFactory :: getFlowerExplosionParticles(float hue,
 	explosion.emitLifeTime = 0.1;
 	explosion.emitCount = 10000;
 	
+	explosion.emitMode = PARTICLE_EMIT_BURST;
+	explosion.emitShape = new ofMesh(ofMesh::icosphere(1,2));
+	explosion.emitLifeTime = 0.1;
+	explosion.directionYVar = explosion.directionZVar = 0;
+	explosion.emitCount = explosion.emitShape->getNumVertices()/explosion.emitLifeTime;
+
 	explosion.startSound = "SoftExplosion";
 	
 	
@@ -315,25 +319,8 @@ TriggerSettingsRocket* FireworkFactory :: getSimpleFountain(float hueStartOffset
 	
 	ParticleSystemSettings ps, ps2;
 	
-	// ParticleData
-	// size range
-	// size modifier
-	// velocity range
-	// life range
-	// drag
-	// gravity
-	// colour
-	// colour modifier
-	// renderer
 	
-	// EmmisionData
-	// Frequency
-	// Burst/continuous
-	// range of start sizes for particles
-	// range of colours for particles
-	
-	// optional colour modifier
-	// PHYSICS
+	// SPARKLES **************************
 	ps.speedMin = 0;
 	ps.speedMax = 20;
 	ps.directionZ = 0;
@@ -389,7 +376,7 @@ TriggerSettingsRocket* FireworkFactory :: getSimpleFountain(float hueStartOffset
 	// optional colour modifier
 	
 	
-	// PHYSICS
+	// SMOKE ***************************************
 	ps2.speedMin = 15;
 	ps2.speedMax = 20;
 	ps2.directionZ = 0;
@@ -431,7 +418,7 @@ TriggerSettingsRocket* FireworkFactory :: getSimpleFountain(float hueStartOffset
 	
 	
 	ps2.emitMode = PARTICLE_EMIT_CONTINUOUS;
-	ps2.emitCount = 500;
+	ps2.emitCount = 200;
 	
 	ps2.emitDelay = 0;
 	ps2.emitLifeTime= 0.5;
@@ -447,7 +434,7 @@ TriggerSettingsRocket* FireworkFactory :: getSimpleFountain(float hueStartOffset
 	rocketSettings.directionVar = 5;
 	rocketSettings.gravity.y = 300;
 	rocketSettings.drag = 0.9;
-	rocketSettings.lifeTime = 1;
+	rocketSettings.setLifeTime(1);
 	ps.timeSpeed = ps2.timeSpeed = rocketSettings.timeSpeed = 0.5;
 	
 	
@@ -502,8 +489,8 @@ TriggerSettingsRocket* FireworkFactory :: getFluffyRocket(){
 	pss.startSound = "RocketFountain";
 	
 	
-	rocketSettings.startSpeedMin = 1000;
-	rocketSettings.startSpeedMax = 1400;
+	rocketSettings.startSpeedMin = 800;
+	rocketSettings.startSpeedMax = 1000	;
 	rocketSettings.gravity.y = 1200;
 	rocketSettings.timeSpeed = pss.timeSpeed = 0.7;
 	
@@ -647,7 +634,8 @@ ParticleSystemSettings FireworkFactory:: getBangerBang() {
 ParticleSystemSettings FireworkFactory:: getBangerCrackles() {
 	
 	ParticleSystemSettings explosion;
-	explosion.renderer = new ParticleRendererCircle();
+	//explosion.renderer = new ParticleRendererCircle();
+	explosion.renderer = new ParticleRendererLaser();
 	
 	
 	explosion.directionYVar= 90;

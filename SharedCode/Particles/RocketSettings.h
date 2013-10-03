@@ -47,12 +47,51 @@ class RocketSettings {
 		
 	};
 	
+	ParticleSystemSettings* addParticleRenderer(ParticleRendererBase* renderer) {
+		ParticleSystemSettings pss;
+		pss.renderer = renderer;
+		pss.gravity = gravity;
+		pss.timeSpeed = timeSpeed;
+		pss.emitMode = PARTICLE_EMIT_BURST;
+		pss.emitCount = 1;
+		pss.drag = drag;
+		pss.emitInheritVelocity = 1;
+		pss.speedMax = pss.speedMin = 0;
+		pss.directionYVar = pss.directionZVar = 0;
+		pss.lifeMin = pss.lifeMax = lifeTime; 
+		
+		ParticleSystemSettings * pssref = addParticleSystemSetting(pss);
+		return pssref; 
+
+	}
+	
+	void setLifeTime(float lifetime) {
+		
+		lifeTime = lifetime;
+		// TODO - CHECK THAT IT'S NOT SHORTER THAN ANY PSS!
+		for(int i = 0; i<particleSystemSettings.size(); i++) {
+			
+			ParticleSystemSettings& pss = particleSystemSettings[i];
+			
+			if(lifeTime <  pss.emitDelay + pss.emitLifeTime) {
+				
+				lifeTime = pss.emitDelay + pss.emitLifeTime;
+				
+			}
+			
+		}
+		
+	}
+	float getLifeTime() {
+		
+		// TODO - CHECK THAT IT'S NOT SHORTER THAN ANY PSS!
+		return lifeTime; 
+	}
 
 	float startSpeedMin; 
 	float startSpeedMax; 
 	float direction; 
 	float directionVar;
-	float lifeTime;
 	
 	float timeSpeed; 
 	
@@ -66,6 +105,8 @@ class RocketSettings {
 	
 	vector <ParticleSystemSettings> particleSystemSettings;
 
-
+	protected :
+	float lifeTime;
+	
 
 }; 

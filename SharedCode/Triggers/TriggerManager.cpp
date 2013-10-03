@@ -167,116 +167,38 @@ void TriggerManager::setTriggersDisabled(bool disabled){
 
 void TriggerManager :: updateLayout() {
 	
-	cout << " ____________________________________ UPDATE LAYOUT _______________" << endl; 
-	
-	//triggers.clear();
-	//triggerCount = 0;
-	//triggersLeft.clear();
-	//triggersRight.clear();
-	
-	/*
-	for(int i = 0; i<triggerPattern.triggers.size(); i++) {
-			
-		
-		TriggerBase* trigger = triggerPattern.triggers.at(i)->clone();
-		
-		trigger->start();
-		
-		trigger->disabled = triggersDisabled;
-		trigger->showDebugData = triggerDebug;
-		triggers.push_back(trigger);
-		
-	}
-	
-	triggerCount = triggers.size();
-	*/
-	
-	
 
-	
-	float xPos = triggerArea.x;
+	float xPos = 0;
+	float midX = triggerArea.x+ triggerArea.width/2;
 	
 	int triggerIndex = 0;
 	triggerCount = 0;
+
+	
+	// if it's a blank arrangement then disable all the triggers and quit
 	
 	if(triggerPattern.triggers.size()==0) {
-		//cout << "NO TRIGGER PATTERNS :( " << endl;
-		//  should probably disable all the triggers
 		
 		
 		for(int i = 0; i<triggers.size(); i++) {
-			//triggers[i]->active = false;
 			triggers[i]->copySettings(NULL);
-			
 		}
 		
 		return;
 		
 	}
-	// TODO implement fixed position triggers
-	/*
-	if(false) { // triggerPattern.fixedPosition) {
-		
-		
-		for (int i = 0; i<triggerPattern.triggers.size(); i++) {
-			
-			TriggerBase* trigger = triggerPattern.triggers[i];
-			
-			float yvar = triggerPattern.verticalVariations[triggerIndex];
-			float ypos = triggerPattern.verticalPositions[triggerIndex] + ofRandom(-yvar, yvar);
-			ypos *= triggerArea.height/2;
-			
-			if(!trigger->fixedPosition) trigger->pos.x = xPos + triggerArea.x;
-			trigger->pos.y = ypos + triggerArea.getCenter().y;
-			
-			xPos += 50;			
-			
-			if(triggers.size()<=i)
-				triggers.push_back(trigger);
-			
-			//if(active)
-			trigger->start();
-			
-			trigger->disabled = triggersDisabled;
-			trigger->showDebugData = triggerDebug;
-			
-			triggerCount++;
-		}
-		
-		
-		
-		
-		
-	} else 
-	*/	
-	float spacing = triggerArea.width / floor(triggerArea.width / minimumSpacing);
-	int numOfTriggers =  floor(triggerArea.width / minimumSpacing);
-	while (triggerCount<=numOfTriggers ) { //(triggerArea.width/2)-minimumSpacing/2) {
-		/*
-		TriggerBase* triggerLeft;
-		TriggerBase* triggerRight;
 	
-		if(triggersLeft.size()>triggerCount) {
-			triggerLeft = triggersLeft[triggerCount];
-			triggerRight = triggersRight[triggerCount];
+	// figure out the spacing between the triggers so that it fills the space
+	//float spacing = triggerArea.width / floor(triggerArea.width / minimumSpacing);
+	// then work out the number of triggers we can fit
+	int numOfTriggers =  ceil(triggerArea.width / minimumSpacing);
+	if(numOfTriggers%2==0) {
+		numOfTriggers--;
+	}
+	float spacing = triggerArea.width/(numOfTriggers-1);
 	
-		} else {
-			triggerLeft = triggerPattern.triggers[triggerIndex]->clone();
-			triggerRight = triggerPattern.triggers[triggerIndex]->clone();
-			
-			triggersLeft.push_back(triggerLeft);
-			triggersRight.push_back(triggerRight);
-			triggers.push_back(triggerLeft);
-			triggers.push_back(triggerRight);
-	
-			
-		}*/
-		
-		
-		//float yvar = triggerPattern.verticalVariations[triggerIndex];
-		//float ypos = triggerPattern.verticalPositions[triggerIndex] + ofRandom(-yvar, yvar);
-		//ypos *= triggerArea.height/2;
-		
+	while (triggerCount<numOfTriggers ) { //(triggerArea.width/2)-minimumSpacing/2) {
+				
 		Trigger * trigger;
 		
 		if(triggers.size()>triggerCount) {
@@ -285,89 +207,37 @@ void TriggerManager :: updateLayout() {
 		} else {
 			trigger = new Trigger();
 			triggers.push_back(trigger);
-			
-
 		}
 		
 		trigger->copySettings(triggerPattern.triggers[triggerIndex]);
-		
-		//cout << triggerCount << " " << triggerIndex << " " << trigger->hue << endl;
-		
-		triggerIndex++;
-		if(triggerIndex>=triggerPattern.triggers.size()) triggerIndex = 0;
-
 		
 		trigger->start();
 		
 		trigger->disabled = triggersDisabled;
 		trigger->showDebugData = triggerDebug;
-		
-		
-		
+			
 		trigger->pos.y = triggerArea.getCenter().y; //ypos +
-		trigger->pos.x = xPos;
-		//triggerRight->pos = triggerLeft->pos;
+		trigger->pos.x = xPos + midX;
+			
+		if(xPos>=0){
+			xPos = -xPos-spacing;
 		
-		//cout << triggerCount << " " << trigger->pos << endl;
-				
-		//lastSpacing = (minimumSpacing * triggerPattern.horizSpacings[triggerIndex]);
-		
-		xPos+=spacing;
-		
+			triggerIndex++;
+			if(triggerIndex>=triggerPattern.triggers.size()) triggerIndex = 0;
+		} else {
+			xPos = -xPos;
+		}
+
 		triggerCount++;
 		
 		
 	}
 	
 	
-	// times by two to get both sets
-	//triggerCount *=2;
-	// and subtract one to get rid of double in middle
-	triggerCount--;
-	
-	for(int i = triggerCount+1; i<triggers.size(); i++) {
-		triggers[i]->active = false;
-		
+	for(int i = triggerCount; i<triggers.size(); i++) {
+		triggers[i]->stop();
 	}
-	
-	/*
-	float spacing = (triggerArea.width/2) / (xPos- (lastSpacing*0.5)) ;
-	//cout << "spacing " << spacing << endl;
-	//cout << triggerCount << endl;
-	
-	
-	for(int i = 0; i<triggers.size(); i+=2) {
-		
-		//cout << i <<  " trigger ";
-		
-		triggers[i]->pos.x *=spacing;
-		triggers[i+1]->pos.x = (triggerArea.x + triggerArea.width) - triggers[i]->pos.x;
-		triggers[i]->pos.x+=triggerArea.x;
-		
-		// disable spares!
-		if(i>=triggerCount)
-			triggers[i]->stop();
-		else {
-			//if(active)
-				triggers[i]->start();
-			triggers[i]->disabled = triggersDisabled;
-			triggers[i]->showDebugData = triggerDebug;
-		}
-		
-		if(i+1>=triggerCount)
-			triggers[i+1]->stop();
-		else {
-			//if(active)
-				triggers[i+1]->start();
-			triggers[i+1]->disabled = triggersDisabled;
-			triggers[i+1]->showDebugData = triggerDebug;
-		}
-		
-	}
-	
 
-	 */
-	
 	
 	
 }
@@ -398,3 +268,11 @@ void TriggerManager::triggerParamChanged(float &value){
     updateLayout();
 }
 
+void TriggerManager::emptyTriggers() {
+	for(int i = 0; i<triggers.size(); i++) {
+		Trigger * trigger = triggers[i];
+		trigger->unitPower = 0; 
+	}
+	
+	
+}

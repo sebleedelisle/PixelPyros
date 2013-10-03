@@ -65,12 +65,12 @@ void ParticleSystemManager :: update(float deltaTime) {
 	for(int i = 0; i<physicsObjects.size(); i++) {
 		
 		PhysicsObject* po = physicsObjects[i];
-		if(!po->enabled) continue;
+		if(!po->isEnabled()) continue;
 		activePhysicsObjectCount++;
 		
 		po->update(deltaTime);
 		
-		if(!po->enabled) {
+		if(!po->isEnabled()) {
 			sparePhysicsObjects.push_back(po);
 		}
 		
@@ -91,6 +91,24 @@ void ParticleSystemManager ::draw() {
 		if(ps->finished) continue;
 		
 		ps->draw();
+	}
+	
+	
+}
+
+
+void ParticleSystemManager::killPhysicsObject(PhysicsObject * po){
+	
+	po->life.end();
+	for(int i = 0; i<particleSystems.size(); i++) {
+			
+		ParticleSystem& ps = *particleSystems[i];
+		if(ps.finished) continue; 
+		
+		if(ps.attachedPhysicsObject == po) {
+			ps.life.end();
+		}
+		
 	}
 	
 	
@@ -140,7 +158,7 @@ PhysicsObject * ParticleSystemManager :: getPhysicsObject() {
 		
 		po = new PhysicsObject();
 		physicsObjects.push_back(po);
-		
+		po->reset(); 
 	}
 	
 	return po;
@@ -176,7 +194,7 @@ PhysicsObject * ParticleSystemManager ::addRocket(RocketSettings& rs, ofVec3f& p
 	rocket->timeSpeed = rs.timeSpeed;
 	rocket->pos.set(pos);
 	rocket->lastPos.set(pos);
-	rocket->life.lifeTime = rs.lifeTime;
+	rocket->life.lifeTime = rs.getLifeTime();
 	
 	for(int i = 0; i<rs.particleSystemSettings.size(); i++) {
 		ParticleSystemSettings pss = rs.particleSystemSettings[i];

@@ -19,10 +19,12 @@
 #include "LaserDot.h"
 #include "LaserShape.h"
 #include "LaserCircle.h"
+#include "LaserSpiral.h"
 #include "LaserLine.h"
 #include "ofxGui.h"
 #include "ofMain.h"
 #include "constants.h"
+#include "RectangleUI.h"
 
 class LaserManager {
 
@@ -36,6 +38,7 @@ class LaserManager {
 	
 	void setup(int width, int height);
     void update();
+	void draw(); 
 	
 	bool my_compare( ofPoint a, ofPoint b){
 		return a.y < b.y;
@@ -44,6 +47,8 @@ class LaserManager {
 	void addLaserDot(const ofPoint& ofpoint, ofFloatColor colour, float intensity =1);
 	
 	void addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, float radius, float intensity =1);
+	
+	void addLaserSpiral(const ofPoint& position, ofFloatColor col, float rad1,float rad2, float fadeoutpoint = 1,  float intens = 1);
 
 	//void addLaserLine(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
 	void addLaserLineEased(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
@@ -55,13 +60,18 @@ class LaserManager {
 	
 	void drawShapes();
 	
-	void drawLaserLine(LaserLine& line); 
+	void drawLaserLine(LaserLine& line);
+	void drawLaserCircle(LaserCircle& circle);
+	void drawLaserDot(LaserDot& dot);
+	void drawLaserSpiral(LaserSpiral& spiral);
 	
 	void resetIldaPoints();
-	void addIldaPoint(const ofPoint& p, ofFloatColor c);
+	void addIldaPoint(const ofPoint& p, ofFloatColor c, float pointIntensity = 1);
 	
 	ofxIlda::Point ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour);
 	ofPoint ildaPointToOfPoint(const ofxIlda::Point& ildapoint);
+	
+	vector<float> getPointsAlongDistance(float distance, float acceleration, float maxspeed);
 	
 	
 	void connectToEtherdream();
@@ -79,16 +89,12 @@ class LaserManager {
 	ofFloatColor white;
 	ofFloatColor black;
 	
-	ofPoint startPosition;
-	ofPoint startVel;
 	ofPoint currentPosition;
-	//ofPoint currentVel;
 	
-	ofParameter<float> maxSpeed;
-	ofParameter<float> acceleration;
 	
-	int endCount;
-	int blankCount;
+	
+	//int endCount;
+	//int blankCount;
 	
 	// overall brightness applied to any laser colour
 	ofParameter<float> intensity;
@@ -97,23 +103,37 @@ class LaserManager {
 	ofParameter<int> colourChangeDelay;
 	
 	// how many blank points before and after drawing a dot
-	ofParameter<int> dotPreBlank;
-	ofParameter<int> dotPostBlank;
+	ofParameter<int> shapePreBlank;
+	ofParameter<int> shapePostBlank;
 	// the number of points for a dot
 	ofParameter<int> dotMaxPoints;
 	
 	// show the movement between shapes as a dotted red line
 	ofParameter<bool> showMovePoints;
-	// the speed for movement and 
+	
+	// the speed for movement and acceleration
 	ofParameter<float> moveSpeed;
-	ofParameter<float> circleMoveSpeed;
-	ofParameter<float> movePointsPadding;
+	ofParameter<int> movePointsPadding;
+	
+	ofParameter<float> speedLine;
+	ofParameter<float> accelerationLine;
+	
+	ofParameter<float> speedEasedLine;
+	ofParameter<int> paddingEasedLine;
+	
+	ofParameter<float>spiralSpacing; 
+	
+
+	
+	
 	ofParameter<bool> connectButton;
-	ofParameter<string> etherdreamStatus; 
+	ofParameter<string> etherdreamStatus;
+	ofParameter<bool> showWarpPoints;
 
 	ofParameter<bool> showRegistration;
 	ofParameter<bool> showSyncTest;
 	ofParameter<bool> renderLaserPath;
+	ofParameter<bool> renderLaserPreview;
 	
 	ofParameterGroup p1, p2, p3;
 	ofParameterGroup parameters;
@@ -123,17 +143,20 @@ class LaserManager {
 	
 	bool isConnected;
 	
+	RectangleUI maskRectangle; 
+	
 	ofMesh previewMesh;
+	ofMesh pathMesh;
 	ofPoint pmin;
 	ofPoint pmax;
 	
-	int minPoints; 
+	int minPoints;
 	
 	//bool laserDirty;
 	
 	
 	vector<ofxIlda::Point> ildaPoints;
-	vector<ofPoint> ofPoints;
+	//vector<ofPoint> ofPoints;
 	
 	float appWidth;
 	float appHeight;

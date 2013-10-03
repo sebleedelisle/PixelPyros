@@ -14,9 +14,9 @@
 #include "TriggerManager.h"
 #include "SequenceCommand.h"
 #include "ofxXMLSettings.h"
+#include "ofMultiDeviceSoundPlayer.h"
 
 class Scene {
-
 
 	public : 
 	
@@ -35,6 +35,7 @@ class Scene {
     
 	virtual bool changeTriggerPattern(int num);
 	
+	void addTriggerPattern();
 	void addTriggerPattern(TriggerPattern& pattern);
 	void addTriggerPattern(TriggerPattern& pattern, string label);
 	
@@ -60,6 +61,7 @@ class Scene {
 	bool togglePlayPause();
 	bool toggleRecord();
 	void goToTime(float time);
+	void setMusicVolume(float volume); 
 	
 	SequenceCommand addCommand(float time, SequenceCommandType type, int arg);
 	vector <SequenceCommand> commands;
@@ -69,7 +71,7 @@ class Scene {
 	float lengthSeconds;
 	float positionSeconds;
 	
-	ofSoundPlayer music;
+	ofMultiDeviceSoundPlayer music;
 	string musicFile;
 	
 	

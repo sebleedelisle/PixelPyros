@@ -82,7 +82,7 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	rs.addParticleSystemSetting(glitchRocket.explosion);
 	rs.timeSpeed = 	glitchRocket.head.timeSpeed = glitchRocket.explosion.timeSpeed= 0.7;
 	
-	rs.lifeTime = 2.4;
+	rs.setLifeTime(2.4);
 	
 	TriggerSettingsRocket* glitchRocketTrigger = new TriggerSettingsRocket();
 	//glitchRocketTrigger->rocketSettings = &glitchRocket;
@@ -395,7 +395,7 @@ TriggerSettingsRocket* SceneVectorizer :: getRocketTronFountain(float hueStartOf
 	rs->direction = -90;
 	rs->directionVar = 0;
 	rs->gravity.y = 0;
-	rs->lifeTime =1.4;
+	rs->setLifeTime(1.4);
 	rs->drag = 0.9;
 	
 	ps.timeSpeed = rs->timeSpeed = 0.8;
@@ -405,8 +405,8 @@ TriggerSettingsRocket* SceneVectorizer :: getRocketTronFountain(float hueStartOf
 	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->rocketSettings = rs;
 	ts->rotateOnFire = true;
-	ts->rotationExtent = 10;
-	ts->rotationSpeed = 2;
+	ts->rotationExtent = 15;
+	ts->rotationSpeed = 5;
 	ts->radius = 6;
 	return ts;
 	

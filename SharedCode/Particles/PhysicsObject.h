@@ -15,8 +15,19 @@ class PhysicsObject {
 	public : 
 	
 	PhysicsObject() { 
-		reset(); 
-	}; 
+		reset();
+		
+		dragApplyFrequency = 30;
+		pos.set(0,0,0);
+		lastPos.set(0,0,0);
+		vel.set(0,0,0);
+		drag = 1;
+		gravity.set(0,0,0);
+		velScalar.set(1,1,1);
+		
+		timeSpeed =1;
+		
+	};
 	
 	virtual void reset() { 
 		dragApplyCount = 0; 
@@ -60,6 +71,8 @@ class PhysicsObject {
 		return enabled; 
 	};
 	
+	bool isEnabled(){ return enabled; }; 
+	
 	ofVec3f pos; 
 	ofVec3f lastPos; 
 	ofVec3f vel;
@@ -77,6 +90,9 @@ class PhysicsObject {
 	int dragApplyCount;
 	float dragApplyFrequency; 
 	float elapsedTime;
+	
+protected:
+	
 	bool enabled;
 	
 	//PhysicsObjectRenderer* renderer;

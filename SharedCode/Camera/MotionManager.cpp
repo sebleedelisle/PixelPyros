@@ -33,7 +33,6 @@ void MotionManager::init(int w, int h, ofImageType type) {
 	width = w; 
 	height = h; 
 	
-	
 	cout << "reinitialising images " << w << " " << h << endl; 
 	
 };

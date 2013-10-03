@@ -61,7 +61,8 @@ class Starfield {
 		for(std::vector<ofVec3f>::iterator it = stars.begin(); it != stars.end(); ++it) {
 			ofVec3f& s = *it;
 			mesh.addVertex(s);
-			mesh.addColor(ofColor(ofMap(s.z,3000,-2000,255,10,true )));
+			//mesh.addColor(ofColor::white);
+			mesh.addColor(ofColor(ofMap(s.z,0,-2000,255,10,true )));
 			
 		
 		}
