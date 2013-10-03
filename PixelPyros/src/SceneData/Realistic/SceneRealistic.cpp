@@ -409,15 +409,15 @@ ParticleSystemSettings SceneRealistic :: getFlowerExplosionParticles(float hue, 
 	
 	explosion.startSound = "SoftExplosion";
 	
-	
 	return explosion;
 	
-	
 }
+
+
 ParticleSystemSettings SceneRealistic :: getLineExplosionParticles(float hue, float hueChange){
 	
 	ParticleSystemSettings explosion;
-	explosion.renderer = new ParticleRendererLine(1, false, 10);
+	explosion.renderer = new ParticleRendererLine(1, false, 4);
 	
 	//pss.directionZVar = 20;
 	explosion.speedMin = 300;

@@ -26,7 +26,7 @@ class SoundPlayer {
 	map <string, Sound> sounds;
 	string defaultPath;
 	
-	float globalVolume; 
+	ofParameter<float> globalVolume;
 	
 	
 };

@@ -3,146 +3,77 @@
 #include "SceneGame.h"
 
 
-SceneGame :: SceneGame(string scenename ) : Scene(scenename) {
+SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSystemManager::instance())
+{
 
-	pixelSize = 2;
+	pixelSize = 1;
 	loadMusicFile("1-05 TECHNOPOLIS.aif");
 	
 	invaderImage1.loadImage("img/Invader.png");
 	invaderImage1.getTextureReference().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
 	activeInvaders = 0; 
-
-	//TODO this should really be somewhere else - but where! 
-	TriggerRechargeSettings::fastMultiples->minTriggerInterval = 0.2;
-	TriggerRechargeSettings::fastMultiples->triggerPower = 0.3;
-	TriggerRechargeSettings::fastMultiples->restoreSpeed = 0.7;
 	
 	
-	TriggerSettings* redRocket = getRetroRocket();
-	TriggerSettings* cyanRocket = getRetroRocket(120);
-	TriggerSettings* redFountainLow = getRetroFountain();
-	TriggerSettings* cyanFountainLow = getRetroFountain(180, -70);
-	TriggerSettings* redFountainHigh = getRetroFountain(0,-128,1300,1600);
-	TriggerSettings* cyanFountainHigh = getRetroFountain(180, -70,1300,1600);
+	//resetInvaders();
 	
+	addTriggerPattern();
 	
-	/*
-	triggerRocketRed.addRocketSettings(redRocket);
-	triggerRocketCyan.addRocketSettings(cyanRocket);
-	triggerFountainRed.addRocketSettings(redFountainLow);
-	triggerFountainCyan.addRocketSettings(cyanFountainLow);
-	triggerFountainRedHigh.addRocketSettings(redFountainHigh);
-	triggerFountainCyanHigh.addRocketSettings(cyanFountainHigh);
-	*/
+	TriggerPattern bulletsPattern;
 	
+	bulletsPattern.addTriggerSettings(getInvaderBulletRocket(170));
+	bulletsPattern.addTriggerSettings();
 	
-	TriggerPattern emptyPattern;
-	addTriggerPattern(emptyPattern);
+	addTriggerPattern(bulletsPattern);
 	
+	explodeMesh.addVertex(ofPoint(1,0));
+	explodeMesh.addVertex(ofPoint(0,1));
+	explodeMesh.addVertex(ofPoint(-1,0));
+	explodeMesh.addVertex(ofPoint(0,-1));
 	
-	TriggerPattern patternCyanChevrons;
-	patternCyanChevrons.addTriggerSettings(cyanFountainLow);
-	patternCyanChevrons.addTriggerSettings();
-	addTriggerPattern(patternCyanChevrons);
-
-	
-	patternCyanChevrons.addTriggerSettings(cyanFountainHigh);
-	patternCyanChevrons.addTriggerSettings();
-	addTriggerPattern(patternCyanChevrons);
-
-	
-	TriggerPattern patternRedChevrons;
-	patternRedChevrons.addTriggerSettings(redFountainLow);
-	patternRedChevrons.addTriggerSettings();
-	addTriggerPattern(patternRedChevrons);
-
-	patternRedChevrons.addTriggerSettings(redFountainHigh);
-	patternRedChevrons.addTriggerSettings();
-	addTriggerPattern(patternRedChevrons);
-	
-	
-	
-	TriggerPattern pixelRockets;
-	float colours [4] = {170, 0, 220, 0};
-	
-	for(int i = 0; i<4; i++) {
-		TriggerSettingsRocket& triggerRocketFat = *getPixelRocket(colours[i]);
-		triggerRocketFat.hue = colours[i];
-		triggerRocketFat.saturation = 255;
-		pixelRockets.addTriggerSettings(&triggerRocketFat);
-		pixelRockets.addTriggerSettings(); 
-	}
-	
-	
-	addTriggerPattern(pixelRockets);
-
-	
-	
-
-	
-	
-	TriggerPattern pixelRockets2;
-	float colours2 [4] = {220, 180, 120, 180};
-	
-	for(int i = 0; i<4; i++) {
-		
-		TriggerSettingsRocket& triggerRocketFat = *getPixelRocket(colours2[i]);
-		triggerRocketFat.hue = colours2[i];
-		triggerRocketFat.saturation = 255;
-		pixelRockets2.addTriggerSettings(&triggerRocketFat);
-		pixelRockets2.addTriggerSettings();
-		
-	}
-	
-	addTriggerPattern(pixelRockets2);
-
-	
-	TriggerPattern patternCyanMix;
-	patternCyanMix.addTriggerSettings(cyanRocket);
-	patternCyanMix.addTriggerSettings();
-	patternCyanMix.addTriggerSettings(cyanFountainLow);
-	patternCyanMix.addTriggerSettings();
-	addTriggerPattern(patternCyanMix);
-	
-	
-	TriggerPattern patternRedMix;
-	patternRedMix.addTriggerSettings(redRocket);
-	patternRedMix.addTriggerSettings();
-	patternRedMix.addTriggerSettings(redFountainLow);
-	patternRedMix.addTriggerSettings();
-	addTriggerPattern(patternRedMix);
-
-	
-	
-	for(int x = 200; x<APP_WIDTH-200; x+=48) {
-		for(int y = 200; y<APP_HEIGHT-500; y+=60) {
-		
-			Invader* invader = new Invader(&invaderImage1, 12, 12);
-			invader->pos.set(x, y);
-			invader->vel.set(4,0);
-			invader->scale = 3;
-			invader->colour.setSaturation(255);
-			invader->colour.setHue(colours[(int)floor(ofMap(y,200,APP_HEIGHT-500, 0,3.9,true))]);
-			
-			invaders.push_back(invader);
-		}
-	}
-
-	
+	explodeMesh.addVertex(ofPoint(0.8,0.8));
+	explodeMesh.addVertex(ofPoint(-0.8,0.8));
+	explodeMesh.addVertex(ofPoint(-0.8,-0.8));
+	explodeMesh.addVertex(ofPoint(0.8,-0.8));
 	
 	
 };
 
 
+void SceneGame::start() {
+	
+	Scene::start();
+	resetInvaders();
+	
+}
+
+void SceneGame::stop() {
+	Scene::stop();
+	for(int i = 0; i<invaders.size(); i++) {
+		Invader &invader = *invaders[i];
+		if(!invader.enabled) continue;
+		invader.enabled = false;
+		explodeInvader(invader);
+		spareInvaders.push_back(&invader);
+	}
+}
+
 bool SceneGame::update(float deltaTime) {
 	
 	if(!Scene::update(deltaTime)) return false;
 
-	ParticleSystemManager& psm = *ParticleSystemManager::instance();
+	updateInvaders();
+	updateInvaders();
+	updateInvaders();
+	updateInvaders();
 	
+	checkInvaderCollisions(); 
+	
+}
+
+void SceneGame::updateInvaders() {
 	activeInvaders = 0;
 	int rightEdge = 0;
-	int leftEdge = APP_WIDTH; 
+	int leftEdge = APP_WIDTH;
 
 	for(int i = 0; i<invaders.size(); i++) {
 		
@@ -150,31 +81,53 @@ bool SceneGame::update(float deltaTime) {
 		
 		if(!invader.enabled) continue;
 		
-		invader.update();
+		if(i == currentUpdateInvader) invader.update(true);
+		else invader.update(false);
 		
 		if(invader.pos.x+invader.width>rightEdge) rightEdge = invader.pos.x+invader.width;
 		if(invader.pos.x<leftEdge) leftEdge = invader.pos.x;
 		
 		
-		activeInvaders++; 
+		activeInvaders++;
 		
 	}
 	
 	if(rightEdge>APP_WIDTH-50) {
 		for(int i = 0; i<invaders.size(); i++) {
-			
 			Invader& invader = *invaders[i];
-			invader.vel.x = -4;
+			if(invader.vel.x>0) {
+				
+				invader.vel.x = -10;
+				invader.pos.y += 20;
+			}
 		}
 	}
-			
+	
 	if(leftEdge<50) {
 		for(int i = 0; i<invaders.size(); i++) {
 			
 			Invader& invader = *invaders[i];
-			invader.vel.x = 4;
+			if(invader.vel.x<0) {
+				invader.vel.x = 10;
+				invader.pos.y += 20;
+			}
 		}
 	}
+	
+	
+	if(activeInvaders == 0 ) resetInvaders();
+	else {
+		
+		do {
+			currentUpdateInvader = (currentUpdateInvader+1) % invaders.size();
+			
+		} while(invaders[currentUpdateInvader]->enabled == false);
+		
+	}
+	
+}
+
+void SceneGame :: checkInvaderCollisions() {
 	
 	vector<PhysicsObject*>& rockets = psm.physicsObjects;
 	
@@ -188,27 +141,18 @@ bool SceneGame::update(float deltaTime) {
 			PhysicsObject& rocket = *rockets[j];
 			if(!rocket.isEnabled()) continue;
 			
-			//ofRectangle invaderRect(invader.pos, invader.width, invader.height);
 			if(invader.getRect().inside(rocket.pos)) {
 				invader.enabled = false;
-				//rocket.life.end();
+				spareInvaders.push_back(&invader);
+				explodeInvader(invader);
+				psm.killPhysicsObject(&rocket);
+				
 				break;
 			}
-			
-			
-			
-			
-			
 		}
-		
-		
-		
 	}
 	
-	
 }
-
-
 
 
 bool SceneGame :: draw() {
@@ -235,45 +179,112 @@ bool SceneGame :: draw() {
 }
 
 
-TriggerSettingsRocket* SceneGame:: getPixelRocket(float hue) {
+void SceneGame :: resetInvaders() {
+	
+	
+	float colours [4] = {170, 0, 220, 0};
+	int invadercount = 0; 
+	
+	for(int y = 300; y<APP_HEIGHT-400; y+=48) {
+		for(int x = 200; x<APP_WIDTH-200; x+=32) {
+		
+			Invader* invader = getNewInvader();
+			invader->pos.set(x, y);
+			invader->vel.set(10,0);
+			invader->scale = 2;
+			invader->colour.setSaturation(255);
+			invader->colour.setHue(colours[(int)floor(ofMap(y,200,APP_HEIGHT-500, 0,3.9,true))]);
+			invader->hue = colours[(int)floor(ofMap(y,300,APP_HEIGHT-400, 0,3.9,true))];
+			invader->colour.setHue(invader->hue);
+			invader->delay = invadercount*5 + 100;
+			invadercount++; 
+			
+		}
+	}
+
+	currentUpdateInvader = 0; 
+	
+}
+
+void SceneGame::explodeInvader(Invader &invader){
+		ParticleSystem &ps = *psm.getParticleSystem();
+	ParticleSystemSettings pss;
+	pss.emitLifeTime = 0.2;
+	pss.emitCount = 100;
+	pss.renderer = new ParticleRendererLowRes(1,3);
+	pss.speedMin = pss.speedMax = 200;
+	pss.drag = 0.86;
+	pss.sizeStartMin = pss.sizeStartMax = 2;
+	pss.sizeChangeRatio = 0.5;
+	pss.emitShape = &explodeMesh;
+	pss.directionYVar = pss.directionZVar = 0;
+	pss.hueStartMin = pss.hueStartMax = invader.hue;
+	pss.hueChange = 0;
+	pss.saturationMin = pss.saturationMax = 0;
+	pss.saturationEnd = 500;
+	pss.brightnessStartMin = pss.brightnessStartMax =pss.brightnessEnd = 255;
+	pss.lifeMin = pss.lifeMax = 0.3;
+	pss.startSound = "RetroExplosion";
+	
+	ps.pos = invader.pos + invader.offset + ofPoint(invader.width*invader.scale/2, invader.width*invader.scale/2);
+	ps.init(pss);
+	
+}
+
+Invader* SceneGame :: getNewInvader() {
+	Invader* invader;
+	if(spareInvaders.size()>0) {
+		invader = spareInvaders.back();
+		spareInvaders.pop_back(); 
+	} else {
+		invader = new Invader(&invaderImage1, 12, 12);
+		invaders.push_back(invader);
+	}
+	return invader; 
+}
+
+
+TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
 
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	ParticleSystemSettings pss;
-	//pss.renderer = new ParticleRendererShape();
-	pss.renderer = new ParticleRendererLowRes(pixelSize,1);
+	pss.renderer = new ParticleRendererLowRes(pixelSize,2);
 	pss.speedMin = pss.speedMax = 0;
 	pss.emitCount = 100;
-	pss.sizeStartMin = pss.sizeStartMax = pixelSize*2;
-	pss.sizeChangeRatio = 0;
-	pss.saturationEnd =500;
+	pss.sizeStartMin = pss.sizeStartMax = 4;
+	pss.sizeChangeRatio = 1;
+	pss.saturationEnd =255;
 	pss.hueStartMin = pss.hueStartMax = hue; 
-	//pss.brightnessEnd = 128;
-	pss.lifeMin = 0.4;
-	pss.lifeMax = 0.4;
+	pss.brightnessEnd = 0;
+	pss.lifeMin = 0.1;
+	pss.lifeMax = 0.2;
+	pss.emitInheritVelocity = 0;//1;
+	pss.drag = 0.95;
 	
-	pss.emitLifeTime = 1.5;
+	rocketSettings.startSpeedMin = 400;
+	rocketSettings.startSpeedMax = 400;
+	rocketSettings.directionVar = 0;
+	rocketSettings.setLifeTime(2);
+	//rocketSettings.timeSpeed = 0.7;
 	
-	pss.startSound = "SynthKick";
+	//rocketSettings.gravity.set(0,1800);
 
+	//ParticleSystemSettings& pss = *rocketSettings.addParticleRenderer(new ParticleRendererLowRes(pixelSize,1));
+	pss.startSound = "SynthKick";
+	pss.sizeChangeRatio = 1;
+	pss.sizeStartMax = pss.sizeStartMin = 1;
+	pss.emitLifeTime = rocketSettings.getLifeTime();
 	
 	rocketSettings.addParticleSystemSetting(pss);
-	
-	rocketSettings.startSpeedMin = 1600;
-	rocketSettings.startSpeedMax= 1700;
-	rocketSettings.directionVar = 0;
-	
-	rocketSettings.timeSpeed = pss.timeSpeed = 0.7;
-	
-	rocketSettings.gravity.set(0,1800);
+
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	
 	ts->rocketSettings = &rocketSettings;
-	ts->rechargeSettings = TriggerRechargeSettings::fast;
+	ts->rechargeSettings = TriggerRechargeSettings::fastMultiples;
 
 	return ts;
-
 
 };
 

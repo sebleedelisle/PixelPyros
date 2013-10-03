@@ -489,8 +489,8 @@ TriggerSettingsRocket* FireworkFactory :: getFluffyRocket(){
 	pss.startSound = "RocketFountain";
 	
 	
-	rocketSettings.startSpeedMin = 1000;
-	rocketSettings.startSpeedMax = 1400;
+	rocketSettings.startSpeedMin = 800;
+	rocketSettings.startSpeedMax = 1000	;
 	rocketSettings.gravity.y = 1200;
 	rocketSettings.timeSpeed = pss.timeSpeed = 0.7;
 	

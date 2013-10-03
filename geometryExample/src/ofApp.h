@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "GeometrySphereGeodesic.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -19,9 +18,6 @@ class ofApp : public ofBaseApp{
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 	
-	GeometrySphereGeodesic sphere;
-	
-	ofMesh sphere2;
-	
-	float angle; 
+	ofSoundStream soundStream; 
+
 };

@@ -24,6 +24,18 @@ public:
         
 		resetDefaults();
 		resetFlag = false;
+		
+		
+		edgeBlendImage.allocate(8, 8, OF_IMAGE_COLOR);
+		ofPixels& pixels = edgeBlendImage.getPixelsRef();
+		for(int x = 0; x<edgeBlendImage.getWidth(); x++) {
+			for(int y = 0; y<edgeBlendImage.getHeight(); y++) {
+				pixels.setColor(x, y, ofColor(ofMap(x,0,7, 255, 0, true)));
+				
+			}	
+		}
+		edgeBlendImage.update();
+		
     }
     
     PyrosRenderer(string filename) : ofShader() {
@@ -53,14 +65,18 @@ public:
 	
     //void draw(ofFbo &fbo, vector<ofVec3f> & warpPoints1, vector<ofVec3f> & warpPoints2 ) {
 	
-	void draw(ofFbo &fbo, QuadWarp& warp1, QuadWarp& warp2 ) {
+	void draw(ofFbo &fbo, QuadWarp& warp1, QuadWarp& warp2, int edgeBlendSize ) {
 
 		if(resetFlag) resetDefaults();
+		
+		float edgeBlendOffset = edgeBlendSize/2; 
 		
 		float w = fbo.getWidth(), h = fbo.getHeight();
 		float hw =  w/2;
 		float hh =  h/2;
 		
+		ofPushStyle();
+		ofEnableBlendMode(OF_BLENDMODE_ADD);
 		
 		ofPushMatrix();
 		
@@ -80,18 +96,91 @@ public:
 		
 		glBegin(GL_QUADS);
 		
-		glTexCoord2f(0, 0);
+		glTexCoord2f(edgeBlendOffset, 0);
 		glVertex2f(0,0);
 		
-		glTexCoord2f(hw, 0);
+		glTexCoord2f(hw+edgeBlendOffset, 0);
 		glVertex2f(hw,0);
 		
-		glTexCoord2f(hw, h);
+		glTexCoord2f(hw+edgeBlendOffset, h);
 		glVertex2f(hw,h);
 		
-		glTexCoord2f(0, h);
+		glTexCoord2f(edgeBlendOffset, h);
 		glVertex2f(0,h);
+
+		glEnd();
 		
+		
+		end();
+		
+		ofPopMatrix();
+
+		ofPushMatrix();
+
+		begin();
+        setUniformTexture("baseTexture", fbo.getTextureReference(), 0);
+        //setShaderParameters();
+		
+		//glPushMatrix();
+		warp2.apply(ofRectangle(0,0,hw, h));
+		
+		
+		glBegin(GL_QUADS);
+		
+		glTexCoord2f(hw-edgeBlendOffset, 0);
+		glVertex2f(hw,0);
+		//glVertex2f(0,0);
+		
+		glTexCoord2f(w-edgeBlendOffset, 0);
+		glVertex2f(w,0);
+		//glVertex2f(hw,0);
+		
+		glTexCoord2f(w-edgeBlendOffset, h);
+		glVertex2f(w,h);
+		//glVertex2f(hw,h);
+		
+		glTexCoord2f(hw-edgeBlendOffset, h);
+		glVertex2f(hw,h);
+		//glVertex2f(0,h);
+		
+		
+		glEnd();
+		//glPopMatrix();
+		
+		
+		end();
+		
+        ofPopMatrix();
+		
+		ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+
+		// EDGE BLEND IMAGE LEFT ------------------------------
+		
+		int edgeBlendImageWidth = edgeBlendImage.getWidth();
+		int edgeBlendImageHeight = edgeBlendImage.getHeight();
+		ofPushMatrix();
+		
+		begin();
+        setUniformTexture("baseTexture", edgeBlendImage.getTextureReference(), 0);
+		disableShader();
+		
+		warp1.apply(ofRectangle(0,0,hw, h));
+		
+		ofSetMinMagFilters(GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_NEAREST);
+		
+		glBegin(GL_QUADS);
+		
+		glTexCoord2f(0, 0);
+		glVertex2f(hw-edgeBlendSize,0);
+		
+		glTexCoord2f(edgeBlendImageWidth, 0);
+		glVertex2f(hw,0);
+		
+		glTexCoord2f(edgeBlendImageWidth, edgeBlendImageHeight);
+		glVertex2f(hw,h);
+		
+		glTexCoord2f(0,edgeBlendImageHeight);
+		glVertex2f(hw-edgeBlendSize,h);
 		
 		glEnd();
 		
@@ -99,57 +188,65 @@ public:
 		end();
 		
 		ofPopMatrix();
+
 		
+		// EDGE BLEND RIGHT ------------------
+
 		ofPushMatrix();
 		
 		
 		begin();
-        setUniformTexture("baseTexture", fbo.getTextureReference(), 0);
-        setShaderParameters();
-		
-		
-		
-		glPushMatrix();
+        setUniformTexture("baseTexture", edgeBlendImage.getTextureReference(), 0);
+     
+		//glPushMatrix();
 		warp2.apply(ofRectangle(0,0,hw, h));
 		
 		
 		glBegin(GL_QUADS);
 		
-		glTexCoord2f(hw, 0);
+		glTexCoord2f(edgeBlendImageWidth, 0);
 		glVertex2f(hw,0);
 		//glVertex2f(0,0);
 		
-		glTexCoord2f(w, 0);
-		glVertex2f(w,0);
+		glTexCoord2f(0, 0);
+		glVertex2f(hw+edgeBlendSize,0);
 		//glVertex2f(hw,0);
 		
-		glTexCoord2f(w, h);
-		glVertex2f(w,h);
+		glTexCoord2f(0, edgeBlendImageHeight);
+		glVertex2f(hw+edgeBlendSize,h);
 		//glVertex2f(hw,h);
 		
-		glTexCoord2f(hw, h);
+		glTexCoord2f(edgeBlendImageWidth, edgeBlendImageHeight);
 		glVertex2f(hw,h);
 		//glVertex2f(0,h);
 		
 		
 		glEnd();
-		glPopMatrix();
+		//glPopMatrix();
 		
 		
 		end();
 		
         ofPopMatrix();
 		
-
-			
+		edgeBlendImage.draw(ofGetMouseX(),ofGetMouseY(),100,100);
+		ofPopStyle();
+		
 	}
-	
-	bool resetFlag; 
+	virtual void disableShader() {
+        setUniform1f("bloom", 0 );
+        setUniform1f("gamma", 1 );
+        setUniform1f("blackPoint", 0 );
+        setUniform1f("whitePoint", 1 );
+    }
+
+	bool resetFlag;
     
     ofParameter<float> bloomParam;
     ofParameter<float> gammaParam;
     ofParameter<float> blackPointParam;
     ofParameter<float> whitePointParam;
+	ofImage edgeBlendImage; 
     
     ofParameterGroup paramters;
     

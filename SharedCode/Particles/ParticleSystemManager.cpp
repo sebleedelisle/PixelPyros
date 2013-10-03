@@ -96,6 +96,24 @@ void ParticleSystemManager ::draw() {
 	
 }
 
+
+void ParticleSystemManager::killPhysicsObject(PhysicsObject * po){
+	
+	po->life.end();
+	for(int i = 0; i<particleSystems.size(); i++) {
+			
+		ParticleSystem& ps = *particleSystems[i];
+		if(ps.finished) continue; 
+		
+		if(ps.attachedPhysicsObject == po) {
+			ps.life.end();
+		}
+		
+	}
+	
+	
+}
+
 void ParticleSystemManager ::killAllParticles ()
 {
 	for(int i = 0; i<particleSystems.size(); i++) {

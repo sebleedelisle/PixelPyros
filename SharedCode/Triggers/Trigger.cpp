@@ -99,17 +99,6 @@ bool Trigger::update(float deltaTime) {
 
 	elapsedTime+=deltaTime;
 	
-	// scale up / down on start stop
-	if(stopping) {
-		scale-=deltaTime*3;
-		if(scale<=0.0) {
-			scale = 0;
-			active = false;
-			return false;
-		}
-	} else {
-		scale+= (1-scale)*0.2;
-	}
 	
 	if(lastSettings!=NULL) {
 		lastScale-=deltaTime*3;
@@ -119,6 +108,21 @@ bool Trigger::update(float deltaTime) {
 		}
 		
 	}
+	
+	// scale up / down on start stop
+	if(stopping) {
+		scale-=deltaTime*3;
+		if(scale<=0.0) {
+			scale = 0;
+			active = false;
+			return false;
+		}
+		return active;
+	} else {
+		scale+= (1-scale)*0.2;
+	}
+	
+	
 	
 	//angle++;
 	
@@ -431,33 +435,16 @@ void Trigger::copySettings(TriggerSettings* newsettings) {
 	lastScale = scale;
 
 	settings = newsettings;
-	if(newsettings!=NULL)
+	if(newsettings!=NULL){
 		rechargeSettings = newsettings->rechargeSettings;
+	} else {
+		stop();
+	}
 
 	scale = 0;
 	angle = 0;
 	rotateDirection = 1; 
-	/*
-	motionTriggerLevel = settings.motionTriggerLevel;
-	triggerPower = settings.triggerPower;
-	minTriggerInterval = settings.minTriggerInterval;
-	
-	motionDecay = settings.motionDecay;
-	motionSensitivity = settings.motionSensitivity;
-	restoreSpeed = settings.restoreSpeed;
-	
-	hue = settings.hue;
-	saturation = settings.saturation;
-	 
-	 
-	//if(settings.renderer!=NULL)
-	renderer = settings.renderer;
-	//else renderer = &defaultRenderer;
-	//if(settings.triggerable!=NULL)
-	triggerable = settings.triggerable;
-	//else triggerable = &defaultTriggerable;
-	*/
-	
+
 	
 };
 

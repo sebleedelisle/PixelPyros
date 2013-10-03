@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		120A05ED17FCD0E200408B12 /* ofMultiDeviceSoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 120A05EB17FCD0E200408B12 /* ofMultiDeviceSoundPlayer.cpp */; };
 		120C789017D35F9C0050D25D /* TriggerSettingsRocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 120C788F17D35F9C0050D25D /* TriggerSettingsRocket.cpp */; };
 		1254503A17BF860500EF23B7 /* SceneIntro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254501D17BF860500EF23B7 /* SceneIntro.cpp */; };
 		1254503C17BF860500EF23B7 /* SceneSlideshow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1254502117BF860500EF23B7 /* SceneSlideshow.cpp */; };
@@ -160,6 +161,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		120A05EB17FCD0E200408B12 /* ofMultiDeviceSoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofMultiDeviceSoundPlayer.cpp; sourceTree = "<group>"; };
+		120A05EC17FCD0E200408B12 /* ofMultiDeviceSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofMultiDeviceSoundPlayer.h; sourceTree = "<group>"; };
 		120C788E17D35EBA0050D25D /* TriggerSettingsRocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsRocket.h; sourceTree = "<group>"; };
 		120C788F17D35F9C0050D25D /* TriggerSettingsRocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettingsRocket.cpp; sourceTree = "<group>"; };
 		1254501917BF860500EF23B7 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
@@ -225,7 +228,6 @@
 		1254507C17BF861C00EF23B7 /* Circ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circ.h; sourceTree = "<group>"; };
 		1254507D17BF861C00EF23B7 /* Cubic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cubic.cpp; sourceTree = "<group>"; };
 		1254507E17BF861C00EF23B7 /* Cubic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cubic.h; sourceTree = "<group>"; };
-		1254507F17BF861C00EF23B7 /* easing_terms_of_use.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = easing_terms_of_use.html; sourceTree = "<group>"; };
 		1254508017BF861C00EF23B7 /* Elastic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Elastic.cpp; sourceTree = "<group>"; };
 		1254508117BF861C00EF23B7 /* Elastic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Elastic.h; sourceTree = "<group>"; };
 		1254508217BF861C00EF23B7 /* Expo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Expo.cpp; sourceTree = "<group>"; };
@@ -738,7 +740,6 @@
 				1254507C17BF861C00EF23B7 /* Circ.h */,
 				1254507D17BF861C00EF23B7 /* Cubic.cpp */,
 				1254507E17BF861C00EF23B7 /* Cubic.h */,
-				1254507F17BF861C00EF23B7 /* easing_terms_of_use.html */,
 				1254508017BF861C00EF23B7 /* Elastic.cpp */,
 				1254508117BF861C00EF23B7 /* Elastic.h */,
 				1254508217BF861C00EF23B7 /* Expo.cpp */,
@@ -775,6 +776,8 @@
 		1254509F17BF861C00EF23B7 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				120A05EB17FCD0E200408B12 /* ofMultiDeviceSoundPlayer.cpp */,
+				120A05EC17FCD0E200408B12 /* ofMultiDeviceSoundPlayer.h */,
 				125450A017BF861C00EF23B7 /* Sound.h */,
 				125450A117BF861C00EF23B7 /* SoundPlayer.h */,
 				12A6DE3517DE640C000D299A /* SoundPlayer.cpp */,
@@ -1934,6 +1937,7 @@
 				129F2E8417F978C400206DFB /* ParameterManager.cpp in Sources */,
 				12F92A4317FB47D000835BBE /* Invader.cpp in Sources */,
 				12F92A4417FB47D000835BBE /* SceneGame.cpp in Sources */,
+				120A05ED17FCD0E200408B12 /* ofMultiDeviceSoundPlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

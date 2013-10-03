@@ -56,7 +56,7 @@
 		<Homography>182.2, 145.8: 921.2, 120.8: 914.2, 554.6: 177.2, 551.6: </Homography>
 		<circle_speed>3.9061</circle_speed>
 		<show_warp_points>0</show_warp_points>
-		<render_laser_preview>0</render_laser_preview>
+		<render_laser_preview>1</render_laser_preview>
 		<line_acceleration>0.500975</line_acceleration>
 			<line_max_speed>18.3318</line_max_speed>
 		<shape_pre_blank_points>0</shape_pre_blank_points>

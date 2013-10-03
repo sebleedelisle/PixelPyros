@@ -30,6 +30,8 @@ void ControlPanels::setup(ParameterManager * parameterManager, vector<ofRectangl
 	setupPanel( "App", "appSettings.xml", ofRectangle(0,0, 400, heightSmall ), appGui );
 	
 	appGui.add( *parameterManager->getParameterGroup("app") );
+	appGui.load();
+	
 	
     setupPanel( "Laser", "laserSettings.xml", ofRectangle( 0, 0, 400, heightSmall ), laserGui );
     laserGui.add( *parameterManager->getParameterGroup("laser") );
@@ -131,10 +133,17 @@ void ControlPanels::exit(){
     projectorCalibration.save();
     
     
-    laserGui.save();
-    rendererGui.save();
-    triggerGui.save();
-    motionGui.save();
+//    laserGui.save();
+//    rendererGui.save();
+//    triggerGui.save();
+//    motionGui.save();
+//	
+	
+  	for(int i = 0; i<panels.size(); i++) {
+		panels[i]->save();
+	}
+
+	
 }
 
 void ControlPanels::keyPressed(int key){
