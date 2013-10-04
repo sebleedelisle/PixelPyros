@@ -13,6 +13,7 @@
 #include "ofxPanel.h"
 #include "ofxToggle.h"
 #include "ofxSliderGroup.h"
+#include "QuadWarp.h"
 
 class ControlPanels {
     
@@ -30,6 +31,8 @@ class ControlPanels {
     ofFbo main;
     ofFbo camera;
     ofFbo motion;
+    
+    QuadWarp * laserWarp;
     
     protected:
 
@@ -63,6 +66,7 @@ class ControlPanels {
     ofRectangle screen;
 	
     ofVec2f padding;
+    
     
     int monitorCount;
     

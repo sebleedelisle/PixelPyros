@@ -26,14 +26,15 @@ void ControlPanels::setup(ParameterManager * parameterManager, vector<ofRectangl
     ofxBaseGui::setDefaultElementSpacing(5);
 	ofxBaseGui::setDefaultElementIndentation(1);
 	ofxBaseGui::setDefaultTextPadding(7);
-
+    
+    
 	setupPanel( "App", "appSettings.xml", ofRectangle(0,0, 400, heightSmall ), appGui );
 	
 	appGui.add( *parameterManager->getParameterGroup("app") );
 	appGui.load();
 	
-	
     setupPanel( "Laser", "laserSettings.xml", ofRectangle( 0, 0, 400, heightSmall ), laserGui );
+
     laserGui.add( *parameterManager->getParameterGroup("laser") );
     laserGui.load();
     laserGui.getGroup("Laser Manager").getToggle("Etherdream connect") = false;
@@ -65,6 +66,7 @@ void ControlPanels::setup(ParameterManager * parameterManager, vector<ofRectangl
 }
 void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 	
+    
 	monitorCount = screens.size();
 	// Assumes GUI will always be on the last monitor, ie
 	// the right-most monitor.
@@ -89,22 +91,19 @@ void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 	position.x-=laserGui.getWidth(); 
 	laserGui.setPosition(position);
 	
-
+    laserWarp->setOffset( screen.x, screen.y );
 	
+    cout << screen.x << ", " << screen.y;
 }
 
 void ControlPanels::draw(){
     
-    if( monitorCount > 1 ) drawPreviewScreen();
     
-//    cameraCalibration.draw();
-//    laserCalibration.draw();
-//    projectorCalibration.draw();
-
+    if( monitorCount > 1 ) drawPreviewScreen();
+        
   	for(int i = 0; i<panels.size(); i++) {
-		panels[i]->draw();
+        panels[i]->draw();
 	}
-
 
 }
 
@@ -125,6 +124,8 @@ void ControlPanels::drawPreviewScreen(){
 	if(scale>1) scale = 1; 
     ofScale(scale, scale);
     main.draw(0,0);
+    
+    
     ofPopMatrix();
 }
 
