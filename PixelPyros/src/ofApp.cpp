@@ -49,7 +49,6 @@ void ofApp::setup(){
   
     ofBackground(0);
 
-	setupScenes(); 
 	
 	cameraManager.init();
 	cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
@@ -93,7 +92,8 @@ void ofApp::setup(){
 	updateScreenSizes();
 	controlPanels.setup( &parameterManager, screens);
 
-
+	setupScenes();
+	
 }
 
 //--------------------------------------------------------------

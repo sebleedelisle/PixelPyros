@@ -71,7 +71,8 @@ class Scene {
 	float lengthSeconds;
 	float positionSeconds;
 	
-	ofMultiDeviceSoundPlayer music;
+	//ofMultiDeviceSoundPlayer music;
+	ofSoundPlayer music; 
 	string musicFile;
 	
 	
