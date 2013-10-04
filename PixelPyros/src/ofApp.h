@@ -3,7 +3,6 @@
 
 #pragma once
 
-
 #include "constants.h"
 
 #include "ofMain.h"
@@ -60,14 +59,13 @@ public:
 	void exit();
 	void mousePressed( int x, int y, int button );
 	void mouseMoved( int x, int y );
-	void keyPressed( int key );
+    void keyPressed( int key );
 	void keyReleased( int key );
 	
 	void setupScenes();
 	void initSounds();
-	
-	void updateScreenSizes();
 	void calculateScreenSizes();
+	void updateScreenSizes(); 
 	void windowResized(int w, int h);
 
 	
@@ -125,3 +123,11 @@ private:
     
     bool paused;
 };
+
+struct screenSortClass {
+    bool operator()(ofRectangle a, ofRectangle b)
+    {
+        return a.x < b.x;
+        }
+} screenSort;
+        
