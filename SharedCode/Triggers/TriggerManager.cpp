@@ -34,11 +34,13 @@ void TriggerManager::initParams(){
     parameters.add( triggerAreaHeightParam.set("height", 0.5, 0, 0.5 ) );
     parameters.add( triggerAreaCenterYParam.set("centre y", 0.5, 0.5, 1 ) );
     parameters.add( triggerSpacingParam.set("spacing", 0, 0, 400 ) );
+    parameters.add( triggerOscillationParam.set("vertical oscillation", 0.1, 0.01, 2 ) );
     
     triggerAreaWidthParam.addListener(this, &TriggerManager::triggerParamChanged);
     triggerAreaHeightParam.addListener(this, &TriggerManager::triggerParamChanged);
     triggerAreaCenterYParam.addListener(this, &TriggerManager::triggerParamChanged);
     triggerSpacingParam.addListener(this, &TriggerManager::triggerParamChanged);
+    triggerOscillationParam.addListener(this, &TriggerManager::triggerParamChanged);
     
 }
 
@@ -216,7 +218,7 @@ void TriggerManager :: updateLayout() {
 		trigger->disabled = triggersDisabled;
 		trigger->showDebugData = triggerDebug;
 			
-		trigger->pos.y = triggerArea.getCenter().y; //ypos +
+		trigger->pos.y = triggerArea.getCenter().y + cos(triggerCount*triggerOscillationParam) * (triggerArea.getHeight()/2); //ypos +
 		trigger->pos.x = xPos + midX;
 			
 		if(xPos>=0){
@@ -262,7 +264,7 @@ void TriggerManager::triggerParamChanged(float &value){
     triggerArea.x = (displayWidth - triggerArea.width)/2;
     triggerArea.height = (displayHeight * triggerAreaHeightParam);
     triggerArea.y = (displayHeight * triggerAreaCenterYParam) - (triggerArea.height/2) ;
-
+	
     minimumSpacing = triggerSpacingParam.get();
     
     updateLayout();

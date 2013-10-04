@@ -1,9 +1,10 @@
 <Triggers>
 	<Trigger_Positioning>
-		<width>0.8225</width>
-		<height>0.15</height>
-		<centre_y>0.89125</centre_y>
-		<spacing>29</spacing>
+		<width>0.845</width>
+		<height>0.03875</height>
+		<centre_y>0.85375</centre_y>
+		<spacing>22</spacing>
+	<vertical_oscillation>0.0299</vertical_oscillation>
 	</Trigger_Positioning>
 <Triggers/>
 </Triggers>

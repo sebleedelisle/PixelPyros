@@ -91,6 +91,7 @@ void ofApp::setup(){
 	calculateScreenSizes();
     controlPanels.laserWarp = & laserManager.warp;
 	controlPanels.setup( &parameterManager, screens);
+	timeSpeed = 1; 
 
 	setupScenes();
 	
@@ -379,7 +380,7 @@ void ofApp::calculateScreenSizes(){
 		screens[i].x -= leftMost;
     }
     
-    std::sort( screens.begin(), screens.end(), screenSort );
+   // std::sort( screens.begin(), screens.end(), screenSort );
 
 }
 
