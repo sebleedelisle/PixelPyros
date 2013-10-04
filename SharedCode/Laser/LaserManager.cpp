@@ -69,10 +69,8 @@ void LaserManager:: setup (int width, int height) {
 	
 	maskRectangle.set(0, 0, APP_WIDTH, y2);
 	maskRectangle.initUI();
-	
-    warp = warpParam;
-	warp.label = "laserWarp";
-    
+
+    warp.label = "laserWarp";
 	warp.setDstPoint(0, ofVec2f(x1,y1));
 	warp.setDstPoint(1, ofVec2f(x2,y1));
 	warp.setDstPoint(2, ofVec2f(x2,y2));
@@ -107,7 +105,6 @@ void LaserManager:: setup (int width, int height) {
 	parameters.add(renderLaserPreview.set("render laser preview", true));
 	
     calibrationParameters.setName("Laser Calibration");
-    calibrationParameters.add(warpParam.set("Homography", warp) );
     
 	//p3.setName("laser graphics");
 	
@@ -273,8 +270,7 @@ void LaserManager::draw() {
 	
 	
 	
-	
-	warp.draw();
+    //warp.draw();
 	ofNoFill();
 	
 	//maskRectangle.draw();
@@ -664,7 +660,6 @@ ofPoint LaserManager::ildaPointToOfPoint(const ofxIlda::Point& ildapoint){
 	
 }
 
-
 void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c, float pointIntensity){
 	
 	bool offScreen = false;
@@ -712,7 +707,6 @@ void LaserManager::resetIldaPoints() {
 
 
 void LaserManager::addDelayTest() {
-	
 	
 	ofFloatColor pointcolour;
 	

@@ -21,6 +21,7 @@ QuadWarp :: QuadWarp (string saveLabel) {
 	pointColour = ofColor :: white;
 	dstPoints.resize(4);
 	srcPoints.resize(4);
+    offset = ofVec2f(0,0);
 	
 	for(int i = 0; i<4;i++) {
 		srcPoints[i].set( (i%2)*100, floor(i/2)*100);
@@ -63,7 +64,7 @@ void QuadWarp :: draw(bool lockAxis) {
 	
 	if(curDragPointIndex>=0) {
 		
-		ofVec3f diff(ofGetMouseX(), ofGetMouseY());
+		ofVec3f diff(ofGetMouseX() - offset.x, ofGetMouseY() - offset.y );
 		diff-=dragStartPoint;
 		diff*=dragSpeed;
 		
@@ -88,6 +89,7 @@ void QuadWarp :: draw(bool lockAxis) {
 	ofPushStyle();
 	ofNoFill();
 	
+    ofTranslate(offset.x, offset.y);
 	
 	//ofEnableSmoothing();
 	//ofScale(1024, 768);
@@ -97,8 +99,7 @@ void QuadWarp :: draw(bool lockAxis) {
 		
 		
 		ofVec3f& point = dstPoints[i];
-		
-		ofCircle(point, 1);
+				ofCircle(point, 1);
 		ofSetColor(pointColour);
 		ofSetLineWidth(1);
 		ofCircle(point, pointRadius);
@@ -121,6 +122,11 @@ void QuadWarp :: draw(bool lockAxis) {
 	
 }
 
+
+void QuadWarp::setOffset(float x,float y){
+    offset.x = x;
+    offset.y = y;
+}
 
 void QuadWarp ::setDstPoint(int index, ofVec3f point){
 	
@@ -275,8 +281,8 @@ void QuadWarp :: mousePressed(ofMouseEventArgs &e) {
 	if(!visible) return;
 	
 		
-	ofVec3f clickPoint(e.x, e.y);
-	    
+	ofVec3f clickPoint(e.x - offset.x, e.y - offset.y);
+	   
 	for(int i = 0; i < dstPoints.size(); i++) {
         if(dstPoints[i].distance(clickPoint) < pointRadius) {
 			curDragPointIndex = i;

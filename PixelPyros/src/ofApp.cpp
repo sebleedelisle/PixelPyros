@@ -2,7 +2,6 @@
 
 #include "ofApp.h"
 
-
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetLogLevel(OF_LOG_WARNING);
@@ -89,7 +88,8 @@ void ofApp::setup(){
     // Now that all of the parameters should be registered with the
 	// ParameterManager, setup the control gui
     
-	updateScreenSizes();
+	calculateScreenSizes();
+    controlPanels.laserWarp = & laserManager.warp;
 	controlPanels.setup( &parameterManager, screens);
 
 	setupScenes();
@@ -344,18 +344,15 @@ void ofApp::mouseMoved( int x, int y ){
 
 }
 
-
-void ofApp::updateScreenSizes() {
-	
-//	ofToggleFullscreen();
-	//cout << ofGetWindowMode()<< endl;
-	
-	int monitorCount;
+void ofApp::calculateScreenSizes(){
+    int monitorCount;
 	
 	GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
 	
 	cout << "RESIZE" << " " << ofGetWindowMode()<< endl;
     screens.clear();
+    
+    int leftMost = 0;
     
     for(int i = 0; i < monitorCount; i++){
 		
@@ -375,9 +372,23 @@ void ofApp::updateScreenSizes() {
         
         screens.push_back(screen);
         cout << i << " " << screen << endl;
-		
+		if( leftMost > screen.x ) leftMost = screen.x;
     }
+    
+    for(int i = 0; i < monitorCount; i++){
+		screens[i].x -= leftMost;
+    }
+    
+    std::sort( screens.begin(), screens.end(), screenSort );
+
+}
+
+void ofApp::updateScreenSizes() {
 	
+//	ofToggleFullscreen();
+	//cout << ofGetWindowMode()<< endl;
+	
+    calculateScreenSizes();
 
 	controlPanels.updatePositions(screens);
 	
