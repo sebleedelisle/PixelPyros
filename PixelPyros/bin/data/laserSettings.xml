@@ -45,7 +45,7 @@
 			<show_registration>0</show_registration>
 			<show_move_points>0</show_move_points>
 			<show_sync_test>0</show_sync_test>
-			<render_laser_path>0</render_laser_path>
+			<render_laser_path>1</render_laser_path>
 			<move_speed>8.15185</move_speed>
 			<move_points_padding>3</move_points_padding>
 			<dot_pre_blank>0</dot_pre_blank>

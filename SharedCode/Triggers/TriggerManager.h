@@ -62,6 +62,7 @@ class TriggerManager {
     ofParameter<float> triggerAreaHeightParam;
     ofParameter<float> triggerAreaCenterYParam;
     ofParameter<float> triggerSpacingParam;
+	ofParameter<float> triggerOscillationParam;
     
     ofParameterGroup parameters;
 };

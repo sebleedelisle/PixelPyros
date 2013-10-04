@@ -66,7 +66,8 @@ public:
 	void setupScenes();
 	void initSounds();
 	
-	void updateScreenSizes(); 
+	void updateScreenSizes();
+	void calculateScreenSizes();
 	void windowResized(int w, int h);
 
 	
