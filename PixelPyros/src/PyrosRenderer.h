@@ -24,8 +24,7 @@ public:
         
 		resetDefaults();
 		resetFlag = false;
-		
-		
+	
 		edgeBlendImage.allocate(8, 8, OF_IMAGE_COLOR);
 		ofPixels& pixels = edgeBlendImage.getPixelsRef();
 		for(int x = 0; x<edgeBlendImage.getWidth(); x++) {
@@ -129,24 +128,17 @@ public:
 		
 		glTexCoord2f(hw-edgeBlendOffset, 0);
 		glVertex2f(hw,0);
-		//glVertex2f(0,0);
 		
 		glTexCoord2f(w-edgeBlendOffset, 0);
 		glVertex2f(w,0);
-		//glVertex2f(hw,0);
 		
 		glTexCoord2f(w-edgeBlendOffset, h);
 		glVertex2f(w,h);
-		//glVertex2f(hw,h);
 		
 		glTexCoord2f(hw-edgeBlendOffset, h);
 		glVertex2f(hw,h);
-		//glVertex2f(0,h);
-		
 		
 		glEnd();
-		//glPopMatrix();
-		
 		
 		end();
 		
@@ -206,30 +198,22 @@ public:
 		
 		glTexCoord2f(edgeBlendImageWidth, 0);
 		glVertex2f(hw,0);
-		//glVertex2f(0,0);
 		
 		glTexCoord2f(0, 0);
 		glVertex2f(hw+edgeBlendSize,0);
-		//glVertex2f(hw,0);
 		
 		glTexCoord2f(0, edgeBlendImageHeight);
 		glVertex2f(hw+edgeBlendSize,h);
-		//glVertex2f(hw,h);
 		
 		glTexCoord2f(edgeBlendImageWidth, edgeBlendImageHeight);
 		glVertex2f(hw,h);
-		//glVertex2f(0,h);
-		
 		
 		glEnd();
-		//glPopMatrix();
-		
-		
+				
 		end();
 		
         ofPopMatrix();
-		
-		edgeBlendImage.draw(ofGetMouseX(),ofGetMouseY(),100,100);
+				
 		ofPopStyle();
 		
 	}

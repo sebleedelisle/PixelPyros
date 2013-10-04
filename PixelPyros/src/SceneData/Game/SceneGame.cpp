@@ -7,11 +7,12 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 {
 
 	pixelSize = 1;
-	loadMusicFile("1-05 TECHNOPOLIS.aif");
+	loadMusicFile("Firecracker.aif");
 	
 	invaderImage1.loadImage("img/Invader.png");
 	invaderImage1.getTextureReference().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
-	activeInvaders = 0; 
+	activeInvaders = 0;
+	activeAsteroids = 0;
 	
 	addTriggerPattern();
 
@@ -22,14 +23,37 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 	
 	TriggerPattern tp;
 	tp.addTriggerSettings(ts);
+	tp.addTriggerSettings();
 	addTriggerPattern(tp);
 	
 	TriggerPattern bulletsPattern;
 	
 	bulletsPattern.addTriggerSettings(getInvaderBulletRocket(170));
-	//bulletsPattern.addTriggerSettings();
+	bulletsPattern.addTriggerSettings();
 	
 	addTriggerPattern(bulletsPattern);
+	
+	
+	ts = getAsteroidsBulletRocket();
+	ts->rechargeSettings = new TriggerRechargeSettings();
+	ts->rechargeSettings->restoreSpeed = 0.000001;
+	
+	TriggerPattern tp2;
+	tp2.addTriggerSettings(ts);
+	tp2.addTriggerSettings();
+	addTriggerPattern(tp2);
+	
+	TriggerPattern bulletsPatternAsteroids;
+	
+	bulletsPatternAsteroids.addTriggerSettings(getAsteroidsBulletRocket());
+	bulletsPatternAsteroids.addTriggerSettings();
+
+	
+	addTriggerPattern(bulletsPatternAsteroids);
+	
+	
+	
+	
 	
 	explodeMesh.addVertex(ofPoint(1,0));
 	explodeMesh.addVertex(ofPoint(0,1));
@@ -43,6 +67,14 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 	currentGame = GAME_NONE;
 	gameState = STATE_INTRO;
 	
+	
+	ofTrueTypeFont::setGlobalDpi(72);
+
+	pixelFont.loadFont("bender_light.ttf", 60, true, true);
+	pixelFont.setLineHeight(68.0f);
+	pixelFont.setLetterSpacing(1.035);
+	
+	
 };
 
 
@@ -51,7 +83,7 @@ void SceneGame::start() {
 	Scene::start();
 	
 	changeGame(GAME_INVADERS);
-	changeState(STATE_INTRO); 
+//	changeState(STATE_INTRO);
 	
 	
 }
@@ -61,14 +93,22 @@ void SceneGame::changeGame(int newgame) {
 	
 	if(currentGame == newgame) return;
 	
+	
+	level = 0;
+	
+	currentGame = newgame;
+	
+	
 	if(newgame == GAME_INVADERS) {
 		//resetInvaders();
 		gameState = -1;
 		changeState(STATE_INTRO);
 
+	} else if(newgame == GAME_ASTEROIDS) {
+		gameState = -1;
+		changeState(STATE_INTRO);
+			
 	}
-	
-	currentGame = newgame;
 	
 	
 }
@@ -85,13 +125,23 @@ void SceneGame::changeState(int newstate) {
 			
 			changeTriggerPattern(2);
 		} else {
+			cout << "CHANGING TRIGGER PATTERN" << endl;
 			changeTriggerPattern(1);
 			triggerManager->emptyTriggers();
 		}
 		
 		
+	} else if(currentGame == GAME_ASTEROIDS) {
+		if(gameState == STATE_PLAYING) {	
+			changeTriggerPattern(4);
+		} else {
+			changeTriggerPattern(3);
+			triggerManager->emptyTriggers();
+			if(gameState!=STATE_GAMEOVER) resetAsteroids();
+		}
+		
+		
 	}
-	
 	
 }
 
@@ -101,8 +151,8 @@ void SceneGame::stop() {
 		Invader &invader = *invaders[i];
 		if(!invader.enabled) continue;
 		invader.enabled = false;
-		explodeInvader(invader);
-		spareInvaders.push_back(&invader);
+		makeInvaderExplosion(invader);
+		//spareInvaders.push_back(&invader);
 	}
 }
 
@@ -110,26 +160,52 @@ bool SceneGame::update(float deltaTime) {
 	
 	if(!Scene::update(deltaTime)) return false;
 
-	
 	if(currentGame == GAME_INVADERS) {
 		
-			
 		if((gameState == STATE_INTRO) || (gameState == STATE_WAITING)) {
 			if(ofGetElapsedTimef()-lastStateChangeTime>5) {
 				changeState(STATE_PLAYING);
 			}
+		} else if(gameState == STATE_GAMEOVER) {
+			if(ofGetElapsedTimef()-lastStateChangeTime>5) {
+				changeGame(GAME_ASTEROIDS);
+			}
+
 		} else if(gameState == STATE_PLAYING) {
 			if(activeInvaders==0) {
-				changeState(STATE_WAITING);
-				
+				level++;
+				if(positionSeconds>lengthSeconds/2) {
+					changeState(STATE_GAMEOVER) ;
+				} else {
+					changeState(STATE_WAITING);
+				}
 				
 			} else {
 				updateInvaders();
 				updateInvaders();
 				updateInvaders();
 				updateInvaders();
-
 				checkInvaderCollisions();
+			}
+		}
+	} else if (currentGame == GAME_ASTEROIDS) {
+		
+		updateAsteroids(deltaTime);
+
+		if((gameState == STATE_INTRO) || (gameState == STATE_WAITING)) {
+			if(ofGetElapsedTimef()-lastStateChangeTime>5) {
+				changeState(STATE_PLAYING);
+			}
+		} else if(gameState == STATE_PLAYING) {
+			if(activeAsteroids==0) {
+				level++;
+				if(positionSeconds>lengthSeconds-20) {
+					changeState(STATE_GAMEOVER) ;
+				} else {
+					changeState(STATE_WAITING);
+				}
+			} else {
+				checkAsteroidCollisions();
 			}
 		}
 	}
@@ -139,6 +215,10 @@ bool SceneGame::update(float deltaTime) {
 
 bool SceneGame :: draw() {
 	if(!Scene::draw()) return false;
+	
+	float centreX = APP_WIDTH/2;
+	float centreY = APP_HEIGHT/2;
+	
 	
 	ofPushStyle();
 	if(currentGame == GAME_INVADERS) {
@@ -154,9 +234,89 @@ bool SceneGame :: draw() {
 			
 		}
 		
+		ofSetColor(255);
+
 		if(gameState == STATE_INTRO) {
-			ofSetColor(255); 
-			ofDrawBitmapString("READY TO PLAY " + ofToString(ofGetElapsedTimef()-lastStateChangeTime), 500,500);
+						
+			String s = "PLAYERS GET READY";
+			
+			drawStringCentered(s, centreX, centreY-50);
+			
+			int secondsToGo = 5-ceil(ofGetElapsedTimef()-lastStateChangeTime);
+			if(secondsToGo<=3) {
+				s= ofToString(secondsToGo);
+				drawStringCentered(s, centreX, centreY+50);
+				
+			}
+			
+			
+		} else if(gameState == STATE_WAITING) {
+			
+			String s = "LEVEL "+ofToString(level)+" CLEARED!";
+			drawStringCentered(s, centreX, centreY-50);
+			
+			int secondsToGo = 5-ceil(ofGetElapsedTimef()-lastStateChangeTime);
+			if(secondsToGo<=3) {
+				s= "NEXT LEVEL IN "+ ofToString(secondsToGo);
+				drawStringCentered(s, centreX, centreY+50);
+			}
+			
+		} else if(gameState == STATE_GAMEOVER) {
+			ofSetColor(255);
+			
+			drawStringCentered("GAME OVER", centreX, centreY);
+		}
+	} else if(currentGame == GAME_ASTEROIDS) {
+		
+		for(int i = 0; i<asteroids.size(); i++) {
+			
+			Asteroid& asteroid = *asteroids[i];
+			
+			if(!asteroid.enabled) continue;
+			
+			asteroid.draw();
+						
+		}
+		
+		if(gameState == STATE_INTRO) {
+						
+			
+			String s = "PLAYERS GET READY";
+			
+			drawStringCentered(s, centreX, centreY-50);
+			
+			int secondsToGo = 5-ceil(ofGetElapsedTimef()-lastStateChangeTime);
+			if(secondsToGo<=3) {
+				s= ofToString(secondsToGo);
+				drawStringCentered(s, centreX, centreY+50);
+				
+			}
+			
+			
+			
+		} else if(gameState == STATE_WAITING) {
+			
+			String s = "LEVEL "+ofToString(level)+" CLEARED!";
+			drawStringCentered(s, centreX, centreY-50);
+			
+			int secondsToGo = 5-ceil(ofGetElapsedTimef()-lastStateChangeTime);
+			if(secondsToGo<=3) {
+				s= "NEXT LEVEL IN "+ ofToString(secondsToGo);
+				drawStringCentered(s, centreX, centreY+50);
+			}
+			
+			
+			
+			
+			
+			
+			//ofDrawBitmapString("LEVEL "+ofToString(level)+" CLEARED " + ofToString(ofGetElapsedTimef()-lastStateChangeTime), 500,500);
+			
+		} else if(gameState == STATE_GAMEOVER) {
+			ofSetColor(255);
+			//ofDrawBitmapString("GAME OVER" + ofToString(ofGetElapsedTimef()-lastStateChangeTime), 500,500);
+			
+			drawStringCentered("GAME OVER", centreX, centreY);
 			
 		}
 	}
@@ -171,9 +331,91 @@ bool SceneGame :: draw() {
 }
 
 
+void SceneGame::drawStringCentered(String string, float x, float y) {
+	float width = pixelFont.stringWidth(string);
+	float height = pixelFont.stringHeight(string); 
+	pixelFont.drawString(string, x-width/2, y-height/2);
+	
+	
+}
+
+void SceneGame:: updateAsteroids(float deltaTime) {
+	activeAsteroids = 0;
+	
+	ofRectangle playRect(0,0,APP_WIDTH, APP_HEIGHT); // TODO use trigger area?
+	for(int i = 0; i<asteroids.size(); i++) {
+		
+		Asteroid& asteroid = *asteroids[i];
+		if(!asteroid.enabled) continue;
+		
+		asteroid.update(deltaTime, playRect);
+		activeAsteroids++; 
+	}
+		
+}
+
+void SceneGame :: resetAsteroids() {
+	for(int i = 0; i<asteroids.size(); i++) {
+		delete asteroids[i];
+	}
+	
+	asteroids.clear();
+	//spareAsteroids.clear();
+	
+	for(int i = 0; i< 20; i++) {
+	
+		Asteroid * asteroid = new Asteroid(ofRandom(0,APP_WIDTH), ofRandom(0,APP_HEIGHT*0.6), 50);
+		
+		if(asteroid->vel.y>0) asteroid->pos.y = ofRandom(0,APP_HEIGHT*0.3);
+		else asteroid->pos.y = ofRandom(APP_HEIGHT*0.3, APP_HEIGHT*0.6);
+
+		asteroids.push_back(asteroid);
+		
+	}
+	activeAsteroids = asteroids.size();
+	
+	
+}
+
+
+void SceneGame :: checkAsteroidCollisions() {
+	
+	vector<PhysicsObject*>& rockets = psm.physicsObjects;
+	
+	for(int i = 0; i<asteroids.size(); i++) {
+		
+		Asteroid& asteroid = *asteroids[i];
+		
+		if(!asteroid.enabled) continue;
+		
+		for(int j = 0; j<rockets.size(); j++) {
+			PhysicsObject& rocket = *rockets[j];
+			if(!rocket.isEnabled()) continue;
+			
+			if(asteroid.pos.distance(rocket.pos) < asteroid.radius) {
+				makeAsteroidExplosion(asteroid);
+				if(asteroid.radius<20) {
+					asteroid.enabled = false;
+					
+				} else {
+					Asteroid* newasteroid = new Asteroid(0,0,asteroid.radius/2);
+					newasteroid->pos = asteroid.pos;
+					asteroid.updateSize(newasteroid->radius);
+					asteroids.push_back(newasteroid);
+				}
+					
+				psm.killPhysicsObject(&rocket);
+				
+				break;
+			}
+		}
+	}
+	
+}
+
+
 void SceneGame::updateInvaders() {
 	
-
 	activeInvaders = 0;
 	int rightEdge = 0;
 	int leftEdge = APP_WIDTH;
@@ -184,7 +426,7 @@ void SceneGame::updateInvaders() {
 		
 		if(!invader.enabled) continue;
 		
-		if(i == currentUpdateInvader) invader.update(true);
+		if(i ==currentUpdateInvader) invader.update(true);
 		else invader.update(false);
 		
 		if(invader.pos.x+invader.width>rightEdge) rightEdge = invader.pos.x+invader.width;
@@ -248,8 +490,8 @@ void SceneGame :: checkInvaderCollisions() {
 			
 			if(invader.getRect().inside(rocket.pos)) {
 				invader.enabled = false;
-				spareInvaders.push_back(&invader);
-				explodeInvader(invader);
+				//spareInvaders.push_back(&invader);
+				makeInvaderExplosion(invader);
 				psm.killPhysicsObject(&rocket);
 				
 				break;
@@ -261,13 +503,17 @@ void SceneGame :: checkInvaderCollisions() {
 
 void SceneGame :: resetInvaders() {
 	
+	for(int i = 0; i<invaders.size(); i++) {
+		delete invaders[i];
+	}
 	
+	//spareInvaders.clear();
+	invaders.clear();
+
 	float colours [4] = {128, 0, 220, 0};
 	int invadercount = 0;
 	
-	spareInvaders.clear();
-	invaders.clear();
-	int numRows = 6;
+		int numRows = 6;
 	int numCols = 30;
 	for(int y = 0; y<numRows; y++) {
 		for(int x = 0; x<numCols; x++) {
@@ -291,7 +537,7 @@ void SceneGame :: resetInvaders() {
 	activeInvaders = invadercount;
 }
 
-void SceneGame::explodeInvader(Invader &invader){
+void SceneGame::makeInvaderExplosion(Invader &invader){
 		ParticleSystem &ps = *psm.getParticleSystem();
 	ParticleSystemSettings pss;
 	pss.emitLifeTime = 0.2;
@@ -316,22 +562,44 @@ void SceneGame::explodeInvader(Invader &invader){
 	
 }
 
+void SceneGame::makeAsteroidExplosion(Asteroid &asteroid){
+	ParticleSystem &ps = *psm.getParticleSystem();
+	ParticleSystemSettings pss;
+	pss.emitLifeTime = 0.2;
+	pss.emitCount = 500;
+	pss.renderer = new ParticleRendererShape();
+	pss.speedMin = pss.speedMax = 800; //  * asteroid.radius;
+	pss.drag = 0.96;
+	pss.sizeStartMin = 10; 
+	pss.sizeStartMax = 20;
+	pss.sizeChangeRatio = 0;
+	//pss.emitShape = &explodeMesh;
+	pss.directionYVar = 0;
+	pss.directionZVar = 180;
+	pss.hueStartMin = pss.hueStartMax = 128;
+	pss.hueChange = 0;
+	pss.saturationMin = pss.saturationMax = 0;
+	pss.saturationEnd = 220;
+	pss.brightnessStartMin = pss.brightnessStartMax =pss.brightnessEnd = 255;
+	pss.lifeMin = pss.lifeMax = 0.3;
+	pss.startSound = "RetroExplosion";
+	//pss.shimmerMin = 0;
+	pss.timeSpeed = 0.7;
+	
+	
+	ps.pos = asteroid.pos; 
+	ps.init(pss);
+	
+}
 Invader* SceneGame :: getNewInvader() {
-	Invader* invader;
-	if(spareInvaders.size()>0) {
-		invader = spareInvaders.back();
-		invader->enabled = true;
-		spareInvaders.pop_back(); 
-	} else {
-		invader = new Invader(&invaderImage1, 12, 12);
-		invaders.push_back(invader);
-	}
+	Invader* invader = new Invader(&invaderImage1, 12, 12);
+	invaders.push_back(invader);
 	return invader; 
 }
 
 
 TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
-
+	
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	ParticleSystemSettings pss;
@@ -341,7 +609,7 @@ TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
 	pss.sizeStartMin = pss.sizeStartMax = 4;
 	pss.sizeChangeRatio = 1;
 	pss.saturationEnd =255;
-	pss.hueStartMin = pss.hueStartMax = hue; 
+	pss.hueStartMin = pss.hueStartMax = hue;
 	pss.brightnessEnd = 0;
 	pss.lifeMin = 0.1;
 	pss.lifeMax = 0.2;
@@ -355,7 +623,7 @@ TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
 	//rocketSettings.timeSpeed = 0.7;
 	
 	//rocketSettings.gravity.set(0,1800);
-
+	
 	//ParticleSystemSettings& pss = *rocketSettings.addParticleRenderer(new ParticleRendererLowRes(pixelSize,1));
 	pss.startSound = "SynthKick";
 	pss.sizeChangeRatio = 1;
@@ -363,15 +631,66 @@ TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
 	pss.emitLifeTime = rocketSettings.getLifeTime();
 	
 	rocketSettings.addParticleSystemSetting(pss);
-
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	TriggerSettingsRocket* ts = new TriggerSettingsInvaders();
 	
 	ts->rocketSettings = &rocketSettings;
-	ts->rechargeSettings = TriggerRechargeSettings::fastMultiples;
-
+	ts->rechargeSettings = TriggerRechargeSettings::fast;
+	
 	return ts;
+	
+}
 
+
+
+
+TriggerSettingsRocket* SceneGame:: getAsteroidsBulletRocket() {
+	
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	ParticleSystemSettings pss;
+	pss.renderer = new ParticleRendererCircle(8, false, 2);
+	pss.speedMin = pss.speedMax = 0;
+	pss.emitCount = 100;
+	pss.sizeStartMin = pss.sizeStartMax = 3;
+	pss.sizeChangeRatio = 0;
+	pss.saturationEnd =255;
+	pss.hueStartMin = pss.hueStartMax = 128;
+	pss.brightnessEnd = 0;
+	pss.lifeMin = 0.1;
+	pss.lifeMax = 0.2;
+	pss.emitInheritVelocity = 1;
+	pss.drag = 0.95;
+	
+	rocketSettings.startSpeedMin = 400;
+	rocketSettings.startSpeedMax = 400;
+	rocketSettings.directionVar = 0;
+	rocketSettings.setLifeTime(2.2);
+	//rocketSettings.timeSpeed = 0.7;
+	
+	//rocketSettings.gravity.set(0,1800);
+	
+	//ParticleSystemSettings& pss = *rocketSettings.addParticleRenderer(new ParticleRendererLowRes(pixelSize,1));
+	pss.startSound = "SynthKick";
+
+	pss.emitLifeTime = rocketSettings.getLifeTime();
+	
+	rocketSettings.addParticleSystemSetting(pss);
+	
+	ParticleSystemSettings& pss2 = *rocketSettings.addParticleRenderer(new ParticleRendererLaser());
+	pss2.sizeStartMax = pss2.sizeStartMin = 2;
+	pss2.sizeChangeRatio = 1; 
+
+	
+	TriggerSettingsRocket* ts = new TriggerSettingsAsteroids();
+	
+	ts->rocketSettings = &rocketSettings;
+	ts->rechargeSettings = TriggerRechargeSettings::fast;
+	ts->rotationExtent = 20;
+	ts->rotationSpeed = 5;
+	
+	return ts;
+	
 }
 
 // ---------------- OLD ROCKETS

@@ -31,7 +31,7 @@ void Scene :: loadMusicFile(string musicfile){
 	
 	musicFile = "../../../Music/"+musicfile;
 	
-	music.loadSoundWithTarget(musicFile,5);
+	music.loadSound(musicFile);
 	// ridiculous hack to get the sound file length #facepalm
 	music.play();
 	music.setPosition(0.9999999f);
@@ -136,6 +136,7 @@ SequenceCommand Scene :: addCommand(float time, SequenceCommandType type, int ar
 	
 	SequenceCommand cmd(type, time, arg);
 	commands.push_back(cmd);
+	// TODO Check that I don't need to sort these !
 	//sort(commands.begin(), commands.end());
 	
 	return cmd;
@@ -314,7 +315,7 @@ void Scene ::addTriggerPattern(TriggerPattern& pattern, string label) {
 
 bool Scene :: changeTriggerPattern(int num) {
 
-	if(triggerPatterns.size()==0) addTriggerPattern();
+	//if(triggerPatterns.size()==0) addTriggerPattern();
 	if(num>=triggerPatterns.size())  return false;
 	
 	//TODO this needs to tell the triggerManager to change stuff
