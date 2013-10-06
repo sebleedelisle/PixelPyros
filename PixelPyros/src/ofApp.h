@@ -96,7 +96,6 @@ public:
 	
 	vector<ofRectangle> screens;
 	
-	
 	//ofRectangle triggerArea;
 	float triggerAreaCentreY;
 	float triggerAreaWidth;
@@ -108,8 +107,6 @@ public:
 	bool drawCameraIntoFBO;
 	bool shiftPressed;
     bool altPressed;
-	
-	
 	
 	PyrosRenderer renderer;
 	

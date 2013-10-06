@@ -91,9 +91,11 @@ void ofApp::setup(){
 	calculateScreenSizes();
     controlPanels.laserWarp = & laserManager.warp;
 	controlPanels.setup( &parameterManager, screens);
-	timeSpeed = 1; 
-
+	timeSpeed = 1;
+	
+	
 	setupScenes();
+	sceneManager.updateUIScreen(screens.back());
 	
 }
 
@@ -183,10 +185,10 @@ void ofApp::draw(){
 	fboWarper1.draw();
 	fboWarper2.draw();
 	
-	//sequencer.draw();
 	
     controlPanels.draw();
-    
+	sceneManager.drawGUI();
+	
 }
 
 //--------------------------------------------------------------
@@ -284,7 +286,7 @@ void ofApp:: setupScenes() {
 
 	SceneIntro* intro = new SceneIntro("Intro");
 	sceneManager.addScene(intro);
-	intro->loadMusicFile("02 In Motion.aif");
+	intro->loadMusicFile("InMotionEdit.aif");
 
 	sceneManager.addScene(new SceneRetro("Retro"));
 	

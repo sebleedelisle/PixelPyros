@@ -27,22 +27,23 @@ class Invader {
 		
 	}
 	
-	void update(bool doPositionChange) {
+	void update() {
 		counter++;
 		
 		if(delay>0) {
 			delay--;
-			offset.x = delay; // Cubic::easeOut(delay, 1000, 0, 1000);
-			offset.y = -delay*4; // 0;//-delay*2;
+			currentPos = pos + ofPoint(10,-20)*delay;
+		} else {
+			currentPos += (pos-currentPos)*0.2;
 			
-		} else offset.set(0,0);
-		
-		if(doPositionChange) {
-
-			pos+=vel;
-			frame++;
-			if(frame>=frameCount) frame = 0;
 		}
+		
+		
+	}
+	void nextFrame() {
+		
+		frame++;
+		if(frame>=frameCount) frame = 0;
 		
 	}
 	
@@ -50,7 +51,7 @@ class Invader {
 	
 		ofPushStyle();
 		ofPushMatrix();
-		ofTranslate(pos + offset);
+		ofTranslate(currentPos);
 		ofScale(scale, scale);
 		ofSetColor(colour); 
 		image->drawSubsection(0, 0, width, height, frame*width, 0);
@@ -63,10 +64,10 @@ class Invader {
 	}
 
 	ofRectangle getRect() {
-		return ofRectangle(pos+offset,width*scale, height*scale);
+		return ofRectangle(currentPos,width*scale, height*scale);
 	}
 
-	ofVec3f pos, vel, offset;
+	ofVec3f currentPos, pos;
 	int scale;
 	int counter;
 	bool enabled;

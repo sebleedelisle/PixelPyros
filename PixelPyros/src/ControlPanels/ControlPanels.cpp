@@ -57,16 +57,18 @@ void ControlPanels::setup(ParameterManager * parameterManager, vector<ofRectangl
     cameraGui.add( *parameterManager->getParameterGroup("camera") );
     cameraGui.load();
     
-    setupPanel( "Laser Calibration", "laserCalibrationSettings.xml", ofRectangle( 0, 0, 400, heightSmall ), laserCalibration );
-    laserCalibration.add( *parameterManager->getParameterGroup("laser calibration") );
-    laserCalibration.load();
+//    setupPanel( "Laser Calibration", "laserCalibrationSettings.xml", ofRectangle( 0, 0, 400, heightSmall ), laserCalibration );
+//    laserCalibration.add( *parameterManager->getParameterGroup("laser calibration") );
+//    laserCalibration.load();
 	
 	updatePositions(screens);
     
 }
 void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 	
-    
+    // I kinda feel like the logic for figuring out which screen is for the UI
+	// should be done in ofApp and just passed in here? - Seb 
+	
 	monitorCount = screens.size();
 	// Assumes GUI will always be on the last monitor, ie
 	// the right-most monitor.
@@ -108,6 +110,9 @@ void ControlPanels::draw(){
 }
 
 void ControlPanels::drawPreviewScreen(){
+	
+	ofPushStyle();
+	
     previewScreenRect = screen;
 	
 	if(panelMode != PANEL_MODE_NONE){
@@ -123,26 +128,27 @@ void ControlPanels::drawPreviewScreen(){
 	if(previewScreenRect.height /main.getHeight() < scale) scale = previewScreenRect.height /main.getHeight();
 	if(scale>1) scale = 1; 
     ofScale(scale, scale);
+	ofBlendMode(OF_BLENDMODE_ADD);
     main.draw(0,0);
-    
-    
+        
     ofPopMatrix();
+	ofPopStyle();
 }
 
 void ControlPanels::exit(){
-    laserCalibration.save();
-    projectorCalibration.save();
-    
-    
-//    laserGui.save();
-//    rendererGui.save();
-//    triggerGui.save();
-//    motionGui.save();
-//	
+	//laserCalibration.save();
 	
-  	for(int i = 0; i<panels.size(); i++) {
-		panels[i]->save();
-	}
+	// Where is this getting set up? Anywhere? I think this is
+	// where it was crashing? 
+	//projectorCalibration.save();
+    
+    appGui.save();
+    laserGui.save();
+    rendererGui.save();
+    triggerGui.save();
+    motionGui.save();
+	cameraGui.save();
+	
 
 	
 }
@@ -187,7 +193,7 @@ void ControlPanels::setupPanel( string name, string filename, ofRectangle rect, 
 	
 	panel.clear();
 	
-    panel.setup( name, filename );
+    panel.setup( name, "settings/"+filename );
     panel.useFrameBuffer(true);
 	panel.loadFont("Verdana.ttf", 10, false);
 	
@@ -199,7 +205,7 @@ void ControlPanels::setupPanel( string name, string filename, ofRectangle rect, 
 	
 	panels.push_back(&panel); 
 
-}
+}	
 
 void ControlPanels::setupPanel( string name, ofRectangle rect, ofxPanel & panel ){
 	setupPanel(name, "settings.xml", rect, panel); 

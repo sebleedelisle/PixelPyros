@@ -16,6 +16,7 @@ TriggerRechargeSettings* TriggerRechargeSettings::fast = new TriggerRechargeSett
 TriggerRechargeSettings* TriggerRechargeSettings::slow = new TriggerRechargeSettings(0.2);
 TriggerRechargeSettings* TriggerRechargeSettings::oneShot = new TriggerRechargeSettings(0);
 TriggerRechargeSettings* TriggerRechargeSettings::fastMultiples = new TriggerRechargeSettings(4);
+TriggerRechargeSettings* TriggerRechargeSettings::mediumMultiples = new TriggerRechargeSettings(4);
 
 TriggerRechargeSettings::TriggerRechargeSettings() {
 

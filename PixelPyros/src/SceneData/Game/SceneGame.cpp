@@ -6,6 +6,12 @@
 SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSystemManager::instance())
 {
 
+	
+	//TODO this should really be somewhere else - but where!
+	TriggerRechargeSettings::mediumMultiples->minTriggerInterval = 0.2;
+	TriggerRechargeSettings::mediumMultiples->triggerPower = 0.3;
+	TriggerRechargeSettings::mediumMultiples->restoreSpeed = 0.5;
+
 	pixelSize = 1;
 	loadMusicFile("Firecracker.aif");
 	
@@ -13,6 +19,8 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 	invaderImage1.getTextureReference().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
 	activeInvaders = 0;
 	activeAsteroids = 0;
+	numRows = 0;
+	numCols = 0;
 	
 	addTriggerPattern();
 
@@ -124,6 +132,7 @@ void SceneGame::changeState(int newstate) {
 			resetInvaders();
 			
 			changeTriggerPattern(2);
+			triggerManager->emptyTriggers();
 		} else {
 			cout << "CHANGING TRIGGER PATTERN" << endl;
 			changeTriggerPattern(1);
@@ -159,6 +168,8 @@ void SceneGame::stop() {
 bool SceneGame::update(float deltaTime) {
 	
 	if(!Scene::update(deltaTime)) return false;
+	
+	timeSinceLastStateChange = ofGetElapsedTimef() - lastStateChangeTime; 
 
 	if(currentGame == GAME_INVADERS) {
 		
@@ -181,9 +192,6 @@ bool SceneGame::update(float deltaTime) {
 				}
 				
 			} else {
-				updateInvaders();
-				updateInvaders();
-				updateInvaders();
 				updateInvaders();
 				checkInvaderCollisions();
 			}
@@ -242,7 +250,7 @@ bool SceneGame :: draw() {
 			
 			drawStringCentered(s, centreX, centreY-50);
 			
-			int secondsToGo = 5-ceil(ofGetElapsedTimef()-lastStateChangeTime);
+			int secondsToGo = 5-ceil(timeSinceLastStateChange);
 			if(secondsToGo<=3) {
 				s= ofToString(secondsToGo);
 				drawStringCentered(s, centreX, centreY+50);
@@ -255,7 +263,7 @@ bool SceneGame :: draw() {
 			String s = "LEVEL "+ofToString(level)+" CLEARED!";
 			drawStringCentered(s, centreX, centreY-50);
 			
-			int secondsToGo = 5-ceil(ofGetElapsedTimef()-lastStateChangeTime);
+			int secondsToGo = 5-ceil(timeSinceLastStateChange);
 			if(secondsToGo<=3) {
 				s= "NEXT LEVEL IN "+ ofToString(secondsToGo);
 				drawStringCentered(s, centreX, centreY+50);
@@ -285,7 +293,7 @@ bool SceneGame :: draw() {
 			
 			drawStringCentered(s, centreX, centreY-50);
 			
-			int secondsToGo = 5-ceil(ofGetElapsedTimef()-lastStateChangeTime);
+			int secondsToGo = 5-ceil(timeSinceLastStateChange);
 			if(secondsToGo<=3) {
 				s= ofToString(secondsToGo);
 				drawStringCentered(s, centreX, centreY+50);
@@ -299,7 +307,7 @@ bool SceneGame :: draw() {
 			String s = "LEVEL "+ofToString(level)+" CLEARED!";
 			drawStringCentered(s, centreX, centreY-50);
 			
-			int secondsToGo = 5-ceil(ofGetElapsedTimef()-lastStateChangeTime);
+			int secondsToGo = 5-ceil(timeSinceLastStateChange);
 			if(secondsToGo<=3) {
 				s= "NEXT LEVEL IN "+ ofToString(secondsToGo);
 				drawStringCentered(s, centreX, centreY+50);
@@ -324,7 +332,7 @@ bool SceneGame :: draw() {
 	
 	ofDrawBitmapString("GAME: " + ofToString(currentGame), 10,500);
 	ofDrawBitmapString("STATE: " + ofToString(gameState), 10,550);
-	ofDrawBitmapString("TIME SINCE CHANGE: " + ofToString(ofGetElapsedTimef()-lastStateChangeTime), 10,600);
+	ofDrawBitmapString("TIME SINCE CHANGE: " + ofToString(timeSinceLastStateChange), 10,600);
 	
 	ofPopStyle();
 			
@@ -417,60 +425,85 @@ void SceneGame :: checkAsteroidCollisions() {
 void SceneGame::updateInvaders() {
 	
 	activeInvaders = 0;
-	int rightEdge = 0;
-	int leftEdge = APP_WIDTH;
-
+	//int rightEdge = 0;
+	//int leftEdge = APP_WIDTH;
+	//int topEdge = APP_HEIGHT;
+	//int bottomEdge = 0;
+	
+	ofRectangle invaderRect;
+	bool firstInvader = true;
+	
+	
 	for(int i = 0; i<invaders.size(); i++) {
 		
 		Invader& invader = *invaders[i];
-		
 		if(!invader.enabled) continue;
-		
-		if(i ==currentUpdateInvader) invader.update(true);
-		else invader.update(false);
-		
-		if(invader.pos.x+invader.width>rightEdge) rightEdge = invader.pos.x+invader.width;
-		if(invader.pos.x<leftEdge) leftEdge = invader.pos.x;
-		
+
+		if(invader.delay<=0) {
+			if(firstInvader) {
+				invaderRect.set(invader.getRect());
+				firstInvader = false; 
+			} else {
+				invaderRect.growToInclude(invader.getRect()); 
+			}
+		}
+		//if(i ==currentUpdateInvader) invader.update(true);
+		//else
+		invader.update();
 		
 		activeInvaders++;
 		
 	}
 	
-	if(rightEdge>APP_WIDTH-50) {
-		for(int i = 0; i<invaders.size(); i++) {
-			Invader& invader = *invaders[i];
-			if(invader.vel.x>0) {
-				
-				invader.vel.x = -10;
-				invader.pos.y += 20;
-			}
+	for(int i = 0; i<invaders.size(); i++) {
+		Invader& invader = *invaders[i];
+		
+		if(nextUpdateCountdown == i%invaderUpdateFrequency){
+			invader.pos+=allInvadersVel;
+			invader.nextFrame();
 		}
+		
 	}
 	
-	if(leftEdge<50) {
+	if(invaderRect.getBottom()<APP_HEIGHT*0.6) {
+		
+		float speed = 2;
+		//if(invaderRect.getBottom()<APP_HEIGHT*0.3) speed = 6;
+		
 		for(int i = 0; i<invaders.size(); i++) {
+			Invader& invader = *invaders[i];
 			
-			Invader& invader = *invaders[i];
-			if(invader.vel.x<0) {
-				invader.vel.x = 10;
-				invader.pos.y += 20;
-			}
+			invader.pos.y+=speed;
+			
 		}
 	}
 	
-	
-	if(activeInvaders == 0 ) {
-		currentUpdateInvader = 0; 
+	if(nextUpdateCountdown == 0) {
+		
+		//if(invaderRect.getBottom()<APP_HEIGHT*0.6) {
+		//	allInvadersVel.y = 18;
+		//} else {
+			allInvadersVel.y = 0;
+		//}
+		if((allInvadersVel.x>0) && (invaderRect.getRight()>triggerManager->triggerArea.getRight()+12)) {
+			allInvadersVel.set(-18,18);
+		}
+		
+		if((allInvadersVel.x<0) && (invaderRect.getLeft()<triggerManager->triggerArea.getLeft()-12)) {
+			allInvadersVel.set(18,18);
+			
+		}
+		
+		invaderUpdateFrequency = min((float)numCols, ceil((float)activeInvaders/5.0f));
+		nextUpdateCountdown = invaderUpdateFrequency;
 	} else {
-		
-		do {
-			currentUpdateInvader = (currentUpdateInvader+1) % invaders.size();
-			
-		} while(invaders[currentUpdateInvader]->enabled == false);
-		
+		nextUpdateCountdown--;
 	}
-
+	
+	if(invaderRect.getBottom() > triggerManager->triggerArea.getCenter().y) {
+		// INSERT EXPLOSIONS
+		changeState(STATE_WAITING);
+	}
 	
 }
 
@@ -487,7 +520,7 @@ void SceneGame :: checkInvaderCollisions() {
 		for(int j = 0; j<rockets.size(); j++) {
 			PhysicsObject& rocket = *rockets[j];
 			if(!rocket.isEnabled()) continue;
-			
+			if(invader.delay>0) continue;
 			if(invader.getRect().inside(rocket.pos)) {
 				invader.enabled = false;
 				//spareInvaders.push_back(&invader);
@@ -513,28 +546,39 @@ void SceneGame :: resetInvaders() {
 	float colours [4] = {128, 0, 220, 0};
 	int invadercount = 0;
 	
-		int numRows = 6;
-	int numCols = 30;
+	
+	ofRectangle rect(triggerManager->triggerArea.getLeft() + 18, -APP_HEIGHT*1.6,   triggerManager->triggerArea.width-36, APP_HEIGHT * 1.5);
+	
+	numRows = floor(rect.height/60.0f);
+	numCols = floor(triggerManager->triggerArea.width/50.0f);
+
+	
 	for(int y = 0; y<numRows; y++) {
 		for(int x = 0; x<numCols; x++) {
 		
 			Invader* invader = getNewInvader();
-			invader->pos.set(ofMap(x, 0, numCols, APP_WIDTH/6, APP_WIDTH/6*5), ofMap(y,0,numRows, APP_HEIGHT*0.3, APP_HEIGHT*0.6));
-			invader->vel.set(10,0);
+			invader->pos.set(ofMap(x, 0, numCols, rect.getLeft(),rect.getRight() ), ofMap(y,numRows,0, rect.getTop(), rect.getBottom()));
+			invader->currentPos = invader->pos + ofPoint(500,-1000);
+			//invader->vel.set(10,0);
 			invader->scale = 2;
 			invader->colour.setSaturation(255);
 
 			invader->hue = colours[(int)floor(ofMap(y, 0, numRows, 0, 3.99))];
 			invader->colour.setHue(invader->hue);
 
-			invader->delay = invadercount*5 + 100;
-			invader->update(false); 
+			invader->delay = 0;//x + y*20;
+			//invader->update();
 			invadercount++;
 		}
 	}
 
 	currentUpdateInvader = 0; 
 	activeInvaders = invadercount;
+	invaderUpdateFrequency = 20;
+	nextUpdateCountdown = 20;
+	
+	allInvadersVel.set(10,0);
+
 }
 
 void SceneGame::makeInvaderExplosion(Invader &invader){
@@ -557,7 +601,7 @@ void SceneGame::makeInvaderExplosion(Invader &invader){
 	pss.lifeMin = pss.lifeMax = 0.3;
 	pss.startSound = "RetroExplosion";
 	
-	ps.pos = invader.pos + invader.offset + ofPoint(invader.width*invader.scale/2, invader.width*invader.scale/2);
+	ps.pos = invader.getRect().getCenter();
 	ps.init(pss);
 	
 }
@@ -565,13 +609,13 @@ void SceneGame::makeInvaderExplosion(Invader &invader){
 void SceneGame::makeAsteroidExplosion(Asteroid &asteroid){
 	ParticleSystem &ps = *psm.getParticleSystem();
 	ParticleSystemSettings pss;
-	pss.emitLifeTime = 0.2;
+	pss.emitLifeTime = 0.1;
 	pss.emitCount = 500;
 	pss.renderer = new ParticleRendererShape();
-	pss.speedMin = pss.speedMax = 800; //  * asteroid.radius;
+	pss.speedMin = pss.speedMax = 600; //  * asteroid.radius;
 	pss.drag = 0.96;
-	pss.sizeStartMin = 10; 
-	pss.sizeStartMax = 20;
+	pss.sizeStartMin = 5;
+	pss.sizeStartMax = 12;
 	pss.sizeChangeRatio = 0;
 	//pss.emitShape = &explodeMesh;
 	pss.directionYVar = 0;
@@ -635,7 +679,7 @@ TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
 	TriggerSettingsRocket* ts = new TriggerSettingsInvaders();
 	
 	ts->rocketSettings = &rocketSettings;
-	ts->rechargeSettings = TriggerRechargeSettings::fast;
+	ts->rechargeSettings = TriggerRechargeSettings::mediumMultiples;
 	
 	return ts;
 	
@@ -685,7 +729,7 @@ TriggerSettingsRocket* SceneGame:: getAsteroidsBulletRocket() {
 	TriggerSettingsRocket* ts = new TriggerSettingsAsteroids();
 	
 	ts->rocketSettings = &rocketSettings;
-	ts->rechargeSettings = TriggerRechargeSettings::fast;
+	ts->rechargeSettings = TriggerRechargeSettings::mediumMultiples;
 	ts->rotationExtent = 20;
 	ts->rotationSpeed = 5;
 	
@@ -779,7 +823,7 @@ TriggerSettingsRocket* SceneGame::getRetroRocket(float hue, float hueChange) {
 	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = 0.7;
 	
 	
-	ts.rechargeSettings = TriggerRechargeSettings::medium;
+	ts.rechargeSettings = TriggerRechargeSettings::mediumMultiples;
 	
 	return &ts;
 	

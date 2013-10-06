@@ -22,6 +22,7 @@ public :
 	
 	bool update(float deltaTime);
 	void draw();
+	void drawGUI(); 
     void exit();
 	
 	bool nextPattern();
@@ -37,8 +38,11 @@ public :
 	void mouseDragged(ofMouseEventArgs &e);
 	void mouseReleased(ofMouseEventArgs &e);
 	void keyPressed(ofKeyEventArgs &e);
+	
+	void updateUIScreen(ofRectangle screen);
+	
+	ofRectangle screenUI;
 
-  
 	vector <Scene*> scenes;
 	
 	int currentSceneIndex;

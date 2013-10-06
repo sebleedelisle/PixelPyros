@@ -59,6 +59,7 @@ class SceneGame : public Scene {
 	const int STATE_GAMEOVER = 3;
 	
 	float lastStateChangeTime;
+	float timeSinceLastStateChange; 
 	
 	int level; 
 	
@@ -74,7 +75,12 @@ class SceneGame : public Scene {
 	int activeInvaders; 
 	ofImage invaderImage1;
 	
+	ofPoint allInvadersVel;
 	int currentUpdateInvader;
+	int invaderUpdateFrequency;
+	int nextUpdateCountdown;
+	int numCols;
+	int numRows; 
 	
 	/// ------------- ASTEROIDS
 	void makeAsteroidExplosion(Asteroid& asteroid);
