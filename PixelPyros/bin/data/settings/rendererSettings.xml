@@ -1,0 +1,12 @@
+<Renderer>
+	<Levels>
+		<bloom>0.3</bloom>
+		<gamma>1.2</gamma>
+		<black_point>0</black_point>
+		<white_point>1</white_point>
+	</Levels>
+	<Particle_Manager>
+		<KILL_ALL_PARTICLES>0</KILL_ALL_PARTICLES>
+	</Particle_Manager>
+<Renderer/>
+</Renderer>

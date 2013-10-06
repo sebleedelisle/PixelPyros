@@ -28,7 +28,8 @@ class TriggerSettingsInvaders : public TriggerSettingsRocket {
 		ofFill();
 		ofSetColor(0);
 		//ofCircle(0,0, radius);
-		ofRect(-radius*1.2, -radius, radius*2.4, radius*2);
+		//ofRect(-radius*1.2, -radius, radius*2.4, radius*2);
+		ofRect(-radius, -radius*0.4, radius*2, radius*1.2);
 		
 		ofNoFill();
 		ofSetLineWidth(2);
@@ -37,16 +38,17 @@ class TriggerSettingsInvaders : public TriggerSettingsRocket {
 		ofSetColor(colour);
 		if(!active) ofSetColor(ofColor::gray);
 		
-		ofRect(-radius*1.2, -radius*0.8, radius*2.4, radius*1.8);
-		ofLine(0,-radius, 0,-radius*1.4);
+		ofRect(-radius, -radius*0.4, radius*2, radius*1.2);
+		ofLine(0,-radius, 0,-radius*0.2);
 		
 		//ofTriangle(0, -radius*1.2, radius, radius*1.2, -radius, radius*1.2);
 		
-		ofTranslate(0,radius*1.2);
+		ofTranslate(0,radius*0.8);
 		ofScale(1,-unitPower);
 		ofFill();
 		//ofTriangle(0, -radius*2.4, radius, 0, -radius, 0);
-		ofRect(-radius*1.2, 0, radius*2.4, radius*1.8);
+		ofRect(-radius, 0, radius*2, radius*1.2);
+		//ofRect(-radius*1.2, 0, radius*2.4, radius*1.8);
 		
 		
 		//path.clear();

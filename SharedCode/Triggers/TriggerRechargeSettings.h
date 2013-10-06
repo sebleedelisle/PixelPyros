@@ -19,6 +19,7 @@ class TriggerRechargeSettings {
 	static TriggerRechargeSettings* fast;
 	static TriggerRechargeSettings* oneShot;
 	static TriggerRechargeSettings* fastMultiples;
+	static TriggerRechargeSettings* mediumMultiples;
 
 	TriggerRechargeSettings();
 	

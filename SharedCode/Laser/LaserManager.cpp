@@ -86,14 +86,11 @@ void LaserManager:: setup (int width, int height) {
 	intensity = 1;
 
 	parameters.setName("Laser Manager");
-	
-	//p1.setName("Etherdream");
+
 	parameters.add(connectButton.set("Etherdream connect", false));
 	parameters.add(etherdreamStatus.set("status", "test"));
 	parameters.add(showWarpPoints.set("show warp points", false)); 
-	
-	//p2.setName("laser");
-    
+
 	parameters.add(intensity.set("intensity", 1, 0, 1));
 	parameters.add(colourChangeDelay.set("colour change offset", -6, -15, 15));
 	
@@ -103,12 +100,7 @@ void LaserManager:: setup (int width, int height) {
 	parameters.add(showSyncTest.set("show sync test", false));
 	parameters.add(renderLaserPath.set("render laser path", true));
 	parameters.add(renderLaserPreview.set("render laser preview", true));
-	
-    calibrationParameters.setName("Laser Calibration");
-    
-	//p3.setName("laser graphics");
-	
-	
+
 	parameters.add(moveSpeed.set("move speed", 3,0.01,20));
 	parameters.add(movePointsPadding.set("move points padding", 1,0,20));
 	
@@ -124,12 +116,8 @@ void LaserManager:: setup (int width, int height) {
 	parameters.add(paddingEasedLine.set("eased line padding", 1,0, 20));
   	parameters.add(spiralSpacing.set("spiral spacing", 10,1, 200));
     
-    
-	
-    //	parameters.add(p1);
-    //	parameters.add(p2);
-    //	parameters.add(p3);
-    
+    // where is this getting set up? 
+	calibrationParameters.setName("Laser Calibration");
 	
 	colourChangeDelay = -6;
 	

@@ -66,28 +66,34 @@ void SceneManager::draw() {
 		scenes[i]->draw();
 	}
 	
+
+	
+}
+
+void SceneManager :: drawGUI() {
+	
 	if(!showInterface) return;
 	if(currentScene==NULL) return;
 	if(!currentScene->music.isLoaded()) return;
 	ofPushStyle();
 	ofFill();
 	ofSetColor(100,120,255);
-	ofRect(0,APP_HEIGHT-4,APP_WIDTH,4);
+	ofRect(screenUI.getLeft(),screenUI.getBottom()-4,screenUI.width,4);
 	
 	// TODO need this to go on the second screen really
-	float pos = ofMap(currentScene->positionSeconds,0,currentScene->lengthSeconds,0,APP_WIDTH);
+	float pos = ofMap(currentScene->positionSeconds,0,currentScene->lengthSeconds, screenUI.getLeft(),screenUI.getRight());
 	ofNoFill();
 	ofSetLineWidth(2);
 	
-	playHeadRect.setPosition(pos-10,APP_HEIGHT-20);
+	playHeadRect.setPosition(pos-10,screenUI.getBottom()-20);
 	//
 	
 	ofSetColor(128);
 	vector <SequenceCommand>& commands = currentScene->commands;
 	for(int i = 0; i<commands.size(); i++) {
 		if(!commands[i].enabled) continue;
-		float pos = ofMap(commands[i].time, 0, currentScene->lengthSeconds, 0, APP_WIDTH);
-		ofLine(pos, APP_HEIGHT-20,pos,APP_HEIGHT);
+		float pos = ofMap(commands[i].time, 0, currentScene->lengthSeconds, screenUI.getLeft(),screenUI.getRight());
+		ofLine(pos, screenUI.getBottom()-20,pos,screenUI.getBottom());
 		
 	}
 	
@@ -95,11 +101,18 @@ void SceneManager::draw() {
 	if((currentScene) && (currentScene->recording)) ofSetColor(ofColor::red);
 	
 	ofRect(playHeadRect);
-	ofLine(pos, APP_HEIGHT-20,pos,APP_HEIGHT-15);
-	ofLine(pos, APP_HEIGHT-5,pos,APP_HEIGHT);
+	ofLine(pos, screenUI.getBottom()-20,pos,screenUI.getBottom()-15);
+	ofLine(pos, screenUI.getBottom()-5,pos,screenUI.getBottom());
 	
-	ofDrawBitmapString(ofToString(currentScene->positionSeconds, 2), pos-12,APP_HEIGHT-28);
+	ofDrawBitmapString(ofToString(currentScene->positionSeconds, 2), pos-12,screenUI.getBottom()-28);
 	
+	/*
+	 ofSetLineWidth(20);
+	 ofFill();
+	 ofRect(screenUI);
+	 
+	 ofRect(ofGetMouseX(), ofGetMouseY(), 20,20);
+	 */
 	ofPopStyle();
 
 	
@@ -275,7 +288,7 @@ void SceneManager :: mouseDragged(ofMouseEventArgs &e) {
 		
 		//currentSequence->positionSeconds = ofMap(e.x, 0, APP_WIDTH, 0, currentSequence->lengthSeconds);
 		
-		currentScene->goToTime(ofMap(e.x-playHeadClickOffset.x, 0, APP_WIDTH, 0, currentScene->lengthSeconds));
+		currentScene->goToTime(ofMap(e.x-playHeadClickOffset.x, screenUI.getLeft(), screenUI.getRight(), 0, currentScene->lengthSeconds));
 	}
 	
 	/*
@@ -347,5 +360,10 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 	
 };
 
+void SceneManager :: updateUIScreen(ofRectangle screen){
+	screenUI = screen;
+	cout << "SCENE MANAGER UPDATE SCREEN " << screen << endl; 
+
+}
 
 
