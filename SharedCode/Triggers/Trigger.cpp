@@ -73,17 +73,16 @@ void Trigger :: start() {
 	active = true;
 	motionLevel = 0;
 	
-	
-	
 	//if(type == TRIGGER_TYPE_FIRE_ON_CHARGE) {
 	//	unitPower = 0;
 	//} else if(type == TRIGGER_TYPE_FIRE_ON_MOTION) {
+	
+	if(settings->startEmpty)
+		unitPower = 0;
+	else
 		unitPower = 1;
 	//}
 	
-	
-	
-
 }
 
 void Trigger :: stop() {
@@ -443,7 +442,7 @@ void Trigger::copySettings(TriggerSettings* newsettings) {
 
 	scale = 0;
 	angle = 0;
-	rotateDirection = 1; 
+	rotateDirection = 1;
 
 	
 };

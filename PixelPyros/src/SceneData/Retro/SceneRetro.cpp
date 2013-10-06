@@ -6,7 +6,7 @@
 SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 
 	pixelSize = 2;
-	loadMusicFile("1-05 TECHNOPOLIS.aif");
+	loadMusicFile("08 Daytona.aif");
 	
 	pixelMesh.setMode(OF_PRIMITIVE_LINES);
 	ofSetLineWidth(1);

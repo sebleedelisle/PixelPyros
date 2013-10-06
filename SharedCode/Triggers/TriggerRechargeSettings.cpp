@@ -39,5 +39,5 @@ void TriggerRechargeSettings :: initDefaults() {
 	motionDecay = 20;
 	motionSensitivity = 1;
 	restoreSpeed = 1;
-
+	
 }
