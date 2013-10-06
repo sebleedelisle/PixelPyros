@@ -288,16 +288,20 @@ void ofApp:: setupScenes() {
 	sceneManager.addScene(intro);
 	intro->loadMusicFile("InMotionEdit.aif");
 
+	sceneManager.addScene(new SceneVectorizer("Vectorizer"));
+	
+	sceneManager.addScene(new SceneRealistic("Realistic - UFO"));
+	
 	sceneManager.addScene(new SceneRetro("Retro"));
 	
-	sceneManager.addScene(new SceneRealistic("Lights"));
-	sceneManager.addScene(new SceneVectorizer("Vectorizer"));
+	sceneManager.addScene(new SceneGame("Game"));
+	
 	sceneManager.addScene(new SceneNadia("Nadia"));
 	
 	sceneManager.addScene(new SceneSpace("Space"));
-	sceneManager.addScene(new SceneGame("Game"));
+
 	
-	sceneManager.changeScene("Game");
+	sceneManager.changeScene("Intro");
 	
 	
 	

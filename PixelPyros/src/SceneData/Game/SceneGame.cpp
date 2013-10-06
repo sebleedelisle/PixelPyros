@@ -132,11 +132,11 @@ void SceneGame::changeState(int newstate) {
 			resetInvaders();
 			
 			changeTriggerPattern(2);
-			triggerManager->emptyTriggers();
+			//triggerManager->emptyTriggers();
 		} else {
 			cout << "CHANGING TRIGGER PATTERN" << endl;
 			changeTriggerPattern(1);
-			triggerManager->emptyTriggers();
+			//triggerManager->emptyTriggers();
 		}
 		
 		
@@ -680,6 +680,8 @@ TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
 	
 	ts->rocketSettings = &rocketSettings;
 	ts->rechargeSettings = TriggerRechargeSettings::mediumMultiples;
+	ts->startEmpty = true;
+	
 	
 	return ts;
 	
@@ -732,6 +734,8 @@ TriggerSettingsRocket* SceneGame:: getAsteroidsBulletRocket() {
 	ts->rechargeSettings = TriggerRechargeSettings::mediumMultiples;
 	ts->rotationExtent = 20;
 	ts->rotationSpeed = 5;
+	ts->startEmpty = true;
+
 	
 	return ts;
 	

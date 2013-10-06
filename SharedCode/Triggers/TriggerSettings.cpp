@@ -33,6 +33,7 @@ TriggerSettings::TriggerSettings() {
 	rotationSpeed = 0;
 	
 	rotateOnFire = false;
+	startEmpty = false; 
 	
 }
 
