@@ -1,5 +1,7 @@
 #version 120
 
+#define M_SQRT2     1.41421356237309504880168872420969808
+
 varying vec2 texCoord;
 uniform sampler2DRect baseTexture;
 uniform float blackPoint;
@@ -29,15 +31,21 @@ vec4 bloomFilter() {
     vec4 sum = vec4(0.0);
     vec4 dry = adjustLevels( texture2DRect(baseTexture, texCoord.xy) );
     vec4 raw;
+    vec2 offset;
+    float d = 0.0;
+    float dSum = 0.0; 
 
     for( int i = -3; i <= 3; i++ ) {
         for( int j = -3; j <= 3; j++ ) {
-            raw = texture2DRect(baseTexture, texCoord + vec2(j, i) ) * 0.25;
-            sum += adjustLevels( raw );
+            offset = vec2(j, i);
+            raw = texture2DRect(baseTexture, texCoord.xy + offset );
+            d = mix( 1.0, 0.0, length( offset ) / 4 );
+            dSum += d;
+            sum += adjustLevels( raw ) * 0.25 * d ;
         }
     }
     
-    sum = sum / 49.0;
+    sum = dSum * sum / 49.0 ;
     
     return bloom * (1.0 - ((1.0 - sum) * (1.0 - dry))) + ((1.0 - bloom) * dry);
 }
