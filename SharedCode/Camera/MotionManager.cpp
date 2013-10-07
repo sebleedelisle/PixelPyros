@@ -18,6 +18,7 @@ void MotionManager::init(int w, int h, ofImageType type) {
     motionSensitivityParam = 1;
     thresholdLevelParam = 20;
     
+	// TODO - this is a bug - init gets called multiple times
     parameters.setName("Motion Detection");
     parameters.add( thresholdLevelParam.set("threshold", 1, 0, 255) );
     parameters.add( motionSensitivityParam.set("motion sensitivity", 1, 1, 5) );
@@ -47,21 +48,22 @@ bool MotionManager :: update(ofPixelsRef image){
 		
 	}
 	
-	
-	
-	// like ofSetPixels, but more concise and cross-toolkit
+	// copy the current image into the previous image
 	copy(current, previous);
 	
+	// copy the new image into the current image
+	copy(image, current);
 	
-	//convertColor(image, current, CV_RGB2GRAY); 
-	copy(image, current); 
-	
+	// difference blend between the two images to highlight the
+	// changes between frames
 	absdiff(previous, current, diff);
+	
+	// and run a threshold filter on it if required
 	if(thresholdLevelParam>0)
 		threshold(diff, thresholdLevelParam);
-	diff.update();
 	
-	motionPositions.clear(); 
+	
+	diff.update();
 	
 };
 
@@ -74,18 +76,18 @@ void MotionManager :: draw() {
 float MotionManager :: getMotionAtPosition(ofVec2f pos, int width, Mat& homography){
 	
 
-	vector<cv::Point2f> pre, post;
+	vector<cv::Point2f> from, to;
 
-	pre.push_back(cv::Point2f(pos.x - (width/2), pos.y - (width/2)));
-	pre.push_back(cv::Point2f(pos.x + (width/2), pos.y + (width/2)));
+	from.push_back(cv::Point2f(pos.x - (width/2), pos.y - (width/2)));
+	from.push_back(cv::Point2f(pos.x + (width/2), pos.y + (width/2)));
 
-	post.push_back(cv::Point2f());
-	post.push_back(cv::Point2f());
+	to.push_back(cv::Point2f());
+	to.push_back(cv::Point2f());
 	
-	perspectiveTransform(pre, post, homography);
+	perspectiveTransform(from, to, homography);
 	
-	ofVec2f topleft = toOf(post[0]);
-	ofVec2f bottomright = toOf(post[1]);
+	ofVec2f topleft = toOf(to[0]);
+	ofVec2f bottomright = toOf(to[1]);
 	
 	return getMotionAtPosition(topleft, bottomright); 
 	
@@ -112,8 +114,8 @@ float MotionManager :: getMotionAtPosition(ofVec2f topleft, ofVec2f bottomright)
 	ofVec2f dimensions = bottomright-topleft; 
 	if((dimensions.x<=0) || (dimensions.y<=0)) return 0; 
 	
-	motionPositions.push_back(topleft);
-	motionPositions.push_back(dimensions);
+	//motionPositions.push_back(topleft);
+	//motionPositions.push_back(dimensions);
 
     Mat diffMat = toCv(diff);
 	Mat diffRoi(diffMat, cv::Rect(topleft.x, topleft.y, dimensions.x , dimensions.y ));

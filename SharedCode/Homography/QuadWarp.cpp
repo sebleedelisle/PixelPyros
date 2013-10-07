@@ -321,15 +321,12 @@ void QuadWarp :: mouseReleased(ofMouseEventArgs &e) {
 	}
 	
 	lastMousePress  = ofGetElapsedTimef() ; 
-		
 	
-	//saveSettings();
 };
 
 
 bool QuadWarp::loadSettings() {
-	if( !autosave ) return;
-    
+	  
 	string filename = "warpdata/"+label+".xml";
 	ofxXmlSettings xml;
 	if(!xml.loadFile(filename)) {
@@ -361,8 +358,7 @@ bool QuadWarp::loadSettings() {
 }
 
 void QuadWarp::saveSettings() {
-	if( !autosave ) return;
-        
+	     
 	ofxXmlSettings xml;
 	
 	string filename = "warpdata/"+label+".xml";

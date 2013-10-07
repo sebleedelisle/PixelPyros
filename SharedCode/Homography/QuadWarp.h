@@ -47,7 +47,7 @@ class QuadWarp {
 
 	
 	bool visible;
-    bool autosave = true;
+   // bool autosave = true;
 	float lastMousePress; 
 	
 	vector <ofVec3f> srcPoints;

@@ -47,13 +47,13 @@ bool Warper :: init (float srcwidth, float srcheight, float dstwidth, float dsth
 		for(int i = 0; i<4;i++) {
 			
 			if(srcVecs.size()==i) srcVecs.push_back(ofVec2f()); 
-			srcVecs[i].set( (i%2)*dstWidth, floor(i/2)*dstHeight);
+			srcVecs[i].set( ((i%2)*0.8 + 0.1) * dstWidth, (floor(i/2)*0.2 + 0.7) * dstHeight);
 		}
 		for(int i = 0; i<4;i++) { 
 			
 			if(dstVecs.size()==i) dstVecs.push_back(ofVec2f()); 
-			dstVecs[i].set( (i%2)* dstWidth, floor(i/2)* dstHeight);
-		}		
+			dstVecs[i].set( ((i%2)*0.8 + 0.1) * dstWidth, (floor(i/2)*0.2 + 0.7) * dstHeight);
+		}
 	}
 	
 	if(warpedImage.isAllocated()) warpedImage.clear();

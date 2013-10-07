@@ -2,7 +2,7 @@
 	<Camera_Manager>
 		<gain>500</gain>
 		<gamma>15</gamma>
-		<shutter_speed>30</shutter_speed>
+		<shutter_speed>43</shutter_speed>
 		<brightness>0</brightness>
 	</Camera_Manager>
 <Camera/>

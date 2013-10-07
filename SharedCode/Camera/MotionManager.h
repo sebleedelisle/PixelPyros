@@ -39,10 +39,12 @@ class MotionManager {
 	ofImage previous; 
 	ofImage diff; 
 	
-	vector <ofVec2f> motionPositions;
+	//vector <ofVec2f> motionPositions;
     ofParameter<float> thresholdLevelParam;
     ofParameter<float> motionSensitivityParam;
     
     ofParameterGroup parameters;
 
+	string cameraLabel; 
+	
 };
