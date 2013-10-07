@@ -58,6 +58,9 @@ class CameraManager : public ofBaseDraws{
 	//guiTypeDrawable* cameraPreview;
 	
 	CameraVidPlayer * addVidPlayer(string filename, int width = 1024, int height = 768);
+	string getCameraLabel();
+
+	
 	CameraWrapper* camera; 
 	vector <CameraWrapper*> cameras; 	
 	

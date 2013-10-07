@@ -51,7 +51,7 @@ void ControlPanels::setup(ParameterManager * parameterManager, vector<ofRectangl
     
     setupPanel( "Motion", "motionDetectionSettings.xml", ofRectangle( 0,0, 400, heightSmall ), motionGui );
     motionGui.add( *parameterManager->getParameterGroup("motion") );
-    motionGui.load();
+    //motionGui.load();
 	
 	setupPanel( "Camera", "cameraSettings.xml", ofRectangle( 0,0, 400, heightSmall ), cameraGui );
     cameraGui.add( *parameterManager->getParameterGroup("camera") );
@@ -146,7 +146,7 @@ void ControlPanels::exit(){
     laserGui.save();
     rendererGui.save();
     triggerGui.save();
-    motionGui.save();
+    //motionGui.save();
 	cameraGui.save();
 	
 

@@ -161,6 +161,11 @@ ofPixelsRef CameraManager::getPixelsRef() {
 
 }
 
+string CameraManager:: getCameraLabel() {
+	return camera->name;
+	
+}
+
 float CameraManager::getWidth() { 
 	return camera->getWidth(); 
 }

@@ -51,13 +51,13 @@ void ofApp::setup(){
 	cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
 
 	motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
-	
+
 	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); 
 	controlPanels.main = fbo;
 	fbo.begin();
 	ofClear(0,0,0);
 	fbo.end(); 
-	
+
     paused = false;
     altPressed = false;
 	shiftPressed = false;
@@ -105,7 +105,7 @@ void ofApp::update(){
 		
 		ofImage image(cameraManager.getPixelsRef()); 
 
-		motionManager.update(cameraManager.getPixelsRef());
+		motionManager.update(cameraManager.getPixelsRef(), cameraManager.getCameraLabel());
 		
 		triggerManager.updateMotion(motionManager, cameraManager.warper.inverseHomography );
 		

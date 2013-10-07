@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "ofxCv.h"
+#include "ofxXmlSettings.h"
 using namespace cv; 
 using namespace ofxCv; 
 
@@ -20,13 +21,15 @@ class MotionManager {
 	MotionManager(int w=640, int h=480);	
 	void init(int w, int h, ofImageType type = OF_IMAGE_GRAYSCALE);
 	
-	bool update(ofPixelsRef image);
+	bool update(ofPixelsRef image, string label);
 	void draw(); 
 	
 	float getMotionAtPosition(ofVec2f pos, int width);
 	float getMotionAtPosition(ofVec2f pos, int width, Mat& homography);
 	float getMotionAtPosition(ofVec2f topleft, ofVec2f botright);
 
+	void saveSettings();
+	void loadSettings(string label); 
 	
 	//void initControlPanel(ofxAutoControlPanel& gui);
 	//void guiEventsIn(guiCallbackData & data);
@@ -45,6 +48,6 @@ class MotionManager {
     
     ofParameterGroup parameters;
 
-	string cameraLabel; 
+	string currentLabel;
 	
 };
