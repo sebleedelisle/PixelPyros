@@ -27,26 +27,24 @@ vec4 adjustLevels(vec4 texel) {
 
 vec4 bloomFilter() {
     vec4 sum = vec4(0.0);
-    vec4 dry = texture2DRect(baseTexture, texCoord);
-    
+    vec4 dry = adjustLevels( texture2DRect(baseTexture, texCoord.xy) );
+    vec4 raw;
+
     for( int i = -3; i <= 3; i++ ) {
         for( int j = -3; j <= 3; j++ ) {
-            sum += texture2DRect(baseTexture, texCoord + vec2(j, i)); // * 2.0) * 0.25;
+            raw = texture2DRect(baseTexture, texCoord + vec2(j, i) ) * 0.25;
+            sum += adjustLevels( raw );
         }
     }
     
-    // sum = sum * sum * 0.012;
     sum = sum / 49.0;
-    dry = texture2DRect(baseTexture, texCoord);
     
     return bloom * (1.0 - ((1.0 - sum) * (1.0 - dry))) + ((1.0 - bloom) * dry);
 }
 
 void main() {
-    vec4 col = texture2DRect(baseTexture, texCoord.xy);
     
-    col = bloomFilter();
-    vec4 gammaAdjusted = adjustLevels(col);
+    vec4 col = bloomFilter();
     
-    gl_FragColor = gammaAdjusted;
+    gl_FragColor = col;
 }
