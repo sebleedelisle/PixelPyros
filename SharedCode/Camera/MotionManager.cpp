@@ -32,14 +32,27 @@ void MotionManager::init(int w, int h, ofImageType type) {
 	diff.allocate(w,h, type); 
 	
 	width = w; 
-	height = h; 
+	height = h;
+	
+	currentLabel = "";
 	
 	cout << "reinitialising images " << w << " " << h << endl; 
 	
 };
 
 
-bool MotionManager :: update(ofPixelsRef image){
+bool MotionManager :: update(ofPixelsRef image, string label){
+	
+	if(label!=currentLabel) {
+		
+		// save old label
+		if(label!="") saveSettings();
+		
+		//load new label
+		loadSettings(label); 
+		currentLabel = label;
+		
+	}
 	
 	if((image.getWidth()!=current.getWidth()) || (image.getHeight()!=current.getHeight()) || (image.getImageType()!=current.getPixelsRef().getImageType())) {
 		
@@ -128,7 +141,49 @@ float MotionManager :: getMotionAtPosition(ofVec2f topleft, ofVec2f bottomright)
 	
 };
 
+void MotionManager::saveSettings() {
+	if(currentLabel=="") return;
+	ofDirectory dir("settings");
+	if(!dir.exists()) dir.create();
+	
+	ofxXmlSettings settings;
+	
+	//positions.addTag("srcvec");
+	//positions.pushTag("srcvec", i);
+	
+	settings.addValue("thresholdLevel", thresholdLevelParam);
+	settings.addValue("motionSensitivity", motionSensitivityParam);
+	
+	//positions.addTag("srcvec");
+	//positions.pushTag("srcvec", i);
+		
+	settings.saveFile("settings/motion"+currentLabel+".xml");
+	cout << "saving settings " << "settings/motion"+currentLabel+".xml" << endl;
+	
 
+	
+}
+
+void MotionManager::loadSettings(string label) {
+	
+	currentLabel = label;
+	string settingsFileLabel = currentLabel;
+	
+	ofxXmlSettings settings;
+	cout << "Loading settings/motion"+settingsFileLabel+".xml" << endl;
+	if(!settings.loadFile("settings/motion"+settingsFileLabel+".xml")) return false;
+	cout<< "LOADED! "<<endl;
+	//if(settings.getNumTags("thresholdLevel")!=1) return false;
+	//if(settings.getNumTags("motionSensitivity")!=1) return false;
+	//if(verbose) cout << "Success!";
+	
+	
+	thresholdLevelParam = (float)settings.getValue("thresholdLevel", 1.0f);
+	motionSensitivityParam = (float)settings.getValue("motionSensitivity", 1.0f);
+	
+	
+	currentLabel = label; 
+}
 
 
 //void MotionManager:: initControlPanel(ofxAutoControlPanel &gui){
