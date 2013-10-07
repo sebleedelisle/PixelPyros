@@ -68,7 +68,6 @@ public:
 	void updateScreenSizes(); 
 	void windowResized(int w, int h);
 
-	
   	ParticleSystemManager& particleSystemManager;
 	LaserManager& laserManager;
 	SceneManager sceneManager;

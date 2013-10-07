@@ -42,8 +42,6 @@ void ofApp::setup(){
     drawCameraIntoFBO = true;
     renderer.load("shaders/default");
     
-	//ofSetFrameRate(60);
-	
 	lastUpdateTime = ofGetElapsedTimef();
   
     ofBackground(0);
@@ -185,6 +183,8 @@ void ofApp::draw(){
 	fboWarper1.draw();
 	fboWarper2.draw();
 	
+	//laserManager.drawGUI(uiScreen);
+
 	
     controlPanels.draw();
 	sceneManager.drawGUI();
@@ -359,7 +359,8 @@ void ofApp::calculateScreenSizes(){
 	cout << "RESIZE" << " " << ofGetWindowMode()<< endl;
     screens.clear();
     
-    int leftMost = 0;
+    int leftMost = 0,
+		topMost = 0;
     
     for(int i = 0; i < monitorCount; i++){
 		
@@ -380,13 +381,22 @@ void ofApp::calculateScreenSizes(){
         screens.push_back(screen);
         cout << i << " " << screen << endl;
 		if( leftMost > screen.x ) leftMost = screen.x;
+		if( topMost > screen.y ) topMost = screen.y;
+
     }
     
     for(int i = 0; i < monitorCount; i++){
 		screens[i].x -= leftMost;
+		screens[i].y -= topMost;
+
     }
     
-   // std::sort( screens.begin(), screens.end(), screenSort );
+	std::sort( screens.begin(), screens.end(), screenSort );
+	
+    for(int i = 0; i < monitorCount; i++){
+		cout << i << " " << screens[i] << endl;
+    }
+    
 
 }
 

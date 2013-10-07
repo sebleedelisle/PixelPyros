@@ -66,8 +66,6 @@ void SceneManager::draw() {
 		scenes[i]->draw();
 	}
 	
-
-	
 }
 
 void SceneManager :: drawGUI() {
