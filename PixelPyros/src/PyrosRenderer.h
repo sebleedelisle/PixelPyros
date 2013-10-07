@@ -217,6 +217,7 @@ public:
 		ofPopStyle();
 		
 	}
+    
 	virtual void disableShader() {
         setUniform1f("bloom", 0 );
         setUniform1f("gamma", 1 );
