@@ -31,6 +31,8 @@ class RocketSettings {
 		timeSpeed = 1;
 		mode = ROCKET_MODE_PHYSICS;
 		
+		
+		
 	};
 
 	ParticleSystemSettings * addParticleSystemSetting(const ParticleSystemSettings& pss) {
@@ -105,6 +107,7 @@ class RocketSettings {
 	
 	vector <ParticleSystemSettings> particleSystemSettings;
 
+	
 	protected :
 	float lifeTime;
 	

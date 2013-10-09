@@ -20,7 +20,7 @@ LaserManager * LaserManager::instance() {
 
 
 LaserManager:: LaserManager() {
-
+	pointPreviewImage.loadImage("img/LaserPointPreview.png");
 }
 
 
@@ -111,6 +111,7 @@ void LaserManager:: setup (int width, int height) {
 	
 	parameters.add(accelerationLine.set("line acceleration", 0.5, 0.001, 20));
 	parameters.add(speedLine.set("line speed", 20,0.1, 100));
+	parameters.add(overlapCircle.set("circle overlap", 20,0, 100));
 	
 	parameters.add(speedEasedLine.set("eased line speed", 8, 0, 20));
 	parameters.add(paddingEasedLine.set("eased line padding", 1,0, 20));
@@ -246,14 +247,8 @@ void LaserManager::draw() {
 	
 	if(renderLaserPreview) {
 		
+		renderPreview(); 
 		
-		ofNoFill();
-		ofSetLineWidth(3);
-		//ofSetColor(50,0,0);
-		ofSetColor(255,255,255);
-		previewMesh.setMode(OF_PRIMITIVE_LINE_LOOP);
-	
-		previewMesh.draw();
 	}
 	
 	
@@ -299,7 +294,7 @@ void LaserManager::addLaserDot(const ofPoint& ofpoint, ofFloatColor colour, floa
 
 void LaserManager::addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, float radius, float intensity){
 	
-	shapes.push_back(new LaserCircle(ofpoint, colour, radius, intensity));
+	shapes.push_back(new LaserCircle(ofpoint, colour, radius, intensity, overlapCircle));
 }
 
 void LaserManager::addLaserSpiral(const ofPoint& position, ofFloatColor col, float rad1,float rad2, float fadeoutpoint,  float intens){
@@ -460,18 +455,28 @@ void LaserManager:: drawLaserDot(LaserDot &dot) {
 
 void LaserManager:: drawLaserCircle(LaserCircle &circle){
 	
-	
-	vector<float> unitDistances = getPointsAlongDistance(2*PI*circle.radius, accelerationLine, speedLine);
+	float distanceTravelled = 2*PI*circle.radius + circle.overlapDistance;
+	vector<float> unitDistances = getPointsAlongDistance(distanceTravelled, accelerationLine, speedLine);
 	
 	ofPoint p;
+	ofColor segmentColour;
 	
 	for(int i = 0; i<unitDistances.size(); i++) {
 		
 		float unitDistance = unitDistances[i];
-		float angle = PI*2*unitDistance; 
+		float angle = ofMap(unitDistance,0,1,-circle.overlapAngle/2,360+(circle.overlapAngle/2)) ;
+		
+		segmentColour = circle.colour;
+		
+		if(angle<circle.overlapAngle/2) {
+			segmentColour*= ofMap(angle, -circle.overlapAngle/2,circle.overlapAngle/2, 0, 1);
+		} if(angle> 360 - circle.overlapAngle/2) {
+			segmentColour *= ofMap(angle, 360 -circle.overlapAngle/2,360 + circle.overlapAngle/2, 1, 0);
+		}			
+		
 		p.set(circle.pos);
-		p.x+=sin(angle)*circle.radius;
-		p.y-=cos(angle)*circle.radius;
+		p.x+=sin(ofDegToRad(angle))*circle.radius;
+		p.y-=cos(ofDegToRad(angle))*circle.radius;
 		
 		addIldaPoint(p, circle.colour, circle.intensity);
 	}
@@ -735,6 +740,199 @@ bool LaserManager:: toggleRegistration() {
 	showRegistration = !showRegistration;
 	
 }
+
+void LaserManager :: renderPreview() {
+	
+	// do dots first
+	ofPushStyle(); 
+
+	ofMesh mesh;
+	
+	vector <ofVec3f> vertices;
+	vector <ofVec2f> texCoords;
+	ofImage* image = &pointPreviewImage; 
+	
+	vertices.push_back(ofVec3f(    -0.5, -0.5 ));
+	vertices.push_back(ofVec3f(  -0.5,  0.5 ));
+	vertices.push_back(ofVec3f(  0.5,  -0.5 ));
+	vertices.push_back(ofVec3f( 0.5,  0.5 ));
+	
+	texCoords.clear();
+	texCoords.push_back(ofVec2f(0,0));
+	texCoords.push_back(ofVec2f(0, image->height));
+	texCoords.push_back(ofVec2f(image->width, 0));
+	texCoords.push_back(ofVec2f(image->width, image->height));
+	
+	
+	mesh.setMode(OF_PRIMITIVE_TRIANGLES);
+
+	
+	for(int i = 0; i<shapes.size(); i++) {
+		
+		LaserShape* shape = shapes[i];
+
+			
+		// Is it a dot?
+		LaserDot * dot = dynamic_cast<LaserDot*>(shape);
+		if(dot) {
+			
+			int vertexIndex = mesh.getNumVertices();
+			
+			for(int i = 0; i<vertices.size(); i++) {
+				ofVec3f v = vertices[i];
+				
+				v*=dot->intensity*10;
+				v+=dot->startPos;
+				mesh.addVertex(v);
+				mesh.addColor(dot->colour);
+				mesh.addTexCoord(texCoords[i]);
+				
+			}
+			
+			mesh.addTriangle(vertexIndex, vertexIndex+1, vertexIndex+2);
+			mesh.addTriangle(vertexIndex+1, vertexIndex+2, vertexIndex+3);
+			
+			
+			// if you want a brighter spot in the middle...
+			
+			/*
+			vertexIndex = mesh.getNumVertices();
+			
+			ofColor brighterColour = dot->colour;
+			brighterColour.r+=50;
+			brighterColour.g+=50;
+			brighterColour.b+=50;
+			
+			
+			for(int i = 0; i<vertices.size(); i++) {
+				ofVec3f v = vertices[i];
+				
+				v*=dot->intensity*5;
+				v+=dot->startPos;
+				mesh.addVertex(v);
+				mesh.addColor(brighterColour);
+				mesh.addTexCoord(texCoords[i]);
+				
+			}
+			
+			mesh.addTriangle(vertexIndex, vertexIndex+1, vertexIndex+2);
+			mesh.addTriangle(vertexIndex+1, vertexIndex+2, vertexIndex+3);
+			*/
+			
+		}
+				
+		
+	}
+	image->bind();
+	mesh.draw();
+	image->unbind();
+	
+	
+	mesh.clear();
+	mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
+	
+	
+	for(int i = 0; i<shapes.size(); i++) {
+		
+		LaserShape* shape = shapes[i];
+		
+		
+		// Is it a dot?
+		LaserCircle * circle = dynamic_cast<LaserCircle*>(shape);
+		if(circle) {
+			
+			ofVec3f v(circle->radius,0);
+			mesh.addColor(ofColor::black);
+			mesh.addVertex(circle->startPos);
+			
+			for(int i = 0; i<=360; i+=20) {
+				
+				v.set(0, -circle->radius);
+				v.rotate(i, ofVec3f(0,0,1)); 
+				mesh.addColor(circle->colour);
+				mesh.addVertex(v+circle->pos);
+				
+			}
+		
+			mesh.addColor(ofColor::black);
+			mesh.addVertex(circle->endPos);
+			
+			
+			
+		}
+		
+		
+		// Is it a line?
+		LaserLine * line = dynamic_cast<LaserLine*>(shape);
+		if(line) {
+			mesh.addColor(ofColor::black);
+			mesh.addVertex(line->startPos);
+			
+			mesh.addColor(line->colour);
+			mesh.addVertex(line->startPos);
+			mesh.addColor(line->colour);
+			mesh.addVertex(line->endPos);
+			
+			mesh.addColor(ofColor::black);
+			mesh.addVertex(line->endPos);
+		}
+		
+	}
+	
+	ofSetLineWidth(1);
+	mesh.draw();
+	
+	vector<ofFloatColor>& colours = mesh.getColors();
+	
+	for(int i = 0; i<colours.size(); i++) {
+		colours[i].r*=0.2;
+		colours[i].g*=0.2;
+		colours[i].b*=0.2;
+		
+		
+	}
+	ofSetLineWidth(5);
+	mesh.draw();
+	
+	ofSetLineWidth(9);
+	mesh.draw();
+
+	
+	/*
+	
+	
+	 
+	 // Is it a circle?
+	 LaserCircle * circle = dynamic_cast<LaserCircle*>(shape);
+	 if(circle) {
+	 
+	 
+	 path.clear();
+	 path.setFilled(true);
+	 path.setColor(circle->colour);
+	 //path.setStrokeWidth(2);
+	 path.circle(circle->pos, circle->radius);
+	 path.draw();
+	 
+	 }
+	 
+
+	// Is it a line?
+	LaserLine * line = dynamic_cast<LaserLine*>(shape);
+	if(line) {
+		drawLaserLine(*line);
+	}
+	// Is it a spiral?
+	LaserSpiral * spiral = dynamic_cast<LaserSpiral*>(shape);
+	if(spiral) {
+		drawLaserSpiral(*spiral);
+	}
+	*/
+	
+	ofPopStyle();
+	
+}
+
 
 /*
  void LaserManager:: moveLaserToPointAndVel(const ofPoint& targetPos, const ofPoint& targetVel) {

@@ -20,6 +20,13 @@ SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 	TriggerPattern blank;
 	addTriggerPattern(blank);
 	
+	TriggerPattern wigglyPattern;
+	wigglyPattern.addTriggerSettings(fireworkFactory.getWigglyRocket());
+	wigglyPattern.addTriggerSettings(TriggerSettings::blank);
+	addTriggerPattern(wigglyPattern);
+
+	
+	
 	// SIMPLE ROCKET
 	
 	TriggerPattern pattern1;

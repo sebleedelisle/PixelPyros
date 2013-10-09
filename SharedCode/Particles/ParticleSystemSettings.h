@@ -74,7 +74,7 @@ class ParticleSystemSettings{
 		rotateMin = rotateMax = 0;
 		rotateAxis.set(0,1,0);
 		
-		velocityModifierSettings = 0;
+		velocityModifierSettings = NULL;
 		
 		renderer = NULL;
 		emitShape = NULL; 

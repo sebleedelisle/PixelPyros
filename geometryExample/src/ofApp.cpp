@@ -18,6 +18,15 @@ void ofApp::draw(){
 	ofBackground(0);
 	ofSetColor(255);
 	
+	ofPath path;
+	
+	path.circle(100,100,20);
+	path.circle(200,100,20);
+	path.circle(100,200,20);
+	path.draw();
+	
+	
+	
 	ofPushMatrix();
 	ofTranslate(ofGetWidth()/4,ofGetHeight()/2);
 	ofScale(100,100,100);

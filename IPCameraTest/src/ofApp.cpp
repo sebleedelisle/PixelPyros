@@ -158,7 +158,7 @@ void ofApp::connectCamera() {
 	// c->setCookie("password", cam.password);
 	
 	grabber->setUsername("root");
-	grabber->setPassword("sebseb");
+	grabber->setPassword("password");
 	
 	grabber->setCameraName("cam name");
 	grabber->setURI("http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480");

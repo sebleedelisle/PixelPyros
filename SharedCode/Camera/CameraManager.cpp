@@ -119,6 +119,25 @@ CameraVidPlayer * CameraManager:: addVidPlayer(string filename, int width, int h
 	
 }
 
+CameraIP * CameraManager:: addIPPlayer(string name, string url, string user, string password, int width, int height){
+	
+	CameraIP * ipPlayer = new CameraIP(); 
+
+	// should probably add a unique id that relates to the file name
+	
+	if(ipPlayer->setup(name, width, height, 30, url, user, password)) {
+		cameras.push_back(ipPlayer);
+		// last initialised becomes the cameraVidPlayer property
+		//cameraVidPlayer = ipPlayer;
+	} else {
+		delete ipPlayer;
+		
+	}
+	
+	
+}
+
+
 
 
 

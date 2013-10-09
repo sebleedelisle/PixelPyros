@@ -83,12 +83,15 @@
 		126E278617F20D26001763E7 /* SceneRealistic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 126E278417F20D26001763E7 /* SceneRealistic.cpp */; };
 		126E278B17F221ED001763E7 /* SceneSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 126E278817F221ED001763E7 /* SceneSpace.cpp */; };
 		1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */; };
+		128D31FF1804ACD100C2CCB6 /* PhysicsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 128D31FE1804ACD100C2CCB6 /* PhysicsObject.cpp */; };
 		129988BA17E1E9CC0044879E /* SceneNadia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129988B817E1E9CC0044879E /* SceneNadia.cpp */; };
 		129F2E6F17F778BC00206DFB /* RectangleUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129F2E6D17F778BC00206DFB /* RectangleUI.cpp */; };
 		129F2E8417F978C400206DFB /* ParameterManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129F2E7C17F978C400206DFB /* ParameterManager.cpp */; };
 		12A6DE3417DE1F83000D299A /* ParticleSystemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */; };
 		12A6DE3617DE640C000D299A /* SoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3517DE640C000D299A /* SoundPlayer.cpp */; };
 		12A6DE3A17DE6D57000D299A /* SceneRetro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DE3817DE6D57000D299A /* SceneRetro.cpp */; };
+		12ACF5CD18041CF600E77A4B /* IPVideoGrabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12ACF5B918041CF600E77A4B /* IPVideoGrabber.cpp */; };
+		12ACF5D318041D5E00E77A4B /* CameraIP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12ACF5D118041D5E00E77A4B /* CameraIP.cpp */; };
 		12AF89F017C4F38A001995FC /* TriggerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12AF89EE17C4F38A001995FC /* TriggerManager.cpp */; };
 		12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */; };
 		12BD9CCF17DF585E00F28A4F /* SceneVectorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BD9CCB17DF585E00F28A4F /* SceneVectorizer.cpp */; };
@@ -462,6 +465,8 @@
 		126E278C17F2224F001763E7 /* LetterWritingPatternMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LetterWritingPatternMaker.h; sourceTree = "<group>"; };
 		1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerRechargeSettings.cpp; sourceTree = "<group>"; };
 		1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRechargeSettings.h; sourceTree = "<group>"; };
+		128D31FE1804ACD100C2CCB6 /* PhysicsObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsObject.cpp; sourceTree = "<group>"; };
+		128D32021804BBE600C2CCB6 /* ParticleRendererLaserTeardrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererLaserTeardrop.h; sourceTree = "<group>"; };
 		129988B417E1E6610044879E /* ParticleRendererLaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererLaser.h; sourceTree = "<group>"; };
 		129988B817E1E9CC0044879E /* SceneNadia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneNadia.cpp; sourceTree = "<group>"; };
 		129988B917E1E9CC0044879E /* SceneNadia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneNadia.h; sourceTree = "<group>"; };
@@ -474,6 +479,10 @@
 		12A6DE3517DE640C000D299A /* SoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundPlayer.cpp; sourceTree = "<group>"; };
 		12A6DE3817DE6D57000D299A /* SceneRetro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneRetro.cpp; sourceTree = "<group>"; };
 		12A6DE3917DE6D57000D299A /* SceneRetro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneRetro.h; sourceTree = "<group>"; };
+		12ACF5B918041CF600E77A4B /* IPVideoGrabber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IPVideoGrabber.cpp; sourceTree = "<group>"; };
+		12ACF5BA18041CF600E77A4B /* IPVideoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPVideoGrabber.h; sourceTree = "<group>"; };
+		12ACF5D118041D5E00E77A4B /* CameraIP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraIP.cpp; sourceTree = "<group>"; };
+		12ACF5D218041D5E00E77A4B /* CameraIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraIP.h; sourceTree = "<group>"; };
 		12AF89EE17C4F38A001995FC /* TriggerManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerManager.cpp; sourceTree = "<group>"; };
 		12AF89EF17C4F38A001995FC /* TriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerManager.h; sourceTree = "<group>"; };
 		12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettings.cpp; sourceTree = "<group>"; };
@@ -657,6 +666,8 @@
 				1254504917BF861C00EF23B7 /* CameraManagerWarped.h */,
 				1254504A17BF861C00EF23B7 /* CameraVidGrabber.cpp */,
 				1254504B17BF861C00EF23B7 /* CameraVidGrabber.h */,
+				12ACF5D118041D5E00E77A4B /* CameraIP.cpp */,
+				12ACF5D218041D5E00E77A4B /* CameraIP.h */,
 				1254504C17BF861C00EF23B7 /* CameraVidPlayer.cpp */,
 				1254504D17BF861C00EF23B7 /* CameraVidPlayer.h */,
 				1254504E17BF861C00EF23B7 /* CameraWrapper.h */,
@@ -704,6 +715,7 @@
 				12A6DE3317DE1F83000D299A /* ParticleSystemManager.cpp */,
 				1254506617BF861C00EF23B7 /* ParticleSystemSettings.h */,
 				1254506717BF861C00EF23B7 /* PhysicsObject.h */,
+				128D31FE1804ACD100C2CCB6 /* PhysicsObject.cpp */,
 				1254506817BF861C00EF23B7 /* renderers */,
 				1254507217BF861C00EF23B7 /* RocketBasic.h */,
 				1254507317BF861C00EF23B7 /* RocketSettings.h */,
@@ -725,6 +737,7 @@
 				1254506E17BF861C00EF23B7 /* ParticleRendererLowRes.h */,
 				1254506F17BF861C00EF23B7 /* ParticleRendererShape.h */,
 				129988B417E1E6610044879E /* ParticleRendererLaser.h */,
+				128D32021804BBE600C2CCB6 /* ParticleRendererLaserTeardrop.h */,
 				1254507017BF861C00EF23B7 /* ParticleRendererSquare.h */,
 				1254507117BF861C00EF23B7 /* ParticleRendererStar.h */,
 			);
@@ -1483,6 +1496,24 @@
 			path = Retro;
 			sourceTree = "<group>";
 		};
+		12ACF55318041CF600E77A4B /* ofxIpVideoGrabber */ = {
+			isa = PBXGroup;
+			children = (
+				12ACF5B818041CF600E77A4B /* src */,
+			);
+			name = ofxIpVideoGrabber;
+			path = ../../../addons/ofxIpVideoGrabber;
+			sourceTree = "<group>";
+		};
+		12ACF5B818041CF600E77A4B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				12ACF5B918041CF600E77A4B /* IPVideoGrabber.cpp */,
+				12ACF5BA18041CF600E77A4B /* IPVideoGrabber.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		12BD9CC717DF585E00F28A4F /* Vectorizer */ = {
 			isa = PBXGroup;
 			children = (
@@ -1657,6 +1688,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				12ACF55318041CF600E77A4B /* ofxIpVideoGrabber */,
 				12EB3BBE17E0EB86002D90A0 /* ofxGui */,
 				12EB3B7117E0EB4F002D90A0 /* ofxEtherdream */,
 				12EB3B8617E0EB4F002D90A0 /* ofxIlda */,
@@ -1942,6 +1974,9 @@
 				12F92A4417FB47D000835BBE /* SceneGame.cpp in Sources */,
 				120A05ED17FCD0E200408B12 /* ofMultiDeviceSoundPlayer.cpp in Sources */,
 				1239442717FE08E4007668B8 /* Asteroid.cpp in Sources */,
+				12ACF5CD18041CF600E77A4B /* IPVideoGrabber.cpp in Sources */,
+				12ACF5D318041D5E00E77A4B /* CameraIP.cpp in Sources */,
+				128D31FF1804ACD100C2CCB6 /* PhysicsObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

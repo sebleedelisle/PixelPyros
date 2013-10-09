@@ -18,6 +18,10 @@ class ofApp : public ofBaseApp{
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 	
-	ofSoundStream soundStream; 
+	ofSoundStream soundStream;
+	
+	ofMesh sphere, sphere2;
+	float angle; 
+	
 
 };

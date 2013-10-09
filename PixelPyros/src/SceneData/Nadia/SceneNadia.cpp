@@ -50,6 +50,8 @@ TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange
 	rocketSettings.drag = 1;
 	rocketSettings.gravity.y = 0;
 	
+	/*
+	
 	ParticleSystemSettings ps;
 	
 	ps.emitLifeTime = 14;
@@ -104,7 +106,9 @@ TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange
 	//rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(laser);
 	//rocketSettings.addParticleSystemSetting(smoke);
-	
+	*/
+	rocketSettings.setLifeTime(16);
+	rocketSettings.addParticleRenderer(new ParticleRendererLaserTeardrop());
 	
 	ts.rocketSettings = &rocketSettings;
 	

@@ -2,24 +2,25 @@
 	<Laser_Manager>
 		<Etherdream_connect>0</Etherdream_connect>
 		<status>disconnected</status>
-		<show_warp_points>0</show_warp_points>
+		<show_warp_points>1</show_warp_points>
 		<intensity>1</intensity>
-		<colour_change_offset>-6</colour_change_offset>
-		<show_registration>0</show_registration>
+		<colour_change_offset>-9</colour_change_offset>
+		<show_registration>1</show_registration>
 		<show_move_points>0</show_move_points>
 		<show_sync_test>0</show_sync_test>
 		<render_laser_path>0</render_laser_path>
-		<render_laser_preview>1</render_laser_preview>
-		<move_speed>3</move_speed>
-		<move_points_padding>1</move_points_padding>
+		<render_laser_preview>0</render_laser_preview>
+		<move_speed>9.50525</move_speed>
+		<move_points_padding>8</move_points_padding>
 		<shape_pre_blank_points>1</shape_pre_blank_points>
 		<shape_post_blank_points>1</shape_post_blank_points>
-		<dot_max_points>7</dot_max_points>
-		<line_acceleration>0.5</line_acceleration>
-		<line_speed>20</line_speed>
-		<eased_line_speed>8</eased_line_speed>
+		<dot_max_points>1</dot_max_points>
+		<line_acceleration>0.300985</line_acceleration>
+		<line_speed>9.34075</line_speed>
+		<eased_line_speed>15.15</eased_line_speed>
 		<eased_line_padding>1</eased_line_padding>
 		<spiral_spacing>10</spiral_spacing>
+	<circle_overlap>5.75</circle_overlap>
 	</Laser_Manager>
 <Laser/>
 </Laser>

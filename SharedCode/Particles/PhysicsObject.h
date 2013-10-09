@@ -8,70 +8,18 @@
 #pragma once
 #include "ofMain.h"
 #include "LifeCycle.h"
-//class PhysicsObjectRenderer;
 
 class PhysicsObject { 
 
 	public : 
 	
-	PhysicsObject() { 
-		reset();
-		
-		dragApplyFrequency = 30;
-		pos.set(0,0,0);
-		lastPos.set(0,0,0);
-		vel.set(0,0,0);
-		drag = 1;
-		gravity.set(0,0,0);
-		velScalar.set(1,1,1);
-		
-		timeSpeed =1;
-		
-	};
+	PhysicsObject();
 	
-	virtual void reset() { 
-		dragApplyCount = 0; 
-		elapsedTime = 0; 
-		enabled = true;
-		
-		dragApplyFrequency = 30;
-		pos.set(0,0,0);
-		lastPos.set(0,0,0);
-		vel.set(0,0,0);
-		drag = 1;
-		gravity.set(0,0,0);
-		velScalar.set(1,1,1);
-		
-		timeSpeed =1;
-		
-		
-		life.reset();
-		
-		//renderer = NULL;
-	};
+	virtual void reset();
 	
-	virtual bool update(float deltaTime) {
-		
-		deltaTime*=timeSpeed;
-		
-		life.update(deltaTime);
-		
-		lastPos = pos; 
-		vel+=gravity*deltaTime;
-		pos+=vel*deltaTime*velScalar;
-		elapsedTime+=deltaTime; 
-		
-		while((elapsedTime * dragApplyFrequency) > dragApplyCount) { 
-			vel*=drag; 
-			dragApplyCount++; 
-		}
-		
-		if(life.isFinished()) enabled = false;
-		
-		return enabled; 
-	};
+	virtual bool update(float deltaTime);
 	
-	bool isEnabled(){ return enabled; }; 
+	bool isEnabled(); 
 	
 	ofVec3f pos; 
 	ofVec3f lastPos; 
@@ -91,10 +39,11 @@ class PhysicsObject {
 	float dragApplyFrequency; 
 	float elapsedTime;
 	
-protected:
+
+	
+	protected:
 	
 	bool enabled;
 	
-	//PhysicsObjectRenderer* renderer;
 	
 };

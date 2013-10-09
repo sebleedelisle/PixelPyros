@@ -776,5 +776,34 @@ ParticleSystemSettings FireworkFactory :: getLaserExplosionParticles(float hue, 
 	
 }
 
+TriggerSettingsRocket* FireworkFactory :: getWigglyRocket(){
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	
+	rocketSettings.startSpeedMin = 100;
+	rocketSettings.startSpeedMax = 120;
+	rocketSettings.directionVar = 4;
+	rocketSettings.gravity.y = 0;
+	rocketSettings.drag = 0.999;
+	rocketSettings.addParticleSystemSetting(getBangerTrails());
+	
+	rocketSettings.setLifeTime(12);
+	rocketSettings.addParticleRenderer(new ParticleRendererShape());
+	
+	
+	
+
+	
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	
+	ts->rocketSettings = &rocketSettings;
+	ts->rechargeSettings = TriggerRechargeSettings::slow;
+	ts->radius *=1.3;
+	
+	return ts;
+	
+	
+	
+}
 
 

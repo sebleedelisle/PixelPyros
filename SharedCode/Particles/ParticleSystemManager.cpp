@@ -93,6 +93,16 @@ void ParticleSystemManager ::draw() {
 		ps->draw();
 	}
 	
+	/*
+	for(int i = 0; i<physicsObjects.size(); i++) {
+		
+		PhysicsObject* po = physicsObjects[i];
+		if(!po->isEnabled()) continue;
+		if(po->renderer == NULL) continue;
+		
+		po->renderer->render(po->pos, po->vel, po->life);
+	}
+	*/
 	
 }
 
