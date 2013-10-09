@@ -11,6 +11,7 @@
 #include "TriggerSettingsRocket.h"
 #include "ParticleRendererShape.h"
 #include "ParticleRendererLaser.h"
+#include "ParticleRendererLaserTeardrop.h"
 
 #include "ParticleRendererLine.h"
 #include "FireworkFactory.h"

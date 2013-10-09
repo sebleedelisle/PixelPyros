@@ -49,6 +49,9 @@ class FireworkFactory {
 	ParticleSystemSettings getBangerCrackles();
 	ParticleSystemSettings getSmoke();
 	
+	
+	TriggerSettingsRocket* getWigglyRocket(); 
+	
 	ofImage softWhiteImage;
 	ofImage bangerFlashImage;
 

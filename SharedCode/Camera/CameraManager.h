@@ -14,6 +14,7 @@
 #include "CameraVidGrabber.h"
 #include "CameraFirewire.h"
 #include "CameraVidPlayer.h"
+#include "CameraIP.h"
 //#include "CameraCanon.h"
 
 //#include "ofxAutoControlPanel.h"
@@ -58,6 +59,8 @@ class CameraManager : public ofBaseDraws{
 	//guiTypeDrawable* cameraPreview;
 	
 	CameraVidPlayer * addVidPlayer(string filename, int width = 1024, int height = 768);
+	CameraIP * addIPPlayer(string name, string url, string user, string password, int width, int height);
+	
 	string getCameraLabel();
 
 	

@@ -26,7 +26,8 @@ bool CameraVidGrabber::setup(string _name, int width, int height, int framerate)
 
 
 bool CameraVidGrabber::videoSettings(){
-	vidGrabber.videoSettings(); 
+	vidGrabber.videoSettings();
+	return true;
 	
 }
 

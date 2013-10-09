@@ -35,5 +35,5 @@ bool CameraVidPlayer::setup(string _name, string filename, int width, int height
 bool CameraVidPlayer::videoSettings(){
 	//vidPlayer.videoSettings(); 
     vidPlayer.setPosition(0); 
-	
+	return true;
 }

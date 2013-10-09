@@ -61,6 +61,11 @@ class LifeCycle {
 		
 	}
 	
+	float getProgress() {
+		return ofMap(elapsedTime, delay, delay+lifeTime, 0, 1, true); 
+		
+	}
+	
 	
 	bool active; 
 	float lifeTime; 

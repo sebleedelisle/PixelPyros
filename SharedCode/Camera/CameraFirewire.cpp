@@ -29,7 +29,7 @@ bool CameraFirewire::setup(string _name, int width, int height, int framerate)  
 
 bool CameraFirewire::videoSettings(){
 	//camera.videoSettings(); 
-	
+	return false; 
 }
 
 /*

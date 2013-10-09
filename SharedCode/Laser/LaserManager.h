@@ -38,7 +38,9 @@ class LaserManager {
 	
 	void setup(int width, int height);
     void update();
-	void draw(); 
+	void draw();
+	
+	void renderPreview();
 	
 	bool my_compare( ofPoint a, ofPoint b){
 		return a.y < b.y;
@@ -118,6 +120,8 @@ class LaserManager {
 	ofParameter<float> speedLine;
 	ofParameter<float> accelerationLine;
 	
+	ofParameter<float> overlapCircle; 
+	
 	ofParameter<float> speedEasedLine;
 	ofParameter<int> paddingEasedLine;
 	
@@ -160,6 +164,8 @@ class LaserManager {
 	
 	float appWidth;
 	float appHeight;
+	
+	ofImage pointPreviewImage;
 
 
 };

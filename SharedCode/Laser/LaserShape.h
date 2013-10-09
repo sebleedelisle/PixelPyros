@@ -14,7 +14,7 @@ class LaserShape {
 
 	LaserShape(){};
 	
-	virtual void fuckYou(){};
+	virtual void renderPreview(){};
 	
 	bool tested = false;
 	
