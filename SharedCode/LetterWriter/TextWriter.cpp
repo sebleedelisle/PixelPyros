@@ -109,7 +109,7 @@ void TextWriter::drawFixedSize(ofRectangle box, string text, float glyphScaleFac
     float glyphRenderHeight = glyphHeight * glyphScaleFactor;
     float glyphRenderSpacing = glyphSpacing * glyphScaleFactor;
     
-    float blockHeight = (glyphRenderHeight * lines.size()) + (glyphRenderSpacing * (lines.size() - 1));
+   // float blockHeight = (glyphRenderHeight * lines.size()) + (glyphRenderSpacing * (lines.size() - 1));
     int marginTop = 0; 
 	
     int ofsX = 0, ofsY = marginTop;

@@ -71,6 +71,7 @@ bool Particle :: update(float deltaTime) {
 		
 	}
 	
+	
 	if(historyCount>0) {
 		if(enabled) {
 			historyPositions.push_back(pos);

@@ -54,7 +54,7 @@ QuadWarp :: ~QuadWarp() {
 }
 
 void QuadWarp :: draw() {
-	QuadWarp ::draw(ofGetKeyPressed(OF_KEY_SHIFT));
+	draw(ofGetKeyPressed(OF_KEY_SHIFT));
 
 }
 
@@ -89,6 +89,8 @@ void QuadWarp :: draw(bool lockAxis) {
 	ofPushStyle();
 	ofNoFill();
 	
+	ofPushMatrix();
+	
     ofTranslate(offset.x, offset.y);
 	
 	//ofEnableSmoothing();
@@ -117,7 +119,7 @@ void QuadWarp :: draw(bool lockAxis) {
 		
 	}
 	
-	
+	ofPopMatrix();
 	ofPopStyle();
 	
 }

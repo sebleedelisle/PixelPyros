@@ -27,13 +27,13 @@ LaserManager:: LaserManager() {
 void LaserManager:: connectToEtherdream() {
 
 	etherdream.setup();
-    etherdream.setPPS(80000);
+   // etherdream.setPPS(pps);
 	isConnected = true;
 	
 }
 void LaserManager:: disconnectFromEtherdream() {
 	
-	etherdream.stop();
+	etherdream.kill();
 	isConnected = false;
 	
 }
@@ -45,6 +45,7 @@ void LaserManager:: setup (int width, int height) {
     
     isConnected = false;
 	showSyncTest = false;
+	//connectButton = false;
 	
 	minPoints = 1000;
     
@@ -59,7 +60,7 @@ void LaserManager:: setup (int width, int height) {
 	
 	showRegistration = true;
 	showMovePoints = false;
-	renderLaserPath = true;
+	showLaserPath = true;
 	intensity = 1;
 	
     float x1 = APP_WIDTH * 0.2;
@@ -86,22 +87,28 @@ void LaserManager:: setup (int width, int height) {
 	intensity = 1;
 
 	parameters.setName("Laser Manager");
-
-	parameters.add(connectButton.set("Etherdream connect", false));
+	
+	connectButton.setup("Etherdream connect");
+	connectButton.addListener(this, &LaserManager::connectButtonPressed);
+	//parameters.add(&connectButton);
 	parameters.add(etherdreamStatus.set("status", "test"));
-	parameters.add(showWarpPoints.set("show warp points", false)); 
+	parameters.add(showWarpPoints.set("show warp points", false));
+	parameters.add(showMaskRectangle.set("show mask rect", false));
 
+	parameters.add(pps.set("points per second", 80000, 30000, 100000));
 	parameters.add(intensity.set("intensity", 1, 0, 1));
 	parameters.add(colourChangeDelay.set("colour change offset", -6, -15, 15));
 	
 	parameters.add(showRegistration.set("show registration", false));
+	parameters.add(flipX.set("flip x", true));
+	parameters.add(flipY.set("flip y", true));
 	
-	parameters.add(showMovePoints.set("show move points", false));
+	parameters.add(showMovePoints.set("laser move points", false));
 	parameters.add(showSyncTest.set("show sync test", false));
-	parameters.add(renderLaserPath.set("render laser path", true));
+	parameters.add(showLaserPath.set("show laser path", true));
 	parameters.add(renderLaserPreview.set("render laser preview", true));
 
-	parameters.add(moveSpeed.set("move speed", 3,0.01,20));
+	parameters.add(moveSpeed.set("move speed", 3,2,20));
 	parameters.add(movePointsPadding.set("move points padding", 1,0,20));
 	
 	parameters.add(shapePreBlank.set("shape pre blank points", 1, 0, 20));
@@ -109,11 +116,11 @@ void LaserManager:: setup (int width, int height) {
 	
 	parameters.add(dotMaxPoints.set("dot max points", 7, 0, 100));
 	
-	parameters.add(accelerationLine.set("line acceleration", 0.5, 0.001, 20));
-	parameters.add(speedLine.set("line speed", 20,0.1, 100));
+	parameters.add(accelerationLine.set("line acceleration", 0.5, 0.1, 10));
+	parameters.add(speedLine.set("line speed", 20,2, 100));
 	parameters.add(overlapCircle.set("circle overlap", 20,0, 100));
 	
-	parameters.add(speedEasedLine.set("eased line speed", 8, 0, 20));
+	parameters.add(speedEasedLine.set("eased line speed", 8, 2, 20));
 	parameters.add(paddingEasedLine.set("eased line padding", 1,0, 20));
   	parameters.add(spiralSpacing.set("spiral spacing", 10,1, 200));
     
@@ -129,23 +136,47 @@ void LaserManager:: setup (int width, int height) {
     
 }
 
+void LaserManager:: connectButtonPressed(){
+	
+	//if(connectButton!=isConnected) {
+		if(!isConnected) {
+			connectToEtherdream();
+		} else {
+			disconnectFromEtherdream();
+		}
+	//}
+
+	
+}
+
+
 void LaserManager:: update() {
 	
-	etherdreamStatus = etherdream.stateIsFound() ? "connected" : "disconnected";
+	etherdream.update();
 	
 	resetIldaPoints();
 	previewMesh.clear();
 	pathMesh.clear();
 	
+
 	
-	if(connectButton!=isConnected) {
-		if(connectButton) {
-			connectToEtherdream();
-		} else {
-			disconnectFromEtherdream();
+	//etherdreamStatus = etherdream.stateIsFound() ? "connected" : "disconnected";
+	etherdreamStatus = etherdream.getDeviceStateString() + (etherdream.stateIsFound() ? " FOUND " : " NOT FOUND ") + ofToString(isConnected);
+	
+	//connectButton.se(etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready");
+	
+	
+	 if(isConnected) {
+		 if(!etherdream.checkConnection(false)) {
+			 isConnected = false;
+			 disconnectFromEtherdream();
+			 // auto reconnect
+			 connectToEtherdream();
 		}
-	}
+	 }
 	
+	
+			
 	if(showSyncTest) {
 		addDelayTest();
 	}
@@ -153,7 +184,7 @@ void LaserManager:: update() {
 	
 	if(showRegistration) {
 		
-		addLaserRectEased(pmin, pmax, white);
+		//addLaserRectEased(pmin, pmax, white);
 		addLaserLineEased(pmin, pmax, white);
 		addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
 		
@@ -162,6 +193,8 @@ void LaserManager:: update() {
 		for(float x =0 ; x<=1; x+=0.2) {
 			for(float y = 0; y<=1; y+=0.2) {
 				addLaserDot(ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*y)), white, 1);
+				if(x<1) addLaserLineEased(ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*y)), ofPoint(pmin.x + (v.x*(x+0.2)), pmin.y + (v.y*y)), ofColor::red);
+				if(y<1) addLaserLineEased(ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*y)), ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*(y+0.2))), ofColor::red);
 			}
 		}
 		
@@ -181,17 +214,19 @@ void LaserManager:: update() {
 	
 	//addLaserSpiral(ofPoint(200,200), ofFloatColor::white, 100, 200);
 	
-	//addLaserLineEased(ofPoint(300,400), ofPoint(400,400), ofFloatColor::white);
+
+	
+		
+	// at this point we should report if the laser has disconnected.
+	
+	
+	
 	
 }
 
 void LaserManager::draw() {
 	
-	
 	drawShapes();
-	
-	
-	
 	
 	while(ildaPoints.size()<minPoints) {
 		
@@ -200,8 +235,9 @@ void LaserManager::draw() {
 	}
 	
 	
-	// SORT OUT COLOUR CHANGE DELAY.
 	vector<ofxIlda::Point> adjustedPoints;
+
+	// SORT OUT COLOUR CHANGE DELAY.
 	
 	for(int i = 0; i<ildaPoints.size(); i++) {
 		
@@ -218,45 +254,31 @@ void LaserManager::draw() {
 		
 		adjustedPoints.push_back(p);
 		
-		
 	}
 	
-	if(isConnected) {
+	if((etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready")) {
 		etherdream.setPoints(adjustedPoints);
-		etherdream.checkConnection(true);
-		//etherdream.setPPS(50000);
+		etherdream.setPPS(pps);
 	}
 	
-	
-	warp.visible = showWarpPoints;
-	ofPushStyle();
 
-	if((renderLaserPath)){//||(showRegistration)) {
-		
-		ofNoFill();
-		ofSetLineWidth(1);
-		
-		ofSetColor(155,0,0);
-		pathMesh.setMode(OF_PRIMITIVE_LINE_LOOP);
-		pathMesh.draw();
-		ofSetColor(255,255,255);
-		pathMesh.setMode(OF_PRIMITIVE_POINTS);
-		pathMesh.draw();
-		
-	}
+	
+	
+	ofPushStyle();
+	
 	
 	if(renderLaserPreview) {
 		
-		renderPreview(); 
+		renderPreview();
 		
 	}
 	
 	
+  	ofNoFill();
 	
-    //warp.draw();
-	ofNoFill();
+	if(showMaskRectangle) maskRectangle.draw();
 	
-	//maskRectangle.draw();
+	
 	
 	ofPopStyle();
 	
@@ -283,6 +305,43 @@ void LaserManager::draw() {
 	
 	
 }
+
+void LaserManager::renderLaserPath(ofRectangle previewRectangle) {
+	
+	ofPushStyle();
+	
+	
+	if((showLaserPath)){//||(showRegistration)) {
+		
+		ofPushMatrix();
+		
+		ofTranslate(previewRectangle.getTopLeft());
+		float scale =  previewRectangle.width / appWidth;
+		ofScale(scale, scale);
+		
+		ofDisableBlendMode();
+		ofNoFill();
+		ofSetLineWidth(1);
+		ofSetColor(255,0,255);
+		pathMesh.setMode(OF_PRIMITIVE_LINE_LOOP);
+		pathMesh.draw();
+		
+		
+		ofSetColor(255,255,255);
+		pathMesh.setMode(OF_PRIMITIVE_POINTS);
+		pathMesh.draw();
+		ofPopMatrix();
+	}
+	
+	
+	// TODO - this needs to go somewhere else!
+	warp.visible = showWarpPoints;
+	warp.draw();
+
+	ofPopStyle();
+
+}
+
 
 void LaserManager::addLaserDot(const ofPoint& ofpoint, ofFloatColor colour, float intensity){
 	
@@ -312,7 +371,7 @@ void LaserManager:: drawShapes() {
 	vector<LaserShape*> sortedShapes;
 	
 	int numberSorted = 0;
-	int dotNum = shapes.size();
+	//int dotNum = shapes.size();
 	int currentIndex = 0; 
 	
 	int nextDotIndex = NULL;
@@ -510,7 +569,7 @@ vector<float> LaserManager:: getPointsAlongDistance(float distance, float accele
 	float timeincrement = totaltime / (floor(totaltime));
 	
 	float currentdistance;
-	currentdistance = 0;
+	
 	float t = 0;
 		
 	while (t <= totaltime + 0.001) {
@@ -577,7 +636,7 @@ void LaserManager::drawLaserSpiral(LaserSpiral& spiral){
 	
 	//float spacing = spiralSpacing;
 	int revolutions = ceil((spiral.radius2 - spiral.radius1)/spiralSpacing);
-	float spaceBetweenRevs = (spiral.radius2 - spiral.radius1)/revolutions;
+	//float spaceBetweenRevs = (spiral.radius2 - spiral.radius1)/revolutions;
 	
 	float maxAngle = 360 * revolutions;
 	
@@ -642,8 +701,12 @@ ofxIlda::Point LaserManager::ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatC
 	ofxIlda::Point ildapoint;
 	
 	ofPoint p = ofpoint;
-	p.y= appHeight-p.y;
-	p.x= appWidth-p.x;
+	if(flipY) p.y= appHeight-p.y;
+	if(flipX) p.x= appWidth-p.x;
+	
+	p.x = ofClamp(p.x, 0, appWidth);
+	p.y = ofClamp(p.y, 0, appHeight);
+	
 
 	ildapoint.set(p, colour, pmin, pmax);
 	return ildapoint;
@@ -653,12 +716,19 @@ ofPoint LaserManager::ildaPointToOfPoint(const ofxIlda::Point& ildapoint){
 	
 }
 
-void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c, float pointIntensity){
+void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity){
 	
 	bool offScreen = false;
-	
+
+	// TODO should be smarter about this. Ideally we should mark the on / off screen
+	// points and add a move between them. 
 	if(!maskRectangle.inside(p)) {
 		offScreen = true;
+		p.x = max(maskRectangle.x, p.x);
+		p.x = min(maskRectangle.getRight(), p.x);
+		p.y = max(maskRectangle.y, p.y);
+		p.y = min(maskRectangle.getBottom(), p.y);
+		
 	}
 	
 	if(offScreen) c = ofFloatColor::black;
@@ -677,6 +747,7 @@ void LaserManager::addIldaPoint(const ofPoint& p, ofFloatColor c, float pointInt
 	c.g*=intensity*pointIntensity;
 	c.b*=intensity*pointIntensity;
 	
+		
 	ildaPoints.push_back(ofPointToIldaPoint(warpedpoint, c));
 	
 	currentPosition = p;
@@ -841,9 +912,9 @@ void LaserManager :: renderPreview() {
 		LaserCircle * circle = dynamic_cast<LaserCircle*>(shape);
 		if(circle) {
 			
-			ofVec3f v(circle->radius,0);
+			ofVec3f v(0,-circle->radius);
 			mesh.addColor(ofColor::black);
-			mesh.addVertex(circle->startPos);
+			mesh.addVertex(v + circle->pos);
 			
 			for(int i = 0; i<=360; i+=20) {
 				
@@ -853,9 +924,10 @@ void LaserManager :: renderPreview() {
 				mesh.addVertex(v+circle->pos);
 				
 			}
-		
+			
+			v.set(0, -circle->radius);
 			mesh.addColor(ofColor::black);
-			mesh.addVertex(circle->endPos);
+			mesh.addVertex(v+circle->pos);
 			
 			
 			
@@ -888,9 +960,8 @@ void LaserManager :: renderPreview() {
 		colours[i].r*=0.2;
 		colours[i].g*=0.2;
 		colours[i].b*=0.2;
-		
-		
 	}
+	
 	ofSetLineWidth(5);
 	mesh.draw();
 	

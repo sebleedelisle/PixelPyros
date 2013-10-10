@@ -50,7 +50,7 @@ void ofApp::setup(){
 	cameraManager.init();
 	cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
 	cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
-	cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 
 	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); 
@@ -87,14 +87,14 @@ void ofApp::setup(){
     // Now that all of the parameters should be registered with the
 	// ParameterManager, setup the control gui
     
-	calculateScreenSizes();
-    controlPanels.laserWarp = & laserManager.warp;
-	controlPanels.setup( &parameterManager, screens);
+	//calculateScreenSizes();
+	
+    //controlPanels.laserWarp = & laserManager.warp;
+	controlPanels.setup( &parameterManager);
 	timeSpeed = 1;
 	
-	
+	updateScreenSizes();
 	setupScenes();
-	sceneManager.updateUIScreen(screens.back());
 	
 }
 
@@ -115,9 +115,12 @@ void ofApp::update(){
 	
 	
 	float time = ofGetElapsedTimef(); 
-	float deltaTime =  time - lastUpdateTime;
+	deltaTime =  time - lastUpdateTime;
+	
+	if(deltaTime>0.1) deltaTime = 0.1;
+	
 	deltaTime*=timeSpeed;
-
+	
 	lastUpdateTime = time;
 	
 	
@@ -135,6 +138,13 @@ void ofApp::update(){
 	
 	laserManager.update();
 	
+//	ofPoint mousePos(ofGetMouseX(), ofGetMouseY());
+//	if(uiScreenRect.inside(mousePos)) {
+//		ofShowCursor();
+//	} else {
+//		ofHideCursor();
+//	}
+//	ofHideCursor();
 }
 
 //--------------------------------------------------------------
@@ -172,11 +182,6 @@ void ofApp::draw(){
 		renderer.draw(fbo, fboWarper1, fboWarper2, edgeBlendSize);
 	}
 	
-	ofDrawBitmapString(ofToString(ofGetFrameRate()),20,20);
-//	ofDrawBitmapString(ofToString(particleSystemManager.particleSystems.size()),20,35);
-//	ofDrawBitmapString(ofToString(particleSystemManager.activeParticleCount),20,50);
-	ofDrawBitmapString(ofToString(particleSystemManager.activePhysicsObjectCount),20,65);
-
 	ofDisableBlendMode();
 	ofDisableAlphaBlending();
 	
@@ -184,8 +189,59 @@ void ofApp::draw(){
 	fboWarper1.draw();
 	fboWarper2.draw();
 	
-	//laserManager.drawGUI(uiScreen);
+	//laserManager.drawGUI(uiScreenRect);
 
+	
+	
+	laserManager.renderLaserPath(controlPanels.getPreviewScreenRect());
+	
+	
+	ofPushStyle();
+	float d = ofGetLastFrameTime();
+	
+	if(d<1.0/50.0)
+		ofSetColor(ofColor::black);
+	else if(d<1.0/40.0)
+		ofSetColor(ofColor::green);
+	else if(d<1.0/30.0)
+		ofSetColor(ofColor::yellow);
+	else if(d<1.0/20.0)
+		ofSetColor(ofColor::orange);
+	else 
+		ofSetColor(ofColor::red);
+	if(d>1.0/30.0)
+		ofRect(uiScreenRect.x, uiScreenRect.y, (d-(1.0/30.0))*4000,4);
+	ofPopStyle();
+	ofDrawBitmapString(ofToString(ofGetFrameRate()),uiScreenRect.x+8,uiScreenRect.y+14);
+
+	
+	ofPoint mousePos(ofGetMouseX(), ofGetMouseY());
+	float modval = 0.3;
+	if(!uiScreenRect.inside(mousePos) && (modff((float)ofGetElapsedTimef(), &modval) > 0.2)) {
+		ofDrawBitmapString("CHECK MOUSE CURSOR",uiScreenRect.x+8,uiScreenRect.y+34);
+	}
+	
+	ofPushMatrix();
+	ofTranslate(uiScreenRect.x+8, uiScreenRect.y+54);
+	
+	ofDrawBitmapString("p systems : "+ofToString(particleSystemManager.particleSystems.size()),0,0);
+	
+	ofTranslate(0,20);
+	ofDrawBitmapString("spare p s : "+ofToString(particleSystemManager.spareParticleSystems.size()),0,0);
+	
+	ofTranslate(0,20);
+	ofDrawBitmapString("particles : "+ofToString(particleSystemManager.activeParticleCount),0,0);
+	
+	ofTranslate(0,20);
+	ofDrawBitmapString("p objects : "+ofToString(particleSystemManager.physicsObjects.size()),0,0);
+	
+	ofTranslate(0,20);
+	ofDrawBitmapString("spare po  : " +ofToString(particleSystemManager.sparePhysicsObjects.size()),0,0);
+
+	ofTranslate(0,20);
+	ofDrawBitmapString("active po : " +ofToString(particleSystemManager.activePhysicsObjectCount),0,0);
+
+	ofPopMatrix();
 	
     controlPanels.draw();
 	sceneManager.drawGUI();
@@ -301,7 +357,6 @@ void ofApp:: setupScenes() {
 	
 	sceneManager.addScene(new SceneSpace("Space"));
 
-	
 	sceneManager.changeScene("Intro");
 	
 	
@@ -398,6 +453,8 @@ void ofApp::calculateScreenSizes(){
 		cout << i << " " << screens[i] << endl;
     }
     
+	uiScreenRect = screens.back();
+		
 
 }
 
@@ -409,6 +466,12 @@ void ofApp::updateScreenSizes() {
     calculateScreenSizes();
 
 	controlPanels.updatePositions(screens);
+	sceneManager.updateUIScreen(uiScreenRect);
+	//laserManager.updatePreviewScreenRect();
+	// todo - this should probably take into account the size
+	// of the preview screen too!
+	laserManager.warp.setOffset( uiScreenRect.x, uiScreenRect.y );
+	
 	
 
 }

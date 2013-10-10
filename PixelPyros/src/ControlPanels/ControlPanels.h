@@ -14,33 +14,36 @@
 #include "ofxToggle.h"
 #include "ofxSliderGroup.h"
 #include "QuadWarp.h"
+#include "LaserManager.h"
 
 class ControlPanels {
     
     public:
     
     ControlPanels():parameterManager(*ParameterManager::instance()){};
-    void setup(ParameterManager * parameterManager, vector<ofRectangle> screens);
+    void setup(ParameterManager * parameterManager); 
 	void updatePositions(vector<ofRectangle> screens); 
     void draw();
     void drawPreviewScreen();
     void exit();
     void keyPressed(int key);
     void mouseMoved(int x, int y);
-    
+	ofRectangle getPreviewScreenRect();
+	
     ofFbo main;
     ofFbo camera;
     ofFbo motion;
     
-    QuadWarp * laserWarp;
+    //QuadWarp * laserWarp;
     
     protected:
 
     void setupPanel( string name, ofRectangle rect, ofxPanel & panel );
     void setupPanel( string name, string filename, ofRectangle rect, ofxPanel & panel );
-    void layoutPanels(vector<ofxPanel> panels,ofRectangle space );
+   // void layoutPanels(vector<ofxPanel> panels,ofRectangle space );
     vector<ofxPanel> getVisiblePanels();
-    
+	void updatePreviewScreenSize();
+   
     ParameterManager& parameterManager;
     
     ofxPanel appGui; 

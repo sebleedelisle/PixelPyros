@@ -70,7 +70,7 @@ bool ParticleSystem::update(float deltaTime) {
 	
 	if(life.active) {
 		
-		int newparticlecount;
+		int newparticlecount = 0;
 		
 		if(settings.emitMode == PARTICLE_EMIT_CONTINUOUS) {
 			newparticlecount = (life.elapsedTime-life.delay)*settings.emitCount;

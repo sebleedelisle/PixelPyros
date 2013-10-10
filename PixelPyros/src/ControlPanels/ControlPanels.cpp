@@ -13,7 +13,7 @@
 #include "GLFW/glfw3native.h"
 
 
-void ControlPanels::setup(ParameterManager * parameterManager, vector<ofRectangle> screens){
+void ControlPanels::setup(ParameterManager * parameterManager) { // , vector<ofRectangle> screens){
 	
 	// no GUI for 0
 	panelMode = 0;
@@ -34,8 +34,10 @@ void ControlPanels::setup(ParameterManager * parameterManager, vector<ofRectangl
 	appGui.load();
 	
     setupPanel( "Laser", "laserSettings.xml", ofRectangle( 0, 0, 400, heightSmall ), laserGui );
-
+	
+	laserGui.add(&(LaserManager::instance()->connectButton));
     laserGui.add( *parameterManager->getParameterGroup("laser") );
+
     laserGui.load();
     laserGui.getGroup("Laser Manager").getToggle("Etherdream connect") = false;
     laserGui.getGroup("Laser Manager").getLabel("status") = "";
@@ -61,7 +63,7 @@ void ControlPanels::setup(ParameterManager * parameterManager, vector<ofRectangl
 //    laserCalibration.add( *parameterManager->getParameterGroup("laser calibration") );
 //    laserCalibration.load();
 	
-	updatePositions(screens);
+	//updatePositions(screens);
     
 }
 void ControlPanels :: updatePositions(vector<ofRectangle> screens){
@@ -73,27 +75,39 @@ void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 	// Assumes GUI will always be on the last monitor, ie
 	// the right-most monitor.
 	
-	screen = screens[monitorCount-1];
+	screen = screens.back();
 	
 	ofVec3f padding = ofVec3f(20,20);
 	ofVec3f position = screen.getPosition() + padding;
 	
+	position.x = screen.getRight() - padding.x*2 - rendererGui.getWidth()- appGui.getWidth();
+	position.y = screen.getTop() + padding.y;
 	appGui.setPosition(position);
-	position.x += appGui.getWidth() + padding.x;
+	
+	position.x = screen.getRight() - padding.x - rendererGui.getWidth();
+	position.y = screen.getTop() + padding.y;
 	rendererGui.setPosition(position);
 	
-	position = screen.getPosition() + padding;
+	
+	
+	// -----------------------
+	position.x = screen.getRight() - padding.x*3 - cameraGui.getWidth() - motionGui.getWidth() - triggerGui.getWidth();
+	position.y = screen.getTop() + padding.y;
 	triggerGui.setPosition(position);
-	position.x += triggerGui.getWidth() + padding.x;
+	
+	position.x = screen.getRight() - padding.x*2 - cameraGui.getWidth() - motionGui.getWidth();
+	position.y = screen.getTop() + padding.y;
 	motionGui.setPosition(position);
-	position.x += motionGui.getWidth() + padding.x;
+	
+	position.x = screen.getRight() - padding.x - cameraGui.getWidth();
+	position.y = screen.getTop() + padding.y;
 	cameraGui.setPosition(position);
 	
-	position = screen.getTopRight() - padding;
-	position.x-=laserGui.getWidth(); 
-	laserGui.setPosition(position);
 	
-    laserWarp->setOffset( screen.x, screen.y );
+	// ---------------------------
+	position.x = screen.getRight() - padding.x - laserGui.getWidth();
+	position.y = screen.getTop() + padding.y;
+	laserGui.setPosition(position);
 	
     cout << screen.x << ", " << screen.y;
 }
@@ -113,27 +127,58 @@ void ControlPanels::drawPreviewScreen(){
 	
 	ofPushStyle();
 	
-    previewScreenRect = screen;
-	
-	if(panelMode != PANEL_MODE_NONE){
-		previewScreenRect.scale(0.75);
-		previewScreenRect.x = screen.x;
-		previewScreenRect.y = screen.getBottom() - previewScreenRect.height;
-	}
+	updatePreviewScreenSize(); 
 	
     ofPushMatrix();
     ofTranslate(previewScreenRect.x, previewScreenRect.y);
 	// TODO get app width and height from somewhere!
 	float scale = previewScreenRect.width/main.getWidth();
-	if(previewScreenRect.height /main.getHeight() < scale) scale = previewScreenRect.height /main.getHeight();
-	if(scale>1) scale = 1; 
+
     ofScale(scale, scale);
 	ofBlendMode(OF_BLENDMODE_ADD);
     main.draw(0,0);
-        
+	 
     ofPopMatrix();
+	
+	ofSetColor(128);
+	ofSetLineWidth(1);
+	ofNoFill();
+	ofRect(previewScreenRect.x-.5, previewScreenRect.y-.5, previewScreenRect.width+2, previewScreenRect.height+2);
 	ofPopStyle();
+	
 }
+
+void ControlPanels::updatePreviewScreenSize(){
+	
+	
+	float targetwidth = main.getWidth()-2;
+	float targetheight = main.getHeight()-2;
+	
+	previewScreenRect.set(0, 0, targetwidth, targetheight);
+	
+	if(panelMode != PANEL_MODE_NONE){
+		targetwidth *= 0.75; 
+	}
+	
+	float scale = targetwidth/previewScreenRect.width;
+	
+	if(previewScreenRect.height / targetheight < scale) scale = previewScreenRect.height /targetheight;
+	if(scale>1) scale = 1;
+    
+	previewScreenRect.scale(scale);
+	previewScreenRect.x = screen.x+1;
+	previewScreenRect.y = screen.y + targetheight - previewScreenRect.height +1;
+	
+	
+	
+	
+}
+ofRectangle ControlPanels::getPreviewScreenRect(){
+	return previewScreenRect;
+	
+	
+}
+
 
 void ControlPanels::exit(){
 	//laserCalibration.save();
@@ -176,6 +221,8 @@ void ControlPanels::keyPressed(int key){
 		} else if(panelMode == PANEL_MODE_LASER) {
 			laserGui.setVisible(true);
         }
+		
+		updatePreviewScreenSize(); 
 		
         /*
          * I've had to disable this automatic layout, as something is wrong with the setPosition of ofxGui for nested GuiGroups
@@ -227,7 +274,7 @@ vector<ofxPanel> ControlPanels::getVisiblePanels(){
     
     return visiblePanels;
 }
-
+/*
 void ControlPanels::layoutPanels(vector<ofxPanel> panels,ofRectangle space ){
     ofVec2f pos(space.x,space.y);
     pos += padding;
@@ -249,3 +296,4 @@ void ControlPanels::layoutPanels(vector<ofxPanel> panels,ofRectangle space ){
     }
         
 }
+*/
