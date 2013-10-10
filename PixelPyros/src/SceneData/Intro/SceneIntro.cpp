@@ -101,6 +101,23 @@ SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 	patternFountain.addTriggerSettings();
 	addTriggerPattern(patternFountain);
 	
+	// FOUNTAINS + ROCKETS
+	TriggerPattern testPattern;
+	testPattern.addTriggerSettings(fireworkFactory.getSimpleFountain(180,0));
+	testPattern.addTriggerSettings();
+	testPattern.addTriggerSettings(fireworkFactory.getSimpleFountain(180,0));
+	testPattern.addTriggerSettings();
+		addTriggerPattern(testPattern);
+	
+	// FOUNTAINS + ROCKETS
+	TriggerPattern testPattern2;
+	testPattern2.addTriggerSettings();
+	testPattern2.addTriggerSettings(fireworkFactory.getBasicRocket(5));
+	testPattern2.addTriggerSettings();
+	testPattern2.addTriggerSettings(fireworkFactory.getBasicRocket(5));
+	testPattern2.addTriggerSettings();
+	testPattern2.addTriggerSettings(fireworkFactory.getBasicRocket(5));
+	addTriggerPattern(testPattern2);
 	
 	
 	

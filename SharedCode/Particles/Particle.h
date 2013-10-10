@@ -42,11 +42,14 @@ class Particle : public PhysicsObject{
 	deque <ofVec3f> historyPositions;
 	deque <ofColor> historyColours; 
 	
-	ColourModifier * colourModifier;
+	ColourModifier colourModifier;
 	VelocityModifier velocityModifier;
 	
 	ofVec3f startPos;
 	
+	// it's a linked list now!
+	Particle * next;
+	Particle * previous;
 	
 	
 };

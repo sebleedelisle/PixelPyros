@@ -21,6 +21,9 @@ ParticleSystemManager :: ParticleSystemManager() : soundPlayer(*SoundPlayer::ins
     
 	activeParticleCount = 0;
 	activePhysicsObjectCount = 0;
+	activeParticleSystemCount = 0; 
+	spareParticleCount = 0;
+	allParticleCount = 0;
 
     parameters.setName("Particle Manager");
     parameters.add( killAllParticlesParam.set("KILL ALL PARTICLES",false) );
@@ -31,8 +34,13 @@ ParticleSystemManager :: ParticleSystemManager() : soundPlayer(*SoundPlayer::ins
 
 void ParticleSystemManager :: update(float deltaTime) {
 	
-	activeParticleCount  = 0;
+	activeParticleCount = 0;
+	allParticleCount = 0;
+
 	activePhysicsObjectCount = 0;
+	activeParticleSystemCount = 0;
+	spareParticleCount = 0;
+	
 	
     /* cause single update delay before setting param back to false */
     if( killAllParticlesFlag ){
@@ -48,12 +56,14 @@ void ParticleSystemManager :: update(float deltaTime) {
 	for(int i = 0; i<particleSystems.size(); i++) {
 		
 		ParticleSystem* ps = particleSystems[i];
-		if(ps->finished) continue;
 		
+		
+		if(ps->finished) continue;
 		
 		ps->update(deltaTime);
 		
 		activeParticleCount+=ps->activeParticleCount;
+		activeParticleSystemCount ++;
 		
 		if(ps->finished) {
 			spareParticleSystems.push_back(ps);
@@ -61,6 +71,9 @@ void ParticleSystemManager :: update(float deltaTime) {
 		
 		
 	}
+	
+	spareParticleCount = ParticleFactory::instance()->recycledParticles.size();
+	allParticleCount = ParticleFactory::instance()->particlesInUse;
 	
 	for(int i = 0; i<physicsObjects.size(); i++) {
 		

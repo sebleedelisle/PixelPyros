@@ -28,15 +28,18 @@ public:
 		
 	}
 	
-    virtual void renderParticles(vector <Particle * > particles){
-        
+   	virtual void renderParticles(Particle* firstParticle){
+      
         // BASIC TRIANGLE RENDERER
 		
 		mesh.clear();
 
-		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
+		Particle* particle = firstParticle;
+		
+		while(particle!=NULL) {
 			
-			Particle& p = **it;
+			Particle& p = *particle;
+			particle = particle->next;
 			
 			if((!p.enabled) || (p.size<pixelSize/4)) continue;
 		

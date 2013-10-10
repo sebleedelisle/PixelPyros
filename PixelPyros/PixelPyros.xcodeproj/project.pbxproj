@@ -84,6 +84,7 @@
 		126E278B17F221ED001763E7 /* SceneSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 126E278817F221ED001763E7 /* SceneSpace.cpp */; };
 		1275BB0117D8E37F0018BC54 /* TriggerRechargeSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */; };
 		128D31FF1804ACD100C2CCB6 /* PhysicsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 128D31FE1804ACD100C2CCB6 /* PhysicsObject.cpp */; };
+		128D320918071DE700C2CCB6 /* ParticleFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 128D320718071DE500C2CCB6 /* ParticleFactory.cpp */; };
 		129988BA17E1E9CC0044879E /* SceneNadia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129988B817E1E9CC0044879E /* SceneNadia.cpp */; };
 		129F2E6F17F778BC00206DFB /* RectangleUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129F2E6D17F778BC00206DFB /* RectangleUI.cpp */; };
 		129F2E8417F978C400206DFB /* ParameterManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 129F2E7C17F978C400206DFB /* ParameterManager.cpp */; };
@@ -467,6 +468,8 @@
 		1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerRechargeSettings.h; sourceTree = "<group>"; };
 		128D31FE1804ACD100C2CCB6 /* PhysicsObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsObject.cpp; sourceTree = "<group>"; };
 		128D32021804BBE600C2CCB6 /* ParticleRendererLaserTeardrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererLaserTeardrop.h; sourceTree = "<group>"; };
+		128D320718071DE500C2CCB6 /* ParticleFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleFactory.cpp; sourceTree = "<group>"; };
+		128D320818071DE600C2CCB6 /* ParticleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleFactory.h; sourceTree = "<group>"; };
 		129988B417E1E6610044879E /* ParticleRendererLaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererLaser.h; sourceTree = "<group>"; };
 		129988B817E1E9CC0044879E /* SceneNadia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneNadia.cpp; sourceTree = "<group>"; };
 		129988B917E1E9CC0044879E /* SceneNadia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneNadia.h; sourceTree = "<group>"; };
@@ -721,6 +724,8 @@
 				1254507317BF861C00EF23B7 /* RocketSettings.h */,
 				1254507417BF861C00EF23B7 /* VelocityModifier.h */,
 				1254507517BF861C00EF23B7 /* VelocityModifierSettings.h */,
+				128D320718071DE500C2CCB6 /* ParticleFactory.cpp */,
+				128D320818071DE600C2CCB6 /* ParticleFactory.h */,
 			);
 			path = Particles;
 			sourceTree = "<group>";
@@ -1977,6 +1982,7 @@
 				12ACF5CD18041CF600E77A4B /* IPVideoGrabber.cpp in Sources */,
 				12ACF5D318041D5E00E77A4B /* CameraIP.cpp in Sources */,
 				128D31FF1804ACD100C2CCB6 /* PhysicsObject.cpp in Sources */,
+				128D320918071DE700C2CCB6 /* ParticleFactory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
