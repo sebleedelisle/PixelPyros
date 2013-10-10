@@ -15,6 +15,7 @@
 #include "LifeCycle.h"
 #include "SoundPlayer.h"
 #include "RocketSettings.h"
+#include "ParticleFactory.h"
 
 class ParticleSystem { 
 
@@ -27,15 +28,17 @@ class ParticleSystem {
 	
 	bool update(float deltaTime) ;
 	
-	bool draw();
+	void draw();
 	
 	void addParticles(int count);
 	
-	Particle * addParticle() ;	
-	Particle * initParticle(Particle * p); 
+	Particle * addParticle() ;
+	Particle * removeParticle(Particle * p); 
+	Particle * initParticle(Particle * p);
+	Particle * getLastParticle(); 
 	
-	vector <Particle * > particles; 
-	vector <Particle * > spareParticles; 
+	Particle * firstParticle;
+	Particle * lastParticle;
 	
 	ofVec3f pos ; 
 	int numParticlesCreated; 

@@ -17,7 +17,7 @@ class ParticleRendererBase {
 	public:
 	
     
-    virtual void renderParticles(vector <Particle * > particles) = 0;
+    virtual void renderParticles(Particle* firstParticle) = 0;
 	
 	int historyCount=0;
 

@@ -41,7 +41,7 @@ class ParticleRendererBitmap : public ParticleRendererBase {
 		
 	}
 	
-	void renderParticles(vector <Particle * > particles){
+	virtual void renderParticles(Particle* firstParticle){
   
 		// BASIC TRIANGLE RENDERER
 		
@@ -51,10 +51,15 @@ class ParticleRendererBitmap : public ParticleRendererBase {
 		
 		mesh.clear();
 			
-		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
+		
+		Particle* particle = firstParticle;
+		
+		while(particle!=NULL) {
 			
-			Particle& p = **it; // *(particles[i]);
-			if((!p.enabled) || (p.size<0.1)) continue;
+			Particle& p = *particle;
+			particle = particle->next;
+			
+			if((!p.enabled) || (p.size<0.1)) continue;			
 			
 			int vertexIndex = mesh.getNumVertices();
 			
@@ -71,6 +76,7 @@ class ParticleRendererBitmap : public ParticleRendererBase {
 			
 			mesh.addTriangle(vertexIndex, vertexIndex+1, vertexIndex+2);
 			mesh.addTriangle(vertexIndex+1, vertexIndex+2, vertexIndex+3);
+			
 			
 			
 		}

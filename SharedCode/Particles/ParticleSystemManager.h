@@ -50,6 +50,9 @@ public:
 	
     int activeParticleCount;
 	int activePhysicsObjectCount;
+	int activeParticleSystemCount;
+	int spareParticleCount;
+	int allParticleCount; 
 	
 	SoundPlayer& soundPlayer;
 

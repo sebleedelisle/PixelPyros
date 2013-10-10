@@ -20,8 +20,8 @@ class ParticleRendererLine : public ParticleRendererBase {
 		historyCount = historycount;
 	}
 	
-	void renderParticles(vector <Particle * > particles){
-        
+	virtual void renderParticles(Particle* firstParticle){
+       
         // BASIC TRIANGLE RENDERER
 		/*
 		if(smooth) ofEnableSmoothing();
@@ -34,9 +34,14 @@ class ParticleRendererLine : public ParticleRendererBase {
 				
 		//ofMatrix4x4 mat;
 		
-		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
+		
+		Particle* particle = firstParticle;
+		
+		while(particle!=NULL) {
 			
-			Particle& p = **it; // *(particles[i]);
+			Particle& p = *particle;
+			particle = particle->next;
+
 			if(!p.enabled)  continue;
 			
 			//int vertexIndex = mesh.getNumVertices();
@@ -70,6 +75,7 @@ class ParticleRendererLine : public ParticleRendererBase {
 //		
 			//mesh.addVertex(p.pos-(p.vel*0.1));
 			//mesh.addColor(ofColor::black);
+			
 			
 		}
 		

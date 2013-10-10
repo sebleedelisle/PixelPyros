@@ -33,17 +33,21 @@ public:
 
 	}
 
-	virtual void renderParticles(vector <Particle * > particles){
-        
+	virtual void renderParticles(Particle* firstParticle){
+		
         // BASIC TRIANGLE RENDERER
 		/*if(smooth)	ofEnableSmoothing();
 		else ofDisableSmoothing();*/
 	
 		mesh.clear();
 		
-		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
+		Particle* particle = firstParticle;
+		
+		while(particle!=NULL) {
 			
-			Particle& p = **it; // *(particles[i]);
+			Particle& p = *particle;
+			particle = particle->next;
+			
 			if((!p.enabled) || (p.size<1)) continue;
 			
 			for(int i = 0; i<shape.size(); i++) {

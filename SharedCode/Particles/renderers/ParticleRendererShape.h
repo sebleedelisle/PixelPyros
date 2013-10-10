@@ -31,16 +31,20 @@ public:
 		
 	}
     
-    virtual void renderParticles(vector <Particle * > particles){
-        
+  	virtual void renderParticles(Particle* firstParticle){
+       
         // BASIC TRIANGLE RENDERER
 		
 		mesh.clear();
 		
+		Particle* particle = firstParticle;
 		
-		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
+		while(particle!=NULL) {
 			
-			Particle& p = **it; // *(particles[i]);
+			Particle& p = *particle;
+			
+			particle = particle->next;
+			
 			if((!p.enabled) || (p.size<0.1)) continue;
 			
 			int vertexIndex = mesh.getNumVertices();

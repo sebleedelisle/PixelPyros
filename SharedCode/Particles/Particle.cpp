@@ -11,7 +11,7 @@
 Particle::Particle() : PhysicsObject() {
 	reset(); 
 	//renderer = new ParticleRendererBase();
-	colourModifier = new ColourModifier();
+	//colourModifier = new ColourModifier();
 	//velocityModifier = new VelocityModifier();
 	
 }
@@ -29,15 +29,18 @@ void Particle::reset() {
 	rotateAmount = 0;
 	rotateAxis.set(0,1,0);
 	
-	velocityModifier.reset(); 
+	velocityModifier.reset();
 	
 	enabled = true;
 	startPos = pos;
 	
 	historyPositions.clear();
 	historyColours.clear();
-	historyCount = 0; 
+	historyCount = 0;
 	
+	next = NULL;
+	previous = NULL;
+
 }
 
 
@@ -63,7 +66,7 @@ bool Particle :: update(float deltaTime) {
 		size = ofMap(ofRandom(1),0,1,size*shimmerMin, size);
 	}
     
-	colourModifier->update(life.unitLifeProgress);
+	colourModifier.update(life.unitLifeProgress);
 	
 	if(rotateAmount!=0) {
 		pos.rotate(rotateAmount*deltaTime, startPos, rotateAxis);
@@ -95,6 +98,6 @@ bool Particle :: update(float deltaTime) {
 }
 
 ofColor& Particle:: getColour() {
-    return colourModifier->colour; 
+    return colourModifier.colour;
 
 }

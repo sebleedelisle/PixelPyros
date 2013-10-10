@@ -17,26 +17,34 @@ class ParticleRendererLaserTeardrop : public ParticleRendererBase {
 		historyCount = 20;
 	}
 	
-	virtual void renderParticles(vector <Particle * > particles){
-        
+	virtual void renderParticles(Particle* firstParticle){
+      
 
 		LaserManager& lm = *LaserManager::instance();
 		
 	
-		for(int i=0; i<particles.size(); i++) {
+		
+		Particle* particle = firstParticle;
+		
+		while(particle!=NULL) {
 			
-			Particle& p = *particles[i]; // *(particles[i]);
-			if((!p.enabled) || (p.size<0.1)) continue;
+			Particle& p = *particle;
+			particle = particle->next;
+			
+			if((!p.enabled) || (p.size<0.1)) continue;			
 			
 			
 			lm.addLaserCircle(p.pos, p.getColour(), p.size);
 			
-			for(int j = 0; j<p.historyPositions.size()-1; j++) {
+			
+			for(int j = 0; j< (int)p.historyPositions.size()-1; j++) {
 				
 				lm.addLaserLineEased(p.historyPositions[j], p.historyPositions[j+1], p.getColour());
 				
 			}
 			
+			
+
 		}
 		
     

@@ -14,6 +14,8 @@ ParticleSystem::ParticleSystem (SoundPlayer& sp) : soundPlayer(sp){
 	life.delay = 0; 
 	reset();
 	
+	firstParticle = NULL;
+	lastParticle = NULL; 
 //	attachedPhysicsObject = NULL;
 	
 }
@@ -50,6 +52,7 @@ bool ParticleSystem::update(float deltaTime) {
 		
 	}
 	
+	// if we've just become activated play a sound
 	if(life.active && (life.elapsedTime-deltaTime <= life.delay)){
 		
 		if(settings.startSound!="") {
@@ -82,7 +85,11 @@ bool ParticleSystem::update(float deltaTime) {
 			life.end();
 		}
 		
-		while(numParticlesCreated<newparticlecount){
+		// HACK TO LIMIT THE NUMBER OF PARTICLES
+		//if(activeParticleCount>100) numParticlesCreated = newparticlecount;
+		//numParticlesCreated = newparticlecount-1;
+		
+		while(numParticlesCreated<newparticlecount) {
 			Particle& p = *addParticle();
 			
 				
@@ -101,51 +108,98 @@ bool ParticleSystem::update(float deltaTime) {
 	
     activeParticleCount = 0; 
 	
-	for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
+	Particle *p = firstParticle;
+	while(p!=NULL) {
 		
-		Particle& p = **it; // *(particles[i]);
+		//if(!p.enabled) continue;
+		p->update(deltaTime);
 		
-		if(!p.enabled) continue;
-		p.update(deltaTime); 
-		if(!p.enabled) {
-			// add to spares... 
-			spareParticles.push_back(&p);
+		if(!p->enabled) {
+			p = removeParticle(p);
+		} else {
+			activeParticleCount++;
+			p = p->next;
 		}
-		
-		activeParticleCount++;
+
 	}
-	finished = ((activeParticleCount ==0) && (life.isFinished())); 
+	finished = ((activeParticleCount ==0) && (life.isFinished()));
 	return finished; 
 }
 
-bool ParticleSystem::draw() { 
+
+
+void ParticleSystem::draw() {
 	
 	if(settings.renderer!=NULL)
-		settings.renderer->renderParticles(particles);
-	else 
-		defaultRenderer.renderParticles(particles);
+		settings.renderer->renderParticles(firstParticle);
+	else
+		defaultRenderer.renderParticles(firstParticle);
 	
 }
+
+
+Particle * ParticleSystem:: removeParticle(Particle * p) {
+	
+	// returns the next in the list
+
+	//cout << "remove particle ----------" << endl;
+	// if we're the first
+	if(p == firstParticle) {
+		//cout << "first" << endl;
+		firstParticle = p->next;
+		if(firstParticle!=NULL) firstParticle->previous = NULL;
+	} else {
+		p->previous->next = p->next;
+	}
+	// if we're the last
+	if(p == lastParticle) {
+		
+		//cout << "first" << endl;
+		
+		lastParticle = p->previous;
+		if(lastParticle!=NULL) lastParticle->next = NULL;
+	} else {
+		p->next->previous = p->previous;
+	}
+	
+	Particle *next = p->next;
+	ParticleFactory::instance()->recycleParticle(p);
+	return next;
+	
+}
+
+
 
 Particle* ParticleSystem :: addParticle() { 
 	
-	Particle * p ;
+	Particle * p  = ParticleFactory :: instance()->getParticle(); 
 	
-	if(spareParticles.size() > 0 ){
-		p = spareParticles.back(); 
-		spareParticles.pop_back();
-	} else { 
+	initParticle(p);
+
+	
+	
+	if(firstParticle == NULL) {
+		firstParticle = p;
+		lastParticle = p; 
+	} else {
 		
-		p = new Particle(); 
-	
-		particles.push_back(p); 
+		lastParticle->next = p;
+		p->previous = lastParticle;
+		lastParticle = p; 
 	}
 	
 	numParticlesCreated++; 
-	initParticle(p);
-	return p; 
+
+	return p;
 
 }
+
+/*
+Particle* ParticleSystem :: getLastParticle() {
+	Particle *p = firstParticle;
+	while(p->next!=NULL) p = p->next;
+	return p;
+}*/
 
 Particle * ParticleSystem::initParticle(Particle * p) { 
 	
@@ -187,7 +241,7 @@ Particle * ParticleSystem::initParticle(Particle * p) {
 	p->rotateAmount = rotateAmount;
 	p->rotateAxis = settings.rotateAxis; 
 	
-	settings.initColourModifier(p->colourModifier, life);
+	settings.initColourModifier(&p->colourModifier, life);
 	p->shimmerMin = settings.shimmerMin; 
 	
 	float curvedRandom = ofRandom(1);

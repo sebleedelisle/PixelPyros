@@ -40,7 +40,8 @@ void ofApp::setup(){
 	triggersDisabled = false;
     
     drawCameraIntoFBO = true;
-    renderer.load("shaders/default");
+    
+	renderer.load("shaders/default");
     
 	lastUpdateTime = ofGetElapsedTimef();
   
@@ -224,22 +225,31 @@ void ofApp::draw(){
 	ofPushMatrix();
 	ofTranslate(uiScreenRect.x+8, uiScreenRect.y+54);
 	
-	ofDrawBitmapString("p systems : "+ofToString(particleSystemManager.particleSystems.size()),0,0);
+	ofDrawBitmapString("particle systems : "+ofToString(particleSystemManager.particleSystems.size()),0,0);
 	
 	ofTranslate(0,20);
-	ofDrawBitmapString("spare p s : "+ofToString(particleSystemManager.spareParticleSystems.size()),0,0);
+	ofDrawBitmapString("spare part sys     : "+ofToString(particleSystemManager.spareParticleSystems.size()),0,0);
 	
 	ofTranslate(0,20);
-	ofDrawBitmapString("particles : "+ofToString(particleSystemManager.activeParticleCount),0,0);
+	ofDrawBitmapString("active part sys    : "+ofToString(particleSystemManager.activeParticleSystemCount),0,0);
 	
 	ofTranslate(0,20);
-	ofDrawBitmapString("p objects : "+ofToString(particleSystemManager.physicsObjects.size()),0,0);
+	ofDrawBitmapString("particles          : "+ofToString(particleSystemManager.allParticleCount),0,0);
 	
 	ofTranslate(0,20);
-	ofDrawBitmapString("spare po  : " +ofToString(particleSystemManager.sparePhysicsObjects.size()),0,0);
+	ofDrawBitmapString("spare particles    : "+ofToString(particleSystemManager.spareParticleCount),0,0);
+	
+	ofTranslate(0,20);
+	ofDrawBitmapString("active particles   : "+ofToString(particleSystemManager.activeParticleCount),0,0);
+	
+	ofTranslate(0,20);
+	ofDrawBitmapString("physics objects    : "+ofToString(particleSystemManager.physicsObjects.size()),0,0);
+	
+	ofTranslate(0,20);
+	ofDrawBitmapString("spare physics objs : " +ofToString(particleSystemManager.sparePhysicsObjects.size()),0,0);
 
 	ofTranslate(0,20);
-	ofDrawBitmapString("active po : " +ofToString(particleSystemManager.activePhysicsObjectCount),0,0);
+	ofDrawBitmapString("active physics objs: " +ofToString(particleSystemManager.activePhysicsObjectCount),0,0);
 
 	ofPopMatrix();
 	

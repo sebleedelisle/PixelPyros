@@ -22,8 +22,8 @@ public:
 		
 	}
 	
-	virtual void renderParticles(vector <Particle * > particles){
-        //cout << "STAR RENDERER"<< endl;
+	virtual void renderParticles(Particle* firstParticle){
+	    //cout << "STAR RENDERER"<< endl;
         // BASIC TRIANGLE RENDERER
 		//		ofDisableSmoothing();
 		
@@ -31,11 +31,14 @@ public:
 		//ofMatrix4x4 mat;
 		
 		mesh.clear();
+		Particle* particle = firstParticle;
 		
-		for(std::vector<Particle *>::iterator it = particles.begin(); it != particles.end(); ++it) {
+		while(particle!=NULL) {
 			
-			Particle& p = **it; // *(particles[i]);
-			if((!p.enabled) || (p.size<0.1)) continue;
+			Particle& p = *particle;
+			particle = particle->next;
+			
+			if((!p.enabled) || (p.size<0.1)) continue;			
 			
 			ofVec3f p1(0,-1), p2(MIN(p.size*20,length),0), p3(0,1);
 			ofVec3f scalar(1,p.size);
@@ -68,6 +71,7 @@ public:
 			}
 			
 			
+
 			
 		}
 		

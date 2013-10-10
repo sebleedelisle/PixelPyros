@@ -201,7 +201,7 @@ TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChan
 	explosion.emitDelay = trails.emitLifeTime = 2;
 	
 	rocketSettings.addParticleSystemSetting(trails);
-	rocketSettings.addParticleSystemSetting(explosion);
+	//rocketSettings.addParticleSystemSetting(explosion);
 	//rocketSettings.addParticleSystemSetting(explosionLines);
 	
 	
@@ -265,7 +265,8 @@ ParticleSystemSettings FireworkFactory :: getFlowerExplosionParticles(float hue,
 	
 	
 	ParticleSystemSettings explosion;
-	explosion.renderer = new ParticleRendererBitmap(&softWhiteImage);
+	//explosion.renderer = new ParticleRendererBitmap(&softWhiteImage);
+	explosion.renderer = new ParticleRendererShape();
 	
 	//pss.directionZVar = 20;
 	explosion.speedMin = 650;
