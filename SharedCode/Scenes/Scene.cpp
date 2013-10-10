@@ -262,6 +262,8 @@ bool Scene::toggleRecord() {
 }
 
 void Scene :: goToTime(float timeSeconds){
+	
+	timeSeconds = ofClamp(timeSeconds, 0, lengthSeconds);
 	music.setPositionMS(timeSeconds*1000);
 	positionSeconds = timeSeconds;
 	

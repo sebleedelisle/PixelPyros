@@ -87,6 +87,7 @@ public:
 	ofFbo fbo;
 	bool useFbo;
 	
+	float deltaTime;
 	float lastUpdateTime;
 	
 	QuadWarp fboWarper1;
@@ -94,6 +95,8 @@ public:
 	
 	
 	vector<ofRectangle> screens;
+	ofRectangle uiScreenRect;
+	ofRectangle previewRect; 
 	
 	//ofRectangle triggerArea;
 	float triggerAreaCentreY;

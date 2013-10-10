@@ -54,7 +54,7 @@ class Sound {
 			}
 		}
 		
-		int numsounds = sounds.size();
+		//int numsounds = sounds.size();
 		
 		// if we only have one sound then make a few for proper
 		// polyphony.

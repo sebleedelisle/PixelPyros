@@ -45,8 +45,6 @@ public:
 			Particle& p = **it; 
 			if((!p.enabled) || (p.size<1)) continue;
 			
-			int vertexIndex = mesh.getNumVertices();
-			
 			for(int i = 0; i<shape.size(); i++) {
 				ofVec3f v = shape[i];
 				

@@ -72,7 +72,7 @@ public:
 		
 		float w = fbo.getWidth(), h = fbo.getHeight();
 		float hw =  w/2;
-		float hh =  h/2;
+		//float hh =  h/2;
 		
 		ofPushStyle();
 		ofEnableBlendMode(OF_BLENDMODE_ADD);

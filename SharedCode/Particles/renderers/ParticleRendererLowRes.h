@@ -41,8 +41,6 @@ public:
 			if((!p.enabled) || (p.size<pixelSize/4)) continue;
 		
 			
-			float size = round(p.size / pixelSize);
-
 			int vertexIndex = mesh.getNumVertices();
 			
 			for(int i = 0; i<shape.size(); i++) {

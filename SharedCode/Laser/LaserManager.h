@@ -41,6 +41,10 @@ class LaserManager {
 	void draw();
 	
 	void renderPreview();
+	void renderLaserPath(ofRectangle previewRectangle);
+	
+	//void updatePreviewScreenRect(ofRectangle pscreenrect);
+
 	
 	bool my_compare( ofPoint a, ofPoint b){
 		return a.y < b.y;
@@ -68,7 +72,7 @@ class LaserManager {
 	void drawLaserSpiral(LaserSpiral& spiral);
 	
 	void resetIldaPoints();
-	void addIldaPoint(const ofPoint& p, ofFloatColor c, float pointIntensity = 1);
+	void addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity = 1);
 	
 	ofxIlda::Point ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour);
 	ofPoint ildaPointToOfPoint(const ofxIlda::Point& ildapoint);
@@ -76,9 +80,12 @@ class LaserManager {
 	vector<float> getPointsAlongDistance(float distance, float acceleration, float maxspeed);
 	
 	
+	
+	void connectButtonPressed();
+	
 	void connectToEtherdream();
 	void disconnectFromEtherdream();
-	bool toggleRegistration(); 
+	bool toggleRegistration();
 	
 	
 	void addDelayTest() ;
@@ -93,10 +100,17 @@ class LaserManager {
 	
 	ofPoint currentPosition;
 	
-	
-	
-	//int endCount;
-	//int blankCount;
+	ofxButton connectButton;
+	ofParameter<string> etherdreamStatus;
+	ofParameter<int> pps; 
+	ofParameter<bool> showWarpPoints;
+	ofParameter<bool> flipX;
+	ofParameter<bool> flipY;
+	ofParameter<bool> showRegistration;
+	ofParameter<bool> showMaskRectangle;
+	ofParameter<bool> showSyncTest;
+	ofParameter<bool> showLaserPath;
+	ofParameter<bool> renderLaserPreview;
 	
 	// overall brightness applied to any laser colour
 	ofParameter<float> intensity;
@@ -130,14 +144,6 @@ class LaserManager {
 
 	
 	
-	ofParameter<bool> connectButton;
-	ofParameter<string> etherdreamStatus;
-	ofParameter<bool> showWarpPoints;
-
-	ofParameter<bool> showRegistration;
-	ofParameter<bool> showSyncTest;
-	ofParameter<bool> renderLaserPath;
-	ofParameter<bool> renderLaserPreview;
 	
 	ofParameterGroup p1, p2, p3;
 	ofParameterGroup parameters;

@@ -63,9 +63,12 @@ public :
 	
 	
 	bool showInterface;
+	
 	bool dragPlayHead;
 	ofPoint playHeadClickOffset;
 	ofRectangle playHeadRect;
+	// time bar is the track along the bottom
+	ofRectangle timeBarRect;
 
 	
 	

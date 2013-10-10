@@ -2,45 +2,4 @@
 <Bucket
    type = "1"
    version = "1.0">
-   <FileBreakpoints>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "../SharedCode/Scenes/Scene.cpp"
-         timestampString = "402577946.116218"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "337"
-         endingLineNumber = "337"
-         landmarkName = "Scene :: changeTriggerPattern(int num)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "../../../libs/openFrameworks/utils/ofXml.cpp"
-         timestampString = "402768497.521237"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "316"
-         endingLineNumber = "316"
-         landmarkName = "ofXml::setToParent()"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "../SharedCode/Particles/ParticleSystemManager.h"
-         timestampString = "402950780.547722"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "34"
-         endingLineNumber = "34"
-         landmarkName = "class ParticleSystemManager"
-         landmarkType = "3">
-      </FileBreakpoint>
-   </FileBreakpoints>
 </Bucket>

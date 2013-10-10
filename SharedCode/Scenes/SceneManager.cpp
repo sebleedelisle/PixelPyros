@@ -75,23 +75,25 @@ void SceneManager :: drawGUI() {
 	if(!currentScene->music.isLoaded()) return;
 	ofPushStyle();
 	ofFill();
+	ofSetColor(25,15,64);
+	ofRect(timeBarRect);
 	ofSetColor(100,120,255);
-	ofRect(screenUI.getLeft(),screenUI.getBottom()-4,screenUI.width,4);
+	ofRect(timeBarRect.x, timeBarRect.y+timeBarRect.height-2,timeBarRect.width, 2);
+
+	float pos = ofMap(currentScene->positionSeconds,0,currentScene->lengthSeconds, timeBarRect.getLeft(),timeBarRect.getRight());
 	
-	// TODO need this to go on the second screen really
-	float pos = ofMap(currentScene->positionSeconds,0,currentScene->lengthSeconds, screenUI.getLeft(),screenUI.getRight());
 	ofNoFill();
 	ofSetLineWidth(2);
 	
-	playHeadRect.setPosition(pos-10,screenUI.getBottom()-20);
+	playHeadRect.setPosition(pos-playHeadRect.width/2,timeBarRect.getTop()-1);
 	//
 	
 	ofSetColor(128);
 	vector <SequenceCommand>& commands = currentScene->commands;
 	for(int i = 0; i<commands.size(); i++) {
 		if(!commands[i].enabled) continue;
-		float pos = ofMap(commands[i].time, 0, currentScene->lengthSeconds, screenUI.getLeft(),screenUI.getRight());
-		ofLine(pos, screenUI.getBottom()-20,pos,screenUI.getBottom());
+		float pos = ofMap(commands[i].time, 0, currentScene->lengthSeconds, timeBarRect.getLeft(),timeBarRect.getRight());
+		ofLine(pos, timeBarRect.getTop(),pos,timeBarRect.getBottom());
 		
 	}
 	
@@ -99,8 +101,8 @@ void SceneManager :: drawGUI() {
 	if((currentScene) && (currentScene->recording)) ofSetColor(ofColor::red);
 	
 	ofRect(playHeadRect);
-	ofLine(pos, screenUI.getBottom()-20,pos,screenUI.getBottom()-15);
-	ofLine(pos, screenUI.getBottom()-5,pos,screenUI.getBottom());
+	ofLine(pos, timeBarRect.getTop()-1,pos, timeBarRect.getTop()+4);
+	ofLine(pos, timeBarRect.getBottom()-4,pos,timeBarRect.getBottom()+1);
 	
 	ofDrawBitmapString(ofToString(currentScene->positionSeconds, 2), pos-12,screenUI.getBottom()-28);
 	
@@ -360,6 +362,7 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 
 void SceneManager :: updateUIScreen(ofRectangle screen){
 	screenUI = screen;
+	timeBarRect.set(screen.x+playHeadRect.width/2, screen.getBottom()-playHeadRect.height-1,screen.width - playHeadRect.width, playHeadRect.height-2);
 	cout << "SCENE MANAGER UPDATE SCREEN " << screen << endl; 
 
 }

@@ -84,9 +84,6 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	rs.setLifeTime(2.4);
 	
-	TriggerSettingsRocket* glitchRocketTrigger = new TriggerSettingsRocket();
-	//glitchRocketTrigger->rocketSettings = &glitchRocket;
-	
 	glitchFountainPattern.addTriggerSettings();
 	glitchFountainPattern.addTriggerSettings(&glitchRocket);
 	glitchFountainPattern.addTriggerSettings();
@@ -311,7 +308,6 @@ bool SceneVectorizer :: draw() {
 TriggerSettingsRocket* SceneVectorizer :: getRocketTronFountain(float hueStartOffset, float hueChange) {
 	
 	
-	ParticleRendererBase* particleRenderer = new ParticleRendererSquare();
 	ParticleRendererBase* particleLineRenderer = new ParticleRendererGlitchLine(1.5);
 	
 	
