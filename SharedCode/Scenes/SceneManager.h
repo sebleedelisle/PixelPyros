@@ -32,7 +32,6 @@ public :
 	bool togglePlayPause();
 	bool toggleShowInterface();
 	bool toggleRecord();
-
 	
 	void mousePressed(ofMouseEventArgs &e);
 	void mouseDragged(ofMouseEventArgs &e);
@@ -40,6 +39,13 @@ public :
 	void keyPressed(ofKeyEventArgs &e);
 	
 	void updateUIScreen(ofRectangle screen);
+	
+	float getPositionForTime(float time);
+	float getTimeForPosition(float position);
+	int getCommandIndexAtPosition(ofPoint pos);
+	ofRectangle getRectangleForCommand(SequenceCommand& command);
+	ofRectangle getRectangleForCommand(int i);
+	
 	
 	ofRectangle screenUI;
 
@@ -65,7 +71,11 @@ public :
 	bool showInterface;
 	
 	bool dragPlayHead;
-	ofPoint playHeadClickOffset;
+	int dragCommandIndex;
+	int mouseOverCommandIndex; 
+	ofPoint dragClickOffset;
+	
+	
 	ofRectangle playHeadRect;
 	// time bar is the track along the bottom
 	ofRectangle timeBarRect;

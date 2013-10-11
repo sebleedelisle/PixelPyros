@@ -51,7 +51,7 @@ void ofApp::setup(){
 	cameraManager.init();
 	cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
 	cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
-	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 
 	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); 
@@ -193,8 +193,10 @@ void ofApp::draw(){
 	//laserManager.drawGUI(uiScreenRect);
 
 	
-	
-	laserManager.renderLaserPath(controlPanels.getPreviewScreenRect());
+//	laserManager.showLaserPath = laserManager.showLaserPath || (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER);
+//	laserManager.showWarpPoints = laserManager.showWarpPoints || (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER);
+
+	laserManager.renderLaserPath(controlPanels.getPreviewScreenRect(), (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER));
 	
 	
 	ofPushStyle();
@@ -253,7 +255,7 @@ void ofApp::draw(){
 
 	ofPopMatrix();
 	
-    controlPanels.draw();
+    controlPanels.draw(motionManager);
 	sceneManager.drawGUI();
 	
 }

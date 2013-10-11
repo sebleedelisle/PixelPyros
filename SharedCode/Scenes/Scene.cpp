@@ -21,7 +21,8 @@ Scene::Scene(string scenename) {
 	name = scenename;
 	
 	playing = false;
-	recording = false; 
+	recording = false;
+	overwriteMode = false; 
 	positionSeconds = 0;
 	lengthSeconds = 1;
 
@@ -116,7 +117,7 @@ bool Scene :: update(float deltaTime) {
 		SequenceCommand& command = commands[i];
 		if((command.time>lastUpdate) && (command.time<=positionSeconds)) {
 			
-			if(recording) {
+			if(recording && overwriteMode) {
 				command.enabled = false;
 			} else if(command.enabled){
 				processCommand(command);
@@ -136,12 +137,12 @@ SequenceCommand Scene :: addCommand(float time, SequenceCommandType type, int ar
 	
 	SequenceCommand cmd(type, time, arg);
 	commands.push_back(cmd);
-	// TODO Check that I don't need to sort these !
-	//sort(commands.begin(), commands.end());
 	
+	updateCommands(); 
 	return cmd;
 	
 }
+
 
 
 void Scene :: processCommand(SequenceCommand command) {
@@ -154,6 +155,31 @@ void Scene :: processCommand(SequenceCommand command) {
 	
 	
 }
+
+void Scene :: updateCommands() {
+	
+	sort(commands.begin(), commands.end());
+	// AUTO SAVE HERE AND DO UNDO STUFF; 
+	//save();
+}
+
+
+bool Scene::disableCommand(int i) {
+	
+	if((i<0) || (commands.size()<=i)) {
+		return false;
+	} else {
+		
+		commands[i].enabled = false;
+		
+		updateCommands();
+		
+		return true;
+	}
+	
+}
+
+
 bool Scene:: draw() {
 
 	if(!active) return false;
@@ -372,3 +398,4 @@ bool Scene :: previous() {
 
 
 }
+

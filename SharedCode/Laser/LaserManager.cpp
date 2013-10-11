@@ -306,12 +306,12 @@ void LaserManager::draw() {
 	
 }
 
-void LaserManager::renderLaserPath(ofRectangle previewRectangle) {
+void LaserManager::renderLaserPath(ofRectangle previewRectangle, bool overrideSettings) {
 	
 	ofPushStyle();
 	
 	
-	if((showLaserPath)){//||(showRegistration)) {
+	if((showLaserPath)||(overrideSettings)) {
 		
 		ofPushMatrix();
 		
@@ -335,7 +335,7 @@ void LaserManager::renderLaserPath(ofRectangle previewRectangle) {
 	
 	
 	// TODO - this needs to go somewhere else!
-	warp.visible = showWarpPoints;
+	warp.visible = showWarpPoints || (overrideSettings);
 	warp.draw();
 
 	ofPopStyle();

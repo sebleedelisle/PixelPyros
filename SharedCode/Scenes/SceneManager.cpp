@@ -14,6 +14,8 @@ SceneManager :: SceneManager() : particleSystemManager(*ParticleSystemManager::i
 	
 	showInterface = true;
 	dragPlayHead = false;
+	dragCommandIndex = -1;
+	mouseOverCommandIndex =-1; 
 	
 	ofAddListener(ofEvents().mousePressed, this, &SceneManager::mousePressed);
 	ofAddListener(ofEvents().mouseDragged, this, &SceneManager::mouseDragged);
@@ -58,6 +60,13 @@ bool SceneManager ::update(float deltaTime){
 	}
 	
 	
+	if((!dragPlayHead) && (dragCommandIndex==-1)) {
+		mouseOverCommandIndex = getCommandIndexAtPosition(ofPoint(ofGetMouseX(), ofGetMouseY()));
+	} else {
+		mouseOverCommandIndex = -1;
+		
+	}
+	
 }
 
 void SceneManager::draw() {
@@ -80,20 +89,50 @@ void SceneManager :: drawGUI() {
 	ofSetColor(100,120,255);
 	ofRect(timeBarRect.x, timeBarRect.y+timeBarRect.height-2,timeBarRect.width, 2);
 
-	float pos = ofMap(currentScene->positionSeconds,0,currentScene->lengthSeconds, timeBarRect.getLeft(),timeBarRect.getRight());
+	
 	
 	ofNoFill();
 	ofSetLineWidth(2);
 	
-	playHeadRect.setPosition(pos-playHeadRect.width/2,timeBarRect.getTop()-1);
-	//
+	
+	playHeadRect.setPosition(getPositionForTime(currentScene->positionSeconds)-playHeadRect.width/2,timeBarRect.getTop()-1);
+	
 	
 	ofSetColor(128);
 	vector <SequenceCommand>& commands = currentScene->commands;
 	for(int i = 0; i<commands.size(); i++) {
 		if(!commands[i].enabled) continue;
-		float pos = ofMap(commands[i].time, 0, currentScene->lengthSeconds, timeBarRect.getLeft(),timeBarRect.getRight());
-		ofLine(pos, timeBarRect.getTop(),pos,timeBarRect.getBottom());
+		
+		float pos = getPositionForTime(commands[i].time);
+		
+		if(i==dragCommandIndex) {
+			ofSetColor(255,0,255);
+			ofFill();
+			ofRectangle commandRect = (getRectangleForCommand(i));
+			if(timeBarRect.y - ofGetMouseY() > 100) {
+				commandRect.y = ofGetMouseY()-(commandRect.height/2); 
+				
+			}
+			
+			ofRect(commandRect);
+			ofSetColor(0);
+			ofDrawBitmapString(ofToString(commands[i].arg1), commandRect.x, commandRect.getTop()+12);
+			
+		} else if(i==mouseOverCommandIndex) {
+			ofSetColor(255);
+			ofFill();
+			ofRectangle commandRect = (getRectangleForCommand(i));
+			
+			ofRect(commandRect);
+			ofSetColor(0);
+			ofDrawBitmapString(ofToString(commands[i].arg1), commandRect.x, commandRect.getTop()+12);
+		} else {
+			ofSetColor(186);
+			
+			ofLine(pos, timeBarRect.getTop(),pos,timeBarRect.getBottom());
+		}
+		ofNoFill(); 
+		
 		
 	}
 	
@@ -101,10 +140,10 @@ void SceneManager :: drawGUI() {
 	if((currentScene) && (currentScene->recording)) ofSetColor(ofColor::red);
 	
 	ofRect(playHeadRect);
-	ofLine(pos, timeBarRect.getTop()-1,pos, timeBarRect.getTop()+4);
-	ofLine(pos, timeBarRect.getBottom()-4,pos,timeBarRect.getBottom()+1);
+	ofLine(playHeadRect.getCenter().x, timeBarRect.getTop()-1,playHeadRect.getCenter().x, timeBarRect.getTop()+4);
+	ofLine(playHeadRect.getCenter().x, timeBarRect.getBottom()-4,playHeadRect.getCenter().x,timeBarRect.getBottom()+1);
 	
-	ofDrawBitmapString(ofToString(currentScene->positionSeconds, 2), pos-12,screenUI.getBottom()-28);
+	ofDrawBitmapString(ofToString(currentScene->positionSeconds, 2) + " " +ofToString(mouseOverCommandIndex), playHeadRect.getCenter().x-12,screenUI.getBottom()-28);
 	
 	/*
 	 ofSetLineWidth(20);
@@ -268,10 +307,22 @@ void SceneManager :: mousePressed(ofMouseEventArgs &e) {
 	ofVec2f cur(e.x, e.y);
 	if(playHeadRect.inside(cur)) {
 		dragPlayHead = true;
-		playHeadClickOffset = cur - (playHeadRect.getPosition()+10);
+		dragClickOffset = playHeadRect.getCenter() - cur;
 		if(currentScene->playing) currentScene->togglePlayPause();
 		
+	} else {
+	
+		int commandIndex = getCommandIndexAtPosition(cur);
+		if(commandIndex!=-1) {
+			dragCommandIndex = commandIndex;
+			dragClickOffset = getRectangleForCommand(dragCommandIndex).getCenter() - cur;
+			mouseOverCommandIndex = -1;
+		}
+		
+		
+		
 	}
+	
 	
 	
 };
@@ -284,11 +335,14 @@ void SceneManager :: mouseDragged(ofMouseEventArgs &e) {
 	
 	if(dragPlayHead) {
 		
-		//playHeadRect.setPosition(ofPoint(e.x, e.y) - playHeadClickOffset);
+		currentScene->goToTime(getTimeForPosition(e.x+ dragClickOffset.x) );
 		
-		//currentSequence->positionSeconds = ofMap(e.x, 0, APP_WIDTH, 0, currentSequence->lengthSeconds);
+	} else if(dragCommandIndex>-1){
 		
-		currentScene->goToTime(ofMap(e.x-playHeadClickOffset.x, screenUI.getLeft(), screenUI.getRight(), 0, currentScene->lengthSeconds));
+		currentScene->commands[dragCommandIndex].time = getTimeForPosition(e.x+dragClickOffset.x);
+		
+		
+		
 	}
 	
 	/*
@@ -310,13 +364,72 @@ void SceneManager :: mouseDragged(ofMouseEventArgs &e) {
 
 
 
+
 void SceneManager :: mouseReleased(ofMouseEventArgs &e) {
+	
 	dragPlayHead = false;
+	if(dragCommandIndex>-1) {
+		if(timeBarRect.y - ofGetMouseY() > 100) {
+			if(currentScene!=NULL) currentScene->disableCommand(dragCommandIndex);
+			//currentScene->commands[dragCommandIndex].enabled = false;
+			
+			//if(getCommand(i)) {
+			//	getCommand(i)->enabled = false;
+				// SAVE HERE FOR UNDO AND AUTOSAVE
+			//}
+		}
+	}
+	
+	dragCommandIndex = -1; 
 	
 	if(!showInterface) return;
 	
 };
 
+
+int SceneManager :: getCommandIndexAtPosition(ofPoint pos) {
+	
+	if(currentScene == NULL) return -1;
+	
+	for(int i = 0; i<currentScene->commands.size(); i++) {
+		
+		if(getRectangleForCommand(currentScene->commands[i]).inside(pos)){
+			return i;
+		}
+		
+	}
+	
+	
+}
+ofRectangle SceneManager::getRectangleForCommand(int i) {
+	
+	if(currentScene == NULL) return ofRectangle();
+	else if((currentScene->commands.size()<=i) || (i<0)) return ofRectangle();
+	else return getRectangleForCommand(currentScene->commands[i]);
+	
+}
+ofRectangle SceneManager::getRectangleForCommand(SequenceCommand& command) {
+	
+	ofRectangle rect(0,timeBarRect.getTop()-12,8,timeBarRect.height+12);
+	rect.x = getPositionForTime(command.time)-4;
+	
+	return rect;
+	
+}
+
+
+
+float SceneManager::getTimeForPosition(float position) {
+	
+	return ofMap(position, timeBarRect.getLeft(), timeBarRect.getRight(), 0, currentScene->lengthSeconds);
+}
+
+float SceneManager:: getPositionForTime(float time){
+	
+	return ofMap(time,0,currentScene->lengthSeconds, timeBarRect.getLeft(),timeBarRect.getRight());
+	
+	
+}
 
 
 void SceneManager :: keyPressed(ofKeyEventArgs &e) {
