@@ -92,6 +92,8 @@ class Scene {
 	// AN ARRAY OF TRIGGERS TO CHANGE ARRANGEMENT
 	// FROM THE GUI / OSC
 	//vector <bool *> triggerPatternChangeTriggers;
+protected:
     
+	SequenceCommand _addCommand(float time, SequenceCommandType type, int arg);
 
 };

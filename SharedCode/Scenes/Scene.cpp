@@ -26,7 +26,7 @@ Scene::Scene(string scenename) {
 	positionSeconds = 0;
 	lengthSeconds = 1;
 
-    addCommand(0, SEQ_PATTERN_CHANGE, 0);	
+    _addCommand(0, SEQ_PATTERN_CHANGE, 0);
 }
 void Scene :: loadMusicFile(string musicfile){
 	
@@ -119,6 +119,7 @@ bool Scene :: update(float deltaTime) {
 			
 			if(recording && overwriteMode) {
 				command.enabled = false;
+                save();
 			} else if(command.enabled){
 				processCommand(command);
 			}
@@ -132,13 +133,20 @@ bool Scene :: update(float deltaTime) {
 	
 }
 
+SequenceCommand Scene:: addCommand(float time, SequenceCommandType type, int arg){
+    SequenceCommand cmd = _addCommand(time,type,arg);
+    
+    updateCommands();
+    
+    return cmd;
+	
+}
 
-SequenceCommand Scene :: addCommand(float time, SequenceCommandType type, int arg){
+SequenceCommand Scene :: _addCommand(float time, SequenceCommandType type, int arg){
 	
 	SequenceCommand cmd(type, time, arg);
 	commands.push_back(cmd);
 	
-	updateCommands(); 
 	return cmd;
 	
 }
@@ -160,7 +168,7 @@ void Scene :: updateCommands() {
 	
 	sort(commands.begin(), commands.end());
 	// AUTO SAVE HERE AND DO UNDO STUFF; 
-	//save();
+	save();
 }
 
 
@@ -229,12 +237,14 @@ void Scene:: save(){
     oldData.erase(std::remove_if(oldData.begin(), oldData.end(), ::isspace ), oldData.end());
     newData.erase(std::remove_if(newData.begin(), newData.end(), ::isspace ), newData.end());
     
-    cout << endl << oldData << endl;
-    cout << endl << newData << endl;
-    
-    
     if( oldData.compare( newData ) != 0 ){
-        ofLogError() << "Scene data has changed, baking up and saving";
+        ofLogError() << "Scene data has changed, backing up and saving";
+        
+        if( newData.compare("") ){
+            ofLogError() << "Scene data empty, has something gone wrong!?";
+            cout << endl << oldData << endl;
+            cout << endl << newData << endl;
+        }
         
         std::time_t t = std::time(NULL);
         struct tm * ptr;
@@ -245,6 +255,8 @@ void Scene:: save(){
         sprintf( backupFilename, "sequences/%s.%s.xml", name.c_str(), mbstr );
         previousXml.saveFile( backupFilename );
         xml.saveFile( filename );
+        
+        
     }
 
 }
@@ -256,7 +268,7 @@ void Scene:: load(){
     if( !loaded ) return;
     int numCommands = xml.getNumTags("command");
     for(int i=0;i<numCommands;i++){
-        addCommand( xml.getValue("command:time", 0.0, i), SEQ_PATTERN_CHANGE, xml.getValue("command:arg1", 0, i) );
+        _addCommand( xml.getValue("command:time", 0.0, i), SEQ_PATTERN_CHANGE, xml.getValue("command:arg1", 0, i) );
     }
     
 }
