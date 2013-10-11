@@ -19,3 +19,6 @@
 [submodule "addons/ofxNSWindower"]
 	path = addons/ofxNSWindower
 	url = git@github.com:paulhayes/ofxNSWindower.git
+[submodule "addons/ofxIpVideoGrabber"]
+	path = addons/ofxIpVideoGrabber
+	url = https://github.com/bakercp/ofxIpVideoGrabber
