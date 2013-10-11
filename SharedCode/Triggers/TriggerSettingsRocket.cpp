@@ -72,19 +72,35 @@ void TriggerSettingsRocket::draw(float elapsedtime, ofVec3f pos, float unitPower
 	path.clear();
 	path.setFillColor(colour);
 	path.setCircleResolution(12);
-	path.arc(0,0, (radius-2)*unitPower, (radius-2)*unitPower, -90, -90 + unitPower*360);
+	
+	
+	float size;
+	
+	if(rechargeSettings->triggerPower ==1 ) {
+		size = unitPower;
+	} else if(unitPower >= rechargeSettings->triggerPower ) {
+		size = ofMap(unitPower, rechargeSettings->triggerPower, 1,0.8,1); 
+	} else {
+		size = ofMap(unitPower, 0, rechargeSettings->triggerPower, 0, 0.8);
+	}
+	
+	bool triggerable = (unitPower>=rechargeSettings->triggerPower);
+	
+	//float modlevel = 0.3f;
+	if(triggerable){
+		path.arc(0,0, (radius-2)*size, (radius-2)*size, -90, -90 + size*360);
+		
+	} else if (int(elapsedtime*1000) % 200 >100) {
+		path.setFillColor(colour * ofMap(unitPower, 0, rechargeSettings->triggerPower, 0.4,1));
+		path.arc(0,0, (radius-2)*size, (radius-2)*size, -90, -90 + size*360);
+
+	}
+
 	
 	
 	path.draw();
 	
-	/*
-	if(!active) {
-		
-		ofSetColor(ofColor::red);
-		ofRect(0,0, radius, radius);
-		
-		
-	}*/
+	
 	if((rotateOnFire) || (rotationSpeed!=0)) {
 		ofRotate(angle);
 		ofLine(0,0,0,-20);
