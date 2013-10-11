@@ -15,6 +15,7 @@
 #include "ofxSliderGroup.h"
 #include "QuadWarp.h"
 #include "LaserManager.h"
+#include "MotionManager.h"
 
 class ControlPanels {
     
@@ -23,8 +24,8 @@ class ControlPanels {
     ControlPanels():parameterManager(*ParameterManager::instance()){};
     void setup(ParameterManager * parameterManager); 
 	void updatePositions(vector<ofRectangle> screens); 
-    void draw();
-    void drawPreviewScreen();
+    void draw(MotionManager& cameraManager);
+    void drawPreviewScreen(MotionManager& cameraManager);
     void exit();
     void keyPressed(int key);
     void mouseMoved(int x, int y);
@@ -36,12 +37,20 @@ class ControlPanels {
     
     //QuadWarp * laserWarp;
     
+	
+	int panelMode;
+	int PANEL_MODE_NONE = 0;
+	int PANEL_MODE_APP = 1;
+	int PANEL_MODE_MOTION = 2;
+	int PANEL_MODE_LASER = 3;
+
+	
     protected:
 
     void setupPanel( string name, ofRectangle rect, ofxPanel & panel );
     void setupPanel( string name, string filename, ofRectangle rect, ofxPanel & panel );
    // void layoutPanels(vector<ofxPanel> panels,ofRectangle space );
-    vector<ofxPanel> getVisiblePanels();
+   // vector<ofxPanel> getVisiblePanels();
 	void updatePreviewScreenSize();
    
     ParameterManager& parameterManager;
@@ -57,11 +66,6 @@ class ControlPanels {
     ofxPanel motionGui;
 	ofxPanel cameraGui;
 	
-	int panelMode;
-	int PANEL_MODE_NONE = 0;
-	int PANEL_MODE_APP = 1;
-	int PANEL_MODE_MOTION = 2;
-	int PANEL_MODE_LASER = 3; 
 	
 	vector<ofxPanel*> panels; 
     

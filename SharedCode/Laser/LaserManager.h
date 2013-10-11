@@ -41,11 +41,10 @@ class LaserManager {
 	void draw();
 	
 	void renderPreview();
-	void renderLaserPath(ofRectangle previewRectangle);
+	void renderLaserPath(ofRectangle previewRectangle, bool overrideSettings);
 	
 	//void updatePreviewScreenRect(ofRectangle pscreenrect);
 
-	
 	bool my_compare( ofPoint a, ofPoint b){
 		return a.y < b.y;
 	}

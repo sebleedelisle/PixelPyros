@@ -112,10 +112,10 @@ void ControlPanels :: updatePositions(vector<ofRectangle> screens){
     cout << screen.x << ", " << screen.y;
 }
 
-void ControlPanels::draw(){
+void ControlPanels::draw(MotionManager& motionManager){
     
     
-    if( monitorCount > 1 ) drawPreviewScreen();
+    if( monitorCount > 1 ) drawPreviewScreen(motionManager);
         
   	for(int i = 0; i<panels.size(); i++) {
         panels[i]->draw();
@@ -123,7 +123,7 @@ void ControlPanels::draw(){
 
 }
 
-void ControlPanels::drawPreviewScreen(){
+void ControlPanels::drawPreviewScreen(MotionManager& motionManager){
 	
 	ofPushStyle();
 	
@@ -144,7 +144,26 @@ void ControlPanels::drawPreviewScreen(){
 	ofSetLineWidth(1);
 	ofNoFill();
 	ofRect(previewScreenRect.x-.5, previewScreenRect.y-.5, previewScreenRect.width+2, previewScreenRect.height+2);
+	ofSetColor(255);
+	if(panelMode == PANEL_MODE_MOTION) {
+		motionManager.current.update();
+		motionManager.current.draw(previewScreenRect.getLeft(), previewScreenRect.getBottom(), previewScreenRect.width/2, previewScreenRect.height/2);
+		motionManager.diff.update();
+		
+		ofSetColor(96);
+		
+		motionManager.current.draw(previewScreenRect.getLeft()+previewScreenRect.width/2, previewScreenRect.getBottom(), previewScreenRect.width/2, previewScreenRect.height/2);
+	
+		
+		ofSetColor(255,0,255);
+		ofBlendMode(OF_BLENDMODE_SCREEN);
+		
+		motionManager.diff.draw(previewScreenRect.getLeft()+previewScreenRect.width/2, previewScreenRect.getBottom(), previewScreenRect.width/2, previewScreenRect.height/2);
+	
+	}
+	
 	ofPopStyle();
+	
 	
 }
 
@@ -156,9 +175,12 @@ void ControlPanels::updatePreviewScreenSize(){
 	
 	previewScreenRect.set(0, 0, targetwidth, targetheight);
 	
-	if(panelMode != PANEL_MODE_NONE){
-		targetwidth *= 0.75; 
-	}
+
+	if(panelMode == PANEL_MODE_MOTION) {
+		targetwidth = screen.width;
+	} else if(panelMode != PANEL_MODE_NONE){
+		targetwidth *= 0.75;		
+	}	
 	
 	float scale = targetwidth/previewScreenRect.width;
 	
@@ -169,7 +191,9 @@ void ControlPanels::updatePreviewScreenSize(){
 	previewScreenRect.x = screen.x+1;
 	previewScreenRect.y = screen.y + targetheight - previewScreenRect.height +1;
 	
-	
+	if(panelMode == PANEL_MODE_MOTION) {
+		previewScreenRect.y = main.getHeight()/2 - previewScreenRect.getHeight();
+	}
 	
 	
 }
@@ -259,6 +283,8 @@ void ControlPanels::setupPanel( string name, ofRectangle rect, ofxPanel & panel 
     
 }
 
+/*
+
 vector<ofxPanel> ControlPanels::getVisiblePanels(){
     vector<ofxPanel> visiblePanels(10);
     if( laserGui.getVisible() )
@@ -273,7 +299,7 @@ vector<ofxPanel> ControlPanels::getVisiblePanels(){
     }
     
     return visiblePanels;
-}
+}*/
 /*
 void ControlPanels::layoutPanels(vector<ofxPanel> panels,ofRectangle space ){
     ofVec2f pos(space.x,space.y);

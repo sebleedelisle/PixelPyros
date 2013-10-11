@@ -26,7 +26,7 @@
 	<flip_x>1</flip_x>
 		<flip_y>1</flip_y>
 	<laser_move_points>0</laser_move_points>
-		<show_laser_path>1</show_laser_path>
+		<show_laser_path>0</show_laser_path>
 	</Laser_Manager>
 <Laser/>
 <group/>

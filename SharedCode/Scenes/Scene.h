@@ -38,12 +38,13 @@ class Scene {
 	void addTriggerPattern();
 	void addTriggerPattern(TriggerPattern& pattern);
 	void addTriggerPattern(TriggerPattern& pattern, string label);
+
 	
 	TriggerPattern getCurrentTriggerPattern();
 	
 	TriggerManager* triggerManager; 
 	
-	string name; 
+	string name;
  
 	bool next();
 	bool previous();
@@ -57,7 +58,8 @@ class Scene {
 	int currentTriggerPatternIndex;
 	
 	bool playing;
-	bool recording; 
+	bool recording;
+	bool overwriteMode; 
 	bool togglePlayPause();
 	bool toggleRecord();
 	void goToTime(float time);
@@ -66,6 +68,9 @@ class Scene {
 	SequenceCommand addCommand(float time, SequenceCommandType type, int arg);
 	vector <SequenceCommand> commands;
 	void processCommand(SequenceCommand command);
+	bool disableCommand(int i);
+	void updateCommands(); 
+
 
 	float lastUpdate;
 	float lengthSeconds;
