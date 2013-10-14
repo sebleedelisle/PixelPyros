@@ -153,7 +153,7 @@ void LaserManager:: connectButtonPressed(){
 
 void LaserManager:: update() {
 	
-	etherdream.update();
+	//etherdream.update();
 	
 	resetIldaPoints();
 	//previewMesh.clear();
@@ -162,7 +162,8 @@ void LaserManager:: update() {
 
 	
 	//etherdreamStatus = etherdream.stateIsFound() ? "connected" : "disconnected";
-	etherdreamStatus = etherdream.getDeviceStateString() + (etherdream.stateIsFound() ? " FOUND " : " NOT FOUND ") + ofToString(isConnected);
+	//etherdreamStatus = etherdream.getDeviceStateString() + (etherdream.stateIsFound() ? " FOUND " : " NOT FOUND ") + ofToString(isConnected);
+	etherdreamStatus = (etherdream.stateIsFound() ? " FOUND " : " NOT FOUND ") + ofToString(isConnected);
 	
 	//connectButton.se(etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready");
 	
@@ -257,10 +258,10 @@ void LaserManager::draw() {
 		
 	}
 	
-	if((etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready")) {
+	//if((etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready")) {
 		etherdream.setPoints(adjustedPoints);
 		etherdream.setPPS(pps);
-	}
+	//}
 	
 
 	
@@ -320,7 +321,7 @@ void LaserManager::renderLaserPath(ofRectangle previewRectangle, bool overrideSe
 		float scale =  previewRectangle.width / appWidth;
 		ofScale(scale, scale);
 		
-		ofDisableBlendMode();
+		//ofDisableBlendMode();
 		ofNoFill();
 		ofSetLineWidth(1);
 		ofSetColor(0,0,255);

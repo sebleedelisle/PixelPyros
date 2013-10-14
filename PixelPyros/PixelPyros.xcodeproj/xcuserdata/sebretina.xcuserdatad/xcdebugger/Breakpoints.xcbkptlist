@@ -112,12 +112,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "403381876.443444"
+         timestampString = "403441416.177937"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "987"
-         endingLineNumber = "987"
+         startingLineNumber = "988"
+         endingLineNumber = "988"
          landmarkName = "LaserManager :: renderPreview()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/ControlPanels/ControlPanels.cpp"
+         timestampString = "403442281.940532"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "165"
+         endingLineNumber = "165"
+         landmarkName = "ControlPanels::drawPreviewScreen(MotionManager&amp; motionManager)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
