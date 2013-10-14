@@ -2,11 +2,14 @@
 
 #include "ofApp.h"
 
+
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetLogLevel(OF_LOG_WARNING);
 	useFbo = true;
-	fboWarper1.label = "leftScreen";
+	spanAll = true;
+    fboWarper1.label = "leftScreen";
 	fboWarper2.label = "rightScreen";
 	
 	//triggerArea.set(APP_WIDTH*0.15,APP_HEIGHT*0.85,APP_WIDTH*0.7,APP_HEIGHT*0.5);
@@ -352,7 +355,11 @@ void ofApp::keyPressed(int key){
             //sequencer.runSequence("Intro");
         }
 	else if(key == 'f') {
-		ofToggleFullscreen();
+        spanAll = !spanAll;
+        int monitorCount;
+        glfwGetMonitors(&monitorCount);
+        ofGetWindowPtr()->setMonitorSpan(spanAll?monitorCount:monitorCount-1);
+    
 		updateScreenSizes();
 	}
    // }
