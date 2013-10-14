@@ -1,7 +1,7 @@
 <Laser>
 	<Laser_Manager>
 		<Etherdream_connect>0</Etherdream_connect>
-		<status>Running FOUND 1</status>
+		<status>No devices connected NOT FOUND 0</status>
 		<show_warp_points>0</show_warp_points>
 		<intensity>1</intensity>
 		<colour_change_offset>-9</colour_change_offset>
@@ -21,12 +21,12 @@
 		<eased_line_padding>1</eased_line_padding>
 		<spiral_spacing>2.99</spiral_spacing>
 	<circle_overlap>6.75</circle_overlap>
-	<show_mask_rect>1</show_mask_rect>
+	<show_mask_rect>0</show_mask_rect>
 		<points_per_second>81100</points_per_second>
 	<flip_x>1</flip_x>
 		<flip_y>1</flip_y>
 	<laser_move_points>0</laser_move_points>
-		<show_laser_path>0</show_laser_path>
+		<show_laser_path>1</show_laser_path>
 	</Laser_Manager>
 <Laser/>
 <group/>
