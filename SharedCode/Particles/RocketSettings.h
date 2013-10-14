@@ -89,7 +89,8 @@ class RocketSettings {
 		// TODO - CHECK THAT IT'S NOT SHORTER THAN ANY PSS!
 		return lifeTime; 
 	}
-
+	
+	
 	float startSpeedMin; 
 	float startSpeedMax; 
 	float direction; 

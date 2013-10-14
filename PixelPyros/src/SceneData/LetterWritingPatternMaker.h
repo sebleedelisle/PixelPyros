@@ -63,7 +63,7 @@ class LetterWritingPatternMaker {
 		
 		
 		
-		RocketSettings rocketTemplate;
+		RocketSettings& rocketTemplate = *new RocketSettings;
 		rocketTemplate.directionVar = 0;
 		
 		rocketTemplate.addParticleSystemSetting(sparkler);
@@ -72,10 +72,7 @@ class LetterWritingPatternMaker {
 		//TriggerRocket triggerTemplate(psm);
 		//triggerTemplate.restoreSpeed = 0;
 		
-		
 		TriggerPattern pattern;
-		
-		
 		
 		for(int j = 0; j<letters.size(); j++) {
 			
@@ -121,11 +118,11 @@ class LetterWritingPatternMaker {
 			ParticleSystemSettings sparks(ps);
 			ParticleSystemSettings smokes(smoke);
 			ParticleSystemSettings burst(letterBurst);
-			ps.emitShape =
-			smoke.emitShape =
-			burst.emitShape = new ofMesh(glyph);
+			ps.emitPositionShape =
+			smoke.emitPositionShape =
+			burst.emitPositionShape = new ofMesh(glyph);
 			
-			RocketSettings rocket(rocketTemplate);
+			RocketSettings& rocket = *new RocketSettings(rocketTemplate);
 			rocket.addParticleSystemSetting(ps);
 			rocket.addParticleSystemSetting(smoke);
 			rocket.addParticleSystemSetting(burst);
@@ -142,22 +139,21 @@ class LetterWritingPatternMaker {
 			
 			//trigger.addRocketSettings(rocket);
 			
+			TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+			ts->addRocketSettings(&rocket);
+		
+			ts->rechargeSettings = TriggerRechargeSettings::oneShot;
 			
 			
-			
-			//pattern.addTrigger(trigger);
+			pattern.addTriggerSettings(ts);
 			
 			
 			x+=letterspacing;
 		}
 		
-		
-		
-		
-		
+		pattern.arrangeMode = TRIGGER_ARRANGE_DISTRIBUTE;
 		
 		return pattern;
-		
 		
 	}
 

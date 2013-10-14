@@ -108,6 +108,8 @@ bool Scene :: update(float deltaTime) {
 	
 	if((!active)) return false;
 	
+	playing= music.getIsPlaying();
+	
 	if(playing) positionSeconds = (float)music.getPositionMS()/1000.0f;
 	
 	vector<int> deleteIndices; 
@@ -141,6 +143,14 @@ SequenceCommand Scene:: addCommand(float time, SequenceCommandType type, int arg
     return cmd;
 	
 }
+
+bool Scene::setCommandTime(int i, float time) {
+	if(i>=commands.size()) return false;
+	
+	commands[i].time = ofClamp(time, 0, lengthSeconds);
+	return true; 
+}
+
 
 SequenceCommand Scene :: _addCommand(float time, SequenceCommandType type, int arg){
 	
@@ -331,14 +341,19 @@ void Scene :: goToTime(float timeSeconds){
 
 
 TriggerPattern Scene :: getCurrentTriggerPattern() {
-
 	return triggerPatterns[currentTriggerPatternIndex];
-	
 }
 
+string Scene :: getTriggerPatternName() {
+	return getCurrentTriggerPattern().name;
+}
+
+
+
 void Scene ::addTriggerPattern() {
-	TriggerPattern emptyPattern;
-	addTriggerPattern(emptyPattern);
+	
+	TriggerPattern empty("empty");
+	addTriggerPattern(empty);
 	
 	//triggerPatternChangeTriggers.push_back(new bool(false));
 }

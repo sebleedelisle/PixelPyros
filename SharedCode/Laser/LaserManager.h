@@ -154,7 +154,7 @@ class LaserManager {
 	
 	RectangleUI maskRectangle; 
 	
-	ofMesh previewMesh;
+	//ofMesh previewMesh;
 	ofMesh pathMesh;
 	ofPoint pmin;
 	ofPoint pmax;

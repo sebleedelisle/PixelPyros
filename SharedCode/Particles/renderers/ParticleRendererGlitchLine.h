@@ -37,7 +37,7 @@ public:
 			particle = particle->next;
 
 			if((!p.enabled) && (!drawDisabled))  continue;
-			if(drawDisabled && (ofRandom(1)<0.05)) continue;
+			if(drawDisabled || (ofRandom(1)<0.05)) continue;
 			
 			mesh.addVertex(p.pos);
 			if(p.enabled)

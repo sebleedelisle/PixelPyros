@@ -36,7 +36,7 @@ class SceneCalibration : public Scene {
 		if(!active) return false;
 		
 		ofPushStyle();
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
+		//ofEnableBlendMode(OF_BLENDMODE_ADD);
 		ofSetColor(255,0,0);
 		ofFill();
 		//ofRect(0,0,(APP_WIDTH/2), APP_HEIGHT);

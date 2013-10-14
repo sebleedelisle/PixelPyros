@@ -7,13 +7,9 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 {
 
 	
-	//TODO this should really be somewhere else - but where!
-	TriggerRechargeSettings::mediumMultiples->minTriggerInterval = 0.2;
-	TriggerRechargeSettings::mediumMultiples->triggerPower = 0.3;
-	TriggerRechargeSettings::mediumMultiples->restoreSpeed = 0.5;
 
 	pixelSize = 1;
-	loadMusicFile("Firecracker.aif");
+	loadMusicFile("FireCrackerEdit.aif");
 	
 	invaderImage1.loadImage("img/Invader.png");
 	invaderImage1.getTextureReference().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
@@ -88,8 +84,10 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 
 void SceneGame::start() {
 	
+	
 	Scene::start();
 	
+	//level = 0;
 	changeGame(GAME_INVADERS);
 //	changeState(STATE_INTRO);
 	
@@ -99,7 +97,7 @@ void SceneGame::start() {
 
 void SceneGame::changeGame(int newgame) {
 	
-	if(currentGame == newgame) return;
+	//if(currentGame == newgame) return;
 	
 	
 	level = 0;
@@ -636,7 +634,7 @@ void SceneGame::makeAsteroidExplosion(Asteroid &asteroid){
 	
 }
 Invader* SceneGame :: getNewInvader() {
-	Invader* invader = new Invader(&invaderImage1, 12, 12);
+	Invader* invader = new Invader(&invaderImage1, 13, 12);
 	invaders.push_back(invader);
 	return invader; 
 }
@@ -678,10 +676,11 @@ TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsInvaders();
 	
-	ts->rocketSettings = &rocketSettings;
+	
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::mediumMultiples;
 	ts->startEmpty = true;
-	
+	ts->rotateMirrorOffset = 0; 
 	
 	return ts;
 	
@@ -730,10 +729,11 @@ TriggerSettingsRocket* SceneGame:: getAsteroidsBulletRocket() {
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsAsteroids();
 	
-	ts->rocketSettings = &rocketSettings;
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::mediumMultiples;
 	ts->rotationExtent = 20;
-	ts->rotationSpeed = 5;
+	ts->rotationSpeed = 4;
+	ts->rotateOscillationOffset = 1;
 	ts->startEmpty = true;
 
 	
@@ -792,8 +792,8 @@ TriggerSettingsRocket* SceneGame:: getRetroFountain(float hueOffset, float hueCh
 	rocketSettings.addParticleSystemSetting(pss2);
 	rocketSettings.timeSpeed = 0.7;
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
-	ts->rocketSettings = &rocketSettings;
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fastMultiples;
 
 	return ts;
@@ -805,7 +805,7 @@ TriggerSettingsRocket* SceneGame:: getRetroFountain(float hueOffset, float hueCh
 
 TriggerSettingsRocket* SceneGame::getRetroRocket(float hue, float hueChange) {
 	
-	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocketOrb();
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
@@ -822,7 +822,7 @@ TriggerSettingsRocket* SceneGame::getRetroRocket(float hue, float hueChange) {
 	rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
 	
-	ts.rocketSettings = &rocketSettings;
+	ts.addRocketSettings(&rocketSettings);
 	
 	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = 0.7;
 	

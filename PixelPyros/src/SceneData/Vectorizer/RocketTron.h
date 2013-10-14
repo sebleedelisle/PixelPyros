@@ -14,12 +14,15 @@
 #include "ParticleRendererLine.h"
 #include "ParticleRendererCircle.h"
 
-class RocketTron : public TriggerSettingsRocket {
+class RocketTron : public TriggerSettingsRocketOrb {
 	
     public :
     
-    RocketTron(float hueStartOffset = 0, float hueChange = 0, float explosionHue = 0, ParticleRendererBase * renderer1 = NULL, ParticleRendererBase * renderer2 = NULL) : TriggerSettingsRocket() {
+    RocketTron(float hueStartOffset = 0, float hueChange = 0, float explosionHue = 0, ParticleRendererBase * renderer1 = NULL, ParticleRendererBase * renderer2 = NULL) : TriggerSettingsRocketOrb() {
      
+		radius = 10;
+		hue = 128;
+		saturation = 80;
 		particleLineRenderer.lineWidth = 2;
 		
 		
@@ -156,7 +159,7 @@ class RocketTron : public TriggerSettingsRocket {
 		explosion.startSound = "LaunchTechnoLow";
 		explosion.renderer = new ParticleRendererSquare();
 
-		rocketSettings = new RocketSettings();
+		RocketSettings * rocketSettings = new RocketSettings();
 		
 		rocketSettings->startSpeedMin = 650;
 		rocketSettings->startSpeedMax = 750;
@@ -165,11 +168,12 @@ class RocketTron : public TriggerSettingsRocket {
 		rocketSettings->gravity.y = 400;
 		rocketSettings->setLifeTime(2.3);
 		
-        
+        addRocketSettings(rocketSettings);
     };
 	
 	void addParticleSystems() {
 		
+		RocketSettings* rocketSettings = getRocketSettings();
 		if(rocketSettings==NULL) {
 			//OOPS
 			return;

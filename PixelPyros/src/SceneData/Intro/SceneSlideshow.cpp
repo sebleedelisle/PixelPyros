@@ -24,14 +24,14 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
     lastUpdateTime = 0;
     defaultFontSize = 4.0;
 	
-	ofColor textColor(128,180,150);
+	ofColor textColor(100,180,170);
     
                                        
     defaultBackground.loadImage(ofToDataPath("slideshow/pixelpyros-slide-background.png"));
 
 //    Do you want your box guides back to layout the text? Uncomment lines 80-82 in TextWriter.cpp and big blue boxes will return
     
-    // Slide 1 -- festivaly opening!
+    // Slide 1 -- festivaly opening! ----------------------------------------
     
     SceneSlide *slide = new SceneSlide(&defaultBackground);
    // slide->add(timer);
@@ -42,23 +42,9 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
 //        ofRectangle(0, 0 + 100, 700, 60),
         textColor,
         defaultFontSize,
-        "the official launch of the 2012 \nbrighton digital festival!"
+        ""
     ));
     
-    // Absolute x,y coordinates for top left of box
-//    slide->add(new SlideText(
-//         ofRectangle(100, 300, 100, 50), 
-//         ofColor(128, 128, 128), 
-//         0.5 * defaultFontSize,
-//         "Absolute Text"
-//    ));
-    
-//    // Auto-sized, horribleness
-//    slide->add(new SlideAutoText(
-//         ofRectangle(APP_WIDTH / 2 - 400, APP_HEIGHT / 2 - 100, 800, 300), 
-//         ofColor(128, 128, 128), 
-//        "2012.brightondigitalfestival.co.uk"
-//    ));
     
     // Auto-centred box, x, y are offsets from the middle
     
@@ -67,7 +53,7 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
         //ofRectangle(0, 120 + 100, 700, 60),
         textColor,
         0.7 * defaultFontSize,
-        "2012.brightondigitalfestival.co.uk"
+        "pixelpyros.org"
         ));
  
 	
@@ -76,35 +62,35 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
 		ofRectangle(0, 150, 700, 60),
 		textColor,
 		 defaultFontSize,
-		"showtimes :  8:30  9:30  10:15"
+		"showtimes :  7pm  8pm  9pm"
 		));
     // Duration to show, in seconds
     slide->duration = 10;
     slides.push_back(slide);
     
-    // Slide 2  -- people thanks!
+    // Slide 2  -- people thanks! -----------------------------------------------------
     
     slide = new SceneSlide(&defaultBackground);
     //slide->add(timer);
     
     slide->add(new CentredSlideText(APP_WIDTH, APP_HEIGHT,
-         ofRectangle(0, -25, 600, 50),
+         ofRectangle(0, -25, 700, 50),
          //ofRectangle(0, 0 + 120, 600, 100),
-         ofColor(128, 128, 128),
-         defaultFontSize,
-         "thanks to:"
+         textColor,
+         0.6 * defaultFontSize,
+         "thanks to our local sponsors"
     ));
     slide->add(new CentredSlideText(APP_WIDTH, APP_HEIGHT,
-         ofRectangle(0, 25, 600, 50),
-         //ofRectangle(0, 200, 300, 100),
-         ofColor(128, 128, 128),
-         0.6 * defaultFontSize,
-         "Jubilee Library, Chilli Pickle, Pizza Express, The Basement,\n, Jonathan Orrell at HOP, Honor Harger,\nLaurence Hill, Jamie Wyld, Jon Pratty,\nPhil Jones, Devi Lozdan, Julie Sharp, Kyle McDonald, \nVal Head, Paul King, John Davey"
+		ofRectangle(0, 25, 700, 50),
+		//ofRectangle(0, 200, 300, 100),
+		textColor,
+		defaultFontSize,
+		"Heart Internet"
     ));
     
     // Duration to show, in seconds
     slide->duration = 10;
-    //slides.push_back(slide);
+    slides.push_back(slide);
     
 
     // Slide 3 -- biz thanks!
@@ -112,21 +98,21 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
     slide = new SceneSlide(&defaultBackground);
     //slide->add(timer);
     slide->add(new CentredSlideText(APP_WIDTH, APP_HEIGHT,
-    	ofRectangle(0, -25, 600, 50),
-    	ofColor(128, 128, 128),
-    	defaultFontSize,
-		"Production :"
+    	ofRectangle(0, -25, 700, 50),
+    	textColor,
+    	0.6 * defaultFontSize,
+		"thanks to our production partners"
 ));
     slide->add(new CentredSlideText(APP_WIDTH, APP_HEIGHT,
-		ofRectangle(0, 25, 600, 50),
-        ofColor(128, 128, 128),
-      	0.6 * defaultFontSize,
-      	"Becky Stevens, Mark Scarratt, Firefly Solar, Facelift, Jack Lang  "
+		ofRectangle(0, 25, 700, 50),
+        textColor,
+      	defaultFontSize,
+      	"LM Productions\nHOP Engineers"
 ));
     
     // Duration to show, in seconds
     slide->duration = 10;
-   // slides.push_back(slide);
+    slides.push_back(slide);
     
 }
 

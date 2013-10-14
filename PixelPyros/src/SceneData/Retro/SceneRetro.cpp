@@ -33,12 +33,6 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 		
 	}
 
-
-	//TODO this should really be somewhere else - but where! 
-	TriggerRechargeSettings::fastMultiples->minTriggerInterval = 0.2;
-	TriggerRechargeSettings::fastMultiples->triggerPower = 0.3;
-	TriggerRechargeSettings::fastMultiples->restoreSpeed = 0.7;
-	
 	
 	TriggerSettings* redRocket = getRetroRocket();
 	TriggerSettings* cyanRocket = getRetroRocket(120);
@@ -214,10 +208,11 @@ TriggerSettingsRocket* SceneRetro:: getPixelRocket(float hue) {
 	
 	rocketSettings.gravity.set(0,1800);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
 	
-	ts->rocketSettings = &rocketSettings;
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
+	ts->rotateMirrorOffset = 0; 
 
 	return ts;
 
@@ -273,8 +268,8 @@ TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueC
 	rocketSettings.addParticleSystemSetting(pss2);
 	rocketSettings.timeSpeed = 0.7;
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
-	ts->rocketSettings = &rocketSettings;
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fastMultiples;
 
 	return ts;
@@ -286,7 +281,7 @@ TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueC
 
 TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
 	
-	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocketOrb();
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
@@ -303,7 +298,7 @@ TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
 	rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
 	
-	ts.rocketSettings = &rocketSettings;
+	ts.addRocketSettings(&rocketSettings);
 	
 	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = 0.7;
 	

@@ -48,4 +48,6 @@ class SceneIntro : public Scene{
 	float lastChangeTime;
 	float elapsedTime;
 	
+	float barLengthSeconds; 
+	
 };

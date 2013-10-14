@@ -85,15 +85,15 @@ bool ParticleSystem::update(float deltaTime) {
 			life.end();
 		}
 		
-		// HACK TO LIMIT THE NUMBER OF PARTICLES
-		//if(activeParticleCount>100) numParticlesCreated = newparticlecount;
-		//numParticlesCreated = newparticlecount-1;
 		
 		while(numParticlesCreated<newparticlecount) {
 			Particle& p = *addParticle();
 			
+			if(settings.emitPositionShape!=NULL) {
 				
-			if(attachedPhysicsObject!=NULL) {
+				p.pos = settings.emitPositionShape->getVertex(ofRandom(0,settings.emitPositionShape->getNumVertices()));
+				
+			} else if(attachedPhysicsObject!=NULL) {
 				if(settings.emitMode == PARTICLE_EMIT_CONTINUOUS) {
 					p.pos = ((attachedPhysicsObject->pos - attachedPhysicsObject->lastPos) * ofMap(numParticlesCreated/settings.emitCount, life.lastUpdateTime, life.elapsedTimeActual,0,1)) + attachedPhysicsObject->lastPos;
 				} else {
@@ -129,6 +129,8 @@ bool ParticleSystem::update(float deltaTime) {
 
 
 void ParticleSystem::draw() {
+	
+	//ofDrawBitmapString(ofToString(life.elapsedTime/settings.timeSpeed), pos);
 	
 	if(settings.renderer!=NULL)
 		settings.renderer->renderParticles(firstParticle);

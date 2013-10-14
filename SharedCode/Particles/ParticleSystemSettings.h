@@ -61,6 +61,8 @@ class ParticleSystemSettings{
 		emitMode = PARTICLE_EMIT_CONTINUOUS;
 		emitCount = 100; // number of Particles per second
 		emitShape = NULL;
+		emitPositionShape = NULL;
+		
 		
 		// EMISSION CHANGE OVER TIME 
 		// This will change the start size and hue of emitted
@@ -169,6 +171,9 @@ class ParticleSystemSettings{
 	
 	// EMISSION SHAPE FOR TEXT AND GEOMETRY
 	ofMesh* emitShape;
+	
+	// shape for the particles to come from (for letters mostly)
+	ofMesh* emitPositionShape;
 	
 	
 	// EMISSION CHANGE OVER TIME 

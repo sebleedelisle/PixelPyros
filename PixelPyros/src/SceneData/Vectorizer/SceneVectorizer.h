@@ -14,6 +14,7 @@
 #include "TriggerSettingsRocket.h"
 #include "StretchyNet.h"
 #include "ParticleRendererSquare.h"
+#include "ParticleRendererGlitchLineLaser.h"
 
 class SceneVectorizer : public Scene {
 	
@@ -22,14 +23,15 @@ class SceneVectorizer : public Scene {
 	SceneVectorizer (string scenename) ;
 	
 	
-	RocketSettings getCircleFountain(float hue = 120);
+	TriggerSettingsRocketOrb* getCircleFountain(float hue = 120);
 
 	
 	bool update(float deltaTime) ;
 	
 	bool draw();
 	
-	TriggerSettingsRocket* getRocketTronFountain(float hueStartOffset = 0, float hueChange = 0);
+	TriggerSettingsRocketOrb* getRocketTronFountain(float hueStartOffset = 0, float hueChange = 0, float speedMultiplier = 1, bool useLaser = false);
+	TriggerSettingsRocketOrb* getGlitchRocket();
 	
    
 	StretchyNet stretchyNet;

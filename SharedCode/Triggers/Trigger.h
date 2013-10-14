@@ -13,7 +13,7 @@ class Trigger {
 	//static TriggerRendererBase * defaultRenderer;
 	
 	Trigger();
-	bool update(float deltaTime);
+	bool update(float deltaTime, ofRectangle& triggerArea);
 	void draw();
 	
 	void start();
@@ -56,7 +56,7 @@ class Trigger {
 	bool showDebugData;
 
 	float elapsedTime;
-
+	float deltaTime;
 	
 	// for the debug data
 	deque <float> motionValues;
@@ -66,8 +66,11 @@ class Trigger {
 	// angle
 	float angle;
 	int rotateDirection; 
-	int triggerCount; 
+	int triggerCount;
 	
+	ofImage flashImage;
+	
+	map<string, float> values; 
 	
 	
 	//SETTINGS

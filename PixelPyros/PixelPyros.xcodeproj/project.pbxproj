@@ -96,6 +96,7 @@
 		12BA0B2317D8D2C100DE4F64 /* TriggerSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BA0B2217D8D2C100DE4F64 /* TriggerSettings.cpp */; };
 		12BD9CCF17DF585E00F28A4F /* SceneVectorizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BD9CCB17DF585E00F28A4F /* SceneVectorizer.cpp */; };
 		12C7959018082C6600836A79 /* IPVideoGrabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C7958B18082C6600836A79 /* IPVideoGrabber.cpp */; };
+		12C795971808618B00836A79 /* TriggerSettingsRocketOrb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C795951808618B00836A79 /* TriggerSettingsRocketOrb.cpp */; };
 		12DBC7B617DDDD280041FA5C /* FireworkFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12DBC7B417DDDD280041FA5C /* FireworkFactory.cpp */; };
 		12EB3B7017E0EB37002D90A0 /* LaserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3B6E17E0EB37002D90A0 /* LaserManager.cpp */; };
 		12EB3BAF17E0EB50002D90A0 /* etherdream.c in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3B7C17E0EB4F002D90A0 /* etherdream.c */; };
@@ -169,6 +170,8 @@
 		120A05EC17FCD0E200408B12 /* ofMultiDeviceSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofMultiDeviceSoundPlayer.h; sourceTree = "<group>"; };
 		120C788E17D35EBA0050D25D /* TriggerSettingsRocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsRocket.h; sourceTree = "<group>"; };
 		120C788F17D35F9C0050D25D /* TriggerSettingsRocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettingsRocket.cpp; sourceTree = "<group>"; };
+		1215867F1809D0700082FCAF /* ParticleRendererGlitchLineLaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererGlitchLineLaser.h; sourceTree = "<group>"; };
+		12158682180B08C60082FCAF /* ParticleRendererLaserFlash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererLaserFlash.h; sourceTree = "<group>"; };
 		1239442517FE08E4007668B8 /* Asteroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Asteroid.cpp; sourceTree = "<group>"; };
 		1239442617FE08E4007668B8 /* Asteroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asteroid.h; sourceTree = "<group>"; };
 		1254501917BF860500EF23B7 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
@@ -498,6 +501,8 @@
 		12C3B32917FEF0E9003F4EE3 /* TriggerSettingsInvaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsInvaders.h; sourceTree = "<group>"; };
 		12C7958B18082C6600836A79 /* IPVideoGrabber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IPVideoGrabber.cpp; sourceTree = "<group>"; };
 		12C7958C18082C6600836A79 /* IPVideoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPVideoGrabber.h; sourceTree = "<group>"; };
+		12C795951808618B00836A79 /* TriggerSettingsRocketOrb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerSettingsRocketOrb.cpp; sourceTree = "<group>"; };
+		12C795961808618B00836A79 /* TriggerSettingsRocketOrb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsRocketOrb.h; sourceTree = "<group>"; };
 		12CBB01F17F339670078677E /* LaserShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LaserShape.h; sourceTree = "<group>"; };
 		12CBB02017F454A00078677E /* LaserCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserCircle.h; sourceTree = "<group>"; };
 		12D15FCD17CE0044003D9024 /* TriggerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
@@ -738,10 +743,12 @@
 				1254506B17BF861C00EF23B7 /* ParticleRendererCircle.h */,
 				12F4141517F9843B007941F2 /* ParticleRendererDoubleCircle.h */,
 				1254506C17BF861C00EF23B7 /* ParticleRendererGlitchLine.h */,
+				1215867F1809D0700082FCAF /* ParticleRendererGlitchLineLaser.h */,
 				1254506D17BF861C00EF23B7 /* ParticleRendererLine.h */,
 				1254506E17BF861C00EF23B7 /* ParticleRendererLowRes.h */,
 				1254506F17BF861C00EF23B7 /* ParticleRendererShape.h */,
 				129988B417E1E6610044879E /* ParticleRendererLaser.h */,
+				12158682180B08C60082FCAF /* ParticleRendererLaserFlash.h */,
 				128D32021804BBE600C2CCB6 /* ParticleRendererLaserTeardrop.h */,
 				1254507017BF861C00EF23B7 /* ParticleRendererSquare.h */,
 				1254507117BF861C00EF23B7 /* ParticleRendererStar.h */,
@@ -816,6 +823,8 @@
 				12AF89EE17C4F38A001995FC /* TriggerManager.cpp */,
 				12AF89EF17C4F38A001995FC /* TriggerManager.h */,
 				120C788F17D35F9C0050D25D /* TriggerSettingsRocket.cpp */,
+				12C795951808618B00836A79 /* TriggerSettingsRocketOrb.cpp */,
+				12C795961808618B00836A79 /* TriggerSettingsRocketOrb.h */,
 				120C788E17D35EBA0050D25D /* TriggerSettingsRocket.h */,
 				1275BAFF17D8E37F0018BC54 /* TriggerRechargeSettings.cpp */,
 				1275BB0017D8E37F0018BC54 /* TriggerRechargeSettings.h */,
@@ -1504,11 +1513,11 @@
 		12BD9CC717DF585E00F28A4F /* Vectorizer */ = {
 			isa = PBXGroup;
 			children = (
+				12BD9CCB17DF585E00F28A4F /* SceneVectorizer.cpp */,
+				12BD9CCC17DF585E00F28A4F /* SceneVectorizer.h */,
 				12BD9CC817DF585E00F28A4F /* RocketThinFountain.h */,
 				12BD9CC917DF585E00F28A4F /* RocketTron.h */,
 				12BD9CCA17DF585E00F28A4F /* RocketTronFountain.h */,
-				12BD9CCB17DF585E00F28A4F /* SceneVectorizer.cpp */,
-				12BD9CCC17DF585E00F28A4F /* SceneVectorizer.h */,
 				12BD9CCD17DF585E00F28A4F /* StretchyNet.h */,
 				12BD9CCE17DF585E00F28A4F /* StretchyNetPoint.h */,
 			);
@@ -1983,6 +1992,7 @@
 				128D31FF1804ACD100C2CCB6 /* PhysicsObject.cpp in Sources */,
 				128D320918071DE700C2CCB6 /* ParticleFactory.cpp in Sources */,
 				12C7959018082C6600836A79 /* IPVideoGrabber.cpp in Sources */,
+				12C795971808618B00836A79 /* TriggerSettingsRocketOrb.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

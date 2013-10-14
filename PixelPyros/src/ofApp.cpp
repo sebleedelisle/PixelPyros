@@ -97,6 +97,8 @@ void ofApp::setup(){
 	updateScreenSizes();
 	setupScenes();
 	
+	
+	
 }
 
 //--------------------------------------------------------------
@@ -196,8 +198,11 @@ void ofApp::draw(){
 //	laserManager.showLaserPath = laserManager.showLaserPath || (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER);
 //	laserManager.showWarpPoints = laserManager.showWarpPoints || (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER);
 
-	laserManager.renderLaserPath(controlPanels.getPreviewScreenRect(), (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER));
-	
+	if(screens.size()==1) {
+		laserManager.renderLaserPath(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT), (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER));
+	} else {
+		laserManager.renderLaserPath(controlPanels.getPreviewScreenRect(), (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER));
+	}
 	
 	ofPushStyle();
 	float d = ofGetLastFrameTime();
@@ -227,6 +232,12 @@ void ofApp::draw(){
 	ofPushMatrix();
 	ofTranslate(uiScreenRect.x+8, uiScreenRect.y+54);
 	
+	ofDrawBitmapString("Current Scene       : "+sceneManager.getCurrentSceneName(),0,0);
+	
+	ofTranslate(0,20);
+	ofDrawBitmapString("Current Arrangement : "+sceneManager.getCurrentTriggerPatternName(),0,0);
+	
+	ofTranslate(0,20);
 	ofDrawBitmapString("particle systems : "+ofToString(particleSystemManager.particleSystems.size()),0,0);
 	
 	ofTranslate(0,20);
@@ -258,6 +269,21 @@ void ofApp::draw(){
     controlPanels.draw(motionManager);
 	sceneManager.drawGUI();
 	
+	
+	/*
+	ofVec3f testpoint(ofGetMouseX(),ofGetMouseY(),-1000);
+	ofCamera camera;
+	camera.begin();
+	ofNoFill();
+	ofSetColor(255,0,0);
+	
+	ofCircle(testpoint,40);
+	ofSetColor(255);
+	cout << (camera.worldToScreen(testpoint)) << endl;
+	camera.end();
+	ofCircle(camera.worldToScreen(testpoint), 100);*/
+	
+	//ofGetCurrentRenderer();
 }
 
 //--------------------------------------------------------------
@@ -346,6 +372,20 @@ void ofApp:: mousePressed(int x, int y, int button ) {
 }
 
 void ofApp:: setupScenes() { 
+	
+	
+	TriggerRechargeSettings::superFastMultiples->minTriggerInterval = 0.1;
+	TriggerRechargeSettings::fastMultiples->triggerPower = 0.3;
+	
+	TriggerRechargeSettings::mediumMultiples->minTriggerInterval = 0.2;
+	TriggerRechargeSettings::mediumMultiples->triggerPower = 0.3;
+	TriggerRechargeSettings::mediumMultiples->restoreSpeed = 0.5;
+	
+	TriggerRechargeSettings::fastMultiples->minTriggerInterval = 0.1;
+	TriggerRechargeSettings::fastMultiples->triggerPower = 0.3;
+	TriggerRechargeSettings::fastMultiples->restoreSpeed = 0.7;
+	
+
 	
 	sceneManager.addScene(new SceneCalibration("Calibration"));
 	sceneManager.addScene(new SceneSlideshow("SlideShow"));

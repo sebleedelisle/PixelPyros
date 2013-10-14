@@ -11,17 +11,17 @@
 #include "ParticleSystemSettings.h"
 #include "ParticleRendererShape.h"
 
-class TriggerSettingsFountain : public TriggerSettingsRocket {
+class TriggerSettingsFountain : public TriggerSettingsRocketOrb {
 	
     public :
     
-    TriggerSettingsFountain(float hueStartOffset = 150, float hueChange = 0) : TriggerSettingsRocket() {
+    TriggerSettingsFountain(float hueStartOffset = 150, float hueChange = 0) : TriggerSettingsRocketOrb() {
 		
         ParticleRendererBase * renderer;
 		ParticleSystemSettings ps, ps2;
 
 		
-		rocketSettings = new RocketSettings();
+		RocketSettings* rocketSettings = new RocketSettings();
 		
         renderer = new ParticleRendererShape();
 		
@@ -162,6 +162,8 @@ class TriggerSettingsFountain : public TriggerSettingsRocket {
 		rocketSettings->addParticleSystemSetting(ps);
 		rocketSettings->addParticleSystemSetting(ps2);
 	   
+		addRocketSettings(rocketSettings);
+		
         rechargeSettings = TriggerRechargeSettings::fast;
         
         

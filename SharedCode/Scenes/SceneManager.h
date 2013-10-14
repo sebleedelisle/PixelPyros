@@ -46,7 +46,9 @@ public :
 	ofRectangle getRectangleForCommand(SequenceCommand& command);
 	ofRectangle getRectangleForCommand(int i);
 	
-	
+	string getCurrentSceneName();
+	string getCurrentTriggerPatternName();
+
 	ofRectangle screenUI;
 
 	vector <Scene*> scenes;

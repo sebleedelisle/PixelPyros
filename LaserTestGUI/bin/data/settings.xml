@@ -54,7 +54,7 @@
 			</laser_graphics>
 		<status/>
 			<group/>
-		<show_registration>0</show_registration>
+		<show_registration>1</show_registration>
 			<show_sync_test>0</show_sync_test>
 		<render_laser_path>1</render_laser_path>
 		<acceleration>1.13428</acceleration>

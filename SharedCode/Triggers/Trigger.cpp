@@ -8,6 +8,8 @@
 
 Trigger :: Trigger(){
 	
+	flashImage.loadImage("img/TriggerFlash.png");
+	
 	// the amount typename = "TriggerRocket"; of power a rocket takes away
 	elapsedTime = 0;
 	lastTriggerTime = 0;
@@ -38,6 +40,7 @@ Trigger :: Trigger(){
 	
 	angle = 0;
 	triggerCount = 0;
+	
 
 	/*
 	
@@ -91,16 +94,16 @@ void Trigger :: stop() {
 	
 }
 
-bool Trigger::update(float deltaTime) {
+bool Trigger::update(float deltaTime, ofRectangle& triggerArea) {
 
-	//
+	this->deltaTime = deltaTime;
 	//if((!stopping) && (scale<1)) scale+=0.1;
 
 	elapsedTime+=deltaTime;
 	
 	
 	if(lastSettings!=NULL) {
-		lastScale-=deltaTime*3;
+		lastScale-=deltaTime*5;
 		if(lastScale<=0.0) {
 			lastScale = 0;
 			lastSettings  = NULL;
@@ -110,23 +113,37 @@ bool Trigger::update(float deltaTime) {
 	
 	// scale up / down on start stop
 	if(stopping) {
-		scale-=deltaTime*3;
+		scale-=deltaTime*5;
 		if(scale<=0.0) {
 			scale = 0;
 			active = false;
 			return false;
 		}
 		return active;
-	} else {
-		scale+= (1-scale)*0.2;
+	} else if(scale<1){
+		scale+= deltaTime*5; // (1-scale)*0.2;
+		if(scale>1) scale = 1; 
 	}
-	
 	
 	
 	//angle++;
 	
-	if((settings!=NULL) && (settings->rotationSpeed>0) && (!settings->rotateOnFire)) {
-		angle = (sin(elapsedTime*settings->rotationSpeed)*settings->rotationExtent);
+	
+	if((settings!=NULL) &&(!settings->rotateOnFire)) {
+		
+		angle = 0;
+	
+		if(settings->rotationSpeed>0) {
+			
+			float sinoffset = settings->rotateOscillationOffset * ofMap(pos.x, triggerArea.getLeft(), triggerArea.getRight(), -1, 1);
+			angle = (sin((elapsedTime + sinoffset)*settings->rotationSpeed )*settings->rotationExtent);
+			
+		}
+		
+		if(settings->rotateMirrorOffset!=0) {
+			angle+= ofMap(pos.x, triggerArea.getLeft(), triggerArea.getRight(), 1, -1) * settings->rotateMirrorOffset;
+			
+		}
 		
 	}
 		
@@ -166,7 +183,7 @@ bool Trigger::update(float deltaTime) {
 	
 	// we need to have sensed motion,
 	// AND we need to have enough unitPower to trigger
-	if( (!stopping) &&
+	if( (!disabled) && (!stopping) &&
 		(scale>0.95) &&
 		(motionLevel >= rechargeSettings->motionTriggerLevel) &&
 		(unitPower>=rechargeSettings->triggerPower) &&
@@ -187,11 +204,6 @@ bool Trigger::update(float deltaTime) {
 	
 	motionLevel -= rechargeSettings->motionDecay*deltaTime;
 	if(motionLevel<0) motionLevel = 0;
-		
-	
-	
-	//}
-	
 	
 	//	else if(type == TRIGGER_TYPE_FIRE_ON_CHARGE) {
 	//		unitPower+=(motionLevel*deltaTime*motionSensitivity);
@@ -209,144 +221,42 @@ bool Trigger::update(float deltaTime) {
 	//
 	
 	
-	//float speed = 1.5;
-	//if(unitPower<triggerPower ) speed = ofMap(unitPower, 0, triggerPower, 0, 0.5, true);
-	/*
-	rot1+= vel1 * deltaTime * speed;
-	rot2+= vel2 * deltaTime * speed;
-	rot3+= vel3 * deltaTime * speed;
-	*/
-	
 	
 	return active;
 }
 
 void Trigger :: draw() {
-
-
-//	ofColor c;
-//	c.setSaturation(settings->saturation);
-//	c.setHue(settings->hue);
-
-	if(settings!=NULL) settings->draw(elapsedTime, pos,  unitPower, active, scale, angle);
-	if(lastSettings!=NULL) lastSettings->draw(elapsedTime, pos,  unitPower, active, lastScale, angle);
 	
+	if(settings!=NULL) {
+		settings->update(deltaTime, values);
+		settings->draw(elapsedTime, pos,  unitPower, active, scale, angle);
+		
+		
+		if(elapsedTime-lastTriggerTime<0.15) {
+			ofPushMatrix();
+			ofPushStyle();
+			ofTranslate(pos.x, pos.y);
+			float size = ofMap(elapsedTime - lastTriggerTime, 0, 0.15, 1, 0);
+			size*=size;
+			size*=settings->radius*5;
+			ofScale(size, size);
+			ofSetColor(settings->getColour());
+			flashImage.draw(-0.5, -0.5, 1,1);
+			ofScale(0.5,0.5);
+			flashImage.draw(-0.5, -0.5, 1,1);
+			
+			ofPopStyle(); 
+			ofPopMatrix();
+		}
+	}
+	
+	if(lastSettings!=NULL) {
+		lastSettings->update(deltaTime, values);
+		lastSettings->draw(elapsedTime, pos,  unitPower, active, lastScale, angle);
+	}
 	if(!active) return;
 
-	//else ofLog(OF_LOG_WARNING, "No renderer for trigger");
-	
-	//ofDrawBitmapString(ofToString(motionLevel), pos);
 
-	//ofCircle(pos, motionLevel*100);
-	
-	/*
-	
-	
-	ofPushStyle();
-	ofPushMatrix();
-    
-	ofTranslate(pos);
-	ofScale(scale, scale);
-	float activeScale = ofMap(unitPower, 0, triggerPower, 0.5, 1, true);
-	ofScale(activeScale, activeScale);
-	ofEnableSmoothing();
-	
-	ofEnableBlendMode(OF_BLENDMODE_ADD);
-	
-	ofColor dimColour = ofColor::white;
-	//dimColour.setHue(hue);
-	//dimColour.setSaturation(saturation);
-	
-  	
-	if((triggerPower<=unitPower) || (fmodf(elapsedTime,0.16) < 0.08) || (restoreSpeed==0)) {
-		
-		//ofCircle(0, 0, radius*0.5);
-		//ofNoFill();
-		
-		dimColour.setHsb(hue, saturation, ofMap(unitPower, 0, motionTriggerLevel, 10,150, true));
-		
-		ofSetColor(dimColour);
-		ofCircle(0, 0, radius*unitPower*0.5);
-		
-		ofSetColor(ofMap(unitPower, 0, motionTriggerLevel, 10,255, true));
-		ofCircle(0, 0, radius*unitPower*0.3);
-		
-		dimColour.setHsb(hue, saturation, ofMap(unitPower, 0, motionTriggerLevel, 10,200, true));
-		
-		//ofSetColor(200);
-		
-	} else {
-		
-		dimColour.setHsb(hue, saturation, 50);
-								
-		
-	}
-	
-	ofSetColor(dimColour);
-	*/
-	//ofCircle(0, 0, radius);
-	
-	
-	
-	//ofPushMatrix();
-	//ofTranslate(pos);
-	//orbSize = 0.5;
-	
-	//cout << orbSize << "\n";
-	
-	//ofScale(orbSize,orbSize,orbSize);
-	
-	
-	
-	//ofEnableSmoothing();
-	//ofSetColor(255,50);
-	//ofFill();
-	//ofCircle(0,0,22);
-	/*
-	
-	ofSetLineWidth(1);
-	
-	ofPushMatrix();
-	ofRotateY(30);
-	ofRotateX(rot1);
-	ofNoFill();
-	ofCircle(0, 0, radius/2, radius);
-	ofPopMatrix();
-	
-	ofPushMatrix();
-	ofRotateZ(120);
-	ofRotateX(rot2);
-	ofNoFill();
-	ofCircle(0, 0, radius/2, radius);
-	ofPopMatrix();
-	
-	ofPushMatrix();
-	ofRotateZ(240);
-	ofRotateX(rot3);
-	ofNoFill();
-	ofCircle(0, 0, radius/2, radius);
-	ofPopMatrix();
-	
-	
-	//ofPopMatrix();
-	
-	if(disabled) {
-		ofDisableBlendMode();
-		ofDisableSmoothing();
-		ofSetLineWidth(3);
-		ofSetColor(140,0,0);
-		
-		//ofSetColor(colour);
-		
-		ofLine(-radius,-radius,radius,radius);
-		ofLine(radius,-radius,-radius,radius);
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
-		
-	}
-	
-	ofPopStyle();
-	ofPopMatrix();
-	*/
 	
 	if(showDebugData) {
 		
@@ -411,7 +321,8 @@ void Trigger :: registerMotion(float unitValue) {
 
 bool Trigger::doTrigger() {
 	if(settings!=NULL) {
-		settings->doTrigger(pos,1,angle);
+		settings->doTrigger(pos,1,angle, values);
+		lastTriggerTime = ofGetElapsedTimef(); 
 		triggerCount++;
 		if(settings->rotateOnFire) {
 			angle += settings->rotationSpeed * rotateDirection;
@@ -434,8 +345,9 @@ void Trigger::copySettings(TriggerSettings* newsettings) {
 	lastScale = scale;
 
 	settings = newsettings;
-	if(newsettings!=NULL){
-		rechargeSettings = newsettings->rechargeSettings;
+	if(settings!=NULL){
+		rechargeSettings = settings->rechargeSettings;
+		disabled = (!settings->enabled);
 	} else {
 		stop();
 	}
@@ -443,6 +355,9 @@ void Trigger::copySettings(TriggerSettings* newsettings) {
 	scale = 0;
 	angle = 0;
 	rotateDirection = 1;
+	values.clear();
+	
+	
 
 	
 };
