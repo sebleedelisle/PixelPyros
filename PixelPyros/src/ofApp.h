@@ -57,7 +57,7 @@ public:
 	void update();
 	void draw();
 	void exit();
-	void mousePressed( int x, int y, int button );
+    void mousePressed( int x, int y, int button );
 	void mouseMoved( int x, int y );
     void keyPressed( int key );
 	void keyReleased( int key );
@@ -86,7 +86,8 @@ public:
 	
 	ofFbo fbo;
 	bool useFbo;
-	
+    bool spanAll;
+
 	float deltaTime;
 	float lastUpdateTime;
 	
