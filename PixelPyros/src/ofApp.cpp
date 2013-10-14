@@ -198,11 +198,7 @@ void ofApp::draw(){
 //	laserManager.showLaserPath = laserManager.showLaserPath || (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER);
 //	laserManager.showWarpPoints = laserManager.showWarpPoints || (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER);
 
-	if(screens.size()==1) {
-		laserManager.renderLaserPath(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT), (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER));
-	} else {
-		laserManager.renderLaserPath(controlPanels.getPreviewScreenRect(), (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER));
-	}
+
 	
 	ofPushStyle();
 	float d = ofGetLastFrameTime();
@@ -268,7 +264,11 @@ void ofApp::draw(){
 	
     controlPanels.draw(motionManager);
 	sceneManager.drawGUI();
-	
+	if(screens.size()==1) {
+		laserManager.renderLaserPath(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT), (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER));
+	} else {
+		laserManager.renderLaserPath(controlPanels.getPreviewScreenRect(), (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER));
+	}
 	
 	/*
 	ofVec3f testpoint(ofGetMouseX(),ofGetMouseY(),-1000);

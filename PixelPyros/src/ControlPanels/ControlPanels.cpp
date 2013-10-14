@@ -161,6 +161,8 @@ void ControlPanels::drawPreviewScreen(MotionManager& motionManager){
 		motionManager.diff.draw(previewScreenRect.getLeft()+previewScreenRect.width/2, previewScreenRect.getBottom(), previewScreenRect.width/2, previewScreenRect.height/2);
 	
 	}
+	ofSetColor(255,0,0);
+	ofRect(previewScreenRect);
 	
 	ofPopStyle();
 	
