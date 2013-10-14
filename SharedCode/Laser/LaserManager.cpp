@@ -68,7 +68,7 @@ void LaserManager:: setup (int width, int height) {
     float y1 = APP_HEIGHT * 0.2;
     float y2 = APP_HEIGHT * 0.8;
 	
-	maskRectangle.set(0, 0, APP_WIDTH, y2);
+	maskRectangle.set(0, 0, APP_WIDTH, APP_HEIGHT/4*3);
 	maskRectangle.initUI();
 
     warp.label = "laserWarp";
@@ -133,6 +133,7 @@ void LaserManager:: setup (int width, int height) {
     
 	warp.dragSpeed = 1; 
     
+	//connectToEtherdream();
     
 }
 
@@ -155,7 +156,7 @@ void LaserManager:: update() {
 	etherdream.update();
 	
 	resetIldaPoints();
-	previewMesh.clear();
+	//previewMesh.clear();
 	pathMesh.clear();
 	
 
@@ -322,7 +323,7 @@ void LaserManager::renderLaserPath(ofRectangle previewRectangle, bool overrideSe
 		ofDisableBlendMode();
 		ofNoFill();
 		ofSetLineWidth(1);
-		ofSetColor(255,0,255);
+		ofSetColor(0,0,255);
 		pathMesh.setMode(OF_PRIMITIVE_LINE_LOOP);
 		pathMesh.draw();
 		
@@ -676,7 +677,7 @@ void LaserManager::drawLaserSpiral(LaserSpiral& spiral){
 
 	for(int i = 0; i<unitDistances.size(); i++) {
 		pos = path.getPointAtLength(min(unitDistances[i]*totaldistance, totaldistance-0.01f));
-		cout << unitDistances[i] << endl; 
+		//cout << unitDistances[i] << endl;
 		addIldaPoint(pos, spiral.colour, spiral.intensity);
 		
 	}
@@ -733,8 +734,8 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity)
 	
 	if(offScreen) c = ofFloatColor::black;
 	
-	previewMesh.addVertex(p);
-	previewMesh.addColor(c);
+	//previewMesh.addVertex(p);
+	//previewMesh.addColor(c);
 	
 	pathMesh.addVertex(p);
 	//pathMesh.addColor(c);
@@ -947,6 +948,59 @@ void LaserManager :: renderPreview() {
 			
 			mesh.addColor(ofColor::black);
 			mesh.addVertex(line->endPos);
+		}
+		
+		LaserSpiral* spiralptr = dynamic_cast<LaserSpiral*>(shape);
+		if(spiralptr) {
+			mesh.addColor(ofColor::black);
+			mesh.addVertex(spiralptr->startPos);
+			
+			
+			LaserSpiral& spiral = *spiralptr;
+			int revolutions = ceil((spiral.radius2 - spiral.radius1)/spiralSpacing);
+			
+			float maxAngle = 360 * revolutions;
+			
+			float currentAngle = 0;
+			
+			ofVec2f pos = spiral.startPos;
+			
+			float speed = 0;
+			float maxSpeed = 20;
+			
+			float rotateSpeed = 1;
+			ofPolyline path;
+			
+			path.addVertex(spiral.startPos);
+			
+			while (currentAngle<=maxAngle) {
+				
+				pos.set(ofMap(currentAngle, 0, maxAngle, spiral.radius1, spiral.radius2), 0);
+				pos.rotate(currentAngle);
+				pos+=spiral.pos;
+				
+				//rotateSpeed = ofMap(currentAngle, 1, 45,0,maxSpeed, true);
+				// should be a setting!
+				currentAngle+=rotateSpeed;
+				path.addVertex(pos);
+			}
+			
+			float totaldistance = path.getPerimeter();
+			
+			vector<float> unitDistances = getPointsAlongDistance(totaldistance, accelerationLine, speedLine);
+			
+			for(int i = 0; i<unitDistances.size(); i++) {
+				pos = path.getPointAtLength(min(unitDistances[i]*totaldistance, totaldistance-0.01f));
+				
+				mesh.addVertex(pos);
+				mesh.addColor(spiral.colour);
+			}
+			
+			mesh.addColor(ofColor::black);
+			mesh.addVertex(spiralptr->endPos);
+			
+			
+			
 		}
 		
 	}

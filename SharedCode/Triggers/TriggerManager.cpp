@@ -34,7 +34,7 @@ void TriggerManager::initParams(){
     parameters.add( triggerAreaHeightParam.set("height", 0.5, 0, 0.5 ) );
     parameters.add( triggerAreaCenterYParam.set("centre y", 0.5, 0.5, 1 ) );
     parameters.add( triggerSpacingParam.set("spacing", 0, 0, 400 ) );
-    parameters.add( triggerOscillationParam.set("vertical oscillation", 0.1, 0.01, 2 ) );
+    parameters.add( triggerOscillationParam.set("vertical oscillation", 0, 0, 10 ) );
     
     triggerAreaWidthParam.addListener(this, &TriggerManager::triggerParamChanged);
     triggerAreaHeightParam.addListener(this, &TriggerManager::triggerParamChanged);
@@ -52,7 +52,7 @@ bool TriggerManager :: update(float deltaTime) {
 	
 	for(int i=0; i<triggers.size(); i++) {
 		
-		if( triggers[i]->update(deltaTime)) activeTriggers++;
+		if( triggers[i]->update(deltaTime, triggerArea)) activeTriggers++;
 		
 	}
 	/*
@@ -170,7 +170,7 @@ void TriggerManager::setTriggersDisabled(bool disabled){
 void TriggerManager :: updateLayout() {
 	
 
-	float xPos = 0;
+	
 	float midX = triggerArea.x+ triggerArea.width/2;
 	
 	int triggerIndex = 0;
@@ -193,14 +193,26 @@ void TriggerManager :: updateLayout() {
 	// figure out the spacing between the triggers so that it fills the space
 	//float spacing = triggerArea.width / floor(triggerArea.width / minimumSpacing);
 	// then work out the number of triggers we can fit
-	int numOfTriggers =  ceil(triggerArea.width / minimumSpacing);
-	if(numOfTriggers%2==0) {
-		numOfTriggers--;
-	}
-	float spacing = triggerArea.width/(numOfTriggers-1);
 	
-	while (triggerCount<numOfTriggers ) { //(triggerArea.width/2)-minimumSpacing/2) {
-				
+	int numOfTriggers;
+	float spacing;
+	float xPos = 0;
+	
+	if(triggerPattern.arrangeMode == TRIGGER_ARRANGE_MIRROR) {
+		numOfTriggers =  ceil(triggerArea.width / minimumSpacing);
+		if(numOfTriggers%2==0) {
+			numOfTriggers--;
+		}
+		spacing = triggerArea.width/(numOfTriggers-1);
+		
+	} else if(triggerPattern.arrangeMode == TRIGGER_ARRANGE_DISTRIBUTE) {
+		numOfTriggers = triggerPattern.triggers.size();
+		spacing = triggerArea.width/(numOfTriggers-1);
+		xPos = triggerArea.getLeft(); 
+	}
+	
+	while (triggerCount<numOfTriggers ) {
+		
 		Trigger * trigger;
 		
 		if(triggers.size()>triggerCount) {
@@ -213,22 +225,33 @@ void TriggerManager :: updateLayout() {
 		
 		trigger->copySettings(triggerPattern.triggers[triggerIndex]);
 		
+		trigger->disabled = trigger->disabled || triggersDisabled;
+		
+		
 		trigger->start();
 		
-		trigger->disabled = triggersDisabled;
 		trigger->showDebugData = triggerDebug;
 			
-		trigger->pos.y = triggerArea.getCenter().y + cos(triggerCount*triggerOscillationParam) * (triggerArea.getHeight()/2); //ypos +
-		trigger->pos.x = xPos + midX;
-			
-		if(xPos>=0){
-			xPos = -xPos-spacing;
-		
-			triggerIndex++;
-			if(triggerIndex>=triggerPattern.triggers.size()) triggerIndex = 0;
+		if(triggerPattern.arrangeMode == TRIGGER_ARRANGE_MIRROR) {
+			trigger->pos.x = xPos + midX;
+			if(xPos>=0){
+				xPos = -xPos-spacing;
+				
+				triggerIndex++;
+				if(triggerIndex>=triggerPattern.triggers.size()) triggerIndex = 0;
+			} else {
+				xPos = -xPos;
+			}
 		} else {
-			xPos = -xPos;
+			trigger->pos.x = xPos;
+			triggerIndex++;
+			xPos+=spacing;
 		}
+		
+		trigger->pos.y = triggerArea.getCenter().y + cos((trigger->pos.x - midX)/(triggerArea.getWidth())* triggerOscillationParam * PI ) * (triggerArea.getHeight()/2);
+		
+			
+
 
 		triggerCount++;
 		

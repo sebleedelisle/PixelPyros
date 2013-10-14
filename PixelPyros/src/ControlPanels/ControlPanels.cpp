@@ -114,7 +114,7 @@ void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 
 void ControlPanels::draw(MotionManager& motionManager){
     
-    
+    ofDisableBlendMode();
     if( monitorCount > 1 ) drawPreviewScreen(motionManager);
         
   	for(int i = 0; i<panels.size(); i++) {

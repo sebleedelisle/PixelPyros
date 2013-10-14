@@ -32,10 +32,17 @@ TriggerSettings::TriggerSettings() {
 	rotationExtent = 0;
 	rotationSpeed = 0;
 	
+	rotateOscillationOffset = 0;
+	rotateMirrorOffset = 5;
+	
+	enabled = false;
+	
 	rotateOnFire = false;
 	startEmpty = false; 
 	
 }
+
+/*
 
 void TriggerSettings::doTrigger(ofVec3f& pos) {
 	doTrigger(pos, 1,0);
@@ -44,14 +51,19 @@ void TriggerSettings::doTrigger(ofVec3f& pos) {
 void TriggerSettings::doTrigger(ofVec3f& pos, float power) {
 	doTrigger(pos, power, 0);
 }
-
-void TriggerSettings::doTrigger(ofVec3f& pos, float power, float direction) {
+*/
+void TriggerSettings::doTrigger(ofVec3f& pos, float power, float direction, map<string, float>& values) {
 	//ofLog(OF_LOG_WARNING, "triggered");
 }
 
 ofColor TriggerSettings::getColour() {
 	return ofColor::black;
 	
+}
+
+
+void TriggerSettings::update(float deltaTime, map<string, float> &triggerValues){
+	values = &triggerValues;
 }
 
 void TriggerSettings::draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale, float angle ) {

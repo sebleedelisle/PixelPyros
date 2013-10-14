@@ -10,30 +10,58 @@
 
 TriggerSettingsRocket :: TriggerSettingsRocket() : particleSystemManager(*ParticleSystemManager::instance()) {
 	
-	rocketSettings = NULL;
+	//rocketSettings = NULL;
 	
 	rotationExtent = 0;
 	rotationSpeed = 0;
 	rotateOnFire = false;
+	enabled = true;
 	
-	
+//	rot1 = ofRandom(360);
+//	rot2 = ofRandom(360);
+//	rot3 = ofRandom(360);
+//	vel1 = ofRandom(400,440);
+//	vel2 = ofRandom(320,380);
+//	vel3 = ofRandom(280,320);
 }
 
 
 
-void TriggerSettingsRocket ::doTrigger(ofVec3f& pos, float power, float direction){
+void TriggerSettingsRocket ::doTrigger(ofVec3f& pos, float power, float direction, map<string, float>& values){
 	
 	PhysicsObject* rocket = NULL;
 	
-	if(rocketSettings!=NULL) {
-		rocket = particleSystemManager.addRocket(*rocketSettings, pos);
-
-		rocket->vel.rotate(0,0, direction );
-		
-	}
+	RocketSettings* rs = NULL;
+	float* currentMultiRocket = NULL; 
 	
-
-
+	if(multiRocketSettings.size()>0) {
+		
+		if(multiRocketProbabilities.size() == multiRocketSettings.size()) {
+			float random = ofRandom(1);
+			int i;
+			for(i = 0; i<=multiRocketSettings.size(); i++) {
+				if(random<multiRocketProbabilities[i]) break;
+			}
+			// shouldn't need this
+			if(i>=multiRocketSettings.size()) i =multiRocketSettings.size()-1;
+			rs = multiRocketSettings[i];
+			
+		} else {
+			
+			if(values.find("currentmultirocket")==values.end()) {
+				values["currentmultirocket"] = 0;
+			}
+			currentMultiRocket = &values["currentmultirocket"];
+			   
+			rs = multiRocketSettings[*currentMultiRocket];
+			(*currentMultiRocket)++;
+			if(*currentMultiRocket>=multiRocketSettings.size()) (*currentMultiRocket) =0;
+		}
+	}
+	if(rs!=NULL) {
+		rocket = particleSystemManager.addRocket(*rs, pos);
+		rocket->vel.rotate(0,0, direction );
+	}
 
 }
 
@@ -118,3 +146,38 @@ ofColor TriggerSettingsRocket::getColour() {
 	return c; 
 
 }
+
+void TriggerSettingsRocket::addRocketSettings(RocketSettings* rs){
+	multiRocketSettings.push_back(rs);
+}
+
+void TriggerSettingsRocket::setProbabilities(vector<float> probs){
+	
+	multiRocketProbabilities.clear();
+	
+	float total = 0;
+	
+	for(int i = 0;i<multiRocketSettings.size();i++) {
+		if(i>=probs.size()) {
+			cout << "ERROR"<< endl;
+			
+		} else {
+			total+=probs[i];
+		}
+		
+	}
+	float currentprob = 0;
+	for(int i = 0;i<probs.size();i++) {
+		currentprob+=(probs[i]/total);
+		multiRocketProbabilities.push_back(currentprob); 
+	}
+	
+	
+}
+
+RocketSettings* TriggerSettingsRocket::getRocketSettings(int index) {
+	if(index>=multiRocketSettings.size()) return NULL; 
+	return multiRocketSettings[index];
+	
+}
+

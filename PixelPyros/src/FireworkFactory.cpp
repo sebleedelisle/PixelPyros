@@ -30,7 +30,7 @@ FireworkFactory :: FireworkFactory() {
 
 
 
-TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue , float saturation, float speedVar, float directionVar ){
+TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue , float saturation,  float speedVar, float directionVar ){
 	
 	ParticleSystemManager& particleSystemManager = *ParticleSystemManager::instance();
 	
@@ -89,11 +89,11 @@ TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue ,
 	//rocketSettings.addParticleSystemSetting(explosionLines);
 	
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	TriggerSettingsRocketOrb* ts = new TriggerSettingsRocketOrb();
 	ts->radius = 7;
 	ts->hue = hue;
 	ts->saturation = saturation * 0.7;
-	ts->rocketSettings = &rocketSettings;
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fastMultiples;
 	
 	return ts;
@@ -102,6 +102,7 @@ TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue ,
 }
 
 
+// TODO is this really a rotating rocket or is it a fluffy rocket? CONFUSED
 
 TriggerSettingsRocket* FireworkFactory::getRotatingRocket(float speed, float hue , float saturation, float speedVar, float directionVar ){
 	
@@ -162,11 +163,11 @@ TriggerSettingsRocket* FireworkFactory::getRotatingRocket(float speed, float hue
 	//rocketSettings.addParticleSystemSetting(explosionLines);
 	
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
 	ts->radius = 7;
 	ts->hue = hue;
 	ts->saturation = saturation * 0.7;
-	ts->rocketSettings = &rocketSettings;
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
 	ts->rotateOnFire = true;
 	
@@ -178,7 +179,7 @@ TriggerSettingsRocket* FireworkFactory::getRotatingRocket(float speed, float hue
 
 
 
-TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChange ){
+TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChange, float flightTime){
 	
 	ParticleSystemManager& particleSystemManager = *ParticleSystemManager::instance();
 	
@@ -187,7 +188,7 @@ TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChan
 	rocketSettings.startSpeedMin = 600;
 	rocketSettings.startSpeedMax = 800;
 	rocketSettings.direction = -90;
-	rocketSettings.directionVar = 4;
+	rocketSettings.directionVar = 2;
 	rocketSettings.gravity.y = 400;
 	
 	//rocketSettings.drag = 0.95;
@@ -196,17 +197,26 @@ TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChan
 	ParticleSystemSettings explosion = getFlowerExplosionParticles(hue, hueChange);
 	//ParticleSystemSettings explosionLines = getLineExplosionParticles(150, hueChange);
 	
-	trails.timeSpeed = explosion.timeSpeed = rocketSettings.timeSpeed = 0.7;
+	ParticleSystemSettings laserFlashParticles = getLaserFlashParticles(hue, 200);
+
 	
-	explosion.emitDelay = trails.emitLifeTime = 2;
+	// the time would usually be 2/0.7 so we need to divide that by the flightTime
+	// to change time to match the flight time. Confused? Me too! 
+	trails.timeSpeed = explosion.timeSpeed = laserFlashParticles.timeSpeed = rocketSettings.timeSpeed = 0.7 * ((2/0.7) / flightTime);
+	
+	
+	laserFlashParticles.emitDelay = explosion.emitDelay = trails.emitLifeTime = 2;
+	
+	//cout << "EXPECTED TIME : " << explosion.emitDelay * explosion.timeSpeed << endl;
+
 	
 	rocketSettings.addParticleSystemSetting(trails);
-	//rocketSettings.addParticleSystemSetting(explosion);
-	//rocketSettings.addParticleSystemSetting(explosionLines);
+	rocketSettings.addParticleSystemSetting(explosion);
+	rocketSettings.addParticleSystemSetting(laserFlashParticles);
 	
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
-	ts->rocketSettings = &rocketSettings;
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::medium; 
 	
 	return ts;
@@ -219,11 +229,9 @@ TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChan
 
 ParticleSystemSettings FireworkFactory :: getFlowerTrailParticles(float hue, float hueChange ){
 	
-	
 	ParticleSystemSettings trails;
 	trails.renderer = new ParticleRendererShape();
-	
-	
+
 	trails.speedMin = 20;
 	trails.speedMax = 50;
 	trails.directionZ = 0;
@@ -231,8 +239,6 @@ ParticleSystemSettings FireworkFactory :: getFlowerTrailParticles(float hue, flo
 	trails.directionYVar = 180;
 	trails.drag = 0.90;
 	trails.gravity.set(0,30);
-	
-	
 	
 	trails.sizeStartMin = 4;
 	trails.sizeStartMax = 6;
@@ -257,7 +263,6 @@ ParticleSystemSettings FireworkFactory :: getFlowerTrailParticles(float hue, flo
 	trails.startSound = "LaunchRocketSharp";
 	
 	return trails;
-	
 	
 };
 ParticleSystemSettings FireworkFactory :: getFlowerExplosionParticles(float hue, float hueChange){
@@ -442,8 +447,8 @@ TriggerSettingsRocket* FireworkFactory :: getSimpleFountain(float hueStartOffset
 	rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(ps2);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
-	ts->rocketSettings = &rocketSettings;
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	ts->addRocketSettings(&rocketSettings);
 	
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
 	ts->radius = 5; 
@@ -499,8 +504,8 @@ TriggerSettingsRocket* FireworkFactory :: getFluffyRocket(){
 	
 	rocketSettings.addParticleSystemSetting(pss);
 	//rocketSettings.addParticleSystemSetting(getSmoke());
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
-	ts->rocketSettings = &rocketSettings;
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
 	
 	return ts;
@@ -543,9 +548,9 @@ TriggerSettingsRocket* FireworkFactory:: getBangerRocket() {
 	rocketSettings.addParticleSystemSetting(bang);
 	rocketSettings.addParticleSystemSetting(bangCrackles);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
 	
-	ts->rocketSettings = &rocketSettings;
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::slow;
 	ts->radius *=1.3;
 	
@@ -795,16 +800,33 @@ TriggerSettingsRocket* FireworkFactory :: getWigglyRocket(){
 	
 
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
 	
-	ts->rocketSettings = &rocketSettings;
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::slow;
 	ts->radius *=1.3;
 	
 	return ts;
 	
+}
+
+ParticleSystemSettings FireworkFactory:: getLaserFlashParticles(float hue, float saturation) {
 	
+	ParticleSystemSettings pss;
 	
+	pss.renderer = new ParticleRendererLaserFlash(20);
+	pss.emitCount =1;
+	pss.emitMode = PARTICLE_EMIT_BURST;
+	
+	pss.sizeStartMin = pss.sizeStartMax = 1;
+	pss.sizeChangeRatio = 30;
+	pss.saturationMin = pss.saturationMax = 0;
+	pss.saturationEnd = saturation;
+	pss.lifeMin = pss.lifeMax = 0.2;
+	pss.brightnessEnd = 0;
+	pss.brightnessStartMin = pss.brightnessStartMax = 500;
+	
+	return pss;
 }
 
 

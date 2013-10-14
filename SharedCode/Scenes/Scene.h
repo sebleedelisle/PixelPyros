@@ -8,7 +8,6 @@
 
 #pragma once 
 
-
 #include "constants.h"
 #include "TriggerPattern.h"
 #include "TriggerManager.h"
@@ -38,9 +37,10 @@ class Scene {
 	void addTriggerPattern();
 	void addTriggerPattern(TriggerPattern& pattern);
 	void addTriggerPattern(TriggerPattern& pattern, string label);
-
-	
 	TriggerPattern getCurrentTriggerPattern();
+
+	string getTriggerPatternName();
+	
 	
 	TriggerManager* triggerManager; 
 	
@@ -68,6 +68,7 @@ class Scene {
 	SequenceCommand addCommand(float time, SequenceCommandType type, int arg);
 	vector <SequenceCommand> commands;
 	void processCommand(SequenceCommand command);
+	bool setCommandTime(int i, float time);
 	bool disableCommand(int i);
 	void updateCommands(); 
 

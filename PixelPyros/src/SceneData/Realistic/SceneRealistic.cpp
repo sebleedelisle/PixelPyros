@@ -255,9 +255,9 @@ TriggerSettingsRocket*  SceneRealistic :: getFountain(float hueStartOffset , flo
 	rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(ps2);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
 	
-	ts->rocketSettings = &rocketSettings;
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
 	
 	return ts;
@@ -290,9 +290,9 @@ TriggerSettingsRocket*  SceneRealistic :: getFlowerRocket(float hue , float hueC
 	rocketSettings.addParticleSystemSetting(explosion);
 	rocketSettings.addParticleSystemSetting(explosionLines);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
 	
-	ts->rocketSettings = &rocketSettings;
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::medium;
 	
 	return ts;
@@ -324,7 +324,7 @@ TriggerSettingsRocket* SceneRealistic :: getSphereFlowerRocket(float hue , float
 	
 	ParticleSystemSettings explosionLines = getLineExplosionParticles(150, hueChange);
 	ParticleSystemSettings crackles = FireworkFactory::instance()->getBangerCrackles();
-	crackles.renderer = new ParticleRendererStar(20, 70);
+	crackles.renderer = new ParticleRendererStar(15, 70);
 	crackles.brightnessStartMax = 150;
 	crackles.brightnessStartMin = 100;
 	crackles.sizeStartMax = 5;
@@ -339,9 +339,9 @@ TriggerSettingsRocket* SceneRealistic :: getSphereFlowerRocket(float hue , float
 	rocketSettings.addParticleSystemSetting(explosionLines);
 	rocketSettings.addParticleSystemSetting(crackles);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
 	
-	ts->rocketSettings = &rocketSettings;
+	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::medium;
 	
 	return ts;

@@ -39,7 +39,7 @@ void ofApp::setup(){
 	gui.add(particleFlicker.set("Flicker",0.5,0,1));
 	gui.setPosition(0,0);
 	gui.add(laserManager.parameters);
-	
+	gui.setVisible (true);
 
 	guiVisible = true;
 	
@@ -123,9 +123,9 @@ void ofApp::draw(){
 
 	
 
-	if( guiVisible ){
+	//if( guiVisible ){
 		gui.draw();
-	}
+	//}
 
 }
 

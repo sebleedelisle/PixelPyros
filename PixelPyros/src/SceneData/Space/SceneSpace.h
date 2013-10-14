@@ -21,6 +21,7 @@
 
 #include "Starfield.h"
 #include "FireworkFactory.h"
+#include "LetterWritingPatternMaker.h"
 
 class SceneSpace : public Scene {
 	

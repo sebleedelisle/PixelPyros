@@ -41,7 +41,7 @@ public:
 			if((!p.enabled) || (p.size<0.1)) continue;			
 			
 			ofVec3f p1(0,-1), p2(MIN(p.size*20,length),0), p3(0,1);
-			ofVec3f scalar(1,p.size);
+			ofVec3f scalar(length/20,p.size);
 			p1 *= scalar;
 			p2 *= scalar;
 			p3 *= scalar;

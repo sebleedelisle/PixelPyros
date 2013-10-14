@@ -13,8 +13,7 @@ SceneNadia :: SceneNadia  (string scenename) : Scene(scenename){
 	
 	loadMusicFile("06 Nadia.aif");
 	
-	TriggerPattern empty;
-	addTriggerPattern(empty);
+	addTriggerPattern();
 	
 	TriggerPattern soft1;
 	soft1.addTriggerSettings();
@@ -41,7 +40,7 @@ SceneNadia :: SceneNadia  (string scenename) : Scene(scenename){
 
 TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange) {
 	
-	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocketOrb();
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
@@ -110,7 +109,7 @@ TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange
 	rocketSettings.setLifeTime(16);
 	rocketSettings.addParticleRenderer(new ParticleRendererLaserTeardrop());
 	
-	ts.rocketSettings = &rocketSettings;
+	ts.addRocketSettings(&rocketSettings);
 	
 	ts.rechargeSettings = TriggerRechargeSettings::slow;
 	
@@ -123,7 +122,7 @@ TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange
 
 TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	
-	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocketOrb();
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
@@ -172,7 +171,7 @@ TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	//rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
 	
-	ts.rocketSettings = &rocketSettings;
+	ts.addRocketSettings(&rocketSettings);
 	
 	ts.rechargeSettings = TriggerRechargeSettings::medium;
 	

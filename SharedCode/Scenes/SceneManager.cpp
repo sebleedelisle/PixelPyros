@@ -277,7 +277,20 @@ bool SceneManager::previousPattern(){
 }
 
 
-
+string SceneManager::getCurrentSceneName(){
+	
+	if(currentScene!=NULL)
+		return currentScene->name;
+	else return "no scene"; 
+	
+}
+string SceneManager::getCurrentTriggerPatternName(){
+	
+	if(currentScene!=NULL)
+		return currentScene->getTriggerPatternName();
+	else return "no scene";
+	
+}
 
 
 
@@ -368,9 +381,11 @@ void SceneManager :: mouseDragged(ofMouseEventArgs &e) {
 void SceneManager :: mouseReleased(ofMouseEventArgs &e) {
 	
 	dragPlayHead = false;
-	if(dragCommandIndex>-1) {
+	if((dragCommandIndex>-1)&&(currentScene!=NULL)){
+		
 		if(timeBarRect.y - ofGetMouseY() > 100) {
-			if(currentScene!=NULL) currentScene->disableCommand(dragCommandIndex);
+			
+			 currentScene->disableCommand(dragCommandIndex);
 			//currentScene->commands[dragCommandIndex].enabled = false;
 			
 			//if(getCommand(i)) {
@@ -378,6 +393,8 @@ void SceneManager :: mouseReleased(ofMouseEventArgs &e) {
 				// SAVE HERE FOR UNDO AND AUTOSAVE
 			//}
 		}
+		currentScene->updateCommands();
+		
 	}
 	
 	dragCommandIndex = -1; 
