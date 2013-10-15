@@ -25,6 +25,7 @@
 #include "ofMain.h"
 #include "constants.h"
 #include "RectangleUI.h"
+#include "ofxNetwork.h"
 
 class LaserManager {
 
@@ -88,7 +89,9 @@ class LaserManager {
 	
 	
 	void addDelayTest() ;
-
+	
+	void sendPointsTCP(vector<ofxIlda::Point>& points); 
+	string ildaPointToString(ofxIlda::Point& p);
 	
 	vector <LaserShape*> shapes;
 	
@@ -96,6 +99,8 @@ class LaserManager {
 	
 	ofFloatColor white;
 	ofFloatColor black;
+	
+	ofSoundPlayer beep; 
 	
 	ofPoint currentPosition;
 	
@@ -140,17 +145,17 @@ class LaserManager {
 	
 	ofParameter<float>spiralSpacing; 
 	
+	ofxTCPServer TCP;
+	bool useTCP; 
 
-	
-	
-	
 	ofParameterGroup p1, p2, p3;
 	ofParameterGroup parameters;
     ofParameterGroup calibrationParameters;
 
     QuadWarp warp;
 	
-	bool isConnected;
+	bool shouldBeConnected;
+	string lastState; 
 	
 	RectangleUI maskRectangle; 
 	
@@ -160,6 +165,7 @@ class LaserManager {
 	ofPoint pmax;
 	
 	int minPoints;
+	int restartCount; 
 	
 	//bool laserDirty;
 	

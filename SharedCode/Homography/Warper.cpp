@@ -149,7 +149,9 @@ void Warper :: draw(ofPixels& pix) {
 	ofSetColor(255);
 	
 	warpedImage.draw(0,0, dstWidth, dstHeight);
-	ofPushMatrix(); 
+	
+	/*
+	ofPushMatrix();
 	
 	ofTranslate(dstWidth/4, dstHeight/4);
 	ofScale(srcWidth/dstWidth/2, srcWidth/dstWidth/2);	
@@ -159,7 +161,9 @@ void Warper :: draw(ofPixels& pix) {
 	//cout << dstWidth << " " << dstHeight << endl;
 	drawPoints(srcVecs, ofColor::cyan);
 
-	ofPopMatrix(); 
+	ofPopMatrix();
+	 
+	 */
 	drawPoints(srcVecs, ofColor::cyan);
 	
 	drawPoints(dstVecs); 

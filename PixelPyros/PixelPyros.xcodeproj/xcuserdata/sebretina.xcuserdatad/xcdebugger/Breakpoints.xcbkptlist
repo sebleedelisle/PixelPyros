@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "403441416.177937"
+         timestampString = "403560545.891427"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "988"
-         endingLineNumber = "988"
+         startingLineNumber = "1033"
+         endingLineNumber = "1033"
          landmarkName = "LaserManager :: renderPreview()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,12 +125,101 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ControlPanels/ControlPanels.cpp"
-         timestampString = "403442281.940532"
+         timestampString = "403561669.452653"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "165"
-         endingLineNumber = "165"
-         landmarkName = "ControlPanels::drawPreviewScreen(MotionManager&amp; motionManager)"
+         startingLineNumber = "174"
+         endingLineNumber = "174"
+         landmarkName = "ControlPanels::drawPreviewScreen(MotionManager&amp; motionManager, CameraManagerWarped&amp; cameraManager)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../SharedCode/Laser/LaserManager.cpp"
+         timestampString = "403560545.891427"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "357"
+         endingLineNumber = "357"
+         landmarkName = "LaserManager::sendPointsTCP(vector&lt;ofxIlda::Point&gt;&amp; points)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../SharedCode/Laser/LaserManager.cpp"
+         timestampString = "403560545.891427"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "308"
+         endingLineNumber = "308"
+         landmarkName = "LaserManager::draw()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../SharedCode/Laser/LaserManager.cpp"
+         timestampString = "403560545.891427"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "307"
+         endingLineNumber = "307"
+         landmarkName = "LaserManager::draw()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../SharedCode/Laser/LaserManager.cpp"
+         timestampString = "403560545.891427"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "367"
+         endingLineNumber = "367"
+         landmarkName = "LaserManager::sendPointsTCP(vector&lt;ofxIlda::Point&gt;&amp; points)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../addons/ofxEtherdream/src/ofxEtherdream.cpp"
+         timestampString = "403558636.228317"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "55"
+         endingLineNumber = "55">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../addons/ofxEtherdream/src/ofxEtherdream.cpp"
+         timestampString = "403558636.228317"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "133"
+         endingLineNumber = "133"
+         landmarkName = "ofxEtherdream::threadedFunction()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/ControlPanels/ControlPanels.cpp"
+         timestampString = "403561669.452653"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "167"
+         endingLineNumber = "167"
+         landmarkName = "ControlPanels::drawPreviewScreen(MotionManager&amp; motionManager, CameraManagerWarped&amp; cameraManager)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
