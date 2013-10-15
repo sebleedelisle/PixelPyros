@@ -337,7 +337,7 @@ bool QuadWarp::loadSettings() {
 		
 	}
 	
-	cout << "Warp Pre load: " << filename << " " << dstPoints[0].x << ", " << dstPoints[0].y << endl;
+	//cout << "Warp Pre load: " << filename << " " << dstPoints[0].x << ", " << dstPoints[0].y << endl;
     
     
 	dstPoints[0].x	= xml.getValue("quad:upperLeft:x", 0.0);
@@ -352,7 +352,7 @@ bool QuadWarp::loadSettings() {
 	dstPoints[3].x	= xml.getValue("quad:lowerLeft:x", 0.0);
 	dstPoints[3].y	= xml.getValue("quad:lowerLeft:y", 1.0);
 	
-    cout << "Loading Warp: " << filename << " " << dstPoints[0].x << ", " << dstPoints[0].y << endl;
+    //cout << "Loading Warp: " << filename << " " << dstPoints[0].x << ", " << dstPoints[0].y << endl;
     
     updateHomography();
     

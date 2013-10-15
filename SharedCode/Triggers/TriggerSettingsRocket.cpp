@@ -159,7 +159,7 @@ void TriggerSettingsRocket::setProbabilities(vector<float> probs){
 	
 	for(int i = 0;i<multiRocketSettings.size();i++) {
 		if(i>=probs.size()) {
-			cout << "ERROR"<< endl;
+			//cout << "ERROR"<< endl;
 			
 		} else {
 			total+=probs[i];

@@ -228,7 +228,7 @@ bool CameraManager:: changeCamera(string camname) {
 bool CameraManager :: changeCamera(CameraWrapper* cam) { 
 	camera = cam;
     capturing = false;
-	cout << "changed camera to " << camera->name << endl;
+	//cout << "changed camera to " << camera->name << endl;
 	return true;
 }
 

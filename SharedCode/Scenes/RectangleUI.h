@@ -13,7 +13,7 @@ class RectangleUI : public ofRectangle {
 
 	public:
 	
-	void initUI();
+	void initUI(ofRectangle maxrect);
 	
 	void update();
 	void draw();
@@ -33,4 +33,5 @@ class RectangleUI : public ofRectangle {
 	
 	float dragSize; 
 	
+	ofRectangle maxRect;
 }; 

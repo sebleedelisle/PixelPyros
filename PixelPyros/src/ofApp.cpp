@@ -53,8 +53,13 @@ void ofApp::setup(){
 	
 	cameraManager.init();
 	cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
-	cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
-	cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	
+	cameraManager.addIPPlayer("network cam1", "http://10.0.1.24/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
+	cameraManager.addIPPlayer("network cam2", "http://10.0.1.25/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
+
+	
 	motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 
 	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); 
@@ -265,7 +270,7 @@ void ofApp::draw(){
 
 	ofPopMatrix();
 	
-    controlPanels.draw(motionManager);
+    controlPanels.draw(motionManager, cameraManager);
 	sceneManager.drawGUI();
 	if(screens.size()==1) {
 		laserManager.renderLaserPath(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT), (controlPanels.panelMode == controlPanels.PANEL_MODE_LASER));
@@ -353,15 +358,17 @@ void ofApp::keyPressed(int key){
         else if ( key == 'r' )
         {
             //sequencer.runSequence("Intro");
-        }
-	else if(key == 'f') {
-        spanAll = !spanAll;
-        int monitorCount;
-        glfwGetMonitors(&monitorCount);
-        ofGetWindowPtr()->setMonitorSpan(spanAll?monitorCount:monitorCount-1);
+        }else if(key == 'F') {
+			ofToggleFullscreen();
+			updateScreenSizes();
+		} else if(key == 'f') {
+			spanAll = !spanAll;
+			int monitorCount;
+			glfwGetMonitors(&monitorCount);
+			ofGetWindowPtr()->setMonitorSpan(spanAll?monitorCount:monitorCount-1);
     
-		updateScreenSizes();
-	}
+			updateScreenSizes();
+		}
    // }
     
     controlPanels.keyPressed(key);
@@ -471,7 +478,7 @@ void ofApp::calculateScreenSizes(){
 	
 	GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
 	
-	cout << "RESIZE" << " " << ofGetWindowMode()<< endl;
+	//cout << "RESIZE" << " " << ofGetWindowMode()<< endl;
     screens.clear();
     
     int leftMost = 0,
@@ -494,7 +501,7 @@ void ofApp::calculateScreenSizes(){
         screen.height = desktopMode->height;
         
         screens.push_back(screen);
-        cout << i << " " << screen << endl;
+        //cout << i << " " << screen << endl;
 		if( leftMost > screen.x ) leftMost = screen.x;
 		if( topMost > screen.y ) topMost = screen.y;
 
@@ -507,10 +514,10 @@ void ofApp::calculateScreenSizes(){
     }
     
 	std::sort( screens.begin(), screens.end(), screenSort );
-	
+	/*
     for(int i = 0; i < monitorCount; i++){
 		cout << i << " " << screens[i] << endl;
-    }
+    }*/
     
 	uiScreenRect = screens.back();
 		

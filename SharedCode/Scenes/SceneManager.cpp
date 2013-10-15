@@ -484,7 +484,7 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 	
 	if((currentScene->recording) && (newPattern>=0) ){
 		currentScene->addCommand((float)currentScene->lastUpdate, SEQ_PATTERN_CHANGE, newPattern);
-		cout << currentScene->positionSeconds << " " << newPattern << endl;
+		//cout << currentScene->positionSeconds << " " << newPattern << endl;
 
 	}
 	
@@ -493,7 +493,7 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 void SceneManager :: updateUIScreen(ofRectangle screen){
 	screenUI = screen;
 	timeBarRect.set(screen.x+playHeadRect.width/2, screen.getBottom()-playHeadRect.height-1,screen.width - playHeadRect.width, playHeadRect.height-2);
-	cout << "SCENE MANAGER UPDATE SCREEN " << screen << endl; 
+	//cout << "SCENE MANAGER UPDATE SCREEN " << screen << endl; 
 
 }
 
