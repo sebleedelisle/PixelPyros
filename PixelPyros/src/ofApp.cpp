@@ -31,7 +31,6 @@ void ofApp::setup(){
 	fboWarper2.setSrcPoint(1, ofVec2f(APP_WIDTH,0));
 	fboWarper2.setSrcPoint(2, ofVec2f(APP_WIDTH,APP_HEIGHT));
 	fboWarper2.setSrcPoint(3, ofVec2f(APP_WIDTH/2,APP_HEIGHT));
-
   
 	fboWarper1.loadSettings();
 	fboWarper2.loadSettings();
@@ -53,15 +52,15 @@ void ofApp::setup(){
 	
 	cameraManager.init();
 	cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
-	cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
-	cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 
 	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); 
 	controlPanels.main = fbo;
 	fbo.begin();
 	ofClear(0,0,0);
-	fbo.end(); 
+	fbo.end();
 
     paused = false;
     altPressed = false;
@@ -71,7 +70,8 @@ void ofApp::setup(){
 	
 	laserManager.setup(APP_WIDTH, APP_HEIGHT);
 
-	appParams.setName("App settings");	
+	appParams.setName("App Settings");
+    
 	appParams.add(timeSpeed.set("time speed", 1, 0,2));
 	// these should be loaded and saved, but not time speed
 	appParams.add(edgeBlendSize.set("edge blend size", 0, 0, 50));
@@ -100,8 +100,37 @@ void ofApp::setup(){
 	updateScreenSizes();
 	setupScenes();
 	
-	
-	
+    ofParameterGroup * oscParams = new ofParameterGroup();
+    oscParams->setName("OSC");
+    oscParams->add( controlPanels.appGui.getParameter() );
+    oscParams->add( controlPanels.triggerGui.getParameter() );
+    oscParams->add( controlPanels.motionGui.getParameter() );
+    sync.setup(*oscParams, 6667, "10.0.1.6", 8000);
+    
+    /*
+
+    testGroup->add(soundPlayer.globalVolume);
+    
+    testGroup->add(motionManager.thresholdLevelParam);
+    testGroup->add(motionManager.motionSensitivityParam);
+    testGroup.add(triggerManager.triggerAreaWidthParam);
+    testGroup.add(triggerManager.triggerAreaHeightParam);
+    testGroup.add(triggerManager.triggerAreaCenterYParam);
+    testGroup.add(triggerManager.triggerSpacingParam);
+    testGroup.add(triggerManager.triggerOscillationParam);
+    testGroup.add(triggerManager.triggerDebugMode);
+      */
+    
+    
+    // Works
+    //sync.setup( ( ofParameterGroup& ) controlPanels.appGui.getParameter(), 6667, "10.0.1.6",8000);
+
+    // Doesn't work
+    //sync.setup( ( ofParameterGroup& ) *parameterManager.getParameterGroup("app"), 6667, "10.0.1.6",8000);
+
+    // Doesn't work
+	//sync.setup( ( ofParameterGroup& ) appParams, 6667, "10.0.1.6",8000);
+
 }
 
 //--------------------------------------------------------------
@@ -144,6 +173,8 @@ void ofApp::update(){
 	
 	laserManager.update();
 	
+    sync.update();
+    
 //	ofPoint mousePos(ofGetMouseX(), ofGetMouseY());
 //	if(uiScreenRect.inside(mousePos)) {
 //		ofShowCursor();

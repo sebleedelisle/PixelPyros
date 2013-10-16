@@ -1,0 +1,7 @@
+<Trigger_Positioning>
+		<width>0.9125</width>
+		<height>0.0325</height>
+		<centre_y>0.86875</centre_y>
+		<spacing>29</spacing>
+	<vertical_oscillation>5.9</vertical_oscillation>
+</Trigger_Positioning>
