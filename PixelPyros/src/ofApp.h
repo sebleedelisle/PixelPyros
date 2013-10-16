@@ -25,6 +25,7 @@
 #include "SceneSlideshow.h"
 #include "SceneGame.h"
 #include "SceneNadia.h"
+#include "ofxOscParameterSync.h"
 
 #include "PyrosRenderer.h"
 
@@ -112,8 +113,7 @@ public:
     bool altPressed;
 	
 	PyrosRenderer renderer;
-	
-	
+	ofxOscParameterSync sync;
     
 private:
     
