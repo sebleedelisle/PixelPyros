@@ -9,7 +9,7 @@
 #include "RectangleUI.h"
 
 
-void RectangleUI::initUI() {
+void RectangleUI::initUI(ofRectangle maxrect) {
 	visible = true;
 	
 	ofAddListener(ofEvents().mouseMoved, this, &RectangleUI::mouseMoved);
@@ -20,6 +20,8 @@ void RectangleUI::initUI() {
 	mouseOverEdge = -1;
 	dragEdge = -1;
 	dragSize = 5;
+	
+	maxRect = maxrect; 
 
 	
 }
@@ -55,17 +57,22 @@ void RectangleUI:: mousePressed(ofMouseEventArgs &e){
 }
 void RectangleUI:: mouseDragged(ofMouseEventArgs &e){
 	if(dragEdge == 0) {
-		setHeight(getBottom()-e.y);
-		setY(e.y); 
+		float newy = ofClamp(e.y, maxRect.getTop(), maxRect.getBottom());
+		setHeight(getBottom()-newy);		
+		setY(newy); 
 	} else if(dragEdge == 1) {
-		setWidth(e.x - getLeft());
+		float newx = ofClamp(e.x, maxRect.getLeft(), maxRect.getRight());
+	
+		setWidth(newx - getLeft());
 		
 	} else if(dragEdge == 2) {
-		setHeight(e.y - getTop());
+		float newy = ofClamp(e.y, maxRect.getTop(), maxRect.getBottom());
+		setHeight(newy - getTop());
 		
 	} else if(dragEdge == 3) {
-		setWidth(getRight() - e.x);
-		setX(e.x);
+		float newx = ofClamp(e.x, maxRect.getLeft(), maxRect.getRight());
+		setWidth(getRight() - newx);
+		setX(newx);
 		
 	}
 }

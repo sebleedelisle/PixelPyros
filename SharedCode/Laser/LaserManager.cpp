@@ -21,20 +21,29 @@ LaserManager * LaserManager::instance() {
 
 LaserManager:: LaserManager() {
 	pointPreviewImage.loadImage("img/LaserPointPreview.png");
+	
+	useTCP = false;
+	//etherdream.setWaitBeforeSend(true);
+	
+	beep.loadSound("beep.aif");
+	
+	lastState = ""; 
 }
 
 
 void LaserManager:: connectToEtherdream() {
-
+	
+	if(useTCP) return;
+	
 	etherdream.setup();
-   // etherdream.setPPS(pps);
-	isConnected = true;
+	shouldBeConnected = true;
 	
 }
 void LaserManager:: disconnectFromEtherdream() {
+	if(useTCP) return; 
 	
 	etherdream.kill();
-	isConnected = false;
+	shouldBeConnected = false;
 	
 }
 
@@ -43,12 +52,14 @@ void LaserManager:: setup (int width, int height) {
     appWidth = width; // ofGetWidth();
     appHeight = height;//ofGetHeight();
     
-    isConnected = false;
+    shouldBeConnected = false;
 	showSyncTest = false;
 	//connectButton = false;
 	
 	minPoints = 1000;
     
+	restartCount = 0;
+	
 	white.set(1,1,1);
 	black.set(0,0,0);
 	
@@ -69,7 +80,7 @@ void LaserManager:: setup (int width, int height) {
     float y2 = APP_HEIGHT * 0.8;
 	
 	maskRectangle.set(0, 0, APP_WIDTH, APP_HEIGHT/4*3);
-	maskRectangle.initUI();
+	maskRectangle.initUI(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT));
 
     warp.label = "laserWarp";
 	warp.setDstPoint(0, ofVec2f(x1,y1));
@@ -134,13 +145,17 @@ void LaserManager:: setup (int width, int height) {
 	warp.dragSpeed = 1; 
     
 	//connectToEtherdream();
-    
+	// TODO make port adjustable
+	if(useTCP) {
+		TCP.setup(11999);
+		//TCP.setMessageDelimiter("\0");
+	}
 }
 
 void LaserManager:: connectButtonPressed(){
 	
 	//if(connectButton!=isConnected) {
-		if(!isConnected) {
+		if(!shouldBeConnected) {
 			connectToEtherdream();
 		} else {
 			disconnectFromEtherdream();
@@ -153,29 +168,59 @@ void LaserManager:: connectButtonPressed(){
 
 void LaserManager:: update() {
 	
-	etherdream.update();
+	/*
+	 I got this when it disconnects - maybe related to PPS? 
+	 -----------------------------------------------
+	 ETHERDREAM CHECK CONNECTION -----------------------------------------------
+	 [397.180691] a3f459 write timed out
+	 [397.180712] a3f459 !! socket error in send: 35: Resource temporarily unavailable
+	 [397.180717] a3f459 L: Shutting down.
+	 ETHERDREAM CHECK CONNECTION -----------------------------------------------
+	 
+	 */
+	
+	
+	//etherdream.update();
 	
 	resetIldaPoints();
 	//previewMesh.clear();
 	pathMesh.clear();
 	
-
+	string etherdreamstate = etherdream.getStateString();
 	
 	//etherdreamStatus = etherdream.stateIsFound() ? "connected" : "disconnected";
-	etherdreamStatus = etherdream.getDeviceStateString() + (etherdream.stateIsFound() ? " FOUND " : " NOT FOUND ") + ofToString(isConnected);
+	etherdreamStatus = etherdream.getDeviceStateString() + " " + (etherdreamstate) + " "+ ofToString(shouldBeConnected)+" " +ofToString(restartCount);
+	//etherdreamStatus = (etherdream.stateIsFound() ? " FOUND " : " NOT FOUND ") + ofToString(isConnected);
 	
 	//connectButton.se(etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready");
 	
+	// we need to know if we were originally waiting... 
+	//if(etherdream.getStateString() == "FOUND") shouldBeConnected = true;
 	
-	 if(isConnected) {
-		 if(!etherdream.checkConnection(false)) {
-			 isConnected = false;
+	if(etherdream.state==ETHERDREAM_DISCONNECTED){
+	
+		//shouldBeConnected = false;
+		restartCount++;
+		disconnectFromEtherdream();
+		beep.play();
+		connectToEtherdream();
+	}
+	/*
+	if(shouldBeConnected && (etherdreamstate!="WAITING")) {
+	
+		// if(!etherdream.checkConnection(true);
+		 
+		// if(!etherdream.checkConnection(false)) {
+			 restartCount++; 
 			 disconnectFromEtherdream();
+			 beep.play();
 			 // auto reconnect
+			 // as this sets isConnected dependent on whether it works, it should only retry once. 
 			 connectToEtherdream();
-		}
+			 // isConnected = etherdream.getDeviceStateString()
+		//}
 	 }
-	
+	*/
 	
 			
 	if(showSyncTest) {
@@ -186,21 +231,21 @@ void LaserManager:: update() {
 	if(showRegistration) {
 		
 		//addLaserRectEased(pmin, pmax, white);
-		addLaserLineEased(pmin, pmax, white);
-		addLaserLineEased(ofPoint(pmax.x, pmin.y), ofPoint(pmin.x, pmax.y), white);
+		addLaserLineEased(maskRectangle.getTopLeft(), maskRectangle.getBottomRight(), white);
+		addLaserLineEased(maskRectangle.getTopRight(), maskRectangle.getBottomLeft(), white);
 		
-		ofPoint v = pmax - pmin;
+		ofPoint v = maskRectangle.getBottomRight() - maskRectangle.getTopLeft(); 
 		
 		for(float x =0 ; x<=1; x+=0.2) {
 			for(float y = 0; y<=1; y+=0.2) {
-				addLaserDot(ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*y)), white, 1);
-				if(x<1) addLaserLineEased(ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*y)), ofPoint(pmin.x + (v.x*(x+0.2)), pmin.y + (v.y*y)), ofColor::red);
-				if(y<1) addLaserLineEased(ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*y)), ofPoint(pmin.x + (v.x*x), pmin.y + (v.y*(y+0.2))), ofColor::red);
+				addLaserDot(ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*y)), white, 1);
+				if(x<1) addLaserLineEased(ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*y)), ofPoint(maskRectangle.x + (v.x*(x+0.2)), maskRectangle.y + (v.y*y)), ofColor::red);
+				if(y<1) addLaserLineEased(ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*y)), ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*(y+0.2))), ofColor::red);
 			}
 		}
 		
-		addLaserCircle(ofPoint(appWidth/2, appHeight/2), white, 10);
-		addLaserCircle(ofPoint(appWidth/2, appHeight/2), ofFloatColor(1,0,0), 50);
+		addLaserCircle(maskRectangle.getCenter(), white, 10);
+		addLaserCircle(maskRectangle.getCenter(), ofFloatColor(1,0,0), 50);
 			
 		
 		/*
@@ -221,7 +266,7 @@ void LaserManager:: update() {
 	// at this point we should report if the laser has disconnected.
 	
 	
-	
+	lastState = etherdreamstate;
 	
 }
 
@@ -230,11 +275,8 @@ void LaserManager::draw() {
 	drawShapes();
 	
 	while(ildaPoints.size()<minPoints) {
-		
 		addIldaPoint(currentPosition, black);
-		
 	}
-	
 	
 	vector<ofxIlda::Point> adjustedPoints;
 
@@ -256,12 +298,15 @@ void LaserManager::draw() {
 		adjustedPoints.push_back(p);
 		
 	}
-	
-	if((etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready")) {
+	if(!useTCP) {
+	//if((etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready")) {
 		etherdream.setPoints(adjustedPoints);
 		etherdream.setPPS(pps);
+	//}
+	} else {
+		sendPointsTCP(adjustedPoints); 
+		
 	}
-	
 
 	
 	
@@ -307,6 +352,36 @@ void LaserManager::draw() {
 	
 }
 
+
+void LaserManager::sendPointsTCP(vector<ofxIlda::Point>& points){
+	//return;
+	//for each client lets send them a message letting them know what port they are connected on
+	for(int i = 0; i < TCP.getLastID(); i++){
+		if( !TCP.isClientConnected(i) )continue;
+		
+		string str = TCP.receive(i);
+
+//		TCP.send(i, "hello client - you are connected on port - "+ofToString(TCP.getClientPort(i)) );
+		TCP.sendToAll("---");
+		for (int j = 0; j<points.size(); j++) {
+			TCP.send(i, ildaPointToString(points[j]));
+		}
+		
+	}
+
+	
+
+	
+	
+}
+
+string LaserManager::ildaPointToString(ofxIlda::Point& p) {
+	return(ofToString(p.x) + ","+ofToString(p.y) +","+ofToString(p.r) +","+ofToString(p.g) +","+ofToString(p.b));
+	
+	
+}
+
+
 void LaserManager::renderLaserPath(ofRectangle previewRectangle, bool overrideSettings) {
 	
 	ofPushStyle();
@@ -320,7 +395,7 @@ void LaserManager::renderLaserPath(ofRectangle previewRectangle, bool overrideSe
 		float scale =  previewRectangle.width / appWidth;
 		ofScale(scale, scale);
 		
-		ofDisableBlendMode();
+		//ofDisableBlendMode();
 		ofNoFill();
 		ofSetLineWidth(1);
 		ofSetColor(0,0,255);
@@ -722,13 +797,23 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity)
 	bool offScreen = false;
 
 	// TODO should be smarter about this. Ideally we should mark the on / off screen
-	// points and add a move between them. 
-	if(!maskRectangle.inside(p)) {
+	// points and add a move between them.
+	
+	// inside doesn't work because I need points on the edge of the rect to work. 
+	//if(!maskRectangle.inside(p)) {
+	if(p.x<maskRectangle.getLeft() ||
+	   p.x>maskRectangle.getRight() ||
+	   p.y<maskRectangle.getTop() ||
+	   p.y>maskRectangle.getBottom()) {
+		
 		offScreen = true;
-		p.x = max(maskRectangle.x, p.x);
-		p.x = min(maskRectangle.getRight(), p.x);
-		p.y = max(maskRectangle.y, p.y);
-		p.y = min(maskRectangle.getBottom(), p.y);
+		p.x = ofClamp(p.x, maskRectangle.getLeft(), maskRectangle.getRight()); 
+		p.y = ofClamp(p.y, maskRectangle.getTop(), maskRectangle.getBottom());
+		
+		//p.x = max(maskRectangle.x, p.x);
+		//p.x = min(maskRectangle.getRight(), p.x);
+		//p.y = max(maskRectangle.y, p.y);
+		//p.y = min(maskRectangle.getBottom(), p.y);
 		
 	}
 	

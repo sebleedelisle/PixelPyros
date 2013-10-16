@@ -132,7 +132,7 @@ void SceneGame::changeState(int newstate) {
 			changeTriggerPattern(2);
 			//triggerManager->emptyTriggers();
 		} else {
-			cout << "CHANGING TRIGGER PATTERN" << endl;
+			//cout << "CHANGING TRIGGER PATTERN" << endl;
 			changeTriggerPattern(1);
 			//triggerManager->emptyTriggers();
 		}

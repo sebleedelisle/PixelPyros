@@ -108,13 +108,13 @@ void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 	position.y = screen.getTop() + padding.y;
 	laserGui.setPosition(position);
 	
-    cout << screen.x << ", " << screen.y;
+   // cout << screen.x << ", " << screen.y;
 }
 
-void ControlPanels::draw(MotionManager& motionManager){
+void ControlPanels::draw(MotionManager& motionManager, CameraManagerWarped& cameraManager){
     
     ofDisableBlendMode();
-    if( monitorCount > 1 ) drawPreviewScreen(motionManager);
+    if( monitorCount > 1 ) drawPreviewScreen(motionManager,  cameraManager);
         
   	for(int i = 0; i<panels.size(); i++) {
         panels[i]->draw();
@@ -122,7 +122,7 @@ void ControlPanels::draw(MotionManager& motionManager){
 
 }
 
-void ControlPanels::drawPreviewScreen(MotionManager& motionManager){
+void ControlPanels::drawPreviewScreen(MotionManager& motionManager, CameraManagerWarped& cameraManager){
 	
 	ofPushStyle();
 	
@@ -134,7 +134,8 @@ void ControlPanels::drawPreviewScreen(MotionManager& motionManager){
 	float scale = previewScreenRect.width/main.getWidth();
 
     ofScale(scale, scale);
-	ofBlendMode(OF_BLENDMODE_ADD);
+	ofEnableBlendMode(OF_BLENDMODE_ADD);
+	
     main.draw(0,0);
 	 
     ofPopMatrix();
@@ -155,11 +156,21 @@ void ControlPanels::drawPreviewScreen(MotionManager& motionManager){
 	
 		
 		ofSetColor(255,0,255);
-		ofBlendMode(OF_BLENDMODE_SCREEN);
+		ofEnableBlendMode(OF_BLENDMODE_SCREEN);
 		
 		motionManager.diff.draw(previewScreenRect.getLeft()+previewScreenRect.width/2, previewScreenRect.getBottom(), previewScreenRect.width/2, previewScreenRect.height/2);
+		
+		vector <ofVec2f>& srcpoints =cameraManager.warper.srcVecs;
+		ofPushMatrix();
+		ofTranslate(previewScreenRect.getLeft(), previewScreenRect.getBottom());
+		float scale = (cameraManager.warper.srcWidth/ cameraManager.warper.dstWidth)*((previewScreenRect.width/2)/cameraManager.warper.srcWidth);
+		ofScale(scale, scale); 
+		cameraManager.warper.drawPoints(cameraManager.warper.srcVecs, ofColor::cyan);
+		ofPopMatrix();
 	
-	}
+	}	
+	ofSetColor(255,0,0);
+	ofRect(previewScreenRect);
 	
 	ofPopStyle();
 	

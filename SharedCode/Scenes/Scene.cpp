@@ -164,7 +164,7 @@ SequenceCommand Scene :: _addCommand(float time, SequenceCommandType type, int a
 
 
 void Scene :: processCommand(SequenceCommand command) {
-	cout << "PROCESS COMMAND "<< command.arg1 << endl;
+	//cout << "PROCESS COMMAND "<< command.arg1 << endl;
 	if(!command.enabled) return; 
 	if(command.type == SEQ_PATTERN_CHANGE) {
 		changeTriggerPattern(command.arg1);
@@ -252,8 +252,8 @@ void Scene:: save(){
         
         if( newData.compare("") ){
             ofLogError() << "Scene data empty, has something gone wrong!?";
-            cout << endl << oldData << endl;
-            cout << endl << newData << endl;
+            //cout << endl << oldData << endl;
+            //cout << endl << newData << endl;
         }
         
         std::time_t t = std::time(NULL);
@@ -326,13 +326,13 @@ void Scene :: goToTime(float timeSeconds){
 			
 			lastCommand = &commands[i];
 			lastPosition = c.time;
-			cout << i<<" " <<c.time << " " << timeSeconds << endl;
+			//cout << i<<" " <<c.time << " " << timeSeconds << endl;
 		}
 		
 	}
 	
 	if(lastCommand!=NULL) {
-		cout << lastCommand->time << " " << lastCommand->arg1 << endl;
+		//cout << lastCommand->time << " " << lastCommand->arg1 << endl;
 		processCommand(*lastCommand);
 		lastUpdate = timeSeconds;
 	}

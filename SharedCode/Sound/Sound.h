@@ -27,7 +27,7 @@ class Sound {
 	
 	
 	bool addSound(string path, string filename, float vol = 1, string type ="aif") {
-		cout <<  "adding sound " << path+filename << endl;
+		//cout <<  "adding sound " << path+filename << endl;
 		
 		ofDirectory dir(path);
 		if(!dir.exists()) {

@@ -36,7 +36,7 @@ void MotionManager::init(int w, int h, ofImageType type) {
 	
 	currentLabel = "";
 	
-	cout << "reinitialising images " << w << " " << h << endl; 
+	//cout << "reinitialising images " << w << " " << h << endl;
 	
 };
 
@@ -158,7 +158,7 @@ void MotionManager::saveSettings() {
 	//positions.pushTag("srcvec", i);
 		
 	settings.saveFile("settings/motion"+currentLabel+".xml");
-	cout << "saving settings " << "settings/motion"+currentLabel+".xml" << endl;
+	//cout << "saving settings " << "settings/motion"+currentLabel+".xml" << endl;
 	
 
 	
@@ -170,9 +170,9 @@ void MotionManager::loadSettings(string label) {
 	string settingsFileLabel = currentLabel;
 	
 	ofxXmlSettings settings;
-	cout << "Loading settings/motion"+settingsFileLabel+".xml" << endl;
+	//cout << "Loading settings/motion"+settingsFileLabel+".xml" << endl;
 	if(!settings.loadFile("settings/motion"+settingsFileLabel+".xml")) return false;
-	cout<< "LOADED! "<<endl;
+	//cout<< "LOADED! "<<endl;
 	//if(settings.getNumTags("thresholdLevel")!=1) return false;
 	//if(settings.getNumTags("motionSensitivity")!=1) return false;
 	//if(verbose) cout << "Success!";

@@ -16,6 +16,7 @@
 #include "QuadWarp.h"
 #include "LaserManager.h"
 #include "MotionManager.h"
+#include "CameraManagerWarped.h"
 
 class ControlPanels {
     
@@ -24,8 +25,8 @@ class ControlPanels {
     ControlPanels():parameterManager(*ParameterManager::instance()){};
     void setup(ParameterManager * parameterManager); 
 	void updatePositions(vector<ofRectangle> screens); 
-    void draw(MotionManager& cameraManager);
-    void drawPreviewScreen(MotionManager& cameraManager);
+    void draw(MotionManager& motionManager, CameraManagerWarped& cameraManager);
+    void drawPreviewScreen(MotionManager& motionManager, CameraManagerWarped& cameraManager);
     void exit();
     void keyPressed(int key);
     void mouseMoved(int x, int y);
