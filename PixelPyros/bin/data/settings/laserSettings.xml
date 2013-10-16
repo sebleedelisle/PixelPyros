@@ -5,7 +5,7 @@
 		<show_warp_points>0</show_warp_points>
 		<intensity>1</intensity>
 		<colour_change_offset>-9</colour_change_offset>
-		<show_registration>0</show_registration>
+		<show_registration>1</show_registration>
 		<show_move_points>0</show_move_points>
 		<show_sync_test>0</show_sync_test>
 		<render_laser_path>1</render_laser_path>
