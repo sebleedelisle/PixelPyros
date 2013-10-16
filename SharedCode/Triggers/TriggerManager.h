@@ -27,7 +27,7 @@ class TriggerManager {
 	void draw();
 	
 	//void updateTriggerSettings(ofRectangle triggerarea, float spacing);
-	void setShowTriggerDebug(bool);
+	void setShowTriggerDebug(bool & debug);
 	void setTriggersDisabled(bool disabled);
     void setDisplaySize( float width, float height );
 	void toggleDebug(); 
@@ -39,6 +39,7 @@ class TriggerManager {
 	
 	void mouseMoved(int x, int y); 
 	void triggerParamChanged(float & value);
+    void updateTriggerValues();
 	
 	void emptyTriggers();
     
@@ -46,7 +47,7 @@ class TriggerManager {
 	
 	ofRectangle triggerArea;
 	//bool active;
-	bool triggerDebug;
+	//bool triggerDebug;
 	bool triggersDisabled;
     float displayWidth;
     float displayHeight;
@@ -63,6 +64,6 @@ class TriggerManager {
     ofParameter<float> triggerAreaCenterYParam;
     ofParameter<float> triggerSpacingParam;
 	ofParameter<float> triggerOscillationParam;
-    
+    ofParameter<bool> triggerDebugMode;
     ofParameterGroup parameters;
 };
