@@ -29,7 +29,6 @@ void ControlPanels::setup(ParameterManager * parameterManager) { // , vector<ofR
     
     
 	setupPanel( "App", "appSettings.xml", ofRectangle(0,0, 400, heightSmall ), appGui );
-	
 	appGui.add( *parameterManager->getParameterGroup("app") );
 	appGui.load();
 	

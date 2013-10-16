@@ -44,6 +44,13 @@ class ControlPanels {
 	int PANEL_MODE_MOTION = 2;
 	int PANEL_MODE_LASER = 3;
 
+    ofxPanel appGui;
+    ofxPanel cameraCalibration;
+    ofxPanel laserGui;
+    ofxPanel rendererGui;
+    ofxPanel triggerGui;
+    ofxPanel motionGui;
+	ofxPanel cameraGui;
 	
     protected:
 
@@ -55,16 +62,8 @@ class ControlPanels {
    
     ParameterManager& parameterManager;
     
-    ofxPanel appGui; 
     //ofxPanel laserCalibration;
     //ofxPanel projectorCalibration;
-    ofxPanel cameraCalibration;
-    
-    ofxPanel laserGui;
-    ofxPanel rendererGui;
-    ofxPanel triggerGui;
-    ofxPanel motionGui;
-	ofxPanel cameraGui;
 	
 	
 	vector<ofxPanel*> panels; 

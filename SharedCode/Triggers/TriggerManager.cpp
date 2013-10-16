@@ -22,7 +22,7 @@ TriggerManager * TriggerManager::instance() {
 TriggerManager::TriggerManager () {
 	
 	triggersDisabled = false;
-	triggerDebug = false;
+	triggerDebugMode = false;
     
     initParams();
 
@@ -30,18 +30,22 @@ TriggerManager::TriggerManager () {
 
 void TriggerManager::initParams(){
     parameters.setName("Trigger Positioning");
-    parameters.add( triggerAreaWidthParam.set("width", 0.5, 0, 1 ) );
-    parameters.add( triggerAreaHeightParam.set("height", 0.5, 0, 0.5 ) );
-    parameters.add( triggerAreaCenterYParam.set("centre y", 0.5, 0.5, 1 ) );
-    parameters.add( triggerSpacingParam.set("spacing", 0, 0, 400 ) );
-    parameters.add( triggerOscillationParam.set("vertical oscillation", 0, 0, 10 ) );
+    parameters.add( triggerAreaWidthParam.set("width", 0.9125, 0, 1 ) );
+    parameters.add( triggerAreaHeightParam.set("height", 0.0325, 0, 0.5 ) );
+    parameters.add( triggerAreaCenterYParam.set("centre y", 0.86875, 0.5, 1 ) );
+    parameters.add( triggerSpacingParam.set("spacing", 29, 0, 400 ) );
+    parameters.add( triggerOscillationParam.set("vertical oscillation", 5.9, 0, 10 ) );
+    parameters.add( triggerDebugMode.set("Debug Mode",false) );
     
     triggerAreaWidthParam.addListener(this, &TriggerManager::triggerParamChanged);
     triggerAreaHeightParam.addListener(this, &TriggerManager::triggerParamChanged);
     triggerAreaCenterYParam.addListener(this, &TriggerManager::triggerParamChanged);
     triggerSpacingParam.addListener(this, &TriggerManager::triggerParamChanged);
     triggerOscillationParam.addListener(this, &TriggerManager::triggerParamChanged);
+    triggerDebugMode.addListener(this, &TriggerManager::setShowTriggerDebug);
     
+    //Needed to load defaults
+    updateTriggerValues();
 }
 
 
@@ -147,16 +151,15 @@ void TriggerManager:: setDisplaySize( float width, float height ){
 }
 
 void TriggerManager :: toggleDebug() {
-		
-	setShowTriggerDebug(!triggerDebug);
+    triggerDebugMode = !triggerDebugMode;
+    bool debug = triggerDebugMode;
+	setShowTriggerDebug(debug);
 	
 }
-void TriggerManager::setShowTriggerDebug(bool debug){
+void TriggerManager::setShowTriggerDebug(bool & debug){
 	for(int i=0; i<triggers.size(); i++){
-
 		triggers[i]->showDebugData = debug ;
 	}
-	triggerDebug = debug;
 }
 
 void TriggerManager::setTriggersDisabled(bool disabled){
@@ -230,7 +233,7 @@ void TriggerManager :: updateLayout() {
 		
 		trigger->start();
 		
-		trigger->showDebugData = triggerDebug;
+		trigger->showDebugData = triggerDebugMode;
 			
 		if(triggerPattern.arrangeMode == TRIGGER_ARRANGE_MIRROR) {
 			trigger->pos.x = xPos + midX;
@@ -283,6 +286,10 @@ void TriggerManager :: mouseMoved(int x, int y){
 }
 
 void TriggerManager::triggerParamChanged(float &value){
+    updateTriggerValues();
+}
+
+void TriggerManager::updateTriggerValues(){
     triggerArea.width = triggerAreaWidthParam*displayWidth;
     triggerArea.x = (displayWidth - triggerArea.width)/2;
     triggerArea.height = (displayHeight * triggerAreaHeightParam);
