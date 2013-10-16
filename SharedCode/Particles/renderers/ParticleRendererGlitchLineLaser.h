@@ -32,19 +32,21 @@ public:
 		while(particle!=NULL) {
 			
 			Particle& p = *particle;
+			
+			if(p.enabled) {
+				if(lastParticleRendered!=NULL) {
+				
+					lm.addLaserLineEased(lastParticleRendered->pos, p.pos, p.getColour());
+				
+				};
+			
+				lastParticleRendered = particle;
+				
+			}
+			
 			particle = particle->next;
-
-			if(!p.enabled)  continue;
-			if(ofRandom(1)<0.05) continue;
 			
-			if(lastParticleRendered!=NULL) {
 				
-				lm.addLaserLineEased(lastParticleRendered->pos, p.pos, p.getColour());
-				
-			};
-			
-			lastParticleRendered = &p; 
-								
 		}
 		
 		ofPopStyle();

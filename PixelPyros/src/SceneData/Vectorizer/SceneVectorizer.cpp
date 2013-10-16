@@ -451,7 +451,7 @@ TriggerSettingsRocketOrb* SceneVectorizer :: getRocketTronFountain(float hueStar
 	if(rs2!=NULL) {
 		ts->addRocketSettings(rs2);
 		vector<float>probs;
-		probs.push_back(99);
+		probs.push_back(9);
 		probs.push_back(1);
 		
 		ts->setProbabilities(probs);

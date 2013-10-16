@@ -67,7 +67,7 @@ void ofMultiDeviceSoundPlayer::initializeFmodWithTargetDevice(int deviceIndex)
 		int driverNum;
 		FMOD_System_GetNumDrivers(sys_Array[deviceIndex], &driverNum);
 		
-		cout << "NUM DRIVERS : " << driverNum << endl;
+		//cout << "NUM DRIVERS : " << driverNum << endl;
 		
 		
 		for(int i=0; i<driverNum; i++)
@@ -171,7 +171,7 @@ void ofMultiDeviceSoundPlayer::setPosition(float pct){
 }
 //------------------------------------------------------------
 void ofMultiDeviceSoundPlayer::setPositionMS(float time){
-	cout << "setPositionMS " << time <<endl;
+	//cout << "setPositionMS " << time <<endl;
 
 	float samplesPerMS = internalFreq/1000.0f;
 

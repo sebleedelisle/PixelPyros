@@ -46,7 +46,7 @@ class CameraManagerWarped : public CameraManager {
 	bool changeCamera(CameraWrapper* cam){
 		
 		CameraManager::changeCamera(cam); 
-		cout << "CameraWarped change camera"<< camera->name << " " << getWidth() << " " << getHeight() << endl;
+		//cout << "CameraWarped change camera"<< camera->name << " " << getWidth() << " " << getHeight() << endl;
 		warper.init(getWidth(), getHeight(), APP_WIDTH, APP_HEIGHT, camera->name);
 		
 		

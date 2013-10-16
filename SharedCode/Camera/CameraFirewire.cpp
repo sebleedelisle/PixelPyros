@@ -88,5 +88,5 @@ int CameraFirewire::getShutter() {
 
 void CameraFirewire::setShutter(int v) { 
 	camera.setShutterRaw(v) ;
-	cout << "shutter " << camera.getShutterRaw()<< "\n";  
+	//cout << "shutter " << camera.getShutterRaw()<< "\n";
 }

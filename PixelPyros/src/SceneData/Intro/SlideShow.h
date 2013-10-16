@@ -42,9 +42,9 @@ class SlideShow {
 			dir.listDir();
 			
 			
-			cout << "numFiles " << dir.numFiles() << endl;
+			//cout << "numFiles " << dir.numFiles() << endl;
 			
-			cout << "path " << folderPath << endl;
+			//cout << "path " << folderPath << endl;
 			
 			
 			currentImageIndex = 0;
@@ -53,7 +53,7 @@ class SlideShow {
 				
 				ofFile file = dir.getFile(i);
 				
-				cout << "loading " << file.getFileName();
+				//cout << "loading " << file.getFileName();
 				
 				if((file.getExtension()=="png") || (file.getExtension()=="jpg")) {
 					images.push_back(ofImage(folderPath+file.getFileName()));
