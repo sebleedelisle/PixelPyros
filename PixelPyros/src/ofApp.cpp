@@ -106,31 +106,6 @@ void ofApp::setup(){
     oscParams->add( controlPanels.triggerGui.getParameter() );
     oscParams->add( controlPanels.motionGui.getParameter() );
     sync.setup(*oscParams, 6667, "10.0.1.6", 8000);
-    
-    /*
-
-    testGroup->add(soundPlayer.globalVolume);
-    
-    testGroup->add(motionManager.thresholdLevelParam);
-    testGroup->add(motionManager.motionSensitivityParam);
-    testGroup.add(triggerManager.triggerAreaWidthParam);
-    testGroup.add(triggerManager.triggerAreaHeightParam);
-    testGroup.add(triggerManager.triggerAreaCenterYParam);
-    testGroup.add(triggerManager.triggerSpacingParam);
-    testGroup.add(triggerManager.triggerOscillationParam);
-    testGroup.add(triggerManager.triggerDebugMode);
-      */
-    
-    
-    // Works
-    //sync.setup( ( ofParameterGroup& ) controlPanels.appGui.getParameter(), 6667, "10.0.1.6",8000);
-
-    // Doesn't work
-    //sync.setup( ( ofParameterGroup& ) *parameterManager.getParameterGroup("app"), 6667, "10.0.1.6",8000);
-
-    // Doesn't work
-	//sync.setup( ( ofParameterGroup& ) appParams, 6667, "10.0.1.6",8000);
-
 }
 
 //--------------------------------------------------------------
