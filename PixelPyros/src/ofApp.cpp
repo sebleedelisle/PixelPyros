@@ -489,7 +489,7 @@ void ofApp::initSounds() {
 
 void ofApp::mouseMoved( int x, int y ){
 	
-	triggerManager.mouseMoved(x, y);
+	triggerManager.mouseMoved(x, y, previewRect);
 
 }
 
