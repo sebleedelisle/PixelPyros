@@ -12,7 +12,7 @@
 	url = git@github.com:sebleedelisle/ofxEtherdream.git
 [submodule "addons/ofxIlda"]
 	path = addons/ofxIlda
-	url = git@github.com:memo/ofxIlda.git
+	url = git@github.com:sebleedelisle/ofxIlda.git
 [submodule "addons/ofxFenster"]
 	path = addons/ofxFenster
 	url = git@github.com:underdoeg/ofxFenster.git
