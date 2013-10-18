@@ -25,6 +25,7 @@
 #include "SceneSlideshow.h"
 #include "SceneGame.h"
 #include "SceneNadia.h"
+#include "SceneIntroAnim.h"
 #include "ofxOscParameterSync.h"
 
 #include "PyrosRenderer.h"
@@ -102,6 +103,7 @@ public:
 	ofRectangle previewRect; 
 	
 	SceneGame * sceneGame;
+	SceneSlideshow * sceneInterstitial;
 	
 	//ofRectangle triggerArea;
 	float triggerAreaCentreY;

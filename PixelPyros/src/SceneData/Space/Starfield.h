@@ -43,7 +43,7 @@ class Starfield {
 		
 	}
 	
-	void draw() {
+	void draw(float brightness = 1) {
 		
 		ofPushStyle(); 
 		ofPushMatrix();
@@ -62,7 +62,7 @@ class Starfield {
 			ofVec3f& s = *it;
 			mesh.addVertex(s);
 			//mesh.addColor(ofColor::white);
-			mesh.addColor(ofColor(ofMap(s.z,0,-2000,255,10,true )));
+			mesh.addColor(ofColor(ofMap(s.z,0,-2000,255,10,true ) * brightness));
 			
 		
 		}

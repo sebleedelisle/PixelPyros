@@ -237,11 +237,18 @@ void LaserManager:: update() {
 		ofPoint v = maskRectangle.getBottomRight() - maskRectangle.getTopLeft(); 
 		
 		for(float x =0 ; x<=1; x+=0.2) {
+
 			for(float y = 0; y<=1; y+=0.2) {
 				addLaserDot(ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*y)), white, 1);
-				if(x<1) addLaserLineEased(ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*y)), ofPoint(maskRectangle.x + (v.x*(x+0.2)), maskRectangle.y + (v.y*y)), ofColor::red);
-				if(y<1) addLaserLineEased(ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*y)), ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*(y+0.2))), ofColor::red);
+			
+				if(x ==0) {
+					addLaserLineEased(ofPoint(maskRectangle.getLeft(), maskRectangle.getTop()+v.y*y),ofPoint(maskRectangle.getRight(), maskRectangle.getTop()+v.y*y), ofColor::red );
+				}
 			}
+			
+			addLaserLineEased(ofPoint(maskRectangle.x + v.x*x, maskRectangle.getTop()),ofPoint(maskRectangle.x + v.x*x, maskRectangle.getBottom()), ofColor::red );
+			
+			
 		}
 		
 		addLaserCircle(maskRectangle.getCenter(), white, 10);

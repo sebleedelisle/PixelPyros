@@ -75,6 +75,9 @@ void ofApp::setup(){
     paused = false;
     altPressed = false;
 	shiftPressed = false;
+	
+	setupScenes();
+	
 
     triggerManager.setDisplaySize(APP_WIDTH, APP_HEIGHT);
 	
@@ -85,8 +88,14 @@ void ofApp::setup(){
 	appParams.add(timeSpeed.set("time speed", 1, 0,2));
 	// these should be loaded and saved, but not time speed
 	appParams.add(edgeBlendSize.set("edge blend size", 0, 0, 50));
+	
+	appParams.add(sceneInterstitial->foreground.set("interstitial foreground", 200,0,255));
+	appParams.add(sceneInterstitial->background.set("interstitial background", 40,0,255));
+	
 	appParams.add(sceneManager.musicVolume);
 	appParams.add(soundPlayer.globalVolume);
+	
+
 	
 	motionManager.parameters.add(cameraPreviewBrightness.set("camera preview brightness", 255,0,255));
 	
@@ -110,7 +119,6 @@ void ofApp::setup(){
 	timeSpeed = 1;
 	
 	updateScreenSizes();
-	setupScenes();
 	
     ofParameterGroup * oscParams = new ofParameterGroup();
     oscParams->setName("OSC");
@@ -373,7 +381,7 @@ void ofApp::keyPressed(int key){
 			particleSystemManager.killAllParticles();
 			sceneGame->killInvadersAndAsteroids();
         }
-        else if ( key == 'r' )
+        else if ( key == 'q' )
         {
             sceneManager.changeScene("SlideShow");
         }else if(key == 'F') {
@@ -396,7 +404,7 @@ void ofApp::keyPressed(int key){
 
 void ofApp::keyReleased(int key){
 	if(key == OF_KEY_SHIFT) shiftPressed = false;
-    if(key == OF_KEY_ALT) altPressed = false;
+	if(key == OF_KEY_ALT) altPressed = false;
 }
 
 void ofApp:: mousePressed(int x, int y, int button ) { 
@@ -420,11 +428,13 @@ void ofApp:: setupScenes() {
 
 	
 	sceneManager.addScene(new SceneCalibration("Calibration"));
-	sceneManager.addScene(new SceneSlideshow("SlideShow"));
+	sceneManager.addScene(sceneInterstitial = new SceneSlideshow("SlideShow"));
 	
 	// This scene was to launch the Brighton Digital Festival
 	//sceneManager.addScene(new SceneLaunch("Launch", particleSystemManager));
 
+	sceneManager.addScene(new SceneIntroAnim("IntroAnim"));
+	
 	SceneIntro* intro = new SceneIntro("Intro");
 	sceneManager.addScene(intro);
 	intro->loadMusicFile("InMotionEdit.aif");

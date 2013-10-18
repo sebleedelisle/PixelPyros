@@ -21,10 +21,13 @@ SceneManager :: SceneManager() : particleSystemManager(*ParticleSystemManager::i
 	ofAddListener(ofEvents().mouseDragged, this, &SceneManager::mouseDragged);
 	ofAddListener(ofEvents().mouseReleased, this, &SceneManager::mouseReleased);
 	ofAddListener(ofEvents().keyPressed, this, &SceneManager::keyPressed);
+	ofAddListener(ofEvents().keyReleased, this, &SceneManager::keyReleased);
 	
 	parameters.add(musicVolume.set("music volume", 0.7,0,1));
 	
 	playHeadRect = ofRectangle(0,0,20,20);
+	altPressed = false;
+	shiftPressed = false;
 
 }
 
@@ -455,33 +458,69 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 	if(!showInterface) return;
 	if(!currentScene) return;
 	
+	//bool shiftPressed = (glutGetModifiers() & GLUT_ACTIVE_SHIFT);
+	if(e.key == OF_KEY_SHIFT) {
+        shiftPressed = true;
+    }
+	
+	if(e.key == OF_KEY_ALT){
+        altPressed = true;
+    }
+	//cout << altPressed << " " << shiftPressed<< endl;
+	
 	int newPattern = -1; 
 	if(e.key==' ') {
 		togglePlayPause();
 	} else if(e.key=='r') {
 		toggleRecord();
-	} else if(e.key=='0') {
-		currentScene->changeTriggerPattern(newPattern = 0);
-	}
+	} 
 
-	if(e.key=='1') {
-		currentScene->changeTriggerPattern(newPattern = 1);
-	} else if(e.key=='2') {
-		currentScene->changeTriggerPattern(newPattern = 2);
-	} else if(e.key=='3') {
-		currentScene->changeTriggerPattern(newPattern = 3);
-	}else if(e.key=='4') {
-		currentScene->changeTriggerPattern(newPattern = 4);
-	}else if(e.key=='5') {
-		currentScene->changeTriggerPattern(newPattern = 5);
-	}else if(e.key=='6') {
-		currentScene->changeTriggerPattern(newPattern = 6);
-	}else if(e.key=='7') {
-		currentScene->changeTriggerPattern(newPattern = 7);
-	}else if(e.key=='8') {
-		currentScene->changeTriggerPattern(newPattern = 8);
-	}else if(e.key=='9') {
-		currentScene->changeTriggerPattern(newPattern = 9);
+	if(!altPressed) {
+		if(e.key=='0') {
+			currentScene->changeTriggerPattern(newPattern = 0);
+		} else if(e.key=='1') {
+			currentScene->changeTriggerPattern(newPattern = 1);
+		} else if(e.key=='2') {
+			currentScene->changeTriggerPattern(newPattern = 2);
+		} else if(e.key=='3') {
+			currentScene->changeTriggerPattern(newPattern = 3);
+		}else if(e.key=='4') {
+			currentScene->changeTriggerPattern(newPattern = 4);
+		}else if(e.key=='5') {
+			currentScene->changeTriggerPattern(newPattern = 5);
+		}else if(e.key=='6') {
+			currentScene->changeTriggerPattern(newPattern = 6);
+		}else if(e.key=='7') {
+			currentScene->changeTriggerPattern(newPattern = 7);
+		}else if(e.key=='8') {
+			currentScene->changeTriggerPattern(newPattern = 8);
+		}else if(e.key=='9') {
+			currentScene->changeTriggerPattern(newPattern = 9);
+		}
+	} else {
+		if(e.key=='0') {
+			currentScene->changeTriggerPattern(newPattern = 10);
+		} else if(e.key=='1') {
+			currentScene->changeTriggerPattern(newPattern = 11);
+		} else if(e.key=='2') {
+			currentScene->changeTriggerPattern(newPattern = 12);
+		} else if(e.key=='3') {
+			currentScene->changeTriggerPattern(newPattern = 13);
+		}else if(e.key=='4') {
+			currentScene->changeTriggerPattern(newPattern = 14);
+		}else if(e.key=='5') {
+			currentScene->changeTriggerPattern(newPattern = 15);
+		}else if(e.key=='6') {
+			currentScene->changeTriggerPattern(newPattern = 16);
+		}else if(e.key=='7') {
+			currentScene->changeTriggerPattern(newPattern = 17);
+		}else if(e.key=='8') {
+			currentScene->changeTriggerPattern(newPattern = 18);
+		}else if(e.key=='9') {
+			currentScene->changeTriggerPattern(newPattern = 19);
+		}
+		
+		
 	}
 	
 	if((currentScene->recording) && (newPattern>=0) ){
@@ -491,6 +530,11 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 	}
 	
 };
+
+void SceneManager::keyReleased(ofKeyEventArgs &e){
+	if(e.key == OF_KEY_SHIFT) shiftPressed = false;
+	if(e.key == OF_KEY_ALT) altPressed = false;
+}
 
 void SceneManager :: updateUIScreen(ofRectangle screen){
 	screenUI = screen;
