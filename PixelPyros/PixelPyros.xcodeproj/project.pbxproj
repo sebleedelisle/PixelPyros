@@ -114,6 +114,7 @@
 		12EB3BD617E0EB86002D90A0 /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3BCB17E0EB86002D90A0 /* ofxSlider.cpp */; };
 		12EB3BD717E0EB86002D90A0 /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3BCD17E0EB86002D90A0 /* ofxSliderGroup.cpp */; };
 		12EB3BD817E0EB86002D90A0 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3BCF17E0EB86002D90A0 /* ofxToggle.cpp */; };
+		12F257031811760100CB3742 /* SceneIntroAnim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F257011811760100CB3742 /* SceneIntroAnim.cpp */; };
 		12F92A4317FB47D000835BBE /* Invader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F92A3F17FB47D000835BBE /* Invader.cpp */; };
 		12F92A4417FB47D000835BBE /* SceneGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F92A4117FB47D000835BBE /* SceneGame.cpp */; };
 		9E16CA5D17E1CE2D009867E9 /* ControlPanels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E16CA5B17E1CE2D009867E9 /* ControlPanels.cpp */; };
@@ -567,6 +568,8 @@
 		12EB3BCE17E0EB86002D90A0 /* ofxSliderGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
 		12EB3BCF17E0EB86002D90A0 /* ofxToggle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
 		12EB3BD017E0EB86002D90A0 /* ofxToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
+		12F257011811760100CB3742 /* SceneIntroAnim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneIntroAnim.cpp; sourceTree = "<group>"; };
+		12F257021811760100CB3742 /* SceneIntroAnim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneIntroAnim.h; sourceTree = "<group>"; };
 		12F4141517F9843B007941F2 /* ParticleRendererDoubleCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererDoubleCircle.h; sourceTree = "<group>"; };
 		12F92A3F17FB47D000835BBE /* Invader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Invader.cpp; sourceTree = "<group>"; };
 		12F92A4017FB47D000835BBE /* Invader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Invader.h; sourceTree = "<group>"; };
@@ -669,6 +672,7 @@
 		1254501B17BF860500EF23B7 /* SceneData */ = {
 			isa = PBXGroup;
 			children = (
+				12F257001811760100CB3742 /* IntroAnim */,
 				12F92A3E17FB47D000835BBE /* Game */,
 				126E278C17F2224F001763E7 /* LetterWritingPatternMaker.h */,
 				126E278717F221ED001763E7 /* Space */,
@@ -1725,6 +1729,15 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		12F257001811760100CB3742 /* IntroAnim */ = {
+			isa = PBXGroup;
+			children = (
+				12F257011811760100CB3742 /* SceneIntroAnim.cpp */,
+				12F257021811760100CB3742 /* SceneIntroAnim.h */,
+			);
+			path = IntroAnim;
+			sourceTree = "<group>";
+		};
 		12F92A3E17FB47D000835BBE /* Game */ = {
 			isa = PBXGroup;
 			children = (
@@ -2048,6 +2061,7 @@
 				12378381180C8EEA00079C7A /* ofxTCPManager.cpp in Sources */,
 				12378382180C8EEA00079C7A /* ofxTCPServer.cpp in Sources */,
 				12378383180C8EEA00079C7A /* ofxUDPManager.cpp in Sources */,
+				12F257031811760100CB3742 /* SceneIntroAnim.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
