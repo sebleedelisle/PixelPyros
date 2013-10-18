@@ -5,3 +5,5 @@ PixelPyros/bin/PixelPyrosDebug.app
 PixelPyros/bin/data/.DS_Store
 PixelPyros/bin/data/capturedFrames
 Music
+
+/PixelPyros/bin/data/capturedFrames/.DS_Store

@@ -370,12 +370,12 @@ void ofApp::keyPressed(int key){
         }
         else if ( key == 'k' )
         {
-            particleSystemManager.killAllParticlesParam = true ;
+			particleSystemManager.killAllParticles();
 			sceneGame->killInvadersAndAsteroids();
         }
         else if ( key == 'r' )
         {
-            //sequencer.runSequence("Intro");
+            sceneManager.changeScene("SlideShow");
         }else if(key == 'F') {
 			ofToggleFullscreen();
 			updateScreenSizes();
