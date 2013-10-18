@@ -146,7 +146,7 @@ void Warper :: draw(ofPixels& pix) {
 	
 	// draw GUI
 	
-	ofSetColor(255);
+	//ofSetColor(255);
 	
 	warpedImage.draw(0,0, dstWidth, dstHeight);
 	

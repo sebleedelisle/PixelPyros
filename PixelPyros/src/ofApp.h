@@ -83,7 +83,8 @@ public:
 	
 	ofParameterGroup appParams; 
 	ofParameter<float> timeSpeed;
-	ofParameter<int> edgeBlendSize; 
+	ofParameter<int> edgeBlendSize;
+	ofParameter<int> cameraPreviewBrightness; 
 	
 	ofFbo fbo;
 	bool useFbo;
@@ -99,6 +100,8 @@ public:
 	vector<ofRectangle> screens;
 	ofRectangle uiScreenRect;
 	ofRectangle previewRect; 
+	
+	SceneGame * sceneGame;
 	
 	//ofRectangle triggerArea;
 	float triggerAreaCentreY;
