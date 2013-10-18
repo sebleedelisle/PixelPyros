@@ -117,7 +117,7 @@ void ofApp::setup(){
     oscParams->add( controlPanels.appGui.getParameter() );
     oscParams->add( controlPanels.triggerGui.getParameter() );
     oscParams->add( controlPanels.motionGui.getParameter() );
-    sync.setup(*oscParams, 6667, "10.0.1.6", 8000);
+    sync.setup(*oscParams, 6667, "10.0.1.51", 8000);
 }
 
 //--------------------------------------------------------------f
