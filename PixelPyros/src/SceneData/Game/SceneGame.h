@@ -34,6 +34,8 @@ class SceneGame : public Scene {
 	
 	void updateInvaders(); 
     void checkInvaderCollisions();
+	void killInvadersAndAsteroids();
+
 	
 	void checkAsteroidCollisions();
 	
@@ -53,10 +55,11 @@ class SceneGame : public Scene {
 	const int GAME_ASTEROIDS = 2;
 	
 	int gameState;
-	const int STATE_INTRO = 0;
-	const int STATE_PLAYING = 1;
-	const int STATE_WAITING = 2;
-	const int STATE_GAMEOVER = 3;
+	const int STATE_PREINTRO = 0;
+	const int STATE_INTRO = 1;
+	const int STATE_PLAYING = 2;
+	const int STATE_WAITING = 3;
+	const int STATE_GAMEOVER = 4;
 	
 	float lastStateChangeTime;
 	float timeSinceLastStateChange; 

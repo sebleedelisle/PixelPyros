@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Particles/ParticleSystem.cpp"
-         timestampString = "403292636.674057"
+         timestampString = "403625696.161574"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "177"
-         endingLineNumber = "177"
+         startingLineNumber = "178"
+         endingLineNumber = "178"
          landmarkName = "ParticleSystem :: addParticle()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Particles/ParticleSystem.cpp"
-         timestampString = "403281803.984916"
+         timestampString = "403625696.161574"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "94"
-         endingLineNumber = "94"
+         startingLineNumber = "95"
+         endingLineNumber = "95"
          landmarkName = "ParticleSystem::update(float deltaTime)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/SceneData/Vectorizer/SceneVectorizer.cpp"
-         timestampString = "403373887.054121"
+         timestampString = "403781926.521373"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "441"
-         endingLineNumber = "441"
+         startingLineNumber = "457"
+         endingLineNumber = "457"
          landmarkName = "SceneVectorizer :: getRocketTronFountain(float hueStartOffset, float hueChange, float speedMultiplier, bool useLaser)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -201,11 +201,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../addons/ofxEtherdream/src/ofxEtherdream.cpp"
-         timestampString = "403558636.228317"
+         timestampString = "403563742.889449"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "133"
-         endingLineNumber = "133"
+         startingLineNumber = "136"
+         endingLineNumber = "136"
          landmarkName = "ofxEtherdream::threadedFunction()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -220,6 +220,32 @@
          startingLineNumber = "167"
          endingLineNumber = "167"
          landmarkName = "ControlPanels::drawPreviewScreen(MotionManager&amp; motionManager, CameraManagerWarped&amp; cameraManager)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/ofApp.cpp"
+         timestampString = "403780092.959199"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "128"
+         endingLineNumber = "128"
+         landmarkName = "ofApp::update()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/ofApp.cpp"
+         timestampString = "403780092.959199"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "159"
+         endingLineNumber = "159"
+         landmarkName = "ofApp::update()"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

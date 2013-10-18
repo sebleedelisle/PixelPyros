@@ -105,10 +105,13 @@ void SceneManager :: drawGUI() {
 		
 		float pos = getPositionForTime(commands[i].time);
 		
+		ofRectangle commandRect = (getRectangleForCommand(i));
+		
+		
 		if(i==dragCommandIndex) {
 			ofSetColor(255,0,255);
 			ofFill();
-			ofRectangle commandRect = (getRectangleForCommand(i));
+			
 			if(timeBarRect.y - ofGetMouseY() > 100) {
 				commandRect.y = ofGetMouseY()-(commandRect.height/2); 
 				
@@ -121,14 +124,13 @@ void SceneManager :: drawGUI() {
 		} else if(i==mouseOverCommandIndex) {
 			ofSetColor(255);
 			ofFill();
-			ofRectangle commandRect = (getRectangleForCommand(i));
 			
 			ofRect(commandRect);
 			ofSetColor(0);
 			ofDrawBitmapString(ofToString(commands[i].arg1), commandRect.x, commandRect.getTop()+12);
 		} else {
 			ofSetColor(186);
-			
+			ofDrawBitmapString(ofToString(i), commandRect.x, commandRect.getTop()+12);
 			ofLine(pos, timeBarRect.getTop(),pos,timeBarRect.getBottom());
 		}
 		ofNoFill(); 

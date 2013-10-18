@@ -108,7 +108,7 @@ void SceneGame::changeGame(int newgame) {
 	if(newgame == GAME_INVADERS) {
 		//resetInvaders();
 		gameState = -1;
-		changeState(STATE_INTRO);
+		changeState(STATE_PREINTRO);
 
 	} else if(newgame == GAME_ASTEROIDS) {
 		gameState = -1;
@@ -126,9 +126,10 @@ void SceneGame::changeState(int newstate) {
 	gameState = newstate;
 	
 	if(currentGame == GAME_INVADERS) {
-		if(gameState == STATE_PLAYING) {
+		if(gameState == STATE_INTRO || gameState == STATE_WAITING){
+			changeTriggerPattern(1);
 			resetInvaders();
-			
+		} else if(gameState == STATE_PLAYING) {
 			changeTriggerPattern(2);
 			//triggerManager->emptyTriggers();
 		} else {
@@ -154,6 +155,10 @@ void SceneGame::changeState(int newstate) {
 
 void SceneGame::stop() {
 	Scene::stop();
+	killInvadersAndAsteroids(); 
+}
+
+void SceneGame::killInvadersAndAsteroids() {
 	for(int i = 0; i<invaders.size(); i++) {
 		Invader &invader = *invaders[i];
 		if(!invader.enabled) continue;
@@ -161,17 +166,33 @@ void SceneGame::stop() {
 		makeInvaderExplosion(invader);
 		//spareInvaders.push_back(&invader);
 	}
+	
+	for(int i = 0; i<asteroids.size(); i++) {
+		Asteroid &asteroid = *asteroids[i];
+		if(!asteroid.enabled) continue;
+		asteroid.enabled = false;
+		makeAsteroidExplosion(asteroid);
+		//spareInvaders.push_back(&invader);
+	}
+	
 }
 
 bool SceneGame::update(float deltaTime) {
 	
 	if(!Scene::update(deltaTime)) return false;
 	
+	if(!playing) lastStateChangeTime+=deltaTime;
 	timeSinceLastStateChange = ofGetElapsedTimef() - lastStateChangeTime; 
 
 	if(currentGame == GAME_INVADERS) {
 		
-		if((gameState == STATE_INTRO) || (gameState == STATE_WAITING)) {
+		if(gameState == STATE_PREINTRO) {
+			if(ofGetElapsedTimef()-lastStateChangeTime>20) {
+				changeState(STATE_INTRO);
+			}
+			
+		}
+		else if((gameState == STATE_INTRO) || (gameState == STATE_WAITING)) {
 			if(ofGetElapsedTimef()-lastStateChangeTime>5) {
 				changeState(STATE_PLAYING);
 			}
@@ -194,6 +215,12 @@ bool SceneGame::update(float deltaTime) {
 				checkInvaderCollisions();
 			}
 		}
+		
+		if(gameState == STATE_PLAYING || gameState == STATE_INTRO || gameState == STATE_WAITING) {
+			updateInvaders();
+			checkInvaderCollisions();
+		}
+		
 	} else if (currentGame == GAME_ASTEROIDS) {
 		
 		updateAsteroids(deltaTime);
@@ -242,7 +269,27 @@ bool SceneGame :: draw() {
 		
 		ofSetColor(255);
 
-		if(gameState == STATE_INTRO) {
+		if((gameState == STATE_PREINTRO)&&(playing)) {
+			if(timeSinceLastStateChange<8) {
+				String s = "READY TO PLAY INVADERS?";
+				drawStringCentered(s, centreX, centreY-50);
+				float flashspeed = 1.0f; 
+				if(modff(timeSinceLastStateChange,&flashspeed)<0.7)	{
+					drawStringCentered("YES / NO", centreX, centreY+50);
+				}
+			} else if((timeSinceLastStateChange>9) && (timeSinceLastStateChange<18)) {
+				String s = "I SAID";
+				drawStringCentered(s, centreX, centreY-100);
+				if(timeSinceLastStateChange>11) {
+					drawStringCentered("ARE YOU READY TO PLAY?", centreX, centreY);
+					float flashspeed = 1.0f;
+					if(modff(timeSinceLastStateChange,&flashspeed)<0.7)	{
+						drawStringCentered("YES OR NO", centreX, centreY+100);
+					}
+				}
+				
+			}
+		} else if(gameState == STATE_INTRO) {
 						
 			String s = "PLAYERS GET READY";
 			
@@ -492,16 +539,24 @@ void SceneGame::updateInvaders() {
 			
 		}
 		
+		if(invaderRect.getBottom() > triggerManager->triggerArea.getTop()) {
+			// INSERT EXPLOSIONS
+			//changeState(STATE_WAITING);
+			allInvadersVel.y = 0; 
+		}
+
+		
 		invaderUpdateFrequency = min((float)numCols, ceil((float)activeInvaders/5.0f));
+		if(invaderUpdateFrequency <=0) invaderUpdateFrequency = 1;
 		nextUpdateCountdown = invaderUpdateFrequency;
 	} else {
 		nextUpdateCountdown--;
 	}
 	
-	if(invaderRect.getBottom() > triggerManager->triggerArea.getCenter().y) {
-		// INSERT EXPLOSIONS
-		changeState(STATE_WAITING);
-	}
+//	if(invaderRect.getBottom() > triggerManager->triggerArea.getCenter().y) {
+//		// INSERT EXPLOSIONS
+//		changeState(STATE_WAITING);
+//	}
 	
 }
 

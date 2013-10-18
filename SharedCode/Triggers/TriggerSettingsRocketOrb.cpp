@@ -26,6 +26,7 @@ void TriggerSettingsRocketOrb :: update(float deltatime, map<string, float>&trig
 
 void TriggerSettingsRocketOrb :: draw(float elapsedtime, ofVec3f pos, float unitPower, bool active, float scale, float angle) {
 
+	elapsedTime = elapsedtime;
 	map<string, float>& triggerValues = *values;
 	
 	float& rot1 = triggerValues["rot1"];
@@ -64,7 +65,7 @@ void TriggerSettingsRocketOrb :: draw(float elapsedtime, ofVec3f pos, float unit
 	//dimColour.setHue(hue);
 	//dimColour.setSaturation(saturation);
 	
-  	
+  
 	if((triggerPower<=unitPower) || (fmodf(elapsedTime,0.16) < 0.08) || (rechargeSettings->restoreSpeed==0)) {
 		
 		//ofCircle(0, 0, radius*0.5);
@@ -84,7 +85,7 @@ void TriggerSettingsRocketOrb :: draw(float elapsedtime, ofVec3f pos, float unit
 		
 	} else {
 		
-		dimColour.setHsb(hue, saturation, 50);
+		dimColour.setHsb(hue, saturation, 10);
 		
 		
 	}

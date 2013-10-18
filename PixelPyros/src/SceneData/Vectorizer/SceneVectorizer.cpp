@@ -82,6 +82,22 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	addTriggerPattern(glitchFountainWithRocket);
 	
+	
+	TriggerPattern rocketTronPreview;
+	RocketTron* rocketTronOnce= new RocketTron();
+	rocketTronOnce->addParticleSystems();
+	rocketTronOnce->rechargeSettings = TriggerRechargeSettings::oneShot;
+	rocketTronPreview.addTriggerSettings();
+	rocketTronPreview.addTriggerSettings();
+	rocketTronPreview.addTriggerSettings();
+	rocketTronPreview.addTriggerSettings();
+	rocketTronPreview.addTriggerSettings(rocketTronOnce);
+	rocketTronPreview.addTriggerSettings();
+	rocketTronPreview.addTriggerSettings();
+	addTriggerPattern(rocketTronPreview);
+	
+	
+	
 	TriggerPattern rocketsAndFountainsPattern;
 	
 	RocketTron* rocketTron = new RocketTron();
@@ -111,8 +127,8 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	TriggerSettingsRocketOrb* rotatingFountainBlueHigh = new TriggerSettingsRocketOrb(*rocketFountainBlueHigh);
 	TriggerSettingsRocketOrb* rotatingFountainPinkHigh = new TriggerSettingsRocketOrb(*rocketFountainPinkHigh);
 	
-	rotatingFountainBlueHigh->rechargeSettings = TriggerRechargeSettings::superFastMultiples;
-	rotatingFountainPinkHigh->rechargeSettings = TriggerRechargeSettings::superFastMultiples;
+	rotatingFountainBlueHigh->rechargeSettings = TriggerRechargeSettings::fastMultiples;
+	rotatingFountainPinkHigh->rechargeSettings = TriggerRechargeSettings::fastMultiples;
 	rotatingFountainPinkHigh->rotateOnFire = false;
 	rotatingFountainBlueHigh->rotateOnFire = false;
 	

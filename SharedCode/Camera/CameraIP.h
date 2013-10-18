@@ -20,7 +20,10 @@ class CameraIP : public CameraWrapper {
 
 	public :
 	bool setup(string _name, int width, int height, int framerate, string url, string user, string pass);
-	void connectCamera(); 
+	bool update();
+	
+	
+	void connectCamera();
 	bool videoSettings();
 	
 	IPVideoGrabber ipGrabber;

@@ -27,10 +27,22 @@ bool CameraIP::setup(string _name, int width, int height, int framerate, string 
     frameNum = 0;
 	
 	baseVideo = &ipGrabber;
+	ipGrabber.update();
 	
 	return true;
 	
 }
+bool CameraIP::update(){
+	
+	
+	if(!ipGrabber.isConnected()) {
+		
+		connectCamera();
+		
+	}
+	return CameraWrapper::update();
+	
+};  // returns true if frame is new
 
 
 void CameraIP::connectCamera() {

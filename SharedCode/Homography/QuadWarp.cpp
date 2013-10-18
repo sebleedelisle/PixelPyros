@@ -80,6 +80,13 @@ void QuadWarp :: draw(bool lockAxis) {
 		curPoint.x = round(curPoint.x*10)/10;
 		curPoint.y = round(curPoint.y*10)/10;
 		
+		if(useBoundsRect) {
+			if(curPoint.x<boundsRectangle.getLeft()) curPoint.x = boundsRectangle.getLeft();
+			if(curPoint.x>boundsRectangle.getRight()) curPoint.x = boundsRectangle.getRight();
+			if(curPoint.y<boundsRectangle.getTop()) curPoint.y = boundsRectangle.getTop();
+			if(curPoint.y>boundsRectangle.getBottom()) curPoint.y = boundsRectangle.getBottom();
+		}
+		
 		updateHomography();
 				
 	}
@@ -112,8 +119,8 @@ void QuadWarp :: draw(bool lockAxis) {
 			ofLine(point.x, point.y - 100, point.x, point.y+100); 
 			ofLine(point.x-100, point.y, point.x+100, point.y);
 			
-			ofDrawBitmapStringHighlight(ofToString(point.x), point.x, point.y-30, ofColor(0,0,0,100));
-			ofDrawBitmapStringHighlight(ofToString(point.y), point.x-30, point.y, ofColor(0,0,0,100));
+			//ofDrawBitmapStringHighlight(ofToString(point.x), point.x, point.y-30, ofColor(0,0,0,100));
+			//ofDrawBitmapStringHighlight(ofToString(point.y), point.x-30, point.y, ofColor(0,0,0,100));
 		}
 		
 		
