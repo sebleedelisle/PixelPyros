@@ -4,8 +4,8 @@
 		<height>0.01125</height>
 		<centre_y>0.82125</centre_y>
 		<spacing>26</spacing>
-	<vertical_oscillation>5.675</vertical_oscillation>
-	<Debug_Mode>0</Debug_Mode>
+		<vertical_oscillation>5.675</vertical_oscillation>
+		<Debug_Mode>0</Debug_Mode>
 	</Trigger_Positioning>
 <Triggers/>
 </Triggers>
