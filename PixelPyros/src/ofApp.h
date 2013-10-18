@@ -81,7 +81,8 @@ public:
     ControlPanels controlPanels;
 
 	
-	ofParameterGroup appParams; 
+    ofParameterGroup * oscParams = new ofParameterGroup();
+	ofParameterGroup appParams;
 	ofParameter<float> timeSpeed;
 	ofParameter<int> edgeBlendSize;
 	ofParameter<int> cameraPreviewBrightness; 

@@ -112,12 +112,16 @@ void ofApp::setup(){
 	updateScreenSizes();
 	setupScenes();
 	
-    ofParameterGroup * oscParams = new ofParameterGroup();
+    oscParams = new ofParameterGroup();
     oscParams->setName("OSC");
     oscParams->add( controlPanels.appGui.getParameter() );
     oscParams->add( controlPanels.triggerGui.getParameter() );
     oscParams->add( controlPanels.motionGui.getParameter() );
+    oscParams->add( controlPanels.laserGui.getParameter() );
+    oscParams->add( controlPanels.rendererGui.getParameter());
+
     sync.setup(*oscParams, 6667, "10.0.1.51", 8000);
+    //sync.setup(*oscParams, 6667, "192.168.43.32", 8000);
 }
 
 //--------------------------------------------------------------f
@@ -376,7 +380,11 @@ void ofApp::keyPressed(int key){
         else if ( key == 'r' )
         {
             //sequencer.runSequence("Intro");
-        }else if(key == 'F') {
+        }
+        else if ( key == 's' ){
+            sync.parameterChanged(*oscParams);
+        }
+        else if(key == 'F') {
 			ofToggleFullscreen();
 			updateScreenSizes();
 		} else if(key == 'f') {
