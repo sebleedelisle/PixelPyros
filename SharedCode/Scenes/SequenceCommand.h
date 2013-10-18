@@ -39,7 +39,9 @@ class SequenceCommand {
 	inline bool operator< (const SequenceCommand& rhs) const{
 		return this->time<rhs.time;
 		};
-		
+	inline bool operator> (const SequenceCommand& rhs) const{
+		return this->time>rhs.time;
+	};
 	
 	SequenceCommandType type;
 	float time;
