@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "403799755.769004"
+         timestampString = "403803991.362044"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1040"
-         endingLineNumber = "1040"
+         startingLineNumber = "1039"
+         endingLineNumber = "1039"
          landmarkName = "LaserManager :: renderPreview()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "403799755.769004"
+         timestampString = "403803991.362044"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "364"
-         endingLineNumber = "364"
+         startingLineNumber = "363"
+         endingLineNumber = "363"
          landmarkName = "LaserManager::sendPointsTCP(vector&lt;ofxIlda::Point&gt;&amp; points)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,20 +151,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "403799755.769004"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "315"
-         endingLineNumber = "315"
-         landmarkName = "LaserManager::draw()"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "403799755.769004"
+         timestampString = "403803991.362044"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "314"
@@ -177,11 +164,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "403799755.769004"
+         timestampString = "403803991.362044"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "374"
-         endingLineNumber = "374"
+         startingLineNumber = "313"
+         endingLineNumber = "313"
+         landmarkName = "LaserManager::draw()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../SharedCode/Laser/LaserManager.cpp"
+         timestampString = "403803991.362044"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "373"
+         endingLineNumber = "373"
          landmarkName = "LaserManager::sendPointsTCP(vector&lt;ofxIlda::Point&gt;&amp; points)"
          landmarkType = "5">
       </FileBreakpoint>

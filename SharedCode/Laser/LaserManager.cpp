@@ -248,7 +248,6 @@ void LaserManager:: update() {
 			
 			addLaserLineEased(ofPoint(maskRectangle.x + v.x*x, maskRectangle.getTop()),ofPoint(maskRectangle.x + v.x*x, maskRectangle.getBottom()), ofColor::red );
 			
-			
 		}
 		
 		addLaserCircle(maskRectangle.getCenter(), white, 10);

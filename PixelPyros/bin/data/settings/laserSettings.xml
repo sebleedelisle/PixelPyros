@@ -3,7 +3,7 @@
 		<Etherdream_connect>0</Etherdream_connect>
 		<status>No devices connected ETHERDREAM_IDLE 0 0</status>
 		<show_warp_points>0</show_warp_points>
-		<intensity>0</intensity>
+		<intensity>0.0175</intensity>
 		<colour_change_offset>-8</colour_change_offset>
 		<show_registration>0</show_registration>
 		<show_move_points>0</show_move_points>
