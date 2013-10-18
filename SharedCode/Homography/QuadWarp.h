@@ -45,6 +45,8 @@ class QuadWarp {
 	bool loadSettings();
 	void saveSettings();
 
+	bool useBoundsRect; // if true, warper can't extend beyond rectangle
+	ofRectangle boundsRectangle; 
 	
 	bool visible;
    // bool autosave = true;

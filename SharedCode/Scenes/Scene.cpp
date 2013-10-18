@@ -148,6 +148,7 @@ bool Scene::setCommandTime(int i, float time) {
 	if(i>=commands.size()) return false;
 	
 	commands[i].time = ofClamp(time, 0, lengthSeconds);
+	updateCommands();
 	return true; 
 }
 
@@ -310,6 +311,9 @@ bool Scene::toggleRecord() {
 }
 
 void Scene :: goToTime(float timeSeconds){
+	
+	
+	sort(commands.begin(), commands.end());
 	
 	timeSeconds = ofClamp(timeSeconds, 0, lengthSeconds);
 	music.setPositionMS(timeSeconds*1000);

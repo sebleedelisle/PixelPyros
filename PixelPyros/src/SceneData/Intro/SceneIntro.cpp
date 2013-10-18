@@ -108,12 +108,10 @@ SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 	
 	
 	
-	texts.push_back("Welcome to PixelPyros");
-	texts.push_back("The fireworks display that you control");
-	texts.push_back("Move your hand across the orbs of light to trigger fireworks");
-	texts.push_back("Larger orbs make bigger fireworks");
-	texts.push_back("If the orbs stop spinning, wait a while for them to recharge");
-	texts.push_back("");
+	texts.push_back("These orbs are the triggers");
+	texts.push_back("Move your arms in front of them to light the fireworks");
+	texts.push_back("Making fireworks uses up energy");
+	texts.push_back("If the trigger flashes, wait for it to recharge");
 	
 	textWriter.colour = ofColor(240,255,255);
 	textWriter.colourFlickerMin = 0.6;

@@ -56,7 +56,7 @@ bool ParticleSystem::update(float deltaTime) {
 	if(life.active && (life.elapsedTime-deltaTime <= life.delay)){
 		
 		if(settings.startSound!="") {
-			float pan = (pos.x - ofGetWidth()/2)/ (ofGetWidth()/2);
+			//float pan = (pos.x - APP_WIDTH/2)/ (APP_WIDTH/2);
 		
 			//cout << "pan " << pan << endl;
 			float volume = 1;
@@ -66,7 +66,8 @@ bool ParticleSystem::update(float deltaTime) {
 				//cout << "volume "<< volume << " " << attachedPhysicsObject->vel.length() << endl;
 				
 			}
-			soundPlayer.playSound(settings.startSound, volume , pan);
+		//	soundPlayer.playSound(settings.startSound, volume , pan);
+			soundPlayer.playSoundPanned(settings.startSound, volume, pos); 
 		}
 	}
 	

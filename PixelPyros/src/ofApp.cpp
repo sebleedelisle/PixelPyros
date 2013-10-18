@@ -3,7 +3,6 @@
 #include "ofApp.h"
 
 
-
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetLogLevel(OF_LOG_WARNING);
@@ -22,6 +21,9 @@ void ofApp::setup(){
 	fboWarper1.setSrcPoint(1, ofVec2f(APP_WIDTH/2,0));
 	fboWarper1.setSrcPoint(2, ofVec2f(APP_WIDTH/2,APP_HEIGHT));
 	fboWarper1.setSrcPoint(3, ofVec2f(0,APP_HEIGHT));
+	fboWarper1.boundsRectangle.set(0,0,APP_WIDTH/2, APP_HEIGHT);
+	fboWarper1.useBoundsRect = true;
+	
 	
 	fboWarper2.setDstPoint(0, ofVec2f(APP_WIDTH/2 +1,0));
 	fboWarper2.setDstPoint(1, ofVec2f(APP_WIDTH,0));
@@ -31,6 +33,9 @@ void ofApp::setup(){
 	fboWarper2.setSrcPoint(1, ofVec2f(APP_WIDTH,0));
 	fboWarper2.setSrcPoint(2, ofVec2f(APP_WIDTH,APP_HEIGHT));
 	fboWarper2.setSrcPoint(3, ofVec2f(APP_WIDTH/2,APP_HEIGHT));
+	fboWarper2.boundsRectangle.set(APP_WIDTH/2,0,APP_WIDTH/2, APP_HEIGHT);
+	fboWarper2.useBoundsRect = true;
+	
   
 	fboWarper1.loadSettings();
 	fboWarper2.loadSettings();
@@ -55,10 +60,11 @@ void ofApp::setup(){
 	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	
-	cameraManager.addIPPlayer("network cam1", "http://10.0.1.31/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
-	cameraManager.addIPPlayer("network cam2", "http://10.0.1.32/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
+	cameraManager.addIPPlayer("network cam1", "http://10.0.1.32/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
+	cameraManager.addIPPlayer("network cam2", "http://10.0.1.31/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
 
-    motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
+    //motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
+	motionManager.init(1024, 768);
 
 	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); 
 	controlPanels.main = fbo;
@@ -81,6 +87,8 @@ void ofApp::setup(){
 	appParams.add(edgeBlendSize.set("edge blend size", 0, 0, 50));
 	appParams.add(sceneManager.musicVolume);
 	appParams.add(soundPlayer.globalVolume);
+	
+	motionManager.parameters.add(cameraPreviewBrightness.set("camera preview brightness", 255,0,255));
 	
 	
 	parameterManager.registerParameterGroup("app", &appParams );
@@ -112,7 +120,7 @@ void ofApp::setup(){
     sync.setup(*oscParams, 6667, "10.0.1.51", 8000);
 }
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------f
 void ofApp::update(){
 
 		
@@ -123,7 +131,7 @@ void ofApp::update(){
 		motionManager.update(cameraManager.getPixelsRef(), cameraManager.getCameraLabel());
 		
 		triggerManager.updateMotion(motionManager, cameraManager.warper.inverseHomography );
-		
+	
 	}
 	
 	
@@ -167,10 +175,12 @@ void ofApp::update(){
 void ofApp::draw(){
 
 	ofBackground(0);
-	ofSetColor(255);
 	
-	if(!drawCameraIntoFBO)
+	ofSetColor(cameraPreviewBrightness);
+	if(!drawCameraIntoFBO) {
 		cameraManager.draw();
+	}
+	
 	
 	if(useFbo) {
 		fbo.begin();
@@ -179,7 +189,9 @@ void ofApp::draw(){
 	
 	if(drawCameraIntoFBO)
 		cameraManager.draw();
-
+	
+	ofSetColor(255);
+	
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
 	
 	particleSystemManager.draw();
@@ -316,9 +328,9 @@ void ofApp::keyPressed(int key){
             cameraManager.toggleWarperGui();
         }else if(key=='e') {
             drawCameraIntoFBO = !drawCameraIntoFBO;
-        } else if (key=='1') {
+        } else if ((shiftPressed) && (key=='1')) {
             fboWarper1.visible = !fboWarper1.visible;
-        } else if (key=='2') {
+        } else if ((shiftPressed) && (key=='2')) {
             fboWarper2.visible = !fboWarper2.visible;
         }
 
@@ -345,7 +357,7 @@ void ofApp::keyPressed(int key){
             else
                 cameraManager.endCapture();
             
-        } else if( key == 'p' ) {
+        } else if( key == 'P' ) {
             paused = !paused;
         }
         else if ( key == 't' )
@@ -359,6 +371,7 @@ void ofApp::keyPressed(int key){
         else if ( key == 'k' )
         {
             particleSystemManager.killAllParticlesParam = true ;
+			sceneGame->killInvadersAndAsteroids();
         }
         else if ( key == 'r' )
         {
@@ -422,9 +435,9 @@ void ofApp:: setupScenes() {
 	
 	sceneManager.addScene(new SceneRetro("Retro"));
 	
-	sceneManager.addScene(new SceneGame("Game"));
+	sceneManager.addScene(sceneGame = new SceneGame("Game"));
 	
-	sceneManager.addScene(new SceneNadia("Nadia"));
+	//sceneManager.addScene(new SceneNadia("Nadia"));
 	
 	sceneManager.addScene(new SceneSpace("Space"));
 
@@ -435,6 +448,8 @@ void ofApp:: setupScenes() {
 }
 
 void ofApp::initSounds() {
+	soundPlayer.setScreenRect(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT));
+	
 	soundPlayer.defaultPath = "../../../Sounds/";
 	
 	
