@@ -11,6 +11,7 @@
 #include "TriggerPattern.h"
 #include "ofxCv.h"
 #include "MotionManager.h"
+#include "constants.h"
 
 class TriggerManager {
 	
@@ -37,7 +38,7 @@ class TriggerManager {
 	void updateLayout();
 	void setPattern(TriggerPattern tp);
 	
-	void mouseMoved(int x, int y); 
+	void mouseMoved(int x, int y, ofRectangle previewRect);
 	void triggerParamChanged(float & value);
     void updateTriggerValues();
 	
