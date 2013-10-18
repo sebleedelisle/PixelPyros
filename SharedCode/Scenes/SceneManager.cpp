@@ -130,7 +130,7 @@ void SceneManager :: drawGUI() {
 			ofDrawBitmapString(ofToString(commands[i].arg1), commandRect.x, commandRect.getTop()+12);
 		} else {
 			ofSetColor(186);
-			ofDrawBitmapString(ofToString(i), commandRect.x, commandRect.getTop()+12);
+			ofDrawBitmapString(ofToString(commands[i].arg1), commandRect.x, commandRect.getTop()+12);
 			ofLine(pos, timeBarRect.getTop(),pos,timeBarRect.getBottom());
 		}
 		ofNoFill(); 
