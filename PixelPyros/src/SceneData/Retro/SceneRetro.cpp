@@ -270,7 +270,7 @@ TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueC
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
 	ts->addRocketSettings(&rocketSettings);
-	ts->rechargeSettings = TriggerRechargeSettings::fastMultiples;
+	ts->rechargeSettings = TriggerRechargeSettings::superFastMultiples;
 
 	return ts;
 	

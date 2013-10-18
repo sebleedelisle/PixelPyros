@@ -375,9 +375,9 @@ bool SceneGame :: draw() {
 	}
 	
 	
-	ofDrawBitmapString("GAME: " + ofToString(currentGame), 10,500);
-	ofDrawBitmapString("STATE: " + ofToString(gameState), 10,550);
-	ofDrawBitmapString("TIME SINCE CHANGE: " + ofToString(timeSinceLastStateChange), 10,600);
+	//ofDrawBitmapString("GAME: " + ofToString(currentGame), 10,500);
+	//ofDrawBitmapString("STATE: " + ofToString(gameState), 10,550);
+	//ofDrawBitmapString("TIME SINCE CHANGE: " + ofToString(timeSinceLastStateChange), 10,600);
 	
 	ofPopStyle();
 			

@@ -58,10 +58,10 @@ void ofApp::setup(){
 	cameraManager.init();
 	cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
 	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
-	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=1280x720", "root", "password", 12, 480);
 	
-	cameraManager.addIPPlayer("network cam1", "http://10.0.1.32/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
-	cameraManager.addIPPlayer("network cam2", "http://10.0.1.31/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
+	cameraManager.addIPPlayer("network cam1", "http://10.0.1.32/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
+	cameraManager.addIPPlayer("network cam2", "http://10.0.1.31/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
 
     //motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 	motionManager.init(1024, 768);
@@ -75,6 +75,9 @@ void ofApp::setup(){
     paused = false;
     altPressed = false;
 	shiftPressed = false;
+	
+	setupScenes();
+	
 
     triggerManager.setDisplaySize(APP_WIDTH, APP_HEIGHT);
 	
@@ -85,8 +88,14 @@ void ofApp::setup(){
 	appParams.add(timeSpeed.set("time speed", 1, 0,2));
 	// these should be loaded and saved, but not time speed
 	appParams.add(edgeBlendSize.set("edge blend size", 0, 0, 50));
+	
+	appParams.add(sceneInterstitial->foreground.set("interstitial foreground", 200,0,255));
+	appParams.add(sceneInterstitial->background.set("interstitial background", 40,0,255));
+	
 	appParams.add(sceneManager.musicVolume);
 	appParams.add(soundPlayer.globalVolume);
+	
+
 	
 	motionManager.parameters.add(cameraPreviewBrightness.set("camera preview brightness", 255,0,255));
 	
@@ -110,7 +119,6 @@ void ofApp::setup(){
 	timeSpeed = 1;
 	
 	updateScreenSizes();
-	setupScenes();
 	
     oscParams = new ofParameterGroup();
     oscParams->setName("OSC");
@@ -374,12 +382,11 @@ void ofApp::keyPressed(int key){
         }
         else if ( key == 'k' )
         {
-            particleSystemManager.killAllParticlesParam = true ;
+			particleSystemManager.killAllParticles();
 			sceneGame->killInvadersAndAsteroids();
         }
-        else if ( key == 'r' )
-        {
-            //sequencer.runSequence("Intro");
+        else if ( key == 'q' ){
+            sceneManager.changeScene("SlideShow");
         }
         else if ( key == 's' ){
             sync.parameterChanged(*oscParams);
@@ -404,7 +411,7 @@ void ofApp::keyPressed(int key){
 
 void ofApp::keyReleased(int key){
 	if(key == OF_KEY_SHIFT) shiftPressed = false;
-    if(key == OF_KEY_ALT) altPressed = false;
+	if(key == OF_KEY_ALT) altPressed = false;
 }
 
 void ofApp:: mousePressed(int x, int y, int button ) { 
@@ -428,11 +435,13 @@ void ofApp:: setupScenes() {
 
 	
 	sceneManager.addScene(new SceneCalibration("Calibration"));
-	sceneManager.addScene(new SceneSlideshow("SlideShow"));
+	sceneManager.addScene(sceneInterstitial = new SceneSlideshow("SlideShow"));
 	
 	// This scene was to launch the Brighton Digital Festival
 	//sceneManager.addScene(new SceneLaunch("Launch", particleSystemManager));
 
+	sceneManager.addScene(new SceneIntroAnim("IntroAnim"));
+	
 	SceneIntro* intro = new SceneIntro("Intro");
 	sceneManager.addScene(intro);
 	intro->loadMusicFile("InMotionEdit.aif");
@@ -497,7 +506,7 @@ void ofApp::initSounds() {
 
 void ofApp::mouseMoved( int x, int y ){
 	
-	triggerManager.mouseMoved(x, y);
+	triggerManager.mouseMoved(x, y, previewRect);
 
 }
 

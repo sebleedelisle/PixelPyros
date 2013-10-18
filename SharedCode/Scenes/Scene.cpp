@@ -46,13 +46,13 @@ void Scene :: loadMusicFile(string musicfile){
 void Scene :: start() {
 	//stopping = false;
 	//if ((triggerPatterns.size()==0)|| (changeTriggerPattern(0))) active = true;
-	
+	playing = false; 
 	if(music.isLoaded()) {
 		music.setPosition(0);
 		positionSeconds = 0;
 		//music.play();
 		lastUpdate = 0;
-	
+		
 		//playing = true;
 	}
 	active = true;
@@ -293,15 +293,15 @@ void Scene::setMusicVolume(float volume){
 bool Scene :: togglePlayPause(){
 	if(playing) {
 		music.stop();
-		recording = false; 
+		recording = false;
+		playing = false; 
 	}
-	else {
+	else if (music.isLoaded()){
 		music.play();
 		music.setPositionMS(positionSeconds*1000);
-		
+		playing = true; 
 	}
 	
-	playing = !playing;
 	return playing;
 }
 

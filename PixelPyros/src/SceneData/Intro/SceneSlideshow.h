@@ -11,6 +11,7 @@
 #include "SlideShow.h"
 #include "TextWriter.h"
 //nclude "Starfield.h"
+#include "constants.h"
 
 #define DEFAULT_SLIDE_DURATION 5.0
 #define NON_CURRENT_SLOTS_TO_SHOW 2
@@ -263,6 +264,9 @@ public:
     ofImage defaultBackground;
     vector<SceneSlide *> slides;
     float defaultFontSize;
+	
+	ofParameter<int> foreground;
+	ofParameter<int> background;
     
     int currentSlide;
     float lastUpdateTime;

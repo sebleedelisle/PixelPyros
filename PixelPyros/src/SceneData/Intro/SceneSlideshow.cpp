@@ -25,10 +25,14 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
     defaultFontSize = 4.0;
 	
 	ofColor textColor(100,180,170);
-    
+    foreground = 200;
+	background = 20;
                                        
-    defaultBackground.loadImage(ofToDataPath("slideshow/pixelpyros-slide-background.png"));
+    defaultBackground.loadImage(ofToDataPath("slideshow/Interstitial-Nottingham.png"));
 
+	
+	
+	
 //    Do you want your box guides back to layout the text? Uncomment lines 80-82 in TextWriter.cpp and big blue boxes will return
     
     // Slide 1 -- festivaly opening! ----------------------------------------
@@ -53,7 +57,7 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
         //ofRectangle(0, 120 + 100, 700, 60),
         textColor,
         0.7 * defaultFontSize,
-        "pixelpyros.org"
+        "" //§"pixelpyros.org"
         ));
  
 	
@@ -62,7 +66,7 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
 		ofRectangle(0, 150, 700, 60),
 		textColor,
 		 defaultFontSize,
-		"showtimes :  7pm  8pm  9pm"
+		"" //"showtimes :  7pm  8pm  9pm"
 		));
     // Duration to show, in seconds
     slide->duration = 10;
@@ -78,14 +82,14 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
          //ofRectangle(0, 0 + 120, 600, 100),
          textColor,
          0.6 * defaultFontSize,
-         "thanks to our local sponsors"
+         "" //"thanks to our local sponsors"
     ));
     slide->add(new CentredSlideText(APP_WIDTH, APP_HEIGHT,
 		ofRectangle(0, 25, 700, 50),
 		//ofRectangle(0, 200, 300, 100),
 		textColor,
 		defaultFontSize,
-		"Heart Internet"
+		"" //"Heart Internet"
     ));
     
     // Duration to show, in seconds
@@ -101,13 +105,13 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
     	ofRectangle(0, -25, 700, 50),
     	textColor,
     	0.6 * defaultFontSize,
-		"thanks to our production partners"
+		"" //"thanks to our production partners"
 ));
     slide->add(new CentredSlideText(APP_WIDTH, APP_HEIGHT,
 		ofRectangle(0, 25, 700, 50),
         textColor,
       	defaultFontSize,
-      	"LM Productions\nHOP Engineers"
+      	"" //"LM Productions\nHOP Engineers"
 ));
     
     // Duration to show, in seconds
@@ -152,12 +156,15 @@ bool SceneSlideshow::draw() {
     if( scale < 1.0 ) {
         ofScale(xScale, yScale);
     }
-    
+    ofSetColor(background);
+	ofFill(); 
+	ofRect(0,0,APP_WIDTH, APP_HEIGHT);
+	ofSetColor(foreground);
     slide->background->draw(0, 0);
     
     ofPopStyle();
     ofPopMatrix();
-    
+    /*
     for( int i = 0; i < slide->objects.size(); i++ ) {
         slide->objects[i]->draw();
     }
@@ -173,7 +180,7 @@ bool SceneSlideshow::draw() {
         lastUpdateTime += deltaTime;
     }
 	
-	
+	*/
 }
 
 bool SceneSlideshow::changeTriggerPattern(int i) {
