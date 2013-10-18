@@ -3,7 +3,6 @@
 #include "ofApp.h"
 
 
-
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetLogLevel(OF_LOG_WARNING);
@@ -55,10 +54,11 @@ void ofApp::setup(){
 	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	
-	cameraManager.addIPPlayer("network cam1", "http://10.0.1.24/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
-	cameraManager.addIPPlayer("network cam2", "http://10.0.1.25/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
+	cameraManager.addIPPlayer("network cam1", "http://10.0.1.32/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
+	cameraManager.addIPPlayer("network cam2", "http://10.0.1.31/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
 
-    motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
+    //motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
+	motionManager.init(1024, 768);
 
 	fbo.allocate(APP_WIDTH, APP_HEIGHT, GL_RGBA, 4); 
 	controlPanels.main = fbo;
@@ -112,7 +112,7 @@ void ofApp::setup(){
     sync.setup(*oscParams, 6667, "10.0.1.6", 8000);
 }
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------f
 void ofApp::update(){
 
 		
@@ -123,7 +123,7 @@ void ofApp::update(){
 		motionManager.update(cameraManager.getPixelsRef(), cameraManager.getCameraLabel());
 		
 		triggerManager.updateMotion(motionManager, cameraManager.warper.inverseHomography );
-		
+	
 	}
 	
 	
@@ -345,7 +345,7 @@ void ofApp::keyPressed(int key){
             else
                 cameraManager.endCapture();
             
-        } else if( key == 'p' ) {
+        } else if( key == 'P' ) {
             paused = !paused;
         }
         else if ( key == 't' )
@@ -435,6 +435,8 @@ void ofApp:: setupScenes() {
 }
 
 void ofApp::initSounds() {
+	soundPlayer.setScreenRect(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT));
+	
 	soundPlayer.defaultPath = "../../../Sounds/";
 	
 	

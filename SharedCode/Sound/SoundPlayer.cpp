@@ -20,6 +20,13 @@ SoundPlayer* SoundPlayer::instance() {
 
 SoundPlayer::SoundPlayer(){
 	globalVolume.set("sfx volume", 0.7,0,1);
+	
+	screenRect.set(0,0,ofGetWidth(), ofGetHeight()); 
+}
+
+void SoundPlayer::setScreenRect(ofRectangle rect) {
+	screenRect.set(rect);
+	
 }
 
 bool SoundPlayer:: addSound(string filename, string reference, float vol, float speed, float speedVar, string fileType, float retriggerMin){
@@ -36,11 +43,18 @@ bool SoundPlayer:: addSound(string filename, string reference, float vol, float 
 		sounds.erase(reference);
 		
 	};
-	
+	return true; 
 }
 
 bool SoundPlayer::playSound(string soundname, float volume = 1, float pan = 0){
 	
 	if(sounds.find(soundname) == sounds.end()) return false;
 	sounds[soundname].play(volume * globalVolume, pan);
+	return true; 
+}
+
+bool SoundPlayer::playSoundPanned(string soundname, float volume, ofVec3f pos){
+	
+	return playSound(soundname, volume, ofMap(pos.x, screenRect.getLeft(), screenRect.getRight(), -1,1));
+
 }

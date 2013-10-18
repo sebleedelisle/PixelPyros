@@ -94,7 +94,7 @@ TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue ,
 	ts->hue = hue;
 	ts->saturation = saturation * 0.7;
 	ts->addRocketSettings(&rocketSettings);
-	ts->rechargeSettings = TriggerRechargeSettings::fastMultiples;
+	ts->rechargeSettings = TriggerRechargeSettings::superFastMultiples;
 	
 	return ts;
 	

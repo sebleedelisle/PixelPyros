@@ -92,6 +92,16 @@ bool CameraManager::update() {
     if( updateCamera && capturing ) {
         captureFrame();
     }
+	/*
+	for(int i = 0; i<cameras.size(); i++) {
+		
+		CameraIP * cam = dynamic_cast<CameraIP*>(cameras[i]);
+		if((cam) && (cam!=camera)) {
+			cam->update();
+			
+		}
+	}*/
+	
 
     return updateCamera;
 }
