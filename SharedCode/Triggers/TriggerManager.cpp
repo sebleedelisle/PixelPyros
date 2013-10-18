@@ -271,7 +271,7 @@ void TriggerManager :: updateLayout() {
 }
 
 
-void TriggerManager :: mouseMoved(int x, int y){
+void TriggerManager :: mouseMoved(int x, int y, ofRectangle previewRect){
 
 	for(int i = 0; i<triggers.size(); i++) {
 		Trigger * trigger = triggers[i];
@@ -282,6 +282,20 @@ void TriggerManager :: mouseMoved(int x, int y){
 		}
 
 	}
+	
+	x = ofMap(x, 0, APP_WIDTH, previewRect.getLeft(), previewRect.getRight());
+	y = ofMap(y, 0, APP_HEIGHT, previewRect.getTop(), previewRect.getBottom());
+	
+	for(int i = 0; i<triggers.size(); i++) {
+		Trigger * trigger = triggers[i];
+		float distance = trigger->pos.distance(ofVec3f(x,y));
+		if(distance<50) {
+			trigger->registerMotion(1.0f-(distance/50.0f));
+			
+		}
+		
+	}
+	
 
 }
 

@@ -300,6 +300,7 @@ class LetterWritingPatternMaker {
 		
 		ps.drag = 0.93;
 		ps.lifeMin = 0.01;
+		ps.lifeMax = 0.4;
 		//ps.shimmerMin = 0;
 		ps.emitCount = 5000;
 		ps.emitSpeedModifier = 0.5;

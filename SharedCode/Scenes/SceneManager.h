@@ -37,6 +37,7 @@ public :
 	void mouseDragged(ofMouseEventArgs &e);
 	void mouseReleased(ofMouseEventArgs &e);
 	void keyPressed(ofKeyEventArgs &e);
+	void keyReleased(ofKeyEventArgs &e);
 	
 	void updateUIScreen(ofRectangle screen);
 	
@@ -71,6 +72,9 @@ public :
 	
 	
 	bool showInterface;
+	
+	bool shiftPressed;
+	bool altPressed;
 	
 	bool dragPlayHead;
 	int dragCommandIndex;
