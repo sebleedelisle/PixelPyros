@@ -55,8 +55,8 @@ void ofApp::setup(){
 	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	
-	cameraManager.addIPPlayer("network cam1", "http://10.0.1.24/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
-	cameraManager.addIPPlayer("network cam2", "http://10.0.1.25/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
+	cameraManager.addIPPlayer("network cam1", "http://10.0.1.31/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
+	cameraManager.addIPPlayer("network cam2", "http://10.0.1.32/axis-cgi/mjpg/video.cgi?resolution=1024x768                         ", "root", "password", 1024, 768);
 
     motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 
@@ -109,7 +109,7 @@ void ofApp::setup(){
     oscParams->add( controlPanels.appGui.getParameter() );
     oscParams->add( controlPanels.triggerGui.getParameter() );
     oscParams->add( controlPanels.motionGui.getParameter() );
-    sync.setup(*oscParams, 6667, "10.0.1.6", 8000);
+    sync.setup(*oscParams, 6667, "10.0.1.51", 8000);
 }
 
 //--------------------------------------------------------------
