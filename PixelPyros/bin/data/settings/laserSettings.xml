@@ -1,23 +1,23 @@
 <Laser>
 	<Laser_Manager>
 		<Etherdream_connect>0</Etherdream_connect>
-		<status>No devices connected ETHERDREAM_IDLE 0 0</status>
+		<status>Shut down ETHERDREAM_IDLE 0 0</status>
 		<show_warp_points>0</show_warp_points>
-		<intensity>0.0175</intensity>
+		<intensity>1</intensity>
 		<colour_change_offset>-8</colour_change_offset>
 		<show_registration>0</show_registration>
 		<show_move_points>0</show_move_points>
 		<show_sync_test>0</show_sync_test>
 		<render_laser_path>1</render_laser_path>
 		<render_laser_preview>1</render_laser_preview>
-		<move_speed>2.855</move_speed>
+		<move_speed>5.96</move_speed>
 		<move_points_padding>4</move_points_padding>
 		<shape_pre_blank_points>1</shape_pre_blank_points>
 		<shape_post_blank_points>1</shape_post_blank_points>
 		<dot_max_points>15</dot_max_points>
 		<line_acceleration>0.4465</line_acceleration>
-		<line_speed>25.765</line_speed>
-		<eased_line_speed>3.845</eased_line_speed>
+		<line_speed>18.17</line_speed>
+		<eased_line_speed>5.645</eased_line_speed>
 		<eased_line_padding>1</eased_line_padding>
 		<spiral_spacing>2.99</spiral_spacing>
 	<circle_overlap>6.75</circle_overlap>
@@ -25,7 +25,7 @@
 		<points_per_second>72700</points_per_second>
 	<flip_x>0</flip_x>
 		<flip_y>1</flip_y>
-	<laser_move_points>1</laser_move_points>
+	<laser_move_points>0</laser_move_points>
 		<show_laser_path>1</show_laser_path>
 	</Laser_Manager>
 <Laser/>
