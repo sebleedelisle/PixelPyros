@@ -165,10 +165,10 @@ public:
 		glTexCoord2f(0, 0);
 		glVertex2f(hw-edgeBlendSize,0);
 		
-		glTexCoord2f(edgeBlendImageWidth, 0);
+		glTexCoord2f(edgeBlendImageWidth/2, 0);
 		glVertex2f(hw,0);
 		
-		glTexCoord2f(edgeBlendImageWidth, edgeBlendImageHeight);
+		glTexCoord2f(edgeBlendImageWidth/2, edgeBlendImageHeight);
 		glVertex2f(hw,h);
 		
 		glTexCoord2f(0,edgeBlendImageHeight);
@@ -196,7 +196,7 @@ public:
 		
 		glBegin(GL_QUADS);
 		
-		glTexCoord2f(edgeBlendImageWidth, 0);
+		glTexCoord2f(edgeBlendImageWidth/2, 0);
 		glVertex2f(hw,0);
 		
 		glTexCoord2f(0, 0);
@@ -205,7 +205,7 @@ public:
 		glTexCoord2f(0, edgeBlendImageHeight);
 		glVertex2f(hw+edgeBlendSize,h);
 		
-		glTexCoord2f(edgeBlendImageWidth, edgeBlendImageHeight);
+		glTexCoord2f(edgeBlendImageWidth/2, edgeBlendImageHeight);
 		glVertex2f(hw,h);
 		
 		glEnd();

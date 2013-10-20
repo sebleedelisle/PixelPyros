@@ -331,6 +331,7 @@ void ofApp::keyPressed(int key){
         shiftPressed = true;
     }
 
+	cout << "SHIFT PRESSED : "<< shiftPressed << endl;
 	if(key == OF_KEY_ALT){
         altPressed = true;
     }
@@ -341,7 +342,10 @@ void ofApp::keyPressed(int key){
         }else if(key=='e') {
             drawCameraIntoFBO = !drawCameraIntoFBO;
         } else if ((shiftPressed) && (key=='1')) {
+			cout << "SHIFT 1" << endl;
+			
             fboWarper1.visible = !fboWarper1.visible;
+			cout << "FBO WARPER VISIBLE " << fboWarper1.visible << endl;
         } else if ((shiftPressed) && (key=='2')) {
             fboWarper2.visible = !fboWarper2.visible;
         }
