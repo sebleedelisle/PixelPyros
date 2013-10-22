@@ -5,7 +5,7 @@
 		<centre_y>0.80875</centre_y>
 		<spacing>34</spacing>
 		<vertical_oscillation>2.375</vertical_oscillation>
-		<Debug_Mode>0</Debug_Mode>
+		<Debug_Mode>1</Debug_Mode>
 	</Trigger_Positioning>
 <Triggers/>
 </Triggers>
