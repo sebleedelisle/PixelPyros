@@ -1,7 +1,7 @@
 <Laser>
 	<Laser_Manager>
 		<Etherdream_connect>0</Etherdream_connect>
-		<status>Shut down ETHERDREAM_IDLE 0 0</status>
+		<status>No devices connected ETHERDREAM_IDLE 0 0</status>
 		<show_warp_points>0</show_warp_points>
 		<intensity>1</intensity>
 		<colour_change_offset>-8</colour_change_offset>

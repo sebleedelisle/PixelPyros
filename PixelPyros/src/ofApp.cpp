@@ -56,7 +56,8 @@ void ofApp::setup(){
 
 	
 	cameraManager.init();
-	cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
+	//cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
+	cameraManager.addVidPlayer("../../../TestMovies/NottinghamTestFootage2.mov", 1280,720);
 	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=1280x720", "root", "password", 12, 480);
 	
