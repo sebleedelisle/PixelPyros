@@ -24,24 +24,41 @@ TriggerManager::TriggerManager () {
 	triggersDisabled = false;
 	triggerDebugMode = false;
     
+	rectanglePreviewBrightness = 1;
+	
     initParams();
 
 }
 
 void TriggerManager::initParams(){
-    parameters.setName("Trigger Positioning");
+    parameters.setName("Triggers");
     parameters.add( triggerAreaWidthParam.set("width", 0.9125, 0, 1 ) );
-    parameters.add( triggerAreaHeightParam.set("height", 0.0325, 0, 0.5 ) );
-    parameters.add( triggerAreaCenterYParam.set("centre y", 0.86875, 0.5, 1 ) );
-    parameters.add( triggerSpacingParam.set("spacing", 29, 0, 400 ) );
+    parameters.add( triggerAreaTopParam.set("top", 0.8, 0.7, 1 ) );
+	parameters.add( triggerAreaBottomParam.set("bottom", 0.9, 0.7, 1 ) );
+	parameters.add( triggerNumParam.set("number of triggers", 28, 1, 40 ) );
+	
+	parameters.add( triggerSampleSizeParam.set("trigger sample size", 10,2,60) );
+				   
     parameters.add( triggerOscillationParam.set("vertical oscillation", 5.9, 0, 10 ) );
     parameters.add( triggerDebugMode.set("Debug Mode",false) );
     
+	parameters.add( triggerMode.set("mode",0,0,2));
+	parameters.add( triggerModeString.set("trigger mode"));
+	
+	parameters.add( numVertSamples.set("vertical sample num", 10, 6,20));
+	parameters.add( motionMultiplier.set("motion multiplier", 0.1, 0.00001, 1));
+	parameters.add( motionSamplesResetSpeed.set("motion reset speed", 0.99, 0.8,0.999999));
+	parameters.add( motionTargetThreshold.set("target threshold", 50, 1, 200));
+	parameters.add( moveTowardMotionSpeed.set("move speed", 0.05, 0.001, 0.2));
+	parameters.add( moveHomeSpeed.set("move home speed", 20, 1,100)); 
+	parameters.add( multiSampleSize.set("samples sample size", 5,2,60) );
+								  
     triggerAreaWidthParam.addListener(this, &TriggerManager::triggerParamChanged);
-    triggerAreaHeightParam.addListener(this, &TriggerManager::triggerParamChanged);
-    triggerAreaCenterYParam.addListener(this, &TriggerManager::triggerParamChanged);
-    triggerSpacingParam.addListener(this, &TriggerManager::triggerParamChanged);
+    triggerAreaTopParam.addListener(this, &TriggerManager::triggerParamChanged);
+    triggerAreaBottomParam.addListener(this, &TriggerManager::triggerParamChanged);
+    triggerNumParam.addListener(this, &TriggerManager::triggerParamIntChanged);
     triggerOscillationParam.addListener(this, &TriggerManager::triggerParamChanged);
+	triggerMode.addListener(this, &TriggerManager::triggerModeChanged);
     triggerDebugMode.addListener(this, &TriggerManager::setShowTriggerDebug);
     
     //Needed to load defaults
@@ -51,6 +68,7 @@ void TriggerManager::initParams(){
 
 bool TriggerManager :: update(float deltaTime) {
 	
+		
 	//if(!active) return false;
 	int activeTriggers = 0;
 	
@@ -64,6 +82,49 @@ bool TriggerManager :: update(float deltaTime) {
 		active = false;
 	}*/
 	
+	triggerModeString = (triggerMode==0)? "MANUAL" : "AUTO";
+	
+	
+
+	
+	if(triggerMode==TRIGGER_MODE_AUTO) {
+		for(int i=0; i<triggers.size(); i++) {
+			
+			Trigger& trigger = *triggers[i];
+			if(!trigger.active) continue;
+			
+			
+			if(trigger.vertMotionSamples.size()!=numVertSamples) {
+				trigger.vertMotionSamples.resize(numVertSamples);
+			}
+			
+			// fade out the samples
+			for(int i = 0; i<numVertSamples; i++) {
+				float& sample = trigger.vertMotionSamples[i];
+				sample*=motionSamplesResetSpeed;
+			}
+
+			int topposition = -1;
+			for(int j = numVertSamples-1; j>=0; j--) {
+				if(trigger.vertMotionSamples[j] > motionTargetThreshold) {
+					topposition = j;
+				}
+			}
+			
+			if(topposition == -1) {
+				trigger.pos.y -= deltaTime * moveHomeSpeed;
+				if(trigger.pos.y < triggerArea.getTop()) trigger.pos.y = triggerArea.getTop();
+				
+			} else {
+				float targety = ofMap(topposition, 0, numVertSamples, triggerArea.getTop(), triggerArea.getBottom());
+				trigger.pos.y += (targety-trigger.pos.y) * moveTowardMotionSpeed;
+			}
+			
+			
+		}
+	}
+
+	
 	return true;
 		
 }
@@ -76,14 +137,33 @@ void TriggerManager :: updateMotion(MotionManager& motionManager, cv::Mat homogr
 		if(!trigger->active) continue;
 		
 		// Fixed motion size! 10 pixels radius
-		float motion = motionManager.getMotionAtPosition(trigger->pos, 10, homography);
+		float motion = motionManager.getMotionAtPosition(trigger->pos, triggerSampleSizeParam, homography);
 		trigger->registerMotion(motion/255);
 	}
+		
+	for(int i=0; i<triggers.size(); i++) {
+		
+		Trigger& trigger = *triggers[i];
+		if(!trigger.active) continue;
 	
-	
+		if(trigger.vertMotionSamples.size()>numVertSamples) {
+			trigger.vertMotionSamples.resize(numVertSamples); 
+		}
+		
+		for(int j = 0; j<numVertSamples; j++) {
+			
+			float ypos = ofMap(j, 0, numVertSamples, triggerArea.getTop(), triggerArea.getBottom());
+			
+			if(trigger.vertMotionSamples.size()<=j) {
+				trigger.vertMotionSamples.push_back(0);
+			}
+			
+			
+			trigger.vertMotionSamples[j] += motionManager.getMotionAtPosition(ofVec2f(trigger.pos.x, ypos), multiSampleSize, homography)*motionMultiplier;
+			if(trigger.vertMotionSamples[j]>255) trigger.vertMotionSamples[j] = 255;
+		}
+	}
 }
-
-
 
 
 void TriggerManager :: draw() {
@@ -91,13 +171,20 @@ void TriggerManager :: draw() {
 	//if(!active) return;
 	
 	for(int i=0; i<triggers.size(); i++) {
-		
-		triggers[i]->draw();
-		
+		triggers[i]->draw(triggerArea, motionTargetThreshold);
 	}
 	
 	
+	if(rectanglePreviewBrightness>0) {
+		ofPushStyle();
+		ofNoFill();
+		ofSetColor(255 * rectanglePreviewBrightness);
+		ofSetLineWidth(1);
+		ofRect(triggerArea);
 	
+		ofPopStyle();
+		rectanglePreviewBrightness-=0.05; 
+	}
 }
 
 
@@ -172,13 +259,12 @@ void TriggerManager::setTriggersDisabled(bool disabled){
 
 void TriggerManager :: updateLayout() {
 	
-
+	triggerPatternOffset++; 
 	
 	float midX = triggerArea.x+ triggerArea.width/2;
 	
 	int triggerIndex = 0;
 	triggerCount = 0;
-
 	
 	// if it's a blank arrangement then disable all the triggers and quit
 	
@@ -197,10 +283,13 @@ void TriggerManager :: updateLayout() {
 	//float spacing = triggerArea.width / floor(triggerArea.width / minimumSpacing);
 	// then work out the number of triggers we can fit
 	
-	int numOfTriggers;
-	float spacing;
+	int numOfTriggers = triggerNumParam;
+	float spacing = minimumSpacing;
 	float xPos = 0;
-	
+	if(numOfTriggers%2==0) {
+		xPos-= minimumSpacing/2;
+	}
+	/*
 	if(triggerPattern.arrangeMode == TRIGGER_ARRANGE_MIRROR) {
 		numOfTriggers =  ceil(triggerArea.width / minimumSpacing);
 		if(numOfTriggers%2==0) {
@@ -212,7 +301,7 @@ void TriggerManager :: updateLayout() {
 		numOfTriggers = triggerPattern.triggers.size();
 		spacing = triggerArea.width/(numOfTriggers-1);
 		xPos = triggerArea.getLeft(); 
-	}
+	}*/
 	
 	while (triggerCount<numOfTriggers ) {
 		
@@ -224,6 +313,7 @@ void TriggerManager :: updateLayout() {
 		} else {
 			trigger = new Trigger();
 			triggers.push_back(trigger);
+			if(triggerMode == TRIGGER_MODE_AUTO) trigger->pos.y = triggerArea.getTop();
 		}
 		
 		trigger->copySettings(triggerPattern.triggers[triggerIndex]);
@@ -251,8 +341,9 @@ void TriggerManager :: updateLayout() {
 			xPos+=spacing;
 		}
 		
-		trigger->pos.y = triggerArea.getCenter().y + cos((trigger->pos.x - midX)/(triggerArea.getWidth())* triggerOscillationParam * PI ) * (triggerArea.getHeight()/2);
-		
+		if(triggerMode == TRIGGER_MODE_MANUAL) {
+			trigger->pos.y = triggerArea.getCenter().y + cos((trigger->pos.x - midX)/(triggerArea.getWidth())* triggerOscillationParam * PI ) * (triggerArea.getHeight()/2);
+		}
 			
 
 
@@ -300,16 +391,47 @@ void TriggerManager :: mouseMoved(int x, int y, ofRectangle previewRect){
 }
 
 void TriggerManager::triggerParamChanged(float &value){
-    updateTriggerValues();
+	updateTriggerValues();
+	
+	rectanglePreviewBrightness = 1;
 }
+
+void TriggerManager::triggerParamIntChanged(int &value){
+	
+   updateTriggerValues();
+	
+	rectanglePreviewBrightness = 1;
+	
+	
+	
+	
+}
+
+void TriggerManager::triggerModeChanged(int &value){
+	
+	// hack because the int slider is stupid :)
+	if(triggerMode >1) triggerMode = 1;
+	
+	
+	updateTriggerValues();
+	
+	rectanglePreviewBrightness = 1;
+
+}
+
+
+
 
 void TriggerManager::updateTriggerValues(){
     triggerArea.width = triggerAreaWidthParam*displayWidth;
     triggerArea.x = (displayWidth - triggerArea.width)/2;
-    triggerArea.height = (displayHeight * triggerAreaHeightParam);
-    triggerArea.y = (displayHeight * triggerAreaCenterYParam) - (triggerArea.height/2) ;
 	
-    minimumSpacing = triggerSpacingParam.get();
+	if(triggerAreaTopParam>triggerAreaBottomParam) triggerAreaTopParam = triggerAreaBottomParam;
+	
+    triggerArea.y = (displayHeight * triggerAreaTopParam)  ;
+	triggerArea.height = displayHeight * (triggerAreaBottomParam - triggerAreaTopParam)  ;
+	
+    minimumSpacing = triggerArea.width/((float)triggerNumParam-1);
     
     updateLayout();
 }

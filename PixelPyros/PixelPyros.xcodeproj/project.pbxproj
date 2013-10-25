@@ -114,6 +114,11 @@
 		12EB3BD617E0EB86002D90A0 /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3BCB17E0EB86002D90A0 /* ofxSlider.cpp */; };
 		12EB3BD717E0EB86002D90A0 /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3BCD17E0EB86002D90A0 /* ofxSliderGroup.cpp */; };
 		12EB3BD817E0EB86002D90A0 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12EB3BCF17E0EB86002D90A0 /* ofxToggle.cpp */; };
+		12F1987B18183CD9004E7045 /* src_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F1987218183CD9004E7045 /* src_colors.cpp */; };
+		12F1987C18183CD9004E7045 /* svgtiny.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F1987318183CD9004E7045 /* svgtiny.cpp */; };
+		12F1987D18183CD9004E7045 /* svgtiny_gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F1987518183CD9004E7045 /* svgtiny_gradient.cpp */; };
+		12F1987E18183CD9004E7045 /* svgtiny_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F1987718183CD9004E7045 /* svgtiny_list.cpp */; };
+		12F1987F18183CD9004E7045 /* ofxSvg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F1987918183CD9004E7045 /* ofxSvg.cpp */; };
 		12F257031811760100CB3742 /* SceneIntroAnim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F257011811760100CB3742 /* SceneIntroAnim.cpp */; };
 		12F92A4317FB47D000835BBE /* Invader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F92A3F17FB47D000835BBE /* Invader.cpp */; };
 		12F92A4417FB47D000835BBE /* SceneGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F92A4117FB47D000835BBE /* SceneGame.cpp */; };
@@ -568,6 +573,15 @@
 		12EB3BCE17E0EB86002D90A0 /* ofxSliderGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
 		12EB3BCF17E0EB86002D90A0 /* ofxToggle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
 		12EB3BD017E0EB86002D90A0 /* ofxToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
+		12F1987218183CD9004E7045 /* src_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = src_colors.cpp; sourceTree = "<group>"; };
+		12F1987318183CD9004E7045 /* svgtiny.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny.cpp; sourceTree = "<group>"; };
+		12F1987418183CD9004E7045 /* svgtiny.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgtiny.h; sourceTree = "<group>"; };
+		12F1987518183CD9004E7045 /* svgtiny_gradient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_gradient.cpp; sourceTree = "<group>"; };
+		12F1987618183CD9004E7045 /* svgtiny_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgtiny_internal.h; sourceTree = "<group>"; };
+		12F1987718183CD9004E7045 /* svgtiny_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svgtiny_list.cpp; sourceTree = "<group>"; };
+		12F1987918183CD9004E7045 /* ofxSvg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSvg.cpp; sourceTree = "<group>"; };
+		12F1987A18183CD9004E7045 /* ofxSvg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSvg.h; sourceTree = "<group>"; };
+		12F1988018183F54004E7045 /* LaserPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserPolyline.h; sourceTree = "<group>"; };
 		12F257011811760100CB3742 /* SceneIntroAnim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneIntroAnim.cpp; sourceTree = "<group>"; };
 		12F257021811760100CB3742 /* SceneIntroAnim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneIntroAnim.h; sourceTree = "<group>"; };
 		12F4141517F9843B007941F2 /* ParticleRendererDoubleCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererDoubleCircle.h; sourceTree = "<group>"; };
@@ -756,10 +770,10 @@
 		1254505917BF861C00EF23B7 /* LetterWriter */ = {
 			isa = PBXGroup;
 			children = (
-				1254505A17BF861C00EF23B7 /* Letter.h */,
 				1254505B17BF861C00EF23B7 /* TextWriter.cpp */,
 				1254505C17BF861C00EF23B7 /* TextWriter.h */,
 				1254505D17BF861C00EF23B7 /* VectorFont.h */,
+				1254505A17BF861C00EF23B7 /* Letter.h */,
 			);
 			path = LetterWriter;
 			sourceTree = "<group>";
@@ -1604,6 +1618,7 @@
 				12CBB02017F454A00078677E /* LaserCircle.h */,
 				129F2E7017F8761000206DFB /* LaserSpiral.h */,
 				12DDCADC17F55C1200484864 /* LaserLine.h */,
+				12F1988018183F54004E7045 /* LaserPolyline.h */,
 				12CBB01F17F339670078677E /* LaserShape.h */,
 				12EB3B6E17E0EB37002D90A0 /* LaserManager.cpp */,
 				12EB3B6F17E0EB37002D90A0 /* LaserManager.h */,
@@ -1729,6 +1744,54 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		12F1986E18183CD9004E7045 /* ofxSvg */ = {
+			isa = PBXGroup;
+			children = (
+				12F1986F18183CD9004E7045 /* libs */,
+				12F1987818183CD9004E7045 /* src */,
+			);
+			name = ofxSvg;
+			path = ../../../addons/ofxSvg;
+			sourceTree = "<group>";
+		};
+		12F1986F18183CD9004E7045 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				12F1987018183CD9004E7045 /* svgTiny */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		12F1987018183CD9004E7045 /* svgTiny */ = {
+			isa = PBXGroup;
+			children = (
+				12F1987118183CD9004E7045 /* src */,
+			);
+			path = svgTiny;
+			sourceTree = "<group>";
+		};
+		12F1987118183CD9004E7045 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				12F1987218183CD9004E7045 /* src_colors.cpp */,
+				12F1987318183CD9004E7045 /* svgtiny.cpp */,
+				12F1987418183CD9004E7045 /* svgtiny.h */,
+				12F1987518183CD9004E7045 /* svgtiny_gradient.cpp */,
+				12F1987618183CD9004E7045 /* svgtiny_internal.h */,
+				12F1987718183CD9004E7045 /* svgtiny_list.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		12F1987818183CD9004E7045 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				12F1987918183CD9004E7045 /* ofxSvg.cpp */,
+				12F1987A18183CD9004E7045 /* ofxSvg.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		12F257001811760100CB3742 /* IntroAnim */ = {
 			isa = PBXGroup;
 			children = (
@@ -1765,6 +1828,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				12F1986E18183CD9004E7045 /* ofxSvg */,
 				12378372180C8EEA00079C7A /* ofxNetwork */,
 				12C7957118082C6600836A79 /* ofxIpVideoGrabber */,
 				12EB3BBE17E0EB86002D90A0 /* ofxGui */,
@@ -2062,6 +2126,11 @@
 				12378382180C8EEA00079C7A /* ofxTCPServer.cpp in Sources */,
 				12378383180C8EEA00079C7A /* ofxUDPManager.cpp in Sources */,
 				12F257031811760100CB3742 /* SceneIntroAnim.cpp in Sources */,
+				12F1987B18183CD9004E7045 /* src_colors.cpp in Sources */,
+				12F1987C18183CD9004E7045 /* svgtiny.cpp in Sources */,
+				12F1987D18183CD9004E7045 /* svgtiny_gradient.cpp in Sources */,
+				12F1987E18183CD9004E7045 /* svgtiny_list.cpp in Sources */,
+				12F1987F18183CD9004E7045 /* ofxSvg.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

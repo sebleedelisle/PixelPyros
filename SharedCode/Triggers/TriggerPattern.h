@@ -40,8 +40,11 @@ class TriggerPattern  {
 	};
 	
 	//template <typename T>
-	void addTriggerSettings(TriggerSettings* trigger = TriggerSettings::blank){
+	void addTriggerSettings(TriggerSettings* trigger){
 		triggers.push_back(trigger);
+	}
+	void addTriggerSettings(){
+		//triggers.push_back(trigger);
 	}
 	
 	TriggerSettingsRocket* addRocketTrigger(RocketSettings* rocketSettings) {

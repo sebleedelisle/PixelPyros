@@ -20,6 +20,7 @@
 #include "LaserShape.h"
 #include "LaserCircle.h"
 #include "LaserSpiral.h"
+#include "LaserPolyline.h"
 #include "LaserLine.h"
 #include "ofxGui.h"
 #include "ofMain.h"
@@ -55,6 +56,8 @@ class LaserManager {
 	void addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, float radius, float intensity =1);
 	
 	void addLaserSpiral(const ofPoint& position, ofFloatColor col, float rad1,float rad2, float fadeoutpoint = 1,  float intens = 1);
+	
+	void addLaserPolyline(const ofPolyline& line, float intens = 1);
 
 	//void addLaserLine(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
 	void addLaserLineEased(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
@@ -67,6 +70,7 @@ class LaserManager {
 	void drawShapes();
 	
 	void drawLaserLine(LaserLine& line);
+	void drawLaserPolyline(LaserPolyline& laserPolyline);
 	void drawLaserCircle(LaserCircle& circle);
 	void drawLaserDot(LaserDot& dot);
 	void drawLaserSpiral(LaserSpiral& spiral);

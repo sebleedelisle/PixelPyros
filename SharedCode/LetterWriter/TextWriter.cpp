@@ -79,18 +79,12 @@ void TextWriter::drawFixedSize(ofRectangle box, string text, float glyphScaleFac
 	if(box.width<=0) box.width = 1;
     
     ofPushStyle();
-	/*
-    if(smooth) ofEnableSmoothing();
-	else ofDisableSmoothing();
-	*/
+
     ofEnableAlphaBlending();
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     ofSetLineWidth(glyphLineWeight);
     
     ofPushStyle();
- 	//ofSetColor(colour);
-//  	ofNoFill();
-//	ofRect(box);
     ofPopStyle();
     
     vector<string> lines;
@@ -101,34 +95,14 @@ void TextWriter::drawFixedSize(ofRectangle box, string text, float glyphScaleFac
         lines = ofSplitString(text, "\n");
     }
     
-    map <int, Letter>& letters = font.letters;
-    
-	ofMesh writingMesh; 
-    
-    float glyphRenderWidth = glyphWidth * glyphScaleFactor;
-    float glyphRenderHeight = glyphHeight * glyphScaleFactor;
-    float glyphRenderSpacing = glyphSpacing * glyphScaleFactor;
-    
-   // float blockHeight = (glyphRenderHeight * lines.size()) + (glyphRenderSpacing * (lines.size() - 1));
-    int marginTop = 0; 
-	
-    int ofsX = 0, ofsY = marginTop;
-    for( int j = 0; j < lines.size(); j++ ) {
-        string line = lines[j];
-        int glyphMarginLeft = centred ? ((box.width - calculateBlockWidth(line, glyphRenderWidth, glyphRenderSpacing)) / 2.0) : 0;
-        for( int i = 0; i < line.length(); i++ ) {
-			addGlyphToMesh(letters[line[i]], ofRectangle(box.x + ofsX + glyphMarginLeft, box.y + ofsY, glyphRenderWidth, glyphRenderHeight), writingMesh);
-            ofsX += glyphRenderWidth + glyphRenderSpacing;
-        }
-        ofsX = 0;
-        ofsY += glyphRenderHeight + glyphRenderSpacing;
-    }
+	ofMesh writingMesh = getMesh(lines, box.getTopLeft(), glyphScaleFactor, centred);
 	
 	writingMesh.setMode(OF_PRIMITIVE_LINES);
     writingMesh.draw(); 
     
     ofPopStyle();
 }
+
 
 void TextWriter::draw(ofRectangle box, string text, bool centred) {
     text = ofToUpper(text);
@@ -139,9 +113,7 @@ void TextWriter::draw(ofRectangle box, string text, bool centred) {
 	
 	
     ofPushStyle();
-	/*
-	if(smooth) ofEnableSmoothing();
-	else ofDisableSmoothing();*/
+
     ofEnableAlphaBlending();
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     ofSetLineWidth(glyphLineWeight);
@@ -149,7 +121,7 @@ void TextWriter::draw(ofRectangle box, string text, bool centred) {
     ofPushStyle();
     ofSetColor(10, 10, 255, 128);
     ofNoFill();
-	//ofRect(box);
+	
     ofPopStyle();
     
     float boxRatio = box.height / (float)box.width;
@@ -178,20 +150,17 @@ void TextWriter::draw(ofRectangle box, string text, bool centred) {
             }
             
             lines.push_back(linePart);
-            // std::cout << linePart << std::endl;
             
             start = index + numCols;
         }
         
-        //lines.back().append(text.substr(index));
-        string linePart = trim(text.substr(index));
+          string linePart = trim(text.substr(index));
         lines.push_back(linePart);
         if( linePart.length() > longestLine.length() ) {
             longestLine = linePart;
         }
         
-        // std::cout << text.substr(index) << std::endl;
-    }
+          }
     
     float glyphScaleFactor = (box.width / (float)longestLine.length()) / (float)(glyphWidth + glyphSpacing);
     float glyphRenderWidth = glyphWidth * glyphScaleFactor;
@@ -225,5 +194,43 @@ void TextWriter::draw(ofRectangle box, string text, bool centred) {
 
 	
     ofPopStyle();
+	
+	return writingMesh; 
 }
 
+ofMesh TextWriter::getMesh(string line, ofVec3f pos, float size, bool centred) {
+	vector<string> lines;
+	lines.push_back(line);
+	return getMesh(lines, pos, size, centred); 
+	
+}
+
+ofMesh TextWriter::getMesh(vector<string>& lines, ofVec3f pos, float size, bool centred) {
+	
+	
+	float glyphRenderWidth = glyphWidth * size;
+    float glyphRenderHeight = glyphHeight * size;
+    float glyphRenderSpacing = glyphSpacing * size;
+
+	
+	map <int, Letter>& letters = font.letters;
+    
+	ofMesh writingMesh;
+
+	
+    int marginTop = 0;
+	
+    int ofsX = 0, ofsY = marginTop;
+    for( int j = 0; j < lines.size(); j++ ) {
+        string line = lines[j];
+        int glyphMarginLeft = centred ? (( - calculateBlockWidth(line, glyphRenderWidth, glyphRenderSpacing)) / 2.0) : 0;
+        for( int i = 0; i < line.length(); i++ ) {
+			addGlyphToMesh(letters[line[i]], ofRectangle(pos.x + ofsX + glyphMarginLeft, pos.y + ofsY, glyphRenderWidth, glyphRenderHeight), writingMesh);
+            ofsX += glyphRenderWidth + glyphRenderSpacing;
+        }
+        ofsX = 0;
+        ofsY += glyphRenderHeight + glyphRenderSpacing;
+    }
+	
+	return writingMesh;
+}

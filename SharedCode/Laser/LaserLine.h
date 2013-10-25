@@ -15,7 +15,7 @@ class LaserLine : public LaserShape{
 	
 	LaserLine(const ofPoint& startpos, const ofPoint& endpos, ofFloatColor& col, float lineintensity = 1){
 	
-	
+		reversable = true; 
 		colour = col;
 		
 		startPos = startpos;

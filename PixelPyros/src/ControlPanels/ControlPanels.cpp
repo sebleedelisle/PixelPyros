@@ -88,19 +88,21 @@ void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 	rendererGui.setPosition(position);
 	
 	
-	
 	// -----------------------
-	position.x = screen.getRight() - padding.x*3 - cameraGui.getWidth() - motionGui.getWidth() - triggerGui.getWidth();
-	position.y = screen.getTop() + padding.y;
-	triggerGui.setPosition(position);
 	
-	position.x = screen.getRight() - padding.x*2 - cameraGui.getWidth() - motionGui.getWidth();
+	position.x = screen.getRight() - padding.x*3 - cameraGui.getWidth() - motionGui.getWidth() - triggerGui.getWidth();
 	position.y = screen.getTop() + padding.y;
 	motionGui.setPosition(position);
 	
-	position.x = screen.getRight() - padding.x - cameraGui.getWidth();
+	position.x = screen.getRight() - padding.x*2 - cameraGui.getWidth() - triggerGui.getWidth();
 	position.y = screen.getTop() + padding.y;
 	cameraGui.setPosition(position);
+	
+	
+	position.x = screen.getRight() - padding.x - triggerGui.getWidth();
+	position.y = screen.getTop() + padding.y;
+	triggerGui.setPosition(position);
+
 	
 	
 	// ---------------------------

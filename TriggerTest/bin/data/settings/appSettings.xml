@@ -1,0 +1,22 @@
+<App_Settings>
+	<time_speed>1</time_speed>
+	<edge_blend_size>0</edge_blend_size>
+	<music_volume>0.6025</music_volume>
+	<sfx_volume>1</sfx_volume>
+<App>
+		<App_Settings>
+			<time_speed>1</time_speed>
+			<edge_blend_size>0</edge_blend_size>
+			<music_volume>0.925</music_volume>
+			<sfx_volume>0.9875</sfx_volume>
+		<interstitial_foreground>79</interstitial_foreground>
+			<interstitial_background>0</interstitial_background>
+		</App_Settings>
+	<App_settings>
+			<time_speed>1</time_speed>
+			<edge_blend_size>0</edge_blend_size>
+			<music_volume>0.7</music_volume>
+			<sfx_volume>1</sfx_volume>
+		</App_settings>
+	</App>
+</App_Settings>
