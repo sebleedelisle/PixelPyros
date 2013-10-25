@@ -28,6 +28,7 @@ void CameraManager::init() {
 	if(cameraFirewire->setup("Firewire", 1024, 768, 60)) {
 		cameras.push_back(cameraFirewire); 
 	}; 
+	
 	if(cameraVidGrabber->setup("USB", 640, 480, 60)){
 		cameras.push_back(cameraVidGrabber);
 	};

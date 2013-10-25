@@ -18,7 +18,8 @@ bool CameraFirewire::setup(string _name, int width, int height, int framerate)  
     if(!camera.setup()) return false;
 	
     camera.setBayerMode(DC1394_COLOR_FILTER_GBRG);
-	//    camera.set1394b(true); 
+	//    camera.set1394b(true);
+	
    
     name = _name; 
 	baseVideo = &camera;

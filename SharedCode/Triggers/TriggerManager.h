@@ -19,6 +19,8 @@ class TriggerManager {
 	
 	static TriggerManager * instance();
 	static TriggerManager * triggerManager;
+	static const int TRIGGER_MODE_MANUAL = 0;
+	static const int TRIGGER_MODE_AUTO = 1;
 
 	
 	TriggerManager();
@@ -40,6 +42,8 @@ class TriggerManager {
 	
 	void mouseMoved(int x, int y, ofRectangle previewRect);
 	void triggerParamChanged(float & value);
+	void triggerParamIntChanged(int &value);
+	void triggerModeChanged(int &value);
     void updateTriggerValues();
 	
 	void emptyTriggers();
@@ -57,14 +61,39 @@ class TriggerManager {
 	//vector <TriggerBase*> triggersLeft;
 	//vector <TriggerBase*> triggersRight;
 	
+	int triggerPatternOffset;
+	
 	float minimumSpacing;
-	int triggerCount;
+	int triggerCount; // keeps track of the number of triggers - needed? 
 
+		
+	float rectanglePreviewBrightness; 
+	
+	ofParameter<int> triggerMode;
+	ofParameter<string> triggerModeString; 
     ofParameter<float> triggerAreaWidthParam;
-    ofParameter<float> triggerAreaHeightParam;
-    ofParameter<float> triggerAreaCenterYParam;
-    ofParameter<float> triggerSpacingParam;
+    ofParameter<float> triggerAreaBottomParam;
+    ofParameter<float> triggerAreaTopParam;
+    ofParameter<int> triggerNumParam;
+	ofParameter<float> triggerSampleSizeParam; 
 	ofParameter<float> triggerOscillationParam;
     ofParameter<bool> triggerDebugMode;
+	
+	
+	// the number of vertical motion samples
+	ofParameter<int> numVertSamples; // 10
+	// the speed that the triggers move towards motion
+	ofParameter<float> moveTowardMotionSpeed; // 0.05
+	// the speed that the trigger reset back to the top (pixels per second)
+	ofParameter<float> moveHomeSpeed; // 20
+	// the minimum motion to move towards  - 0 > 255
+	ofParameter<int> motionTargetThreshold; // 50
+	// the speed that the motion samples reset
+	ofParameter<float> motionSamplesResetSpeed;  // 0.99; 
+	// a scalar to adjust the amount of motion to add to the samples
+	ofParameter<float> motionMultiplier; // 0.1
+	ofParameter<float> multiSampleSize; 
+	
+	
     ofParameterGroup parameters;
 };

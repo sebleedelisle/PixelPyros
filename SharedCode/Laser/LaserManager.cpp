@@ -127,8 +127,8 @@ void LaserManager:: setup (int width, int height) {
 	
 	parameters.add(dotMaxPoints.set("dot max points", 7, 0, 100));
 	
-	parameters.add(accelerationLine.set("line acceleration", 0.5, 0.1, 10));
-	parameters.add(speedLine.set("line speed", 20,2, 100));
+	parameters.add(accelerationLine.set("line acceleration", 0.5, 0.01, 4));
+	parameters.add(speedLine.set("line speed", 20,2, 40));
 	parameters.add(overlapCircle.set("circle overlap", 20,0, 100));
 	
 	parameters.add(speedEasedLine.set("eased line speed", 8, 2, 20));
@@ -413,8 +413,17 @@ void LaserManager::renderLaserPath(ofRectangle previewRectangle, bool overrideSe
 		pathMesh.setMode(OF_PRIMITIVE_POINTS);
 		pathMesh.draw();
 		ofPopMatrix();
+		
+		if(ildaPoints.size()>0) {
+			int pointindex = floor(ofMap(ofGetMouseX(), previewRectangle.x, previewRectangle.getRight(), 0, (int)ildaPoints.size(), true));
+			if(pointindex>=ildaPoints.size()) pointindex =ildaPoints.size();
+			
+			ofPoint p = ildaPointToOfPoint(ildaPoints[pointindex]);
+			ofSetColor(0,255,0); 
+			ofCircle(ofMap(p.x, 0, appWidth, previewRectangle.x, previewRectangle.getRight()), ofMap(p.y, 0, appHeight, previewRectangle.y, previewRectangle.getBottom()), 5);
+
+		}
 	}
-	
 	
 	// TODO - this needs to go somewhere else!
 	warp.visible = showWarpPoints || (overrideSettings);
@@ -443,6 +452,12 @@ void LaserManager::addLaserSpiral(const ofPoint& position, ofFloatColor col, flo
 	
 }
 
+void LaserManager::addLaserPolyline(const ofPolyline& line, float intens){
+	
+	shapes.push_back(new LaserPolyline(line));
+	
+	
+}
 
 void LaserManager:: drawShapes() {
 	
@@ -458,34 +473,45 @@ void LaserManager:: drawShapes() {
 	
 	int nextDotIndex = NULL;
 	
-	float travelDistanceSorted = 0; 
+	//float travelDistanceSorted = 0;
+	bool reversed = false;
 	
 	do {
 		
-		LaserShape * dot1 = shapes.at(currentIndex);
+		
+		LaserShape * shape1 = shapes.at(currentIndex);
 		
 		//LaserDot & nextDot = dots.at(nextDotIndex);
-		dot1->tested = true;
-		sortedShapes.push_back(dot1);
+		shape1->tested = true;
+		sortedShapes.push_back(shape1);
+		shape1->reversed = reversed; 
 		
 		float shortestDistance = INFINITY;
 		nextDotIndex = -1;
 		
+		
 		for(int j = 0; j<shapes.size(); j++) {
 			
-			LaserShape * dot2 = shapes.at(j);
-			if((dot1==dot2) || (dot2->tested)) continue;
+			LaserShape * shape2 = shapes.at(j);
+			if((shape1==shape2) || (shape2->tested)) continue;
 		
-			if(dot1->endPos.distanceSquared(dot2->startPos) < shortestDistance) {
-				shortestDistance = dot1->endPos.distanceSquared(dot2->startPos);
+			if(shape1->getEndPos().distanceSquared(shape2->getStartPos()) < shortestDistance) {
+				shortestDistance = shape1->getEndPos().distanceSquared(shape2->getStartPos());
 				nextDotIndex = j;
+				reversed = false;
+			}
+			if((shape1->reversable) && (shape1->getEndPos().distanceSquared(shape2->getEndPos()) < shortestDistance)) {
+				shortestDistance = shape1->getEndPos().distanceSquared(shape2->getEndPos());
+				nextDotIndex = j;
+				reversed = true;
 			}
 			
+			
 		}
-		
+		/*
 		if(nextDotIndex>-1) {
 			travelDistanceSorted += sqrt(shortestDistance);
-		}
+		}*/
 			
 		currentIndex = nextDotIndex;
 		
@@ -493,33 +519,41 @@ void LaserManager:: drawShapes() {
 		
 	} while (currentIndex>-1);
 	
-	
+	/*
 	float travelDistanceUnsorted = 0;
 	
 	for(int i = 0; i<shapes.size()-1; i++) {
-		LaserShape* dot1 = shapes.at(i);
-		LaserShape* dot2 = shapes.at(i+1);
+		LaserShape* shape1 = shapes.at(i);
+		LaserShape* shape2 = shapes.at(i+1);
 		
-		travelDistanceUnsorted += dot1->endPos.distanceSquared(dot2->startPos); 
+		travelDistanceUnsorted += shape1->endPos.distanceSquared(shape2->startPos); 
 		
-	}
+	}*/
 	
 	//ofDrawBitmapString(ofToString(travelDistanceUnsorted)+"\n" +ofToString(travelDistanceSorted), ofPoint(10,40));
 	
-	ofPoint startPosition = sortedShapes[0]->startPos;
+	ofPoint startPosition = sortedShapes[0]->getStartPos();
 	
 	for(int i = 0; i<sortedShapes.size(); i++) {
 		
 		LaserShape* shape = sortedShapes.at(i);
 
-		if(!currentPosition.match(shape->startPos, 0.01)) {
-			moveLaser(shape->startPos);
+		if(!currentPosition.match(shape->getStartPos(), 0.01)) {
+			moveLaser(shape->getStartPos());
+			
+			// PRE BLANK
+			for(int i = 0; i<shapePreBlank; i++) {
+				addIldaPoint(shape->getStartPos(), black, 1);
+			}
+		} else {
+			// no blanks if we're there already? 
+			// PRE BLANK
+			//for(int i = 0; i<shapePreBlank; i++) {
+			//	addIldaPoint(shape->getStartPos(), shape.getC, 1);
+			//}
 		}
 		
-		// PRE BLANK
-		for(int i = 0; i<shapePreBlank; i++) {
-			addIldaPoint(shape->startPos, black, 1);
-		}
+		
 		
 		
 		// Is it a dot?
@@ -527,27 +561,32 @@ void LaserManager:: drawShapes() {
 		if(dot) {
 			drawLaserDot(*dot); 
 		}
-		
-		// Is it a circle?
-		LaserCircle * circle = dynamic_cast<LaserCircle*>(shape);
-		if(circle) {
-			drawLaserCircle(*circle);
-		}
-		
 		// Is it a line?
 		LaserLine * line = dynamic_cast<LaserLine*>(shape);
 		if(line) {
 			drawLaserLine(*line);
 		}
+		// Is it a circle?
+		LaserCircle * circle = dynamic_cast<LaserCircle*>(shape);
+		if(circle) {
+			drawLaserCircle(*circle);
+		}
+		// Is it a line?
+		LaserPolyline * poly = dynamic_cast<LaserPolyline*>(shape);
+		if(poly) {
+			drawLaserPolyline(*poly);
+		}
+		
 		// Is it a spiral?
 		LaserSpiral * spiral = dynamic_cast<LaserSpiral*>(shape);
 		if(spiral) {
 			drawLaserSpiral(*spiral);
 		}
 	
+		// what's the point of pre and post blank? just one blank is enough, right? 
 		// POST BLANK
 		for(int i = 0; i<shapePostBlank; i++) {
-			addIldaPoint(shape->endPos, black, 1);
+			addIldaPoint(shape->getEndPos(), black, 1);
 		}
 		
 	}
@@ -589,7 +628,7 @@ void LaserManager:: drawLaserDot(LaserDot &dot) {
 	int particlecount = dotMaxPoints;// ceil(dotMaxPoints* dot->intensity);
 
 	for(int i = 0; i<particlecount; i++) {
-		addIldaPoint(dot.startPos, dot.colour, dot.intensity);
+		addIldaPoint(dot.getStartPos(), dot.colour, dot.intensity);
 	}
 	
 }
@@ -605,7 +644,9 @@ void LaserManager:: drawLaserCircle(LaserCircle &circle){
 	for(int i = 0; i<unitDistances.size(); i++) {
 		
 		float unitDistance = unitDistances[i];
-		float angle = ofMap(unitDistance,0,1,-circle.overlapAngle/2,360+(circle.overlapAngle/2)) ;
+		float angle;
+		if(!circle.reversed) angle = ofMap(unitDistance,0,1,-circle.overlapAngle/2,360+(circle.overlapAngle/2)) ;
+		else angle = ofMap(unitDistance,1,0,-circle.overlapAngle/2,360+(circle.overlapAngle/2)) ;
 		
 		segmentColour = circle.colour;
 		
@@ -688,8 +729,8 @@ vector<float> LaserManager:: getPointsAlongDistance(float distance, float accele
 
 void LaserManager:: drawLaserLine(LaserLine& line) {
 	
-	ofPoint start = line.startPos;// warp.getWarpedPoint(startpoint);
-	ofPoint end = line.endPos;//warp.getWarpedPoint(endpoint);
+	ofPoint start = line.getStartPos();// warp.getWarpedPoint(startpoint);
+	ofPoint end = line.getEndPos();//warp.getWarpedPoint(endpoint);
 	
 	ofPoint vec = end - start;
 	
@@ -710,6 +751,84 @@ void LaserManager:: drawLaserLine(LaserLine& line) {
 	
 }
 
+void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly) {
+	
+	ofPolyline poly = laserpoly.polyline;
+	
+	
+	/*
+	vector<ofVec3f>& vertices = poly.getVertices();
+	
+	for(int i=0; i<vertices.size()-1; i++) {
+		ofPoint start = vertices[i];
+		ofPoint end = vertices[i+1];
+		
+		ofPoint vec = end - start;
+		
+		float speed = speedEasedLine;
+		
+		int iterations = floor(vec.length()/speed) + paddingEasedLine; // arbitrary amount to create enough ease points!
+		
+		// TODO add start and end blanks for lines?
+		
+		for(float j = 0; j<iterations; j++) {
+			
+			float t = Quad::easeInOut(j/iterations, 0, 1, 1);
+			
+			addIldaPoint(start + (vec*t), ofColor::white, laserpoly.intensity);
+			
+		}
+		
+	}*/
+	
+	
+	int startpoint = 0;
+	int endpoint = 0;
+	
+	while(endpoint<poly.getVertices().size()-1) {
+
+		do {
+			endpoint++;
+		} while ((endpoint< poly.getVertices().size()-1) && abs(poly.getAngleAtIndex(endpoint)) < 30);
+		
+		
+		float startdistance = poly.getLengthAtIndex(startpoint);
+		float enddistance = poly.getLengthAtIndex(endpoint);
+		
+		float length = enddistance - startdistance;
+		
+		if(length>0) {
+			vector<float> unitDistances = getPointsAlongDistance(length, accelerationLine, speedLine);
+			
+			
+			//cout << "START POINT " << startpoint << " END POINT " << endpoint << " ----------------" << endl;
+
+			
+			for(int i = 0; i<unitDistances.size(); i++) {
+				
+				
+				addIldaPoint(poly.getPointAtLength((unitDistances[i]* length) + startdistance), laserpoly.colour, laserpoly.intensity);
+				//cout << i<< " " << unitDistances[i] <<" " << length << " " << startdistance << endl;
+				
+				
+			}
+		}
+		startpoint = endpoint;
+		
+	}
+
+	/*
+	
+	float length = poly.getPerimeter();
+	
+	vector<float> unitDistances = getPointsAlongDistance(length, accelerationLine, speedLine);
+	
+	
+	*/
+	
+	
+}
+
 // can the shape itself be put in the object?
 
 void LaserManager::drawLaserSpiral(LaserSpiral& spiral){
@@ -724,7 +843,8 @@ void LaserManager::drawLaserSpiral(LaserSpiral& spiral){
 	
 	float currentAngle = 0;
 	
-	ofVec2f pos = spiral.startPos;
+	
+	ofVec2f pos(spiral.getStartPos());
 	
 	float speed = 0;
 	float maxSpeed = 20;
@@ -734,8 +854,10 @@ void LaserManager::drawLaserSpiral(LaserSpiral& spiral){
 	//path.setFilled(false);
 	//path.setStrokeWidth(1);
 	
-	path.addVertex(spiral.startPos);
+	path.addVertex(pos);
 	
+	// TODO - DRAW BACKWARDS if reversed!
+
 	while (currentAngle<=maxAngle) {
 		
 		pos.set(ofMap(currentAngle, 0, maxAngle, spiral.radius1, spiral.radius2), 0);
@@ -758,7 +880,7 @@ void LaserManager::drawLaserSpiral(LaserSpiral& spiral){
 
 	for(int i = 0; i<unitDistances.size(); i++) {
 		pos = path.getPointAtLength(min(unitDistances[i]*totaldistance, totaldistance-0.01f));
-		//cout << unitDistances[i] << endl;
+		//cout << unitDistances[i] << " " <<pos << endl;
 		addIldaPoint(pos, spiral.colour, spiral.intensity);
 		
 	}
@@ -796,6 +918,15 @@ ofxIlda::Point LaserManager::ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatC
 }
 ofPoint LaserManager::ildaPointToOfPoint(const ofxIlda::Point& ildapoint){
 	
+	ofxIlda::Point p = ildapoint; 
+	
+
+	p.x = ofMap(p.x, kIldaMinPoint, kIldaMaxPoint, 0, appWidth);
+	p.y = ofMap(p.y, kIldaMinPoint, kIldaMaxPoint, 0, appHeight);
+	if(flipY) p.y= appHeight-p.y;
+	if(flipX) p.x= appWidth-p.x;
+	
+	return  warp.getUnWarpedPoint(ofVec3f(p.x, p.y));;
 }
 
 void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity){
@@ -945,7 +1076,7 @@ void LaserManager :: renderPreview() {
 				ofVec3f v = vertices[i];
 				
 				v*=dot->intensity*10;
-				v+=dot->startPos;
+				v+=dot->getStartPos();
 				mesh.addVertex(v);
 				mesh.addColor(dot->colour);
 				mesh.addTexCoord(texCoords[i]);
@@ -1030,21 +1161,21 @@ void LaserManager :: renderPreview() {
 		LaserLine * line = dynamic_cast<LaserLine*>(shape);
 		if(line) {
 			mesh.addColor(ofColor::black);
-			mesh.addVertex(line->startPos);
+			mesh.addVertex(line->getStartPos());
 			
 			mesh.addColor(line->colour);
-			mesh.addVertex(line->startPos);
+			mesh.addVertex(line->getStartPos());
 			mesh.addColor(line->colour);
-			mesh.addVertex(line->endPos);
+			mesh.addVertex(line->getEndPos());
 			
 			mesh.addColor(ofColor::black);
-			mesh.addVertex(line->endPos);
+			mesh.addVertex(line->getEndPos());
 		}
 		
 		LaserSpiral* spiralptr = dynamic_cast<LaserSpiral*>(shape);
 		if(spiralptr) {
 			mesh.addColor(ofColor::black);
-			mesh.addVertex(spiralptr->startPos);
+			mesh.addVertex(spiralptr->getStartPos());
 			
 			
 			LaserSpiral& spiral = *spiralptr;
@@ -1054,7 +1185,7 @@ void LaserManager :: renderPreview() {
 			
 			float currentAngle = 0;
 			
-			ofVec2f pos = spiral.startPos;
+			ofVec2f pos;
 			
 			float speed = 0;
 			float maxSpeed = 20;
@@ -1062,7 +1193,7 @@ void LaserManager :: renderPreview() {
 			float rotateSpeed = 1;
 			ofPolyline path;
 			
-			path.addVertex(spiral.startPos);
+			
 			
 			while (currentAngle<=maxAngle) {
 				
@@ -1088,7 +1219,7 @@ void LaserManager :: renderPreview() {
 			}
 			
 			mesh.addColor(ofColor::black);
-			mesh.addVertex(spiralptr->endPos);
+			mesh.addVertex(spiralptr->getEndPos());
 			
 			
 			

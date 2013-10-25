@@ -137,6 +137,7 @@ float MotionManager :: getMotionAtPosition(ofVec2f topleft, ofVec2f bottomright)
 	
 	Scalar avg = mean(diffRoi);
 	ofColor avgColor(avg[0]);
+	//cout << avgColor.getBrightness() * motionSensitivityParam << endl;
 	return avgColor.getBrightness() * motionSensitivityParam;
 	
 };

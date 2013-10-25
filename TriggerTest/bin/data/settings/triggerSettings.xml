@@ -1,0 +1,22 @@
+<Triggers>
+	<Trigger_Positioning>
+		<width>0.905</width>
+		<height>0.0075</height>
+		<centre_y>0.80875</centre_y>
+		<spacing>0.110625</spacing>
+		<vertical_oscillation>1.275</vertical_oscillation>
+		<Debug_Mode>1</Debug_Mode>
+	<top>0.78175</top>
+		<number_of_triggers>28</number_of_triggers>
+	<bottom>0.859</bottom>
+	</Trigger_Positioning>
+<Triggers/>
+<width>0.895</width>
+	<top>0.7675</top>
+	<bottom>0.874</bottom>
+	<number_of_triggers>26</number_of_triggers>
+	<vertical_oscillation>5.75</vertical_oscillation>
+	<Debug_Mode>0</Debug_Mode>
+	<mode>1</mode>
+	<UnknownName>AUTO</UnknownName>
+</Triggers>

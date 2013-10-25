@@ -14,7 +14,7 @@ class Trigger {
 	
 	Trigger();
 	bool update(float deltaTime, ofRectangle& triggerArea);
-	void draw();
+	void draw(ofRectangle area, int motionTargetThreshold);
 	
 	void start();
 	void stop();
@@ -36,6 +36,9 @@ class Trigger {
 	
 	// motionLevel is the accumulated motion
 	float motionLevel;
+	
+	// a vector of motion levels across the height of the trigger
+	vector<float>vertMotionSamples;
 	
 	float lastTriggerTime;
 	

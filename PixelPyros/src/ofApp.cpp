@@ -137,6 +137,16 @@ void ofApp::setup(){
 void ofApp::update(){
 
 		
+	float time = ofGetElapsedTimef();
+	deltaTime =  time - lastUpdateTime;
+	
+	if(deltaTime>0.1) deltaTime = 0.1;
+	
+	deltaTime*=timeSpeed;
+	
+	lastUpdateTime = time;
+
+	
 	if(cameraManager.update()){
 		
 		ofImage image(cameraManager.getPixelsRef()); 
@@ -147,16 +157,7 @@ void ofApp::update(){
 	
 	}
 	
-	
-	
-	float time = ofGetElapsedTimef(); 
-	deltaTime =  time - lastUpdateTime;
-	
-	if(deltaTime>0.1) deltaTime = 0.1;
-	
-	deltaTime*=timeSpeed;
-	
-	lastUpdateTime = time;
+
 	
 	
 	if ( triggersDisabled != triggerManager.triggersDisabled ) {
@@ -459,11 +460,11 @@ void ofApp:: setupScenes() {
 	
 	sceneManager.addScene(sceneGame = new SceneGame("Game"));
 	
-	//sceneManager.addScene(new SceneNadia("Nadia"));
+	sceneManager.addScene(new SceneNadia("Nadia"));
 	
 	sceneManager.addScene(new SceneSpace("Space"));
 
-	sceneManager.changeScene("Intro");
+	sceneManager.changeScene("IntroAnim");
 	
 	
 	

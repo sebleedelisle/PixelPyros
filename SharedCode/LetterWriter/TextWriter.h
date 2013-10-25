@@ -18,7 +18,10 @@ public:
     TextWriter();
     void draw(ofRectangle, string, bool centered);
     void drawFixedSize(ofRectangle, string, float, bool);
-    
+    ofMesh getMesh(vector<string>& lines, ofVec3f pos, float size, bool centred);
+    ofMesh getMesh(string line, ofVec3f pos, float size, bool centred);
+
+	
     float glyphSpacing, glyphLineSpacing, glyphLineWeight;
 	ofColor colour;
 	
@@ -27,6 +30,8 @@ public:
 	bool smooth; 
     
 	void addGlyphToMesh(Letter&, ofRectangle, ofMesh& );
+	
+	
 	
 private:
     

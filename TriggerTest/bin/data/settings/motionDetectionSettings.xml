@@ -1,0 +1,7 @@
+<Motion>
+	<Motion_Detection>
+		<threshold>8.875</threshold>
+		<motion_sensitivity>1.15</motion_sensitivity>
+		<camera_preview_brightness>95</camera_preview_brightness>
+	</Motion_Detection>
+</Motion>
