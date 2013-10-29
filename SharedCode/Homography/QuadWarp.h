@@ -25,22 +25,23 @@ class QuadWarp {
 	void mousePressed(ofMouseEventArgs &e);
 	void mouseDragged(ofMouseEventArgs &e);
 	void mouseReleased(ofMouseEventArgs &e);
+    
 	float dragSpeed = 0.1;
 	
 	bool hitTestPoints(vector<ofVec2f>& points, ofVec2f& point);
 	void drawPoints(vector<ofVec2f>& points, ofColor colour = ofColor::white);
 
+    void drawMarker(ofVec3f& point, const ofColor & color, float radius);
 	void setOffset(float x, float y);
 	void setDstPoint(int index, ofVec3f point);
 	void setSrcPoint(int index, ofVec3f point);
-	
+	ofVec3f getCenter();
 	ofVec3f getWarpedPoint(ofVec3f point);
 	ofVec3f getUnWarpedPoint(ofVec3f point);
 	void updateHomography();
 	
 	// applies the distortion matrix to the current draw state
 	void apply(ofRectangle sourceRect);
-	
 	
 	bool loadSettings();
 	void saveSettings();
@@ -54,6 +55,7 @@ class QuadWarp {
 	
 	vector <ofVec3f> srcPoints;
 	vector <ofVec3f> dstPoints;
+    vector <ofVec3f> dstPointsStartDrag;
 	//vector <ofVec3f> defaultDstPoints;
 	
 	cv::Mat homography;
@@ -70,6 +72,8 @@ class QuadWarp {
 	
 	ofVec3f clickOffset;
 	ofVec3f dragStartPoint;
+    ofVec3f dragCenterStart;
+    bool dragAltPressed;
 	
 	
 	ofRectangle bounds;
