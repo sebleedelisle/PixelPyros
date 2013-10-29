@@ -12,7 +12,7 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	loadMusicFile("LightsKlaypex.aif");
 	
-	addTriggerPattern();
+	addEmptyTriggerPattern();
 	
 	TriggerSettingsRocketOrb * rocketFountainBlue = getRocketTronFountain(130,10);
 	TriggerSettingsRocketOrb * rocketFountainPink = getRocketTronFountain(235,0);
@@ -25,27 +25,18 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	TriggerPattern glitchFountainPattern("glitch fountains small");
 	
 	glitchFountainPattern.addTriggerSettings(rocketFountainBlue);
-	glitchFountainPattern.addTriggerSettings();
 	glitchFountainPattern.addTriggerSettings(rocketFountainBlue);
-	glitchFountainPattern.addTriggerSettings();
 	glitchFountainPattern.addTriggerSettings(rocketFountainPink);
-	glitchFountainPattern.addTriggerSettings();
 	glitchFountainPattern.addTriggerSettings(rocketFountainPink);
-	glitchFountainPattern.addTriggerSettings();
 
 	addTriggerPattern(glitchFountainPattern);
-	
 	
 	TriggerPattern glitchFountainPatternHigh("glitch fountains high");
 	
 	glitchFountainPatternHigh.addTriggerSettings(rocketFountainBlueHigh);
-	glitchFountainPatternHigh.addTriggerSettings();
 	glitchFountainPatternHigh.addTriggerSettings(rocketFountainBlue);
-	glitchFountainPatternHigh.addTriggerSettings();
 	glitchFountainPatternHigh.addTriggerSettings(rocketFountainPinkHigh);
-	glitchFountainPatternHigh.addTriggerSettings();
 	glitchFountainPatternHigh.addTriggerSettings(rocketFountainPink);
-	glitchFountainPatternHigh.addTriggerSettings();
 	
 	addTriggerPattern(glitchFountainPatternHigh);
 
@@ -53,76 +44,47 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 
 	glitchRocketOnce->rechargeSettings = TriggerRechargeSettings::oneShot; 
 	TriggerPattern glitchRocketPattern("glitch rocket");
+	// TO DO - limit number of rockets here
 	glitchRocketPattern.addTriggerSettings(glitchRocketOnce);
-	glitchRocketPattern.addTriggerSettings();
-	glitchRocketPattern.addTriggerSettings();
-	glitchRocketPattern.addTriggerSettings();
-	glitchRocketPattern.addTriggerSettings();
-	glitchRocketPattern.addTriggerSettings();
-	glitchRocketPattern.addTriggerSettings();
-	glitchRocketPattern.addTriggerSettings();
-	glitchRocketPattern.addTriggerSettings();
-	glitchRocketPattern.addTriggerSettings();
-	
 	addTriggerPattern(glitchRocketPattern);
 		
 	TriggerSettingsRocketOrb* glitchRocket = getGlitchRocket();
 
 	TriggerPattern glitchFountainWithRocket("glitch fountains + rocket"); 
 	glitchFountainWithRocket.addTriggerSettings(glitchRocket);
-	glitchFountainWithRocket.addTriggerSettings();
 	glitchFountainWithRocket.addTriggerSettings(rocketFountainBlue);
-	glitchFountainWithRocket.addTriggerSettings();
 	glitchFountainWithRocket.addTriggerSettings(rocketFountainBlue);
-	glitchFountainWithRocket.addTriggerSettings();
 	glitchFountainWithRocket.addTriggerSettings(rocketFountainPink);
-	glitchFountainWithRocket.addTriggerSettings();
 	glitchFountainWithRocket.addTriggerSettings(rocketFountainPink);
-	glitchFountainWithRocket.addTriggerSettings();
 	
 	addTriggerPattern(glitchFountainWithRocket);
 	
 	
-	TriggerPattern rocketTronPreview;
+	TriggerPattern rocketTronPreview ;
 	RocketTron* rocketTronOnce= new RocketTron();
 	rocketTronOnce->addParticleSystems();
 	rocketTronOnce->rechargeSettings = TriggerRechargeSettings::oneShot;
-	rocketTronPreview.addTriggerSettings();
-	rocketTronPreview.addTriggerSettings();
-	rocketTronPreview.addTriggerSettings();
-	rocketTronPreview.addTriggerSettings();
+	// TO DO - limit number of rockets here
+	
 	rocketTronPreview.addTriggerSettings(rocketTronOnce);
-	rocketTronPreview.addTriggerSettings();
-	rocketTronPreview.addTriggerSettings();
-	addTriggerPattern(rocketTronPreview);
+	addTriggerPattern(rocketTronPreview, "Rocket Tron preview");
 	
 	
 	
-	TriggerPattern rocketsAndFountainsPattern;
+	TriggerPattern rocketsAndFountainsPattern("Rockets and fountains");
 	
 	RocketTron* rocketTron = new RocketTron();
 	rocketTron->addParticleSystems();
 	
-	
 	rocketsAndFountainsPattern.addTriggerSettings(rocketTron);
-	rocketsAndFountainsPattern.addTriggerSettings();
 	rocketsAndFountainsPattern.addTriggerSettings(rocketFountainBlue);
-	rocketsAndFountainsPattern.addTriggerSettings();
 	rocketsAndFountainsPattern.addTriggerSettings(rocketFountainPink);
-	rocketsAndFountainsPattern.addTriggerSettings();
 	
 	addTriggerPattern(rocketsAndFountainsPattern);
 	
 	// Arrangement with only glitch fountains, closer spaced
 	 
 	TriggerPattern rotatingHighFountains;
-	//TriggerRotator crazyTrigger(particleSystemManager,20,1,false);
-	//crazyTrigger.triggerPower = 1;
-	//crazyTrigger.restoreSpeed = 1;
-	//crazyTrigger.addRocketSettings(rocketFountainBlueHigh);
-	//crazyTrigger.addRocketSettings(rocketFountainPinkHigh);
-	//crazyPattern.addTrigger(crazyTrigger,0,0,0.3);
-	//pattern.addTrigger(trigger2);
 	
 	TriggerSettingsRocketOrb* rotatingFountainBlueHigh = new TriggerSettingsRocketOrb(*rocketFountainBlueHigh);
 	TriggerSettingsRocketOrb* rotatingFountainPinkHigh = new TriggerSettingsRocketOrb(*rocketFountainPinkHigh);
@@ -134,6 +96,10 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	rotatingFountainPinkHigh->rotationSpeed = 1;
 	rotatingFountainBlueHigh->rotationSpeed = 1;
+	
+	rotatingFountainPinkHigh->numTriggers = 2;
+	rotatingFountainBlueHigh->numTriggers = 1;
+
 	
 	rotatingHighFountains.addTriggerSettings(rotatingFountainBlueHigh);
 	rotatingHighFountains.addTriggerSettings(rotatingFountainPinkHigh);
@@ -200,16 +166,12 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	TriggerSettingsRocketOrb* circleFountain = getCircleFountain(235);
 	
-	TriggerPattern bigPattern;
+	TriggerPattern bigPattern ("Big ending");
 	
 	bigPattern.addTriggerSettings(circleFountain);
-	bigPattern.addTriggerSettings();
 	bigPattern.addTriggerSettings(rocketTron);
-	bigPattern.addTriggerSettings();
 	bigPattern.addTriggerSettings(rocketFountainPink);
-	bigPattern.addTriggerSettings();
 	bigPattern.addTriggerSettings(rocketTron);
-	bigPattern.addTriggerSettings();
 	
 	addTriggerPattern(bigPattern);
 

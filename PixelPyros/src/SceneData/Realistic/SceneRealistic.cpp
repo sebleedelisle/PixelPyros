@@ -33,25 +33,20 @@ SceneRealistic :: SceneRealistic(string scenename) : Scene(scenename) {
 	TriggerPattern patternFluffy;
 	
 	patternFluffy.addTriggerSettings(triggerFluffy);
-	patternFluffy.addTriggerSettings();
 	patternFluffy.addTriggerSettings(triggerFountain);
-	patternFluffy.addTriggerSettings();
-	addTriggerPattern(patternFluffy); 
+	addTriggerPattern(patternFluffy, "Fluffy");
 	
 	// fluffy with added flowers
 	patternFluffy.addTriggerSettings(triggerFlower);
-	patternFluffy.addTriggerSettings();
-
-	addTriggerPattern(patternFluffy);
+	
+	addTriggerPattern(patternFluffy, "Fluffy with flower yellow");
 	
 	
 	
 	// another fountain and banger
 	patternFluffy.addTriggerSettings(triggerFountain);
-	patternFluffy.addTriggerSettings();
 	patternFluffy.addTriggerSettings(triggerBanger);
-	patternFluffy.addTriggerSettings();
-	addTriggerPattern(patternFluffy);
+	addTriggerPattern(patternFluffy, "Fluffy with yellow flower + bang");
 	
 	
 	TriggerSettingsRocket*  triggerFlowerPurple = getFlowerRocket(220);
@@ -74,20 +69,17 @@ SceneRealistic :: SceneRealistic(string scenename) : Scene(scenename) {
 		triggerRocketFountain->saturation = 100;
 		
 		multiColourFountains.addTriggerSettings(triggerRocketFountain);
-		multiColourFountains.addTriggerSettings();
+
 	}
-	addTriggerPattern(multiColourFountains); 
+	addTriggerPattern(multiColourFountains, "Multi colour fountains");
 	
 	
 	TriggerPattern patternNewColour;
 	patternNewColour.addTriggerSettings(triggerFluffy);
-	patternNewColour.addTriggerSettings();
 	patternNewColour.addTriggerSettings(triggerFountain);
-	patternNewColour.addTriggerSettings();
 	patternNewColour.addTriggerSettings(triggerFlowerPurple);
-	patternNewColour.addTriggerSettings();
 	
-	addTriggerPattern(patternNewColour);
+	addTriggerPattern(patternNewColour, "Fluffy with flower purple");
 	
 	
 	TriggerPattern endPattern;
@@ -98,14 +90,11 @@ SceneRealistic :: SceneRealistic(string scenename) : Scene(scenename) {
 	triggerBigFlower->radius= 10;
 	
 	endPattern.addTriggerSettings(triggerFlower);
-	endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(triggerBigFlower);
-	endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(triggerBanger);
-	endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(triggerFountain);
 	
-	addTriggerPattern(endPattern);
+	addTriggerPattern(endPattern, "Big ending with big cyan flowers");
 
 	 
 	 
@@ -255,7 +244,7 @@ TriggerSettingsRocket*  SceneRealistic :: getFountain(float hueStartOffset , flo
 	rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(ps2);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
@@ -290,7 +279,7 @@ TriggerSettingsRocket*  SceneRealistic :: getFlowerRocket(float hue , float hueC
 	rocketSettings.addParticleSystemSetting(explosion);
 	rocketSettings.addParticleSystemSetting(explosionLines);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::medium;
@@ -339,7 +328,7 @@ TriggerSettingsRocket* SceneRealistic :: getSphereFlowerRocket(float hue , float
 	rocketSettings.addParticleSystemSetting(explosionLines);
 	rocketSettings.addParticleSystemSetting(crackles);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::medium;

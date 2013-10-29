@@ -12,21 +12,23 @@
 		<render_laser_preview>1</render_laser_preview>
 		<move_speed>4.16</move_speed>
 		<move_points_padding>1</move_points_padding>
-		<shape_pre_blank_points>1</shape_pre_blank_points>
-		<shape_post_blank_points>3</shape_post_blank_points>
+		<shape_pre_blank_points>0</shape_pre_blank_points>
+		<shape_post_blank_points>0</shape_post_blank_points>
 		<dot_max_points>22</dot_max_points>
-		<line_acceleration>0.54865</line_acceleration>
-		<line_speed>4.755</line_speed>
-		<eased_line_speed>5.015</eased_line_speed>
-		<eased_line_padding>6</eased_line_padding>
-		<spiral_spacing>2.99</spiral_spacing>
+		<line_acceleration>0.179575</line_acceleration>
+		<line_speed>3.71</line_speed>
+		<eased_line_speed>7.4</eased_line_speed>
+		<eased_line_padding>8</eased_line_padding>
+		<spiral_spacing>1.4975</spiral_spacing>
 	<circle_overlap>6.75</circle_overlap>
 	<show_mask_rect>0</show_mask_rect>
-		<points_per_second>95450</points_per_second>
+		<points_per_second>77075</points_per_second>
 	<flip_x>1</flip_x>
 		<flip_y>1</flip_y>
-	<laser_move_points>1</laser_move_points>
-		<show_laser_path>0</show_laser_path>
+	<laser_move_points>0</laser_move_points>
+		<show_laser_path>1</show_laser_path>
+	<circle_acceleration>0.039925</circle_acceleration>
+		<circle_speed>4.755</circle_speed>
 	</Laser_Manager>
 <Laser/>
 </Laser>

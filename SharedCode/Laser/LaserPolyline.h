@@ -15,25 +15,23 @@ class LaserPolyline : public LaserShape{
 	public :
 	
 	LaserPolyline(const ofPolyline& sourcepoly){
-	
-		reversable = false;
-		//colour = col;
 		
-		//startPos = sourcepath.;
-		//endPos = endpos;
-		polyline = sourcepoly;
+	//cout << "LASERPOLYLINE CREATE -----------" << endl;
+		reversable = false;
+
+		polyline = sourcepoly; // makes a copy
 		
 		startPos = polyline.getPointAtPercent(0);
 		endPos = polyline.getPointAtPercent(1);
 		
 		polyline.simplify();
-		
-		
-		//intensity = 1;//lineintensity;
+				
 		tested = false;
-		
-	//cout<<"LINE SET : " << startPos << " " << endPos << " " <<endl;
-		
+				
+	}
+	
+	~LaserPolyline() {
+		polyline.clear();
 	}
 	
 	ofPolyline polyline;

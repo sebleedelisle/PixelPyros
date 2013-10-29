@@ -112,13 +112,13 @@ void CameraManager::draw(float x, float y) {
 	
 }
 
-CameraVidPlayer * CameraManager:: addVidPlayer(string filename, int width, int height){
+CameraVidPlayer * CameraManager:: addVidPlayer(string name, string filename, int width, int height){
 	
 	CameraVidPlayer * vidPlayer = new CameraVidPlayer();
 	
 	// should probably add a unique id that relates to the file name
 	
-	if(vidPlayer->setup("Video", filename, width, height, 60)) {
+	if(vidPlayer->setup(name, filename, width, height, 60)) {
 		cameras.push_back(vidPlayer);
 		// last initialised becomes the cameraVidPlayer property 
 		cameraVidPlayer = vidPlayer;

@@ -156,6 +156,18 @@ void QuadWarp :: draw(bool lockAxis) {
         }
 
 		
+		switch(curDragPointIndex) {
+			case 0 :
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+		}
+		
+		
 		updateHomography();
 				
 	}
@@ -238,7 +250,11 @@ void QuadWarp::setOffset(float x,float y){
 
 void QuadWarp ::setDstPoint(int index, ofVec3f point){
 	
-
+	if(index>=dstPoints.size()) {
+		dstPoints.resize(index+1);
+		setSrcPoint(index, point);
+	}
+	
 	dstPoints[index] = point;
 	updateHomography();
 	
@@ -247,6 +263,10 @@ void QuadWarp ::setDstPoint(int index, ofVec3f point){
 
 void QuadWarp ::setSrcPoint(int index, ofVec3f point){
 	
+	if(index>=srcPoints.size()) {
+		srcPoints.resize(index+1);
+		setDstPoint(index, point); 
+	}
 	
 	srcPoints[index] = point;
 	updateHomography();
@@ -277,35 +297,20 @@ void QuadWarp ::apply(ofRectangle sourceRect){
 	}
 	
 	// source and destination points
-	double src[4][2];
-	double dest[4][2];
+	double src[srcPoints.size()][2];
+	double dest[dstPoints.size()][2];
 	
 	// we set the warp coordinates
 	// source coordinates as the dimensions of our window
-//	src[0][0] = sourceRect.x;
-//	src[0][1] = sourceRect.y;
-//	src[1][0] = sourceRect.width;
-//	src[1][1] = sourceRect.y;
-//	src[2][0] = sourceRect.width;
-//	src[2][1] = sourceRect.height;
-//	src[3][0] = sourceRect.x;
-//	src[3][1] = sourceRect.height;
-	
-	src[0][0] = srcPoints[0].x;
-	src[0][1] = srcPoints[0].y;
-	src[1][0] = srcPoints[1].x; // should this be the width?
-	src[1][1] = srcPoints[1].y;
-	src[2][0] = srcPoints[2].x; // width?
-	src[2][1] = srcPoints[2].y; // height?
-	src[3][0] = srcPoints[3].x;
-	src[3][1] = srcPoints[3].y; // height?
-	
-	
-	// corners are in 0.0 - 1.0 range
-	// so we scale up so that they are at the render scale
-	for(int i = 0; i < 4; i++){
-		dest[i][0] = dstPoints[i].x;// * (float) width;
-		dest[i][1] = dstPoints[i].y;// * (float) height;
+
+	for(int i = 0; i<srcPoints.size(); i++) {
+		src[i][0] = srcPoints[i].x;
+		src[i][1] = srcPoints[i].y;
+	}
+
+	for(int i = 0; i < dstPoints.size(); i++){
+		dest[i][0] = dstPoints[i].x;
+		dest[i][1] = dstPoints[i].y;
 	}
 	
 	// perform the warp calculation

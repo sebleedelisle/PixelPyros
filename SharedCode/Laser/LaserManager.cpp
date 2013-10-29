@@ -130,7 +130,9 @@ void LaserManager:: setup (int width, int height) {
 	parameters.add(accelerationLine.set("line acceleration", 0.5, 0.01, 4));
 	parameters.add(speedLine.set("line speed", 20,2, 40));
 	parameters.add(overlapCircle.set("circle overlap", 20,0, 100));
-	
+	parameters.add(accelerationCircle.set("circle acceleration", 0.5, 0.01, 4));
+	parameters.add(speedCircle.set("circle speed", 20,2, 40));
+
 	parameters.add(speedEasedLine.set("eased line speed", 8, 2, 20));
 	parameters.add(paddingEasedLine.set("eased line padding", 1,0, 20));
   	parameters.add(spiralSpacing.set("spiral spacing", 10,1, 200));
@@ -636,7 +638,7 @@ void LaserManager:: drawLaserDot(LaserDot &dot) {
 void LaserManager:: drawLaserCircle(LaserCircle &circle){
 	
 	float distanceTravelled = 2*PI*circle.radius + circle.overlapDistance;
-	vector<float> unitDistances = getPointsAlongDistance(distanceTravelled, accelerationLine, speedLine);
+	vector<float> unitDistances = getPointsAlongDistance(distanceTravelled, accelerationCircle, speedCircle);
 	
 	ofPoint p;
 	ofColor segmentColour;
@@ -753,7 +755,7 @@ void LaserManager:: drawLaserLine(LaserLine& line) {
 
 void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly) {
 	
-	ofPolyline poly = laserpoly.polyline;
+	ofPolyline& poly = laserpoly.polyline;
 	
 	
 	/*
@@ -798,33 +800,18 @@ void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly) {
 		float length = enddistance - startdistance;
 		
 		if(length>0) {
+			
 			vector<float> unitDistances = getPointsAlongDistance(length, accelerationLine, speedLine);
 			
-			
-			//cout << "START POINT " << startpoint << " END POINT " << endpoint << " ----------------" << endl;
-
-			
 			for(int i = 0; i<unitDistances.size(); i++) {
-				
-				
-				addIldaPoint(poly.getPointAtLength((unitDistances[i]* length) + startdistance), laserpoly.colour, laserpoly.intensity);
-				//cout << i<< " " << unitDistances[i] <<" " << length << " " << startdistance << endl;
-				
-				
+				addIldaPoint(poly.getPointAtLength((unitDistances[i]* length) + startdistance), laserpoly.colour, laserpoly.intensity);				
 			}
+			
 		}
-		startpoint = endpoint;
+		
+		startpoint=endpoint;
 		
 	}
-
-	/*
-	
-	float length = poly.getPerimeter();
-	
-	vector<float> unitDistances = getPointsAlongDistance(length, accelerationLine, speedLine);
-	
-	
-	*/
 	
 	
 }

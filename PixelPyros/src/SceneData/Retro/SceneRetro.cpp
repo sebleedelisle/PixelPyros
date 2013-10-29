@@ -40,43 +40,26 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	TriggerSettings* cyanFountainLow = getRetroFountain(180, -70);
 	TriggerSettings* redFountainHigh = getRetroFountain(0,-128,1300,1600);
 	TriggerSettings* cyanFountainHigh = getRetroFountain(180, -70,1300,1600);
-	
-	
-	/*
-	triggerRocketRed.addRocketSettings(redRocket);
-	triggerRocketCyan.addRocketSettings(cyanRocket);
-	triggerFountainRed.addRocketSettings(redFountainLow);
-	triggerFountainCyan.addRocketSettings(cyanFountainLow);
-	triggerFountainRedHigh.addRocketSettings(redFountainHigh);
-	triggerFountainCyanHigh.addRocketSettings(cyanFountainHigh);
-	*/
-	
-	
+		
 	TriggerPattern emptyPattern;
 	addTriggerPattern(emptyPattern);
 	
 	
 	TriggerPattern patternCyanChevrons;
 	patternCyanChevrons.addTriggerSettings(cyanFountainLow);
-	patternCyanChevrons.addTriggerSettings();
-	addTriggerPattern(patternCyanChevrons);
+	addTriggerPattern(patternCyanChevrons, "Cyan fountains low");
 
 	
 	patternCyanChevrons.addTriggerSettings(cyanFountainHigh);
-	patternCyanChevrons.addTriggerSettings();
-	addTriggerPattern(patternCyanChevrons);
+	addTriggerPattern(patternCyanChevrons, "Cyan fountains high");
 
 	
 	TriggerPattern patternRedChevrons;
 	patternRedChevrons.addTriggerSettings(redFountainLow);
-	patternRedChevrons.addTriggerSettings();
-	addTriggerPattern(patternRedChevrons);
+	addTriggerPattern(patternRedChevrons, "Red fountains low");
 
 	patternRedChevrons.addTriggerSettings(redFountainHigh);
-	patternRedChevrons.addTriggerSettings();
-	addTriggerPattern(patternRedChevrons);
-	
-	
+	addTriggerPattern(patternRedChevrons, "Red fountains high");
 	
 	TriggerPattern pixelRockets;
 	float colours [4] = {170, 0, 220, 0};
@@ -86,10 +69,9 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 		triggerRocketFat.hue = colours[i];
 		triggerRocketFat.saturation = 255;
 		pixelRockets.addTriggerSettings(&triggerRocketFat);
-		pixelRockets.addTriggerSettings(); 
 	}
 	
-	addTriggerPattern(pixelRockets);
+	addTriggerPattern(pixelRockets, "Pixel rockets cyan / red");
 
 	TriggerPattern pixelRockets2;
 	float colours2 [4] = {220, 180, 120, 180};
@@ -100,52 +82,22 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 		triggerRocketFat.hue = colours2[i];
 		triggerRocketFat.saturation = 255;
 		pixelRockets2.addTriggerSettings(&triggerRocketFat);
-		pixelRockets2.addTriggerSettings();
-		
+				
 	}
 	
-	addTriggerPattern(pixelRockets2);
+	addTriggerPattern(pixelRockets2, "Pixel rockets cyan / magenta");
 
 	TriggerPattern patternCyanMix;
 	patternCyanMix.addTriggerSettings(cyanRocket);
-	patternCyanMix.addTriggerSettings();
 	patternCyanMix.addTriggerSettings(cyanFountainLow);
-	patternCyanMix.addTriggerSettings();
-	addTriggerPattern(patternCyanMix);
+	addTriggerPattern(patternCyanMix, "Cyan fountains + rockets");
+	
 	
 	TriggerPattern patternRedMix;
 	patternRedMix.addTriggerSettings(redRocket);
-	patternRedMix.addTriggerSettings();
 	patternRedMix.addTriggerSettings(redFountainLow);
-	patternRedMix.addTriggerSettings();
-	addTriggerPattern(patternRedMix);
-	
-	/*
-	TriggerPattern patternRedMix;
-	patternRedMix.addTrigger(triggerRocketRed);
-	patternRedMix.addTrigger(triggerFountainRed);
-	patternRedMix.addTrigger(triggerFountainRed);
-	addTriggerPattern(patternRedMix);
-
-	
-	TriggerPattern patternCyanRockets;
-	patternCyanRockets.addTrigger(triggerRocketCyan);
-	patternCyanRockets.addTrigger(triggerRocketCyan);
-	
-	patternCyanRockets.addTrigger(triggerFountainCyan);
-	addTriggerPattern(patternCyanRockets);
-	
-	
-	TriggerPattern patternRedRockets;
-	patternRedRockets.addTrigger(triggerRocketRed);
-	patternRedRockets.addTrigger(triggerRocketRed);
-	patternRedRockets.addTrigger(triggerFountainRed);
-	
-	addTriggerPattern(patternRedRockets);
-	
-	
-*/
-		
+	addTriggerPattern(patternRedMix, "Red fountains + rockets");
+			
 };
 
 
@@ -208,7 +160,7 @@ TriggerSettingsRocket* SceneRetro:: getPixelRocket(float hue) {
 	
 	rocketSettings.gravity.set(0,1800);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
@@ -268,7 +220,7 @@ TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueC
 	rocketSettings.addParticleSystemSetting(pss2);
 	rocketSettings.timeSpeed = 0.7;
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::superFastMultiples;
 
@@ -281,7 +233,7 @@ TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueC
 
 TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
 	
-	TriggerSettingsRocket& ts = *new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	

@@ -297,11 +297,13 @@ void TriggerManager :: updateLayout() {
 		}
 		spacing = triggerArea.width/(numOfTriggers-1);
 		
-	} else if(triggerPattern.arrangeMode == TRIGGER_ARRANGE_DISTRIBUTE) {
+	} else */
+	 
+	if(triggerPattern.arrangeMode == TRIGGER_ARRANGE_DISTRIBUTE) {
 		numOfTriggers = triggerPattern.triggers.size();
-		spacing = triggerArea.width/(numOfTriggers-1);
+		//spacing = triggerArea.width/(numOfTriggers-1);
 		xPos = triggerArea.getLeft(); 
-	}*/
+	}
 	
 	while (triggerCount<numOfTriggers ) {
 		
@@ -336,6 +338,7 @@ void TriggerManager :: updateLayout() {
 				xPos = -xPos;
 			}
 		} else {
+			
 			trigger->pos.x = xPos;
 			triggerIndex++;
 			xPos+=spacing;
