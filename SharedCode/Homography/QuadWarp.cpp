@@ -126,13 +126,21 @@ void QuadWarp :: draw(bool lockAxis) {
                 bool nextPointIsHorizontalClamped = i&1;
                 
                 dstPoints[i] = oppositePoint + ( dstPointsStartDrag[i] - oppositePoint ).normalize() * len * scale;
+                
+                ofVec3f nextPoint = ( oppositePoint + ( dstPointsStartDrag[j] - oppositePoint ).normalize() * l2 * scale );
+                ofVec3f lastPoint = ( oppositePoint + ( dstPointsStartDrag[k] - oppositePoint ).normalize() * l3 * scale );
+                
                 if( nextPointIsHorizontalClamped ){
-                    dstPoints[j].x = ( oppositePoint + ( dstPointsStartDrag[j] - oppositePoint ).normalize() * l2 * scale ).x;
-                    dstPoints[k].y = ( oppositePoint + ( dstPointsStartDrag[k] - oppositePoint ).normalize() * l2 * scale ).y;
+                    /*dstPoints[j].x = ( oppositePoint + ( dstPointsStartDrag[j] - oppositePoint ).normalize() * l2 * scale ).x;
+                    dstPoints[k].y = ( oppositePoint + ( dstPointsStartDrag[k] - oppositePoint ).normalize() * l3 * scale ).y;
+                     */
+                    
+                    dstPoints[j].x = nextPoint.x;
+                    dstPoints[k].y = lastPoint.y;
                 }
                 else{
-                    dstPoints[j].y = ( oppositePoint + ( dstPointsStartDrag[j] - oppositePoint ).normalize() * l2 * scale ).y;
-                    dstPoints[k].x = ( oppositePoint + ( dstPointsStartDrag[k] - oppositePoint ).normalize() * l2 * scale ).x;
+                    dstPoints[j].y = nextPoint.y;
+                    dstPoints[k].x = lastPoint.x;
                 }
             }
             else{
