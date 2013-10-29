@@ -58,7 +58,7 @@ class CameraManager : public ofBaseDraws{
 	//guiTypeToggle* toggleShowUSBControls;
 	//guiTypeDrawable* cameraPreview;
 	
-	CameraVidPlayer * addVidPlayer(string filename, int width = 1024, int height = 768);
+	CameraVidPlayer * addVidPlayer(string name, string filename, int width = 1024, int height = 768);
 	CameraIP * addIPPlayer(string name, string url, string user, string password, int width, int height);
 	
 	string getCameraLabel();

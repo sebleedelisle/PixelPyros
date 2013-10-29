@@ -13,7 +13,9 @@ class LaserShape {
 	public :
 
 	LaserShape(){};
-	
+	virtual ~LaserShape(){
+		//cout << "LASER SHAPE DESTROY!!!" << endl;
+	};
 	virtual void renderPreview(){};
 	
 	bool tested = false;
