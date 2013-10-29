@@ -89,7 +89,7 @@ TriggerSettingsRocket* FireworkFactory::getSimpleRocket(float speed, float hue ,
 	//rocketSettings.addParticleSystemSetting(explosionLines);
 	
 	
-	TriggerSettingsRocketOrb* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->radius = 7;
 	ts->hue = hue;
 	ts->saturation = saturation * 0.7;
@@ -163,7 +163,7 @@ TriggerSettingsRocket* FireworkFactory::getRotatingRocket(float speed, float hue
 	//rocketSettings.addParticleSystemSetting(explosionLines);
 	
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->radius = 7;
 	ts->hue = hue;
 	ts->saturation = saturation * 0.7;
@@ -215,7 +215,7 @@ TriggerSettingsRocket* FireworkFactory::getBasicRocket(float hue , float hueChan
 	rocketSettings.addParticleSystemSetting(laserFlashParticles);
 	
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::medium; 
 	
@@ -447,7 +447,7 @@ TriggerSettingsRocket* FireworkFactory :: getSimpleFountain(float hueStartOffset
 	rocketSettings.addParticleSystemSetting(ps);
 	rocketSettings.addParticleSystemSetting(ps2);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);
 	
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
@@ -504,7 +504,7 @@ TriggerSettingsRocket* FireworkFactory :: getFluffyRocket(){
 	
 	rocketSettings.addParticleSystemSetting(pss);
 	//rocketSettings.addParticleSystemSetting(getSmoke());
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
 	
@@ -548,7 +548,7 @@ TriggerSettingsRocket* FireworkFactory:: getBangerRocket() {
 	rocketSettings.addParticleSystemSetting(bang);
 	rocketSettings.addParticleSystemSetting(bangCrackles);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::slow;
@@ -800,7 +800,7 @@ TriggerSettingsRocket* FireworkFactory :: getWigglyRocket(){
 	
 
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::slow;

@@ -13,24 +13,19 @@ SceneNadia :: SceneNadia  (string scenename) : Scene(scenename){
 	
 	loadMusicFile("06 Nadia.aif");
 	
-	addTriggerPattern();
+	addEmptyTriggerPattern();
 	
 	TriggerPattern soft1;
-	soft1.addTriggerSettings();
-	soft1.addTriggerSettings();
-	soft1.addTriggerSettings();
 	soft1.addTriggerSettings(getLaserSlowRocket(10,0));
 	
-	addTriggerPattern(soft1);
+	addTriggerPattern(soft1, "Slow rockets");
 
 	
 	
 	TriggerPattern pattern1;
 	TriggerSettings* laserRocket = getLaserRocket();
 	pattern1.addTriggerSettings(laserRocket);
-	pattern1.addTriggerSettings();
-	
-	addTriggerPattern(pattern1);
+	addTriggerPattern(pattern1, "Laser Rockets");
 	
 }
 
@@ -40,7 +35,7 @@ SceneNadia :: SceneNadia  (string scenename) : Scene(scenename){
 
 TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange) {
 	
-	TriggerSettingsRocket& ts = *new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
@@ -122,7 +117,7 @@ TriggerSettingsRocket* SceneNadia::getLaserSlowRocket(float hue, float hueChange
 
 TriggerSettingsRocket* SceneNadia::getLaserRocket(float hue, float hueChange) {
 	
-	TriggerSettingsRocket& ts = *new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	

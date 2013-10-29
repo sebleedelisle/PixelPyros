@@ -43,9 +43,10 @@ class TriggerPattern  {
 	void addTriggerSettings(TriggerSettings* trigger){
 		triggers.push_back(trigger);
 	}
+	/*
 	void addTriggerSettings(){
 		//triggers.push_back(trigger);
-	}
+	}*/
 	
 	TriggerSettingsRocket* addRocketTrigger(RocketSettings* rocketSettings) {
 		

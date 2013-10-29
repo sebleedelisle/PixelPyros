@@ -34,7 +34,7 @@ class Scene {
     
 	virtual bool changeTriggerPattern(int num);
 	
-	void addTriggerPattern();
+	void addEmptyTriggerPattern();
 	void addTriggerPattern(TriggerPattern& pattern);
 	void addTriggerPattern(TriggerPattern& pattern, string label);
 	TriggerPattern getCurrentTriggerPattern();

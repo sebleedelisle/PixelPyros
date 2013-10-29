@@ -18,7 +18,7 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 	numRows = 0;
 	numCols = 0;
 	
-	addTriggerPattern();
+	addEmptyTriggerPattern();
 
 	
 	TriggerSettingsRocket* ts = getInvaderBulletRocket(170);
@@ -27,15 +27,12 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 	
 	TriggerPattern tp;
 	tp.addTriggerSettings(ts);
-	tp.addTriggerSettings();
-	addTriggerPattern(tp);
+	addTriggerPattern(tp, "invader ships");
 	
 	TriggerPattern bulletsPattern;
 	
 	bulletsPattern.addTriggerSettings(getInvaderBulletRocket(170));
-	bulletsPattern.addTriggerSettings();
-	
-	addTriggerPattern(bulletsPattern);
+	addTriggerPattern(bulletsPattern, "invader ships active");
 	
 	
 	ts = getAsteroidsBulletRocket();
@@ -44,16 +41,13 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 	
 	TriggerPattern tp2;
 	tp2.addTriggerSettings(ts);
-	tp2.addTriggerSettings();
-	addTriggerPattern(tp2);
+	addTriggerPattern(tp2, "asteroid ships");
 	
 	TriggerPattern bulletsPatternAsteroids;
 	
 	bulletsPatternAsteroids.addTriggerSettings(getAsteroidsBulletRocket());
-	bulletsPatternAsteroids.addTriggerSettings();
-
 	
-	addTriggerPattern(bulletsPatternAsteroids);
+	addTriggerPattern(bulletsPatternAsteroids, "asteroid ships active");
 	
 	
 	

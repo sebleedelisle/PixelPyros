@@ -13,7 +13,7 @@ SceneIntroAnim::SceneIntroAnim(string scenename) : Scene(scenename){
 	
 	
 	starfield.speed = 100;
-	addTriggerPattern();
+	addEmptyTriggerPattern();
 	
 	video.loadMovie("../../../Music/pp titles v01.mov");
 	video.setLoopState(OF_LOOP_NONE); 
@@ -107,7 +107,7 @@ bool SceneIntroAnim::draw() {
 	
 	LaserManager& lm = *LaserManager::instance();
 	
-	/*
+	
 	
 	vector<ofVec3f>& vertices = laserWordMesh.getVertices();
 	
@@ -117,7 +117,7 @@ bool SceneIntroAnim::draw() {
 		lm.addLaserLineEased(vertices[i], vertices[i+1], laserWordMesh.getColors()[i]);
 		
 		
-	}*/
+	}
 	
 	ofSetColor(255);
 	
@@ -127,15 +127,17 @@ bool SceneIntroAnim::draw() {
 	
 	//logo.draw();
 	
+	
 	for(int i=0; i<logo.getNumPath(); i++ ) {
 		
-		vector<ofPolyline>lines = logo.getPathAt(i).getOutline();
+		vector<ofPolyline>& lines = logo.getPathAt(i).getOutline();
 		for(int j=0; j<lines.size(); j++) {
-			ofPolyline line = lines[j];
+			ofPolyline& line = lines[j];
+			/*
 			vector <ofVec3f>& vertices = line.getVertices(); 
 			for(int k = 0; k<vertices.size(); k++) {
 				vertices[k]*=2;
-			}
+			}*/
 			
 			lm.addLaserPolyline(line);
 		}
