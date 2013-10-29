@@ -41,6 +41,9 @@ class TriggerSettings {
 	// if true, then trigger's power is diminished on initialisation
 	bool startEmpty;
 	
+	// for double and triple firers :)
+	int numTriggers; 
+	
 	// false by default, needs overriding. 
 	bool enabled;
 	

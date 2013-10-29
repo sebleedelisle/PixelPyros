@@ -13,7 +13,7 @@
 class ParticleRendererGlitchLineLaser : public ParticleRendererBase {
 	
 public:
-	
+
 	ParticleRendererGlitchLineLaser() : ParticleRendererBase() {
 		
 		
@@ -21,8 +21,6 @@ public:
 	
 	virtual void renderParticles(Particle* firstParticle){
       
-		ofPushStyle();
-		
 		LaserManager& lm = *LaserManager::instance();
 		
 		
@@ -49,8 +47,7 @@ public:
 				
 		}
 		
-		ofPopStyle();
-        
+	        
     }
 	
-	};
+};

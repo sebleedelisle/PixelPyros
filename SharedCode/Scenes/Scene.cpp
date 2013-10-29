@@ -354,13 +354,13 @@ string Scene :: getTriggerPatternName() {
 
 
 
-void Scene ::addTriggerPattern() {
+void Scene ::addEmptyTriggerPattern() {
 	
-	TriggerPattern empty("empty");
+	TriggerPattern empty("Empty");
 	addTriggerPattern(empty);
 	
-	//triggerPatternChangeTriggers.push_back(new bool(false));
 }
+
 void Scene ::addTriggerPattern(TriggerPattern& pattern) {
 	addTriggerPattern(pattern, "");
 	
@@ -368,6 +368,7 @@ void Scene ::addTriggerPattern(TriggerPattern& pattern) {
 }
 void Scene ::addTriggerPattern(TriggerPattern& pattern, string label) {
 	triggerPatterns.push_back(pattern);
+	triggerPatterns.back().name = label;
 	
 	//triggerPatternChangeTriggers.push_back(new bool(false));
 }

@@ -38,7 +38,8 @@ TriggerSettings::TriggerSettings() {
 	enabled = false;
 	
 	rotateOnFire = false;
-	startEmpty = false; 
+	startEmpty = false;
+	numTriggers = 1; 
 	
 }
 

@@ -54,6 +54,8 @@ void Trigger :: start() {
 	active = true;
 	motionLevel = 0;
 	
+	if(!settings) return;
+	
 	if(settings->startEmpty)
 		unitPower = 0;
 	else
@@ -213,7 +215,7 @@ void Trigger :: draw(ofRectangle area, int motionTargetThreshold) {
 		ofTranslate(pos);
       
 		ofTranslate(0, motionValueCount*-2);
-		ofSetColor(ofColor::red);
+		ofSetColor(100,0,0);
 		ofFill();
 		 
         for(float i = -0.5; i<=0.5 ; i++){
@@ -255,9 +257,7 @@ void Trigger :: draw(ofRectangle area, int motionTargetThreshold) {
 			float ypos = ofMap(i, 0, vertMotionSamples.size(), area.getTop(), area.getBottom());
 			ofCircle(pos.x, ypos, 3);
 			
-			
 		}
-		
 		
 		ofPopStyle();
 

@@ -29,10 +29,12 @@ void ofApp::setup(){
 	fboWarper2.setDstPoint(1, ofVec2f(APP_WIDTH,0));
 	fboWarper2.setDstPoint(2, ofVec2f(APP_WIDTH,APP_HEIGHT));
 	fboWarper2.setDstPoint(3, ofVec2f(APP_WIDTH/2 +1,APP_HEIGHT));
+	fboWarper2.setDstPoint(4, ofVec2f(APP_WIDTH/4*3,APP_HEIGHT/2));
 	fboWarper2.setSrcPoint(0, ofVec2f(APP_WIDTH/2,0));
 	fboWarper2.setSrcPoint(1, ofVec2f(APP_WIDTH,0));
 	fboWarper2.setSrcPoint(2, ofVec2f(APP_WIDTH,APP_HEIGHT));
 	fboWarper2.setSrcPoint(3, ofVec2f(APP_WIDTH/2,APP_HEIGHT));
+	fboWarper2.setSrcPoint(4, ofVec2f(APP_WIDTH/4*3,APP_HEIGHT/2));
 	fboWarper2.boundsRectangle.set(APP_WIDTH/2,0,APP_WIDTH/2, APP_HEIGHT);
 	fboWarper2.useBoundsRect = true;
 	
@@ -56,13 +58,13 @@ void ofApp::setup(){
 
 	
 	cameraManager.init();
-	//cameraManager.addVidPlayer("../../../TestMovies/TestPyrosCamCropped.mov");
-	cameraManager.addVidPlayer("../../../TestMovies/NottinghamTestFootage2.mov", 1280,720);
-	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.18/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	cameraManager.addVidPlayer("testvideo1", "../../../TestMovies/TestPyrosCamCropped.mov");
+	cameraManager.addVidPlayer("testvideo2", "../../../TestMovies/NottinghamTestFootage2.mov", 1280,720);
+	cameraManager.addIPPlayer("network cam1", "http://10.0.1.2/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=1280x720", "root", "password", 12, 480);
 	
 	cameraManager.addIPPlayer("network cam1", "http://10.0.1.32/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
-	cameraManager.addIPPlayer("network cam2", "http://10.0.1.31/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
+	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.31/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
 
     //motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 	motionManager.init(1024, 768);
@@ -98,7 +100,7 @@ void ofApp::setup(){
 	
 
 	
-	motionManager.parameters.add(cameraPreviewBrightness.set("camera preview brightness", 255,0,255));
+	motionManager.parameters.add(cameraPreviewBrightness.set("camera preview brightness", 128,0,255));
 	
 	
 	parameterManager.registerParameterGroup("app", &appParams );

@@ -144,6 +144,9 @@ class LaserManager {
 	
 	ofParameter<float> overlapCircle; 
 	
+	ofParameter<float> speedCircle;
+	ofParameter<float> accelerationCircle;
+	
 	ofParameter<float> speedEasedLine;
 	ofParameter<int> paddingEasedLine;
 	

@@ -30,16 +30,14 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 
 	TriggerPattern fountainPattern;
 	fountainPattern.addTriggerSettings(softCyanFountain);
-	fountainPattern.addTriggerSettings();
 	
-	addTriggerPattern(fountainPattern);
+	addTriggerPattern(fountainPattern, "Soft fountains");
 
 	
 	TriggerPattern starryPattern;
 	starryPattern.addTriggerSettings(starFountain);
-	starryPattern.addTriggerSettings();
 	
-	addTriggerPattern(starryPattern);
+	addTriggerPattern(starryPattern, "Starry fountains");
 	
 	TriggerSettingsRocket* planetTrigger = getPlanetRocket();
 	
@@ -50,13 +48,10 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	TriggerPattern pattern;
 	
 	pattern.addTriggerSettings(softCyanFountain);
-	pattern.addTriggerSettings();
 	pattern.addTriggerSettings(softCyanFountain);
-	pattern.addTriggerSettings();
 	pattern.addTriggerSettings(planetTrigger);
-	pattern.addTriggerSettings();
 
-	addTriggerPattern(pattern);
+	addTriggerPattern(pattern, "Fountains plus planet");
 	
 	TriggerSettingsRocket* triggerFluffy = fireworkFactory.getFluffyRocket();
 	TriggerSettingsRocket* triggerFountain = new TriggerSettingsFountain(120);
@@ -71,26 +66,20 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	TriggerPattern patternFluffy;
 	
 	patternFluffy.addTriggerSettings(triggerFluffy);
-	patternFluffy.addTriggerSettings();
 	patternFluffy.addTriggerSettings(triggerFountain);
-	patternFluffy.addTriggerSettings();
-	addTriggerPattern(patternFluffy);
+	addTriggerPattern(patternFluffy, "Fluffy plus fountains");
 	
 	
 	// fluffy with added flowers
 	patternFluffy.addTriggerSettings(redFlower);
-	patternFluffy.addTriggerSettings();
-	
-	addTriggerPattern(patternFluffy);
+	addTriggerPattern(patternFluffy, "Fluffy plus red flower");
 	
 	
 	// another fountain and banger
 	patternFluffy.addTriggerSettings(triggerFountain);
-	patternFluffy.addTriggerSettings();
 	patternFluffy.addTriggerSettings(triggerBanger);
-	patternFluffy.addTriggerSettings();
 	
-	addTriggerPattern(patternFluffy);
+	addTriggerPattern(patternFluffy, "Fluffy, plus red flower plus bang");
 	
 	
 	TriggerPattern multiColourFountains;
@@ -107,7 +96,7 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 		
 		multiColourFountains.addTriggerSettings(triggerRocketFountain);
 	}
-	addTriggerPattern(multiColourFountains);
+	addTriggerPattern(multiColourFountains, "multicolour fountains");
 	
 	
 	
@@ -119,13 +108,10 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 
 	TriggerPattern patternNewColour;
 	patternNewColour.addTriggerSettings(triggerFluffy);
-	patternNewColour.addTriggerSettings();
 	patternNewColour.addTriggerSettings(triggerFountain);
-	patternNewColour.addTriggerSettings();
 	patternNewColour.addTriggerSettings(purpleFlower);
-	patternNewColour.addTriggerSettings();
 	
-	addTriggerPattern(patternNewColour);
+	addTriggerPattern(patternNewColour, "fluffy plus purple flower");
 	
 	
 	TriggerPattern endPattern;
@@ -138,14 +124,11 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	
 	endPattern.addTriggerSettings(redFlower);
-	endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(bigCyanFlower);
-	endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(triggerBanger);
-	endPattern.addTriggerSettings();
 	endPattern.addTriggerSettings(triggerFountain);
 	
-	addTriggerPattern(endPattern);
+	addTriggerPattern(endPattern, "Red flower, big cyan flower, bangs");
 	
 	
 	
@@ -153,39 +136,10 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	LetterWritingPatternMaker patternMaker;
 	ParticleSystemManager& psm = *ParticleSystemManager::instance();
 	TriggerPattern textPattern = patternMaker.getPattern(psm, "Goodnight!", 15, 0.2, 350, APP_WIDTH/2, 15, 5, 48, 1, APP_WIDTH*0.5, letterMesh);
-	
-	//TriggerPattern textPattern = patternMaker.getPattern(psm, "X", 15, 0.2, 350, APP_WIDTH/2, 15, 5, 48, 1, APP_WIDTH*0.5, letterMesh);
-	
-	//TriggerPattern textPattern2 = patternMaker.getPattern(psm, "#BDF12", 20, 0.2, 300, APP_WIDTH/2, 15, 5, 52, 0.2, APP_WIDTH*0.7, letterMesh);
-	
-	addTriggerPattern(textPattern);//, true );
 
-	/*
-	TriggerPattern finalPattern;
-	
-	
-	triggerBanger.restoreSpeed = 2;
-	
-	finalPattern.addTrigger(triggerBanger);
-	finalPattern.addTrigger(triggerFountain);
-	finalPattern.addTrigger(starTrigger);
-	
-	addTriggerPattern(finalPattern);
-	
-	*/
-	
-	//	pattern.addTrigger(triggerFlower);
-	//	pattern.addTrigger(triggerFluffy);
-	//	pattern.addTrigger(triggerFluffy);
-	//	pattern.addTrigger(triggerFlower);
-	//	pattern.addTrigger(triggerBanger);
-	//
-	//	addTriggerPattern(pattern);
+	addTriggerPattern(textPattern, "Goodnight text");//, true );
 
-	
-	
-	//-------------------------
-	
+		
 
 	
 	
@@ -307,7 +261,7 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	rocketSettings.addParticleSystemSetting(stars);
 	rocketSettings.addParticleSystemSetting(ps);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
 	
@@ -510,7 +464,7 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	rocketSettings.addParticleSystemSetting(ps2);
 	rocketSettings.addParticleSystemSetting(ps3);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::slow;
 	
@@ -548,7 +502,7 @@ TriggerSettingsRocket* SceneSpace :: getFlowerRocket(float hue , float hueChange
 	
 	
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::slow;
 	
@@ -603,7 +557,7 @@ TriggerSettingsRocket* SceneSpace :: getSphereFlowerRocket(float hue , float hue
 	ParticleSystemSettings laserExplosion = FireworkFactory::instance()->getLaserExplosionParticles(hue, hueChange);
 	
 	laserExplosion.emitDelay = explosion.emitDelay-0.05;
-	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = explosionLines.timeSpeed = crackles.timeSpeed;
+	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = explosionLines.timeSpeed = crackles.timeSpeed = laserExplosion.timeSpeed = 0.5;
 	
 	rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
@@ -611,9 +565,10 @@ TriggerSettingsRocket* SceneSpace :: getSphereFlowerRocket(float hue , float hue
 	rocketSettings.addParticleSystemSetting(explosionLines);
 	rocketSettings.addParticleSystemSetting(crackles);
 	
-	TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::slow;
+	ts->rotateMirrorOffset = 10; 
 	
 	return ts;
 	
