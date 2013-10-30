@@ -108,6 +108,7 @@ void LaserManager:: setup (int width, int height) {
 
 	parameters.add(pps.set("points per second", 80000, 30000, 100000));
 	parameters.add(intensity.set("intensity", 1, 0, 1));
+	parameters.add(colourCorrection.set("colour correction", ofColor(255,255,255),ofColor(200,200,200), ofColor(255,255,255)));
 	parameters.add(colourChangeDelay.set("colour change offset", -6, -15, 15));
 	
 	parameters.add(showRegistration.set("show registration", false));
@@ -135,7 +136,7 @@ void LaserManager:: setup (int width, int height) {
 
 	parameters.add(speedEasedLine.set("eased line speed", 8, 2, 20));
 	parameters.add(paddingEasedLine.set("eased line padding", 1,0, 20));
-  	parameters.add(spiralSpacing.set("spiral spacing", 10,1, 200));
+  	parameters.add(spiralSpacing.set("spiral spacing", 10,1, 20));
     
     // where is this getting set up? 
 	calibrationParameters.setName("Laser Calibration");
@@ -454,9 +455,11 @@ void LaserManager::addLaserSpiral(const ofPoint& position, ofFloatColor col, flo
 	
 }
 
-void LaserManager::addLaserPolyline(const ofPolyline& line, float intens){
+void LaserManager::addLaserPolyline(const ofPolyline& line, ColourSystem* coloursystem, float intens){
 	
-	shapes.push_back(new LaserPolyline(line));
+	if((line.getVertices().size()==0)||(line.getPerimeter()<0.1)) return;
+	
+	shapes.push_back(new LaserPolyline(line, coloursystem));
 	
 	
 }
@@ -502,6 +505,7 @@ void LaserManager:: drawShapes() {
 				nextDotIndex = j;
 				reversed = false;
 			}
+			
 			if((shape1->reversable) && (shape1->getEndPos().distanceSquared(shape2->getEndPos()) < shortestDistance)) {
 				shortestDistance = shape1->getEndPos().distanceSquared(shape2->getEndPos());
 				nextDotIndex = j;
@@ -783,15 +787,15 @@ void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly) {
 		
 	}*/
 	
-	
+	laserpoly.previewMesh.clear(); 
 	int startpoint = 0;
 	int endpoint = 0;
 	
-	while(endpoint<poly.getVertices().size()-1) {
+	while(endpoint<(int)poly.getVertices().size()-1) {
 
 		do {
 			endpoint++;
-		} while ((endpoint< poly.getVertices().size()-1) && abs(poly.getAngleAtIndex(endpoint)) < 30);
+		} while ((endpoint< (int)poly.getVertices().size()-1) && abs(poly.getAngleAtIndex(endpoint)) < 30);
 		
 		
 		float startdistance = poly.getLengthAtIndex(startpoint);
@@ -799,12 +803,28 @@ void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly) {
 		
 		float length = enddistance - startdistance;
 		
+		ofPoint lastpoint;
+		
 		if(length>0) {
 			
 			vector<float> unitDistances = getPointsAlongDistance(length, accelerationLine, speedLine);
 			
+			ofColor pointcolour;
+			
 			for(int i = 0; i<unitDistances.size(); i++) {
-				addIldaPoint(poly.getPointAtLength((unitDistances[i]* length) + startdistance), laserpoly.colour, laserpoly.intensity);				
+				ofPoint p = poly.getPointAtLength((unitDistances[i]*0.999* length) + startdistance);
+				pointcolour = laserpoly.getColourForPoint(unitDistances[i], p);
+				
+				addIldaPoint(p, pointcolour, laserpoly.intensity);
+				
+				if(i>0) {
+					laserpoly.previewMesh.addVertex(lastpoint);
+					laserpoly.previewMesh.addVertex(p);
+					laserpoly.previewMesh.addColor(pointcolour);
+					laserpoly.previewMesh.addColor(pointcolour);
+					
+				}
+				lastpoint = p; 
 			}
 			
 		}
@@ -823,7 +843,7 @@ void LaserManager::drawLaserSpiral(LaserSpiral& spiral){
 	// should probably be a setting
 	
 	//float spacing = spiralSpacing;
-	int revolutions = ceil((spiral.radius2 - spiral.radius1)/spiralSpacing);
+	float revolutions = ((spiral.radius2 - spiral.radius1)/spiralSpacing);
 	//float spaceBetweenRevs = (spiral.radius2 - spiral.radius1)/revolutions;
 	
 	float maxAngle = 360 * revolutions;
@@ -845,9 +865,9 @@ void LaserManager::drawLaserSpiral(LaserSpiral& spiral){
 	
 	// TODO - DRAW BACKWARDS if reversed!
 
-	while (currentAngle<=maxAngle) {
+	while (currentAngle<=maxAngle + 360) {
 		
-		pos.set(ofMap(currentAngle, 0, maxAngle, spiral.radius1, spiral.radius2), 0);
+		pos.set(ofMap(currentAngle, 0, maxAngle, spiral.radius1, spiral.radius2, true), 0);
 		pos.rotate(currentAngle);
 		pos+=spiral.pos;
 		
@@ -863,7 +883,7 @@ void LaserManager::drawLaserSpiral(LaserSpiral& spiral){
 	
 	float totaldistance = path.getPerimeter();
 	
-	vector<float> unitDistances = getPointsAlongDistance(totaldistance, accelerationLine, speedLine);
+	vector<float> unitDistances = getPointsAlongDistance(totaldistance, accelerationCircle, speedCircle);
 
 	for(int i = 0; i<unitDistances.size(); i++) {
 		pos = path.getPointAtLength(min(unitDistances[i]*totaldistance, totaldistance-0.01f));
@@ -888,10 +908,13 @@ void LaserManager::addLaserRectEased(const ofPoint&topLeft, const ofPoint&dimens
 
 ofxIlda::Point LaserManager::ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour){
 	
+	ofPoint p = gLProject(ofpoint.x, ofpoint.y, ofpoint.z);
+	
+	
 	
 	ofxIlda::Point ildapoint;
 	
-	ofPoint p = ofpoint;
+	
 	if(flipY) p.y= appHeight-p.y;
 	if(flipX) p.x= appWidth-p.x;
 	
@@ -903,6 +926,13 @@ ofxIlda::Point LaserManager::ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatC
 	return ildapoint;
 	
 }
+
+
+
+
+
+
+
 ofPoint LaserManager::ildaPointToOfPoint(const ofxIlda::Point& ildapoint){
 	
 	ofxIlda::Point p = ildapoint; 
@@ -953,11 +983,10 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity)
 	
 	//ofPoints.push_back(warpedpoint);
 
-	c.r*=intensity*pointIntensity;
-	c.g*=intensity*pointIntensity;
-	c.b*=intensity*pointIntensity;
+	c.r*=intensity*pointIntensity * ((float)colourCorrection->r/255.0f);
+	c.g*=intensity*pointIntensity * ((float)colourCorrection->g/255.0f);
+	c.b*=intensity*pointIntensity * ((float)colourCorrection->b/255.0f);
 	
-		
 	ildaPoints.push_back(ofPointToIldaPoint(warpedpoint, c));
 	
 	currentPosition = p;
@@ -1127,23 +1156,17 @@ void LaserManager :: renderPreview() {
 			mesh.addVertex(v + circle->pos);
 			
 			for(int i = 0; i<=360; i+=20) {
-				
 				v.set(0, -circle->radius);
 				v.rotate(i, ofVec3f(0,0,1)); 
 				mesh.addColor(circle->colour);
 				mesh.addVertex(v+circle->pos);
-				
 			}
 			
 			v.set(0, -circle->radius);
 			mesh.addColor(ofColor::black);
 			mesh.addVertex(v+circle->pos);
-			
-			
-			
 		}
-		
-		
+	
 		// Is it a line?
 		LaserLine * line = dynamic_cast<LaserLine*>(shape);
 		if(line) {
@@ -1166,7 +1189,7 @@ void LaserManager :: renderPreview() {
 			
 			
 			LaserSpiral& spiral = *spiralptr;
-			int revolutions = ceil((spiral.radius2 - spiral.radius1)/spiralSpacing);
+			float revolutions = ((spiral.radius2 - spiral.radius1)/spiralSpacing);
 			
 			float maxAngle = 360 * revolutions;
 			
@@ -1182,9 +1205,9 @@ void LaserManager :: renderPreview() {
 			
 			
 			
-			while (currentAngle<=maxAngle) {
+			while (currentAngle<=maxAngle + 360) {
 				
-				pos.set(ofMap(currentAngle, 0, maxAngle, spiral.radius1, spiral.radius2), 0);
+				pos.set(ofMap(currentAngle, 0, maxAngle, spiral.radius1, spiral.radius2, true), 0);
 				pos.rotate(currentAngle);
 				pos+=spiral.pos;
 				
@@ -1211,6 +1234,14 @@ void LaserManager :: renderPreview() {
 			
 			
 		}
+		
+		LaserPolyline* laserpoly = dynamic_cast<LaserPolyline*>(shape);
+		if(laserpoly) {
+			
+			laserpoly->previewMesh.draw();
+			
+		}
+			
 		
 	}
 	

@@ -9,34 +9,54 @@
 
 #include "LaserShape.h"
 #include "ofMain.h"
+#include "ColourSystem.h"
 
 class LaserPolyline : public LaserShape{
 	
 	public :
 	
-	LaserPolyline(const ofPolyline& sourcepoly){
+	LaserPolyline(const ofPolyline& sourcepoly, ColourSystem* coloursystem = NULL){
 		
-	//cout << "LASERPOLYLINE CREATE -----------" << endl;
 		reversable = false;
-
+		
 		polyline = sourcepoly; // makes a copy
 		
 		startPos = polyline.getPointAtPercent(0);
-		endPos = polyline.getPointAtPercent(1);
+		// to avoid a bug in polyline in open polys
+		endPos = polyline.getPointAtPercent(0.999);
+		colourSystem = coloursystem;
+		previewMesh.setMode(OF_PRIMITIVE_LINES); 
 		
-		polyline.simplify();
-				
 		tested = false;
-				
+
 	}
+
+	
+	ofColor getColourForPoint(float distance, ofPoint& pos){
+		if(colourSystem!=NULL) {
+			return colourSystem->getColourForPoint(distance, pos);
+		} else {
+			return ofColor::white;
+		}
+		
+		
+	}
+	
 	
 	~LaserPolyline() {
 		polyline.clear();
+		// assumes that this object owns the colourSystem object.
+		// Bit nasty.
+		if(colourSystem!=NULL) delete colourSystem;
+		previewMesh.clear(); 
+		
 	}
 	
 	ofPolyline polyline;
+	ofMesh previewMesh; 
 	float intensity = 1;
 	ofFloatColor colour;
+	ColourSystem * colourSystem; 
 		
 };
 

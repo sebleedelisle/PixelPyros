@@ -57,7 +57,7 @@ class LaserManager {
 	
 	void addLaserSpiral(const ofPoint& position, ofFloatColor col, float rad1,float rad2, float fadeoutpoint = 1,  float intens = 1);
 	
-	void addLaserPolyline(const ofPolyline& line, float intens = 1);
+	void addLaserPolyline(const ofPolyline& line, ColourSystem* coloursystem = NULL, float intens = 1);
 
 	//void addLaserLine(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
 	void addLaserLineEased(const ofPoint&start, const ofPoint&end, ofFloatColor colour);
@@ -83,7 +83,24 @@ class LaserManager {
 	
 	vector<float> getPointsAlongDistance(float distance, float acceleration, float maxspeed);
 	
-	
+	//----------------------------------------
+	// converts openGL coords to screen coords //
+	static ofVec3f gLProject( float ax, float ay, float az ) {
+		GLdouble model_view[16];
+		glGetDoublev(GL_MODELVIEW_MATRIX, model_view);
+		
+		GLdouble projection[16];
+        glGetDoublev(GL_PROJECTION_MATRIX, projection);
+		
+		GLint viewport[4];
+		glGetIntegerv(GL_VIEWPORT, viewport);
+		
+		GLdouble X, Y, Z = 0;
+		gluProject( ax, ay, az, model_view, projection, viewport, &X, &Y, &Z);
+		
+		return ofVec3f(X, Y, 0.f);
+		//return ofVec3f(X, ofGetWindowHeight()-Y, 0.f);
+	}
 	
 	void connectButtonPressed();
 	
@@ -122,6 +139,8 @@ class LaserManager {
 	
 	// overall brightness applied to any laser colour
 	ofParameter<float> intensity;
+	// speaks for itself : 
+	ofParameter<ofColor> colourCorrection;
 	// allows you to shift the colour changes back or
 	// forward to compensate for crap lasers
 	ofParameter<int> colourChangeDelay;

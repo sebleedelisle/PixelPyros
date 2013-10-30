@@ -139,7 +139,16 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 
 	addTriggerPattern(textPattern, "Goodnight text");//, true );
 
-		
+	
+	TriggerPattern laserRocketsPattern;
+	TriggerSettingsRocket* laserRocketRed = fireworkFactory.getLaserRocket(0, 0);
+	TriggerSettingsRocket* laserRocketYellow = fireworkFactory.getLaserRocket(30, 0);
+	TriggerSettingsRocket* laserRocketBlue = fireworkFactory.getLaserRocket(140, 0);
+	//laserRocketsPattern.addTriggerSettings(laserRocketRed);
+	laserRocketsPattern.addTriggerSettings(laserRocketYellow);
+	laserRocketsPattern.addTriggerSettings(laserRocketBlue);
+	
+	addTriggerPattern(laserRocketsPattern, "laser rockets"); 
 
 	
 	
@@ -683,3 +692,5 @@ ParticleSystemSettings SceneSpace :: getLineExplosionParticles(float hue, float 
 	
 	
 }
+
+
