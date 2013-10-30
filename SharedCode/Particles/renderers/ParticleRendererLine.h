@@ -52,16 +52,17 @@ class ParticleRendererLine : public ParticleRendererBase {
 			// for soft tips to the line
 			float brightness = 1;
 
-			ofColor colour = p.getColour();//p.historyColours[size-1];
+			//ofColor colour = p.getColour();//
+			//ofColor colour = p.historyColours[size-1];
 			
 			for(int i =0; i<size-1; i++) {
 				
 				//colour.setBrightness(brightness*255*ofRandom(p.shimmerMin, 1));
 				mesh.addVertex(p.historyPositions[i]);
-				mesh.addColor(colour);
+				mesh.addColor(p.historyColours[(size-1)-i]);
 				
 				mesh.addVertex(p.historyPositions[i+1]);
-				mesh.addColor(colour);
+				mesh.addColor(p.historyColours[(size-1)-(i+1)]);
 				//brightness+=0.5;
 				//if(brightness>1) brightness = 1;
 

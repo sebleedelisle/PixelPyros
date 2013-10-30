@@ -527,9 +527,14 @@
 		12CBB01F17F339670078677E /* LaserShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LaserShape.h; sourceTree = "<group>"; };
 		12CBB02017F454A00078677E /* LaserCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserCircle.h; sourceTree = "<group>"; };
 		12D15FCD17CE0044003D9024 /* TriggerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriggerSettings.h; sourceTree = "<group>"; };
+		12D174C31820456200CC282B /* ParticleRendererGlitchPolylineLaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererGlitchPolylineLaser.h; sourceTree = "<group>"; };
+		12D174C41820480200CC282B /* ParticleRendererLaserLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererLaserLine.h; sourceTree = "<group>"; };
+		12D174C518205F4E00CC282B /* ColourSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColourSystem.h; sourceTree = "<group>"; };
+		12D174C6182061E800CC282B /* ColourSystemGradient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColourSystemGradient.h; sourceTree = "<group>"; };
 		12DBC7B417DDDD280041FA5C /* FireworkFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FireworkFactory.cpp; sourceTree = "<group>"; };
 		12DBC7B517DDDD280041FA5C /* FireworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireworkFactory.h; sourceTree = "<group>"; };
 		12DDCADC17F55C1200484864 /* LaserLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserLine.h; sourceTree = "<group>"; };
+		12E447891820638F00DFD05F /* ColourStop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColourStop.h; sourceTree = "<group>"; };
 		12EB0A1A17E7D0840045DC0B /* SequenceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequenceCommand.h; sourceTree = "<group>"; };
 		12EB3B6C17E0EB37002D90A0 /* CubicBezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubicBezier.h; sourceTree = "<group>"; };
 		12EB3B6D17E0EB37002D90A0 /* LaserDot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserDot.h; sourceTree = "<group>"; };
@@ -812,7 +817,9 @@
 				12F4141517F9843B007941F2 /* ParticleRendererDoubleCircle.h */,
 				1254506C17BF861C00EF23B7 /* ParticleRendererGlitchLine.h */,
 				1215867F1809D0700082FCAF /* ParticleRendererGlitchLineLaser.h */,
+				12D174C31820456200CC282B /* ParticleRendererGlitchPolylineLaser.h */,
 				1254506D17BF861C00EF23B7 /* ParticleRendererLine.h */,
+				12D174C41820480200CC282B /* ParticleRendererLaserLine.h */,
 				1254506E17BF861C00EF23B7 /* ParticleRendererLowRes.h */,
 				1254506F17BF861C00EF23B7 /* ParticleRendererShape.h */,
 				129988B417E1E6610044879E /* ParticleRendererLaser.h */,
@@ -1619,9 +1626,12 @@
 				129F2E7017F8761000206DFB /* LaserSpiral.h */,
 				12DDCADC17F55C1200484864 /* LaserLine.h */,
 				12F1988018183F54004E7045 /* LaserPolyline.h */,
+				12E447891820638F00DFD05F /* ColourStop.h */,
 				12CBB01F17F339670078677E /* LaserShape.h */,
 				12EB3B6E17E0EB37002D90A0 /* LaserManager.cpp */,
 				12EB3B6F17E0EB37002D90A0 /* LaserManager.h */,
+				12D174C518205F4E00CC282B /* ColourSystem.h */,
+				12D174C6182061E800CC282B /* ColourSystemGradient.h */,
 			);
 			path = Laser;
 			sourceTree = "<group>";

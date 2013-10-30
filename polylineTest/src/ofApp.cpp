@@ -5,6 +5,11 @@ void ofApp::setup(){
 
 	
 	svg.load("logo.svg");
+	testpoly.setClosed(false);
+	for(int i = 0; i<20; i++) {
+		testpoly.addVertex(ofPoint(ofRandom(ofGetWidth()), ofRandom(ofGetHeight())));
+	}
+	
 	
 }
 
@@ -19,7 +24,7 @@ void ofApp::draw(){
 	
 	
 	ofBackground(0);
-	
+	/*
 	int pathnum = ofClamp(floor(ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, svg.getNumPath(), true)), 0, svg.getNumPath()-1);
 	
 	ofPolyline letter = svg.getPathAt(pathnum).getOutline()[0];
@@ -42,8 +47,13 @@ void ofApp::draw(){
 		
 	}
 	
+	*/
 	
-		
+	testpoly.draw();
+	ofNoFill();
+	ofCircle(testpoly.getPointAtPercent(0), 20);
+	ofCircle(testpoly.getPointAtPercent(0.99999), 20);
+	ofCircle(testpoly.getPointAtPercent(ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 1)),10);
 	
 	
 	

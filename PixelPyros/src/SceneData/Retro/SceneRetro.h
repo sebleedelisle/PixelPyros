@@ -19,6 +19,7 @@ class SceneRetro : public Scene {
 	
 	TriggerSettingsRocket* getRetroRocket(float hue = -30, float hueChange = 40);
 	TriggerSettingsRocket* getRetroFountain(float hueOffset = 0, float hueChange = -128, float minSpeed = 600, float maxSpeed = 900);
+	TriggerSettingsRocket* getRetroSpinner(float hueOffset = 0, float hueChange = -128);
 	
 	
 	ParticleSystemSettings getPixelTrailParticles(float hue = -30, float hueChange = 40);

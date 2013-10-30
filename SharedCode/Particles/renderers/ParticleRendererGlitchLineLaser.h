@@ -23,15 +23,18 @@ public:
       
 		LaserManager& lm = *LaserManager::instance();
 		
+		if((!firstParticle ) || (!firstParticle->next)) return;
 		
+			
 		Particle* particle = firstParticle;
-		Particle* lastParticleRendered = NULL; 
+		Particle* lastParticleRendered = NULL;
 		
 		while(particle!=NULL) {
 			
 			Particle& p = *particle;
 			
 			if(p.enabled) {
+				
 				if(lastParticleRendered!=NULL) {
 				
 					lm.addLaserLineEased(lastParticleRendered->pos, p.pos, p.getColour());
@@ -47,7 +50,8 @@ public:
 				
 		}
 		
-	        
+       
     }
 	
+		
 };
