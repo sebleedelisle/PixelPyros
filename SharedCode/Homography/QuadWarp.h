@@ -74,6 +74,7 @@ class QuadWarp {
 	ofVec3f dragStartPoint;
     ofVec3f dragCenterStart;
     bool dragAltPressed;
+    bool cornerScalingMode=true;
 	
 	
 	ofRectangle bounds;
