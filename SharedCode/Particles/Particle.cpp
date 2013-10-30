@@ -34,6 +34,9 @@ void Particle::reset() {
 	enabled = true;
 	startPos = pos;
 	
+	historySaveFrequency = 30;
+	historySaveCount = 0; 
+	
 	historyPositions.clear();
 	historyColours.clear();
 	historyCount = 0;
@@ -73,27 +76,29 @@ bool Particle :: update(float deltaTime) {
 		
 		
 	}
-	
-	
+
 	if(historyCount>0) {
-		if(enabled) {
-			historyPositions.push_back(pos);
-			historyColours.push_back(getColour());
-			
-			while(historyPositions.size()>historyCount){
+
+		while((elapsedTime * historySaveFrequency) > historySaveCount) {
+			historySaveCount++;
+			if(enabled) {
+				historyPositions.push_back(pos);
+				historyColours.push_back(getColour());
+				
+				while(historyPositions.size()>historyCount){
+					historyPositions.pop_front();
+					historyColours.pop_front();
+				}
+			}
+			else if(historyPositions.size()>0){
 				historyPositions.pop_front();
 				historyColours.pop_front();
-			}
-		}
-		else if(historyPositions.size()>0){
-			historyPositions.pop_front();
-			historyColours.pop_front();
-			if(historyPositions.size()>0) {
-				//enabled = true;
+				
 			}
 		}
 	}
 	
+	if(historyPositions.size()>0) enabled = true;
 	return enabled; 
 }
 

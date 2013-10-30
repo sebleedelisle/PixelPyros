@@ -197,7 +197,7 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 TriggerSettingsRocketOrb* SceneVectorizer :: getGlitchRocket(){
 	
 	RocketTron& glitchRocket = *new RocketTron();
-	glitchRocket.head.renderer = new ParticleRendererGlitchLine(1);
+	glitchRocket.head.renderer = new ParticleRendererGlitchLineLaser();
 	glitchRocket.head.speedMin = 20;
 	glitchRocket.head.speedMax = 60;
 	glitchRocket.head.brightnessStartMax = 255;
@@ -429,7 +429,7 @@ TriggerSettingsRocketOrb* SceneVectorizer :: getRocketTronFountain(float hueStar
 	if(rs2!=NULL) {
 		ts->addRocketSettings(rs2);
 		vector<float>probs;
-		probs.push_back(9);
+		probs.push_back(4);
 		probs.push_back(1);
 		
 		ts->setProbabilities(probs);

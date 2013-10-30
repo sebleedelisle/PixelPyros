@@ -38,6 +38,9 @@ class Particle : public PhysicsObject{
 	
 	float renderDelay; 
 	
+	int historySaveCount;
+	float historySaveFrequency;
+	
 	int historyCount;
 	deque <ofVec3f> historyPositions;
 	deque <ofColor> historyColours; 

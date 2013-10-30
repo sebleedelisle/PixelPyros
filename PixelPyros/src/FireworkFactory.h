@@ -14,6 +14,7 @@
 #include "ParticleSystemSettings.h"
 #include "ParticleRendererBitmap.h"
 #include "ParticleRendererLine.h"
+#include "ParticleRendererLaserLine.h"
 #include "ParticleRendererCircle.h"
 #include "ParticleRendererLaser.h"
 #include "ParticleRendererLaserFlash.h"
@@ -47,11 +48,16 @@ class FireworkFactory {
 	TriggerSettingsRocket* getBangerRocket();
 	ParticleSystemSettings getBangerTrails();
 	ParticleSystemSettings getBangerBang();
+	ParticleSystemSettings getBangerLaserBang();
 	ParticleSystemSettings getBangerCrackles();
 	ParticleSystemSettings getSmoke();
 	ParticleSystemSettings getLaserFlashParticles(float hue = 0, float saturation = 0);
 	
-	TriggerSettingsRocket* getWigglyRocket(); 
+	TriggerSettingsRocket* getWigglyRocket();
+	
+	ParticleSystemSettings getLaserParticles(float hue, float hueChange);
+	TriggerSettingsRocket* getLaserRocket(float hue, float hueChange);
+
 	
 	ofImage softWhiteImage;
 	ofImage bangerFlashImage;
