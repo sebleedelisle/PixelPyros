@@ -41,7 +41,9 @@ void ofApp::setup(){
   
 	fboWarper1.loadSettings();
 	fboWarper2.loadSettings();
-	
+    	
+    loadNetworkConfig();
+    
 	initSounds();
 	
     paused = false;
@@ -55,16 +57,15 @@ void ofApp::setup(){
 	lastUpdateTime = ofGetElapsedTimef();
   
     ofBackground(0);
-
-	
+    
 	cameraManager.init();
 	cameraManager.addVidPlayer("testvideo1", "../../../TestMovies/TestPyrosCamCropped.mov");
 	cameraManager.addVidPlayer("testvideo2", "../../../TestMovies/NottinghamTestFootage2.mov", 1280,720);
-	cameraManager.addIPPlayer("network cam1", "http://10.0.1.2/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
+	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.2/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=1280x720", "root", "password", 12, 480);
 	
-	cameraManager.addIPPlayer("network cam1", "http://10.0.1.32/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
-	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.31/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
+	cameraManager.addIPPlayer("network cam1", "http://"+camera1Address+"/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
+	cameraManager.addIPPlayer("network cam2", "http://"+camera2Address+"/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
 
     //motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
 	motionManager.init(1024, 768);
@@ -131,8 +132,7 @@ void ofApp::setup(){
     oscParams->add( controlPanels.laserGui.getParameter() );
     oscParams->add( controlPanels.rendererGui.getParameter());
 
-    sync.setup(*oscParams, 6667, "10.0.1.51", 8000);
-    //sync.setup(*oscParams, 6667, "192.168.43.32", 8000);
+    sync.setup(*oscParams, 6667, oscDeviceAddress, 8000);
 }
 
 //--------------------------------------------------------------f
@@ -567,6 +567,37 @@ void ofApp::calculateScreenSizes(){
 	uiScreenRect = screens.back();
 		
 
+}
+
+void ofApp::loadNetworkConfig(){
+    camera1Address = "10.0.1.31";
+    camera2Address = "10.0.1.32";
+    oscDeviceAddress = "10.0.1.51";
+
+    string filename = "settings/network.xml";
+    ofxXmlSettings xml;
+    if(!xml.loadFile(filename)) {
+		
+        addAddressEntry(xml,"camera1", camera1Address);
+        addAddressEntry(xml,"camera2", camera2Address);
+        addAddressEntry(xml,"oscDevice", oscDeviceAddress);
+
+        xml.saveFile(filename);
+        
+		return;
+	}
+    
+    camera1Address = xml.getValue("camera1:url", camera1Address);
+    camera2Address = xml.getValue("camera2:url", camera2Address);
+    oscDeviceAddress = xml.getValue("oscDevice:url", oscDeviceAddress);
+    
+}
+
+void ofApp::addAddressEntry(ofxXmlSettings& xml, const string& name, const string& address){
+    xml.addTag(name);
+    xml.pushTag(name);
+    xml.addValue("url",address);
+    xml.popTag();
 }
 
 void ofApp::updateScreenSizes() {
