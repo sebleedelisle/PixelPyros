@@ -19,7 +19,7 @@
 	<motion_multiplier>0.110009</motion_multiplier>
 	<reset_speed>0.993999</reset_speed>
 	<target_threshold>59</target_threshold>
-	<move_speed>0.0184125</move_speed>
+	<move_speed>0.0373175</move_speed>
 	<move_home_speed>20</move_home_speed>
 <UnknownName>AUTO</UnknownName>
 <motion_reset_speed>0.979499</motion_reset_speed>

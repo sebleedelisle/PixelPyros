@@ -97,6 +97,10 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	patternRedMix.addTriggerSettings(redRocket);
 	patternRedMix.addTriggerSettings(redFountainLow);
 	addTriggerPattern(patternRedMix, "Red fountains + rockets");
+	
+	TriggerPattern spinnersRed;
+	spinnersRed.addTriggerSettings(getRetroSpinner()); 
+	addTriggerPattern(spinnersRed, "Red spinners with fountains"); 
 			
 };
 
@@ -263,6 +267,67 @@ TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
 }
 
 
+
+
+TriggerSettingsRocket* SceneRetro::getRetroSpinner(float hue, float hueChange) {
+	
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	
+	rocketSettings.startSpeedMin = 1100;
+	rocketSettings.startSpeedMax = 1400;
+	rocketSettings.drag = 0.94;
+	
+	
+	ParticleSystemSettings trails;// = getPixelTrailParticles(hue, hueChange);
+	
+	ofMesh* circleMesh = new ofMesh();
+	for(int i = 0; i<50; i++) {
+		ofVec3f v(1,0,0);
+		v.rotate(ofMap(i,0,30,0,360), ofVec3f(0,0,1));
+		circleMesh->addVertex(v);
+	}
+	
+	trails.emitShape = circleMesh;
+	trails.speedMin = 60;
+	trails.speedMax = 60;
+	trails.directionZVar = 0;
+	trails.directionYVar = 0;
+	trails.emitCount = 200;
+	trails.emitInheritVelocity = 0.5;
+	trails.drag = 0.9; 
+	trails.renderer = new ParticleRendererLowRes(pixelSize);
+	
+	trails.sizeStartMin = trails.sizeStartMax = 4;
+	trails.hueStartMin = trails.hueStartMax = hue;
+	trails.hueChange = hueChange;
+	trails.saturationMin = trails.saturationMax = 0;
+	trails.saturationEnd = 500;
+	trails.brightnessStartMin = trails.brightnessStartMin = trails.brightnessEnd = 255;
+	
+	trails.shimmerMin = 0.1;
+	trails.lifeMin = trails.lifeMax = 0.6;
+	trails.emitSpeedModifier = 1;		// Multiplier
+	
+	
+	//ParticleSystemSettings explosion = getPixelExplosionParticles(hue, hueChange);
+	
+	//explosion.emitDelay = trails.emitLifeTime;
+	
+	rocketSettings.addParticleSystemSetting(trails);
+	//rocketSettings.addParticleSystemSetting(explosion);
+	
+	ts.addRocketSettings(&rocketSettings);
+	
+	rocketSettings.timeSpeed = trails.timeSpeed = 0.7;
+	
+	ts.rechargeSettings = TriggerRechargeSettings::medium;
+	
+	return &ts;
+	
+	
+}
 
 
 ParticleSystemSettings SceneRetro::  getPixelTrailParticles(float hue, float hueChange){

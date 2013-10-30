@@ -20,6 +20,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 
-	ofxSVG svg; 
+	ofxSVG svg;
+	
+	ofPolyline testpoly; 
 
 };

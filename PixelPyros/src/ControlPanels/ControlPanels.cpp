@@ -21,12 +21,11 @@ void ControlPanels::setup(ParameterManager * parameterManager) { // , vector<ofR
 	int heightSmall = 30;
 	 
     ofxBaseGui::setDefaultWidth(500);
-    ofxBaseGui::setDefaultHeight(26);
+    ofxBaseGui::setDefaultHeight(20);
 	ofxBaseGui::setDefaultSpacing(4);
     ofxBaseGui::setDefaultElementSpacing(5);
 	ofxBaseGui::setDefaultElementIndentation(1);
 	ofxBaseGui::setDefaultTextPadding(7);
-    
     
 	setupPanel( "App", "appSettings.xml", ofRectangle(0,0, 400, heightSmall ), appGui );
 	appGui.add( *parameterManager->getParameterGroup("app") );
@@ -277,7 +276,7 @@ void ControlPanels::setupPanel( string name, string filename, ofRectangle rect, 
 	panel.clear();
 	
     panel.setup( name, "settings/"+filename );
-    panel.useFrameBuffer(true);
+    panel.useFrameBuffer(false);
 	panel.loadFont("Verdana.ttf", 10, false);
 	
     panel.setSize( rect.width, rect.height );

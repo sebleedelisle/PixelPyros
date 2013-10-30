@@ -527,6 +527,7 @@ TriggerSettingsRocket* FireworkFactory:: getBangerRocket() {
 	
 	ParticleSystemSettings trails = getBangerTrails();
 	ParticleSystemSettings bang = getBangerBang();
+	ParticleSystemSettings laserBang = getBangerLaserBang();
 	ParticleSystemSettings bangCrackles = getBangerCrackles();
 	ParticleSystemSettings smoke1 = getSmoke();
 	ParticleSystemSettings smoke2 = getSmoke();
@@ -539,13 +540,13 @@ TriggerSettingsRocket* FireworkFactory:: getBangerRocket() {
 	smoke2.brightnessStartMin = 10;
 	smoke2.brightnessStartMax = 30;
 	
-	
-	bang.emitDelay = bangCrackles.emitDelay = trails.emitLifeTime = smoke1.emitLifeTime =smoke2.emitDelay = 2;
+	bang.emitDelay =laserBang.emitDelay = bangCrackles.emitDelay = trails.emitLifeTime = smoke1.emitLifeTime =smoke2.emitDelay = 2;
 	
 	rocketSettings.addParticleSystemSetting(trails);
 	//rocketSettings.addParticleSystemSetting(smoke1);
 	rocketSettings.addParticleSystemSetting(smoke2);
 	rocketSettings.addParticleSystemSetting(bang);
+	rocketSettings.addParticleSystemSetting(laserBang);
 	rocketSettings.addParticleSystemSetting(bangCrackles);
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
@@ -626,6 +627,49 @@ ParticleSystemSettings FireworkFactory:: getBangerBang() {
 	
 	
 	explosion.startSound = "Banger";
+	
+	
+	return explosion;
+	
+	
+	return ParticleSystemSettings();
+	
+}
+
+
+ParticleSystemSettings FireworkFactory:: getBangerLaserBang() {
+	
+	ParticleSystemSettings explosion;
+	//explosion.renderer = new ParticleRendererCircle(24);
+	//explosion.renderer = new ParticleRendererBitmap(&bangerFlashImage);
+	explosion.renderer = new ParticleRendererLaserFlash(100);
+	
+	//pss.directionZVar = 20;
+	explosion.speedMin = 0;
+	explosion.speedMax = 0;
+	explosion.drag = 0.90;
+	
+	explosion.sizeStartMin = 50;
+	explosion.sizeStartMax = 50;
+	explosion.sizeChangeRatio = 0;
+	explosion.hueStartMin = explosion.hueStartMax = 0;
+	explosion.hueChange = 0;
+	explosion.saturationMin = explosion.saturationMax = 0;
+	explosion.saturationEnd = 0;
+	explosion.brightnessStartMin = explosion.brightnessStartMin = 255;
+	explosion.brightnessEnd = 0;
+	
+	explosion.shimmerMin = 1;
+	explosion.lifeMin = 0.1;
+	explosion.lifeMax = 0.1;
+	
+	explosion.emitMode = PARTICLE_EMIT_BURST;
+	explosion.emitLifeTime = 0.1;
+	explosion.emitCount = 1;
+	
+	
+	
+	//explosion.startSound = "Banger";
 	
 	
 	return explosion;
@@ -742,7 +786,7 @@ ParticleSystemSettings FireworkFactory:: getSmoke() {
 ParticleSystemSettings FireworkFactory :: getLaserExplosionParticles(float hue, float hueChange){
 	
 	ParticleSystemSettings explosion;
-	explosion.renderer = new ParticleRendererLaser();
+	explosion.renderer = new ParticleRendererLaserFlash(50);
 	
 	//pss.directionZVar = 20;
 	explosion.speedMin = 0;
@@ -753,9 +797,9 @@ ParticleSystemSettings FireworkFactory :: getLaserExplosionParticles(float hue, 
 	explosion.directionZVar = 0;
 	explosion.directionYVar = 0;
 	
-	explosion.sizeStartMin = 0.1;
-	explosion.sizeStartMax = 4;
-	explosion.sizeChangeRatio = 30;
+	explosion.sizeStartMin = 1;
+	explosion.sizeStartMax = 1;
+	explosion.sizeChangeRatio = 100;
 	explosion.hueStartMin = hue;
 	explosion.hueStartMax = hue + 5;
 	explosion.hueChange = -20;
@@ -772,7 +816,7 @@ ParticleSystemSettings FireworkFactory :: getLaserExplosionParticles(float hue, 
 	
 	explosion.emitMode = PARTICLE_EMIT_BURST;
 	explosion.emitLifeTime = 0.1;
-	explosion.emitCount = 10;
+	explosion.emitCount = 1;
 	
 	explosion.startSound = "SoftExplosion";
 	
@@ -827,6 +871,116 @@ ParticleSystemSettings FireworkFactory:: getLaserFlashParticles(float hue, float
 	pss.brightnessStartMin = pss.brightnessStartMax = 500;
 	
 	return pss;
+}
+
+
+
+
+TriggerSettingsRocket* FireworkFactory::getLaserRocket(float hue, float hueChange) {
+	
+	TriggerSettingsRocket& ts = *new TriggerSettingsRocket();
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	
+	rocketSettings.startSpeedMin = 1000;
+	rocketSettings.startSpeedMax = 1100;
+	rocketSettings.drag = 0.96;
+	rocketSettings.gravity.y = 160;
+	rocketSettings.setLifeTime(1.7);
+	
+	/*
+	ParticleSystemSettings laserTrails = getLaserParticles(hue, hueChange);
+	
+	laserTrails.sizeStartMin = 8;
+	laserTrails.sizeStartMax = 10;
+	laserTrails.sizeChangeRatio = 0;
+	laserTrails.shimmerMin = 1;
+	laserTrails.emitInheritVelocity = 1;
+	laserTrails.drag = rocketSettings.drag;
+	laserTrails.gravity = rocketSettings.gravity;
+	
+	laserTrails.lifeMin = laserTrails.lifeMax = rocketSettings.getLifeTime();
+	
+	
+	laserTrails.emitCount = 1;
+	laserTrails.emitMode = PARTICLE_EMIT_BURST;
+	laserTrails.startSound = "Launch";
+	*/
+	//ParticleSystemSettings trails;// = getTrailParticles(hue, hueChange);
+	//trails.renderer = new ParticleRendererLine(10);
+	
+	
+	//trails.emitLifeTime = rocketSettings.getLifeTime();
+	
+	ParticleSystemSettings explosion = getLaserParticles(hue, hueChange);
+	explosion.emitDelay = rocketSettings.getLifeTime();
+	explosion.speedMax = 1000;
+	explosion.speedMin = 800;
+	explosion.directionZVar = 180;
+	explosion.sizeStartMin = 1;
+	explosion.sizeStartMax = 1;
+	explosion.lifeMin = 0.3;
+	explosion.lifeMax = 0.6;
+	explosion.drag = 0.9;
+	explosion.hueChange = 0;
+	explosion.brightnessEnd = 0;
+	explosion.gravity.y = 500;
+
+	explosion.startSound = "SoftExplosion";
+		
+	//explosion.emitDelay = trails.emitLifeTime;
+	
+	//rocketSettings.addParticleSystemSetting(laserTrails);
+	ParticleSystemSettings& trails = *rocketSettings.addParticleRenderer(new ParticleRendererLaserLine(100));
+	trails.brightnessEnd = 0;
+	trails.saturationEnd = 255;
+	trails.renderer->historyCount = 20;
+	
+	ParticleSystemSettings& head = *rocketSettings.addParticleRenderer(new ParticleRendererLaser());
+	head.saturationEnd = 200; 
+
+	
+	
+	rocketSettings.addParticleSystemSetting(explosion);
+	rocketSettings.directionVar = 0;
+	ts.rotateMirrorOffset = 40;
+	ts.rotationSpeed = 1;
+	ts.rotationExtent = 30;
+	
+	
+	ts.addRocketSettings(&rocketSettings);
+	
+	ts.rechargeSettings = TriggerRechargeSettings::medium;
+	
+	return &ts;
+	
+}
+
+
+ParticleSystemSettings FireworkFactory::  getLaserParticles(float hue, float hueChange){
+	
+	ParticleSystemSettings laserParticles;
+	laserParticles.renderer = new ParticleRendererLaserLine(20);
+	
+	laserParticles.speedMin = 0;
+	laserParticles.speedMax = 0;
+	laserParticles.sizeStartMin = laserParticles.sizeStartMax = 10;
+	laserParticles.sizeChangeRatio = 0.2;
+	laserParticles.hueStartMin = laserParticles.hueStartMax = hue;
+	laserParticles.hueChange = hueChange;
+	laserParticles.saturationMin = laserParticles.saturationMax = 0;
+	laserParticles.saturationEnd = 500;
+	laserParticles.brightnessStartMin = laserParticles.brightnessStartMin = laserParticles.brightnessEnd = 255;
+	
+	laserParticles.emitCount = 5;
+	laserParticles.emitInheritVelocity = 1;
+	laserParticles.shimmerMin = 0;
+	laserParticles.lifeMin = 0.1;
+	laserParticles.lifeMax = 0.1;
+	laserParticles.emitMode = PARTICLE_EMIT_BURST; 
+	
+	return laserParticles;
+	
 }
 
 
