@@ -64,6 +64,7 @@ void QuadWarp :: draw(bool lockAxis) {
 	
 	if(!visible) return;
 	
+    /* dragging center point */
     if( curDragPointIndex == 8 ){
         ofVec3f diff(ofGetMouseX() - offset.x - dragStartPoint.x, ofGetMouseY() - offset.y - dragStartPoint.y );
                 
@@ -74,11 +75,12 @@ void QuadWarp :: draw(bool lockAxis) {
         updateHomography();
         
     }
+    /* dragging corner point */
 	else if(curDragPointIndex>=0 && curDragPointIndex<4) {
 		
 		ofVec3f diff(ofGetMouseX() - offset.x, ofGetMouseY() - offset.y );
         
-        
+        /* single point dragging */
         if(dragAltPressed){
             
             if(lockAxis) {
@@ -104,14 +106,52 @@ void QuadWarp :: draw(bool lockAxis) {
                 if(curPoint.y>boundsRectangle.getBottom()) curPoint.y = boundsRectangle.getBottom();
             }
         }
+        /* scale dragging */
         else {
-            ofVec3f& center = dragCenterStart;
+            ofVec3f center = dragCenterStart;
             
-            float scale = diff.distance( center ) / dragStartPoint.distance(center);
             
-            for( int i=0; i< dstPoints.size();i++){
-                float len = dstPointsStartDrag[i].distance( center );
-                dstPoints[i] = center + ( dstPointsStartDrag[i] - center ).normalize() * len * scale;
+            if(cornerScalingMode) {
+                int i=curDragPointIndex;
+                int j=(i+1)%dstPoints.size();
+                int k=(i+dstPoints.size()-1)%dstPoints.size();
+                int oppositeCornerIndex = (i+2)%dstPoints.size();
+                ofVec3f oppositePoint = dstPoints[oppositeCornerIndex];
+                
+                float scale = diff.distance( oppositePoint ) / dragStartPoint.distance(oppositePoint);
+                float len = dstPointsStartDrag[i].distance( oppositePoint );
+                float l2 = dstPointsStartDrag[j].distance( oppositePoint );
+                float l3 = dstPointsStartDrag[k].distance( oppositePoint );
+                
+                bool nextPointIsHorizontalClamped = i&1;
+                
+                dstPoints[i] = oppositePoint + ( dstPointsStartDrag[i] - oppositePoint ).normalize() * len * scale;
+                
+                ofVec3f nextPoint = ( oppositePoint + ( dstPointsStartDrag[j] - oppositePoint ).normalize() * l2 * scale );
+                ofVec3f lastPoint = ( oppositePoint + ( dstPointsStartDrag[k] - oppositePoint ).normalize() * l3 * scale );
+                
+                if( nextPointIsHorizontalClamped ){
+                    /*dstPoints[j].x = ( oppositePoint + ( dstPointsStartDrag[j] - oppositePoint ).normalize() * l2 * scale ).x;
+                    dstPoints[k].y = ( oppositePoint + ( dstPointsStartDrag[k] - oppositePoint ).normalize() * l3 * scale ).y;
+                     */
+                    
+                    dstPoints[j].x = nextPoint.x;
+                    dstPoints[k].y = lastPoint.y;
+                }
+                else{
+                    dstPoints[j].y = nextPoint.y;
+                    dstPoints[k].x = lastPoint.x;
+                }
+            }
+            else{
+            
+                float scale = diff.distance( center ) / dragStartPoint.distance(center);
+                
+                for( int i=0; i< dstPoints.size();i++){
+                    float len = dstPointsStartDrag[i].distance( center );
+                    
+                    dstPoints[i] = center + ( dstPointsStartDrag[i] - center ).normalize() * len * scale;
+                }
             }
         }
 
@@ -130,7 +170,9 @@ void QuadWarp :: draw(bool lockAxis) {
 		
 		updateHomography();
 				
-	}else if(curDragPointIndex>=4 && curDragPointIndex<8){
+	}
+    /* dragging side point */
+    else if(curDragPointIndex>=4 && curDragPointIndex<8){
         ofVec3f diff(ofGetMouseX() - offset.x - dragStartPoint.x, ofGetMouseY() - offset.y - dragStartPoint.y );
         
         if(lockAxis) {
