@@ -15,6 +15,8 @@
 #include "StretchyNet.h"
 #include "ParticleRendererSquare.h"
 #include "ParticleRendererGlitchLineLaser.h"
+#include "ParticleRendererMeshLines.h"
+#include "ParticleRendererMeshLinesLaser.h"
 
 class SceneVectorizer : public Scene {
 	
@@ -32,6 +34,7 @@ class SceneVectorizer : public Scene {
 	
 	TriggerSettingsRocketOrb* getRocketTronFountain(float hueStartOffset = 0, float hueChange = 0, float speedMultiplier = 1, bool useLaser = false);
 	TriggerSettingsRocketOrb* getGlitchRocket();
+	TriggerSettingsRocketOrb* getGeomRocket(ofMesh& mesh, int minBrightness = 255);
 	
    
 	StretchyNet stretchyNet;
@@ -39,5 +42,8 @@ class SceneVectorizer : public Scene {
 	ParticleRendererSquare renderer;
 	
 	ParticleSystemManager& particleSystemManager;
+	
+	ofMesh box;
+	ofMesh sphere;
 
 };

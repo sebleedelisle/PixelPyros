@@ -16,7 +16,7 @@ SceneIntroAnim::SceneIntroAnim(string scenename) : Scene(scenename){
 	addEmptyTriggerPattern();
 	
 	video.loadMovie("../../../Music/pp titles v01.mov");
-	video.setLoopState(OF_LOOP_NONE); 
+	video.setLoopState(OF_LOOP_NONE);
 	textWriter.lineRandomness = 0;
 	textWriter.colourFlickerMin = 1;
 	vector<string> textlines;
@@ -57,7 +57,8 @@ SceneIntroAnim::SceneIntroAnim(string scenename) : Scene(scenename){
 void SceneIntroAnim::start() {
 	
 	Scene::start();
-	//video.play();
+	video.play();
+	video.setPosition(0.5);
 
 	starBrightness = 0; 
 
@@ -76,7 +77,7 @@ bool SceneIntroAnim::update(float deltaTime) {
 	video.update();
 	
 	float vidPosition = video.getPosition();
-	
+		
 	if(vidPosition > 0.90) starBrightness = ofMap(vidPosition, 0.90,0.92,1,0, true);
 	if(starBrightness<1.0) starBrightness+=0.005;
 	
@@ -91,15 +92,35 @@ bool SceneIntroAnim::draw() {
 	starfield.draw(starBrightness);
 	
 	ofPushStyle();
+	
 	ofPushMatrix();
 	ofTranslate(APP_WIDTH/2, APP_HEIGHT/2);
-	ofScale(0.7,0.7);
+	ofScale(0.6,0.6);
 	ofTranslate(-APP_WIDTH/2, -APP_HEIGHT/2);
 	
 	ofSetColor(ofFloatColor(ofMap(video.getPosition(), 0.90,0.92,1,0, true)));
 	
+	
 	video.draw(0,0, APP_WIDTH, APP_HEIGHT);
 	ofPopMatrix();
+	
+	/*
+	for(int i = 0; i<4; i++) {
+		
+		ofPushMatrix();
+		ofTranslate(APP_WIDTH/8 * ((i*2)+1), APP_HEIGHT/8*7);
+		ofScale(0.2,0.2);
+		ofTranslate(-APP_WIDTH/2, -APP_HEIGHT/2);
+		
+		ofSetColor(ofFloatColor(ofMap(video.getPosition(), 0.90,0.92,1,0, true)));
+		video.getTextureReference().setTextureMinMagFilter(GL_LINEAR,GL_LINEAR);
+		video.draw(0,0, APP_WIDTH, APP_HEIGHT);
+		//ofRect(0,0,APP_WIDTH, APP_HEIGHT);
+		ofPopMatrix();
+		
+	}*/
+	
+	
 	ofPopStyle();
 	
 	//textWriter.draw(ofRectangle(APP_WIDTH*0.2, APP_HEIGHT*0.2, APP_WIDTH*0.6,APP_HEIGHT*0.2), "LASERS", true);

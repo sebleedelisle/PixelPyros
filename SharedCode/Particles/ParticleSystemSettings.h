@@ -61,6 +61,7 @@ class ParticleSystemSettings{
 		emitMode = PARTICLE_EMIT_CONTINUOUS;
 		emitCount = 100; // number of Particles per second
 		emitShape = NULL;
+		emitShapeUseHue = false;
 		emitPositionShape = NULL;
 		
 		
@@ -100,7 +101,8 @@ class ParticleSystemSettings{
 	};
 	
 	void initColourModifier (ColourModifier* c, LifeCycle& life) { 
-		c->hueStart = ofRandom(hueStartMin, hueStartMax); 
+		c->hueStart = ofRandom(hueStartMin, hueStartMax);
+		
 		if(emitHueModifierOffset!=0) { 
 			c->hueStart += (life.unitLifeProgress *emitHueModifierOffset) ; 
 		}
@@ -171,6 +173,7 @@ class ParticleSystemSettings{
 	
 	// EMISSION SHAPE FOR TEXT AND GEOMETRY
 	ofMesh* emitShape;
+	bool emitShapeUseHue;
 	
 	// shape for the particles to come from (for letters mostly)
 	ofMesh* emitPositionShape;

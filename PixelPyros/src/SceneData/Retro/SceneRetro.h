@@ -6,6 +6,7 @@
 #include "ParticleRendererLowRes.h"
 #include "RocketSettings.h"
 #include "ParticleSystemSettings.h"
+#include "ParticleRendererLaser.h"
 
 
 class SceneRetro : public Scene {
@@ -19,7 +20,7 @@ class SceneRetro : public Scene {
 	
 	TriggerSettingsRocket* getRetroRocket(float hue = -30, float hueChange = 40);
 	TriggerSettingsRocket* getRetroFountain(float hueOffset = 0, float hueChange = -128, float minSpeed = 600, float maxSpeed = 900);
-	TriggerSettingsRocket* getRetroSpinner(float hueOffset = 0, float hueChange = -128);
+	TriggerSettingsRocket* getRetroSpinner(float hueOffset = 0, float hueChange = 0);
 	
 	
 	ParticleSystemSettings getPixelTrailParticles(float hue = -30, float hueChange = 40);
@@ -27,6 +28,7 @@ class SceneRetro : public Scene {
 
 	
 	TriggerSettingsRocket* getPixelRocket(float hue = 0);
+ 	TriggerSettingsRocket* getSmallPixelRocket(float hue = 0);
     
 		
 	unsigned int pixelSize;

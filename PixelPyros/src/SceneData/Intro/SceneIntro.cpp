@@ -65,14 +65,12 @@ SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 		rs->startSpeedMax*=1.5;
 		colourFountain->hue = colours[i];
 		colourFountain->saturation = 255;
-		
 		multiColourPattern.addTriggerSettings(colourFountain);
-		
 	}
 	
 	addTriggerPattern(multiColourPattern, "Rainbow fountains");
 			
-	// FOUNTAINS + ROCKETS
+	// FOUNTAINS + ROCKETS 
 	TriggerPattern patternFountain;
 	patternFountain.addTriggerSettings(fireworkFactory.getSimpleFountain(180,0));
 	patternFountain.addTriggerSettings(fireworkFactory.getSimpleFountain(180,0));

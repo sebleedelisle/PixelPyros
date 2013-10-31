@@ -73,9 +73,9 @@ bool Particle :: update(float deltaTime) {
 	
 	if(rotateAmount!=0) {
 		pos.rotate(rotateAmount*deltaTime, startPos, rotateAxis);
-		
-		
+		vel.rotate(rotateAmount*deltaTime, rotateAxis);
 	}
+	
 
 	if(historyCount>0) {
 

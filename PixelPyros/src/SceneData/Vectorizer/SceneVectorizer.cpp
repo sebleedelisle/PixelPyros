@@ -12,6 +12,104 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	loadMusicFile("LightsKlaypex.aif");
 	
+	ofMesh tempsphere = ofMesh::icosphere(1.3,1);
+	vector<ofVec3f>& vertices1 = tempsphere.getVertices();
+	vector<ofIndexType>& indices = tempsphere.getIndices();
+	
+	
+	// Ridiculous piece of engineering to make sure we only get one line
+	// per edge of triangle.
+	
+	vector<bool> doneAlready;
+	int numVertices = vertices1.size(); 
+	while(doneAlready.size()<numVertices*numVertices) doneAlready.push_back(false);
+	
+	for(int i = 0; i<(int)indices.size()-1; i++) {
+
+		int index1 = indices[i];
+		int index2 = indices[i+1];
+		
+		int hash;
+		
+		if(index1<=index2) {
+			hash = (numVertices*index1) + index2;
+		} else {
+			hash = (numVertices*index2) + index1;
+		}
+		if(doneAlready[hash]) continue;
+		
+		sphere.addVertex(vertices1[indices[i]]);
+		sphere.addVertex(vertices1[indices[i+1]]);
+		doneAlready[hash] = true;
+	}
+	
+	/*
+	
+	for(int i = 0; i<(int)vertices1.size()-1; i++) {
+		sphere.addVertex(vertices1[i]);
+		sphere.addVertex(vertices1[i+1]);
+		
+		
+		
+	}*/
+	
+	//sphere = ofMesh::icosphere(1.2,2);
+	
+	//box = ofMesh::box(1,1,1, 6,6,6);
+	
+	box.addVertex(ofVec3f(-1,1,1));
+	box.addVertex(ofVec3f(1,1,1));
+	
+	box.addVertex(ofVec3f(1,1,1));
+	box.addVertex(ofVec3f(1,-1,1));
+	
+	box.addVertex(ofVec3f(1,-1,1));
+	box.addVertex(ofVec3f(-1,-1,1));
+	
+	box.addVertex(ofVec3f(-1,-1,1));
+	box.addVertex(ofVec3f(-1,1,1));
+	
+	box.addVertex(ofVec3f(-1,1,-1));
+	box.addVertex(ofVec3f(1,1,-1));
+	
+	box.addVertex(ofVec3f(1,1,-1));
+	box.addVertex(ofVec3f(1,-1,-1));
+	
+	box.addVertex(ofVec3f(1,-1,-1));
+	box.addVertex(ofVec3f(-1,-1,-1));
+	
+	box.addVertex(ofVec3f(-1,-1,-1));
+	box.addVertex(ofVec3f(-1,1,-1));
+	
+	
+	box.addVertex(ofVec3f(-1,1,1));
+	box.addVertex(ofVec3f(-1,1,-1));
+	
+	box.addVertex(ofVec3f(1,1,1));
+	box.addVertex(ofVec3f(1,1,-1));
+	
+	box.addVertex(ofVec3f(1,-1,1));
+	box.addVertex(ofVec3f(1,-1,-1));
+		
+	box.addVertex(ofVec3f(-1,-1,1));
+	box.addVertex(ofVec3f(-1,-1,-1));
+	
+	vector<ofVec3f>& vertices = box.getVertices();
+	int numpoints = vertices.size();
+	
+	for(int i = 0; i<numpoints; i++) {
+	
+		vertices[i].rotate(45, ofVec3f(1,0,0));
+		vertices[i].rotate(45, ofVec3f(0,1,0));
+		
+	}
+	
+	for(int i = 0; i<numpoints; i++) {
+		vertices.push_back(vertices[i]*0.5);
+		
+	}
+	
+	
 	addEmptyTriggerPattern();
 	
 	TriggerSettingsRocketOrb * rocketFountainBlue = getRocketTronFountain(130,10);
@@ -166,17 +264,30 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	TriggerSettingsRocketOrb* circleFountain = getCircleFountain(235);
 	
-	TriggerPattern bigPattern ("Big ending");
+	TriggerPattern bigPattern;
 	
 	bigPattern.addTriggerSettings(circleFountain);
 	bigPattern.addTriggerSettings(rocketTron);
 	bigPattern.addTriggerSettings(rocketFountainPink);
-	bigPattern.addTriggerSettings(rocketTron);
+	bigPattern.addTriggerSettings(rocketFountainBlue);
 	
-	addTriggerPattern(bigPattern);
+	addTriggerPattern(bigPattern, "Big ending");
 
+	TriggerPattern geomPattern;
 	
+	geomPattern.addTriggerSettings(rocketFountainPink);
+	geomPattern.addTriggerSettings(getGeomRocket(box, 255));
 	
+	addTriggerPattern(geomPattern, "Geom boxes");
+	
+	TriggerPattern geomPattern2;
+	
+	geomPattern2.addTriggerSettings(rocketFountainBlue);
+	geomPattern2.addTriggerSettings(getGeomRocket(sphere, 100));
+	
+	addTriggerPattern(geomPattern2, "Geom geospheres");
+	
+
 	
 /*
 	TriggerPattern endPattern;
@@ -235,6 +346,76 @@ TriggerSettingsRocketOrb* SceneVectorizer :: getGlitchRocket(){
 	
 	rs.addParticleSystemSetting(glitchRocket.head);
 	rs.addParticleSystemSetting(glitchRocket.explosion);
+	rs.timeSpeed = 	glitchRocket.head.timeSpeed = glitchRocket.explosion.timeSpeed= 0.7;
+	
+	rs.setLifeTime(2.4);
+	
+	return &glitchRocket;
+	
+}
+
+
+TriggerSettingsRocketOrb* SceneVectorizer :: getGeomRocket(ofMesh& mesh, int minBrightness){
+	
+	RocketTron& glitchRocket = *new RocketTron();
+	glitchRocket.head.renderer = new ParticleRendererGlitchLine();
+	glitchRocket.head.speedMin = 20;
+	glitchRocket.head.speedMax = 60;
+	glitchRocket.head.brightnessStartMax = 255;
+	glitchRocket.head.brightnessStartMin = 255;
+	glitchRocket.head.brightnessEnd = 255;
+	
+	glitchRocket.head.lifeMin= 0.1;
+	glitchRocket.head.lifeMax= 0.15;
+	glitchRocket.head.emitInheritVelocity  =0.0;
+	glitchRocket.head.emitLifeTime= 3.0;
+	
+	glitchRocket.explosion.renderer = new ParticleRendererMeshLinesLaser(1, 0.6);
+	glitchRocket.explosion.sizeStartMin = glitchRocket.explosion.sizeStartMax =2;
+	
+	glitchRocket.explosion.brightnessStartMin = minBrightness;
+	glitchRocket.explosion.brightnessStartMax = 255;
+	glitchRocket.explosion.brightnessEnd = 0;
+	glitchRocket.explosion.sizeStartMax = 4;
+	glitchRocket.explosion.sizeStartMin = 3;
+	
+	glitchRocket.explosion.speedMin = 250;
+	glitchRocket.explosion.speedMax = 280;
+	glitchRocket.explosion.directionZVar = 0;
+	glitchRocket.explosion.lifeMin= 0.5;
+	glitchRocket.explosion.lifeMax= 2.5;
+	glitchRocket.explosion.hueStartMin = 130;
+	glitchRocket.explosion.hueStartMax = 130;
+	
+	glitchRocket.explosion.emitCount = 5000;
+	glitchRocket.explosion.emitLifeTime = 0.1;
+	glitchRocket.explosion.emitDelay = 3.1;
+	glitchRocket.explosion.emitMode = PARTICLE_EMIT_BURST;
+	glitchRocket.explosion.directionZVar = 0;
+	glitchRocket.explosion.directionYVar = 0;
+	
+	glitchRocket.explosion.emitShape = &mesh;
+	
+	glitchRocket.explosion.rotateMin = -50;
+	glitchRocket.explosion.rotateMax = 50;
+	glitchRocket.explosion.shimmerMin = 0;
+	
+	glitchRocket.explosion.drag = 0.92;
+	
+	ParticleSystemSettings geomPoints(glitchRocket.explosion);
+	geomPoints.renderer = new ParticleRendererCircle(); 
+	
+	
+	RocketSettings& rs = *glitchRocket.getRocketSettings();
+	rs.startSpeedMin = 650;
+	
+	rs.startSpeedMax = 700;
+	rs.directionVar = 6;
+	//rs.gravity.y = 200;
+	
+	rs.addParticleSystemSetting(glitchRocket.head);
+	rs.addParticleSystemSetting(glitchRocket.explosion);
+	rs.addParticleSystemSetting(geomPoints);
 	rs.timeSpeed = 	glitchRocket.head.timeSpeed = glitchRocket.explosion.timeSpeed= 0.7;
 	
 	rs.setLifeTime(2.4);

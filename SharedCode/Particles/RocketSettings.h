@@ -60,7 +60,7 @@ class RocketSettings {
 		pss.emitInheritVelocity = 1;
 		pss.speedMax = pss.speedMin = 0;
 		pss.directionYVar = pss.directionZVar = 0;
-		pss.lifeMin = pss.lifeMax = lifeTime; 
+		pss.lifeMin = pss.lifeMax = lifeTime;
 		
 		ParticleSystemSettings * pssref = addParticleSystemSetting(pss);
 		return pssref; 
