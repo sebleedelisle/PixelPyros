@@ -29,12 +29,10 @@ void ofApp::setup(){
 	fboWarper2.setDstPoint(1, ofVec2f(APP_WIDTH,0));
 	fboWarper2.setDstPoint(2, ofVec2f(APP_WIDTH,APP_HEIGHT));
 	fboWarper2.setDstPoint(3, ofVec2f(APP_WIDTH/2 +1,APP_HEIGHT));
-	fboWarper2.setDstPoint(4, ofVec2f(APP_WIDTH/4*3,APP_HEIGHT/2));
 	fboWarper2.setSrcPoint(0, ofVec2f(APP_WIDTH/2,0));
 	fboWarper2.setSrcPoint(1, ofVec2f(APP_WIDTH,0));
 	fboWarper2.setSrcPoint(2, ofVec2f(APP_WIDTH,APP_HEIGHT));
 	fboWarper2.setSrcPoint(3, ofVec2f(APP_WIDTH/2,APP_HEIGHT));
-	fboWarper2.setSrcPoint(4, ofVec2f(APP_WIDTH/4*3,APP_HEIGHT/2));
 	fboWarper2.boundsRectangle.set(APP_WIDTH/2,0,APP_WIDTH/2, APP_HEIGHT);
 	fboWarper2.useBoundsRect = true;
 	
