@@ -979,7 +979,7 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity)
 	pathMesh.addVertex(p);
 	//pathMesh.addColor(c);
 	
-	ofPoint warpedpoint = warp.getWarpedPoint(p);;
+	ofPoint warpedpoint = warp.getWarpedPoint(p);
 	
 	//ofPoints.push_back(warpedpoint);
 

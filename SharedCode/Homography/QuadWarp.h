@@ -37,7 +37,14 @@ class QuadWarp {
 	void setSrcPoint(int index, ofVec3f point);
 	ofVec3f getCenter();
 	ofVec3f getWarpedPoint(ofVec3f point);
-	ofVec3f getUnWarpedPoint(ofVec3f point);
+    ofVec3f barrelCorrection(ofVec3f point);
+    ofVec3f getUnWarpedPoint(ofVec3f point);
+    ofVec3f barrelCorrection();
+    
+    bool lineIntersectionWithCurve(ofPoint lp1, ofPoint lp2,ofPoint bp1,ofPoint bp2,ofPoint cp1, ofPoint cp2, ofPoint& closestIntersection);
+    ofPoint pointOnBeizer();
+    
+    void clampPoints();
 	void updateHomography();
 	
 	// applies the distortion matrix to the current draw state
@@ -55,8 +62,11 @@ class QuadWarp {
 	
 	vector <ofVec3f> srcPoints;
 	vector <ofVec3f> dstPoints;
+	vector <ofVec3f> dstControlPoints;
     vector <ofVec3f> dstPointsStartDrag;
 	//vector <ofVec3f> defaultDstPoints;
+    
+    ofRectangle srcRangeRect;
 	
 	cv::Mat homography;
 	cv::Mat inverseHomography;
@@ -66,6 +76,7 @@ class QuadWarp {
 	GLfloat _glWarpMatrix[16];
 	double _warpMatrix[3][3];
 	
+    float barrellingAmount;
 	
 	//ofVec3f *curPoint;
 	int curDragPointIndex;
@@ -73,13 +84,15 @@ class QuadWarp {
 	ofVec3f clickOffset;
 	ofVec3f dragStartPoint;
     ofVec3f dragCenterStart;
+
     bool dragAltPressed;
     bool cornerScalingMode=true;
-	
+	bool useBarrelingCorrection=false;
 	
 	ofRectangle bounds;
 	string label;
 	float pointRadius;
+    float controlPointRadius;
     ofVec2f offset;
 	   
 };

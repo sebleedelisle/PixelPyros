@@ -21,13 +21,21 @@ QuadWarp :: QuadWarp (string saveLabel) {
 	pointColour = ofColor :: white;
 	dstPoints.resize(4);
 	srcPoints.resize(4);
+    dstControlPoints.resize(8);
     dstPointsStartDrag.resize(4);
     offset = ofVec2f(0,0);
 	
 	for(int i = 0; i<4;i++) {
-		srcPoints[i].set( (i%2)*100, floor(i/2)*100);
-		dstPoints[i].set( (i%2)*100, floor(i/2)*100);
+		srcPoints[i].set( (i%2)*100, (i/2)*100);
+		dstPoints[i].set( (i%2)*100, (i/2)*100);
+        
+        float cpDistance = 50;
+        int n = (i/2^(i%2))&1;
+        dstControlPoints[i*2].set( ( 0.5 - n ) * cpDistance, 0 );
+        dstControlPoints[i*2+1].set( 0, ( 0.5 - floor(i/2) )*cpDistance );
 	}
+    
+    
 	/*
 	ofVec3f midpoint = srcPoints[0] + ((srcPoints[3] - srcPoints[0]) / 2);
 	srcPoints[4] = dstPoints[4] = midpoint;
@@ -37,7 +45,8 @@ QuadWarp :: QuadWarp (string saveLabel) {
 	visible = false;
     useBoundsRect = false;
 	pointRadius = 10;
-	curDragPointIndex = -1;
+	controlPointRadius = 8;
+    curDragPointIndex = -1;
 	lastMousePress = 0;
 	
 	ofAddListener(ofEvents().mousePressed, this, &QuadWarp::mousePressed);
@@ -65,13 +74,14 @@ void QuadWarp :: draw(bool lockAxis) {
 	if(!visible) return;
 	
     /* dragging center point */
-    if( curDragPointIndex == 8 ){
+    if( curDragPointIndex==8 ){
         ofVec3f diff(ofGetMouseX() - offset.x - dragStartPoint.x, ofGetMouseY() - offset.y - dragStartPoint.y );
                 
         for( int i=0; i< dstPoints.size();i++){
             dstPoints[i] = dstPointsStartDrag[i] + diff;
         }
         
+        clampPoints();
         updateHomography();
         
     }
@@ -110,13 +120,14 @@ void QuadWarp :: draw(bool lockAxis) {
         else {
             ofVec3f center = dragCenterStart;
             
-            
             if(cornerScalingMode) {
                 int i=curDragPointIndex;
                 int j=(i+1)%dstPoints.size();
                 int k=(i+dstPoints.size()-1)%dstPoints.size();
                 int oppositeCornerIndex = (i+2)%dstPoints.size();
-                ofVec3f oppositePoint = dstPoints[oppositeCornerIndex];
+                ofVec3f curPoint = dstPoints[curDragPointIndex];
+                ofVec3f oppositePoint = dstPointsStartDrag[oppositeCornerIndex];
+                ofVec3f dragPointRelative = curPoint - dstPointsStartDrag[oppositeCornerIndex];
                 
                 float scale = diff.distance( oppositePoint ) / dragStartPoint.distance(oppositePoint);
                 float len = dstPointsStartDrag[i].distance( oppositePoint );
@@ -131,9 +142,6 @@ void QuadWarp :: draw(bool lockAxis) {
                 ofVec3f lastPoint = ( oppositePoint + ( dstPointsStartDrag[k] - oppositePoint ).normalize() * l3 * scale );
                 
                 if( nextPointIsHorizontalClamped ){
-                    /*dstPoints[j].x = ( oppositePoint + ( dstPointsStartDrag[j] - oppositePoint ).normalize() * l2 * scale ).x;
-                    dstPoints[k].y = ( oppositePoint + ( dstPointsStartDrag[k] - oppositePoint ).normalize() * l3 * scale ).y;
-                     */
                     
                     dstPoints[j].x = nextPoint.x;
                     dstPoints[k].y = lastPoint.y;
@@ -155,20 +163,8 @@ void QuadWarp :: draw(bool lockAxis) {
             }
         }
 
-		
-		switch(curDragPointIndex) {
-			case 0 :
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-		}
-		
-		
-		updateHomography();
+        clampPoints();
+        updateHomography();
 				
 	}
     /* dragging side point */
@@ -186,9 +182,17 @@ void QuadWarp :: draw(bool lockAxis) {
         dstPoints[i] = dstPointsStartDrag[i] + diff;
         dstPoints[j] = dstPointsStartDrag[j] + diff;
         
+        clampPoints();
         updateHomography();
     }
-
+    else if(curDragPointIndex>8){
+        ofVec3f diff(ofGetMouseX() - offset.x, ofGetMouseY() - offset.y );
+        
+        int cpIndex = curDragPointIndex-9;
+        int i = floor( cpIndex / 2 );
+        dstControlPoints[cpIndex] = diff + clickOffset - dstPoints[i];
+    
+    }
 	
 	
 	ofPushStyle();
@@ -206,6 +210,13 @@ void QuadWarp :: draw(bool lockAxis) {
 		ofVec3f& point = dstPoints[i];
         drawMarker(point, pointColour, pointRadius);
 	
+        if( useBarrelingCorrection ){
+            ofVec3f hControlPoint = dstControlPoints[i*2]+point;
+            ofVec3f vControlPoint = dstControlPoints[i*2+1]+point;
+            drawMarker(hControlPoint,pointColour,controlPointRadius);
+            drawMarker(vControlPoint,pointColour,controlPointRadius);
+        }
+        
 		if(i == curDragPointIndex){
 			
 			ofLine(point.x, point.y - 100, point.x, point.y+100); 
@@ -231,6 +242,18 @@ void QuadWarp :: draw(bool lockAxis) {
 	ofPopMatrix();
 	ofPopStyle();
 	
+}
+
+void QuadWarp::clampPoints(){
+    if(useBoundsRect) {
+        for(int i=0;i<dstPoints.size();i++){
+            ofVec3f& point = dstPoints[i];
+            if(point.x<boundsRectangle.getLeft()) point.x = boundsRectangle.getLeft();
+            if(point.x>boundsRectangle.getRight()) point.x = boundsRectangle.getRight();
+            if(point.y<boundsRectangle.getTop()) point.y = boundsRectangle.getTop();
+            if(point.y>boundsRectangle.getBottom()) point.y = boundsRectangle.getBottom();
+        }
+    }
 }
 
 void QuadWarp::drawMarker(ofVec3f& point, const ofColor & color, float radius){
@@ -361,6 +384,7 @@ ofVec3f QuadWarp::getWarpedPoint(ofVec3f point){
 	
 	vector<cv::Point2f> pre, post;
 	
+    //if( useBarrelingCorrection ) point = barrelCorrection(point);
 	
 	pre.push_back(cv::Point2f(point.x, point.y));
 	post.push_back(cv::Point2f());
@@ -370,13 +394,42 @@ ofVec3f QuadWarp::getWarpedPoint(ofVec3f point){
 	cv::perspectiveTransform(pre, post, homography);
 	//cout << "warped" << post[0] << endl;
 
-	return ofxCv::toOf(post[0]);
+	
 //	return ofxCv::toOf(pre[0]);
 	
-//	return point;
+//	return point;s
+    
+    return ofxCv::toOf(post[0]);
 
 }
 
+ofVec3f QuadWarp::barrelCorrection(ofVec3f point){
+    
+    /*
+    float aspectRatio = srcRangeRect / srcRangeRect.height;
+    float radius = SQRT2 * srcRangeRect.width;
+    
+    point.x = ofMap( point.x, srcRangeRect.getMinX(), srcRangeRect.getMaxX(), 0.0f, 1.0f);
+    point.y = ofMap( point.x, srcRangeRect.getMinY(), srcRangeRect.getMaxY(), 0.0f, 1.0f);
+    
+    point = point.normalize() * ( point.length() + barrellingAmount * ( radius - point.length() ) );
+    
+    point.x = ofMap( point.x, 0.0f, 1.0f, srcRangeRect.getMinX(), srcRangeRect.getMaxX());
+    point.y = ofMap( point.x, 0.0f, 1.0f, srcRangeRect.getMinY(), srcRangeRect.getMaxY());
+     */
+    
+    
+    
+}
+
+bool QuadWarp::lineIntersectionWithCurve(ofPoint lp1, ofPoint lp2,ofPoint bp1,ofPoint bp2,ofPoint cp1, ofPoint cp2, ofPoint& closestIntersection){
+    
+    return false;
+}
+
+ofPoint QuadWarp::pointOnBeizer(){
+    
+}
 
 ofVec3f QuadWarp::getUnWarpedPoint(ofVec3f point){
 	
@@ -397,7 +450,6 @@ ofVec3f QuadWarp::getUnWarpedPoint(ofVec3f point){
 	//	return point;
 	
 }
-
 
 void QuadWarp :: mousePressed(ofMouseEventArgs &e) {
 	
@@ -434,6 +486,20 @@ void QuadWarp :: mousePressed(ofMouseEventArgs &e) {
                 dstPointsStartDrag[j].set( dstPoints[j] );
             }
             break;
+        }
+        
+        ofVec3f controlPointHorizontal = dstControlPoints[i*2]+dstPoints[i];
+        ofVec3f controlPointVertical = dstControlPoints[i*2+1]+dstPoints[i];
+        if( controlPointHorizontal.distance(clickPoint)< controlPointRadius ){
+            curDragPointIndex = (i*2)+9;
+            dragStartPoint = controlPointHorizontal;
+            clickOffset = controlPointHorizontal - clickPoint;
+        }
+        
+        if( controlPointVertical.distance(clickPoint)< controlPointRadius ){
+            curDragPointIndex = (i*2)+10;
+            dragStartPoint = controlPointVertical;
+            clickOffset = controlPointVertical - clickPoint;
         }
 	}
     
@@ -479,7 +545,6 @@ void QuadWarp :: mouseReleased(ofMouseEventArgs &e) {
 	lastMousePress  = ofGetElapsedTimef() ; 
 	
 };
-
 
 bool QuadWarp::loadSettings() {
 	  
