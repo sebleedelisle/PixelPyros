@@ -70,6 +70,9 @@ public:
 	void updateScreenSizes(); 
 	void windowResized(int w, int h);
 
+    void loadNetworkConfig();
+    void addAddressEntry(ofxXmlSettings& xml, const string& name, const string& address);
+    
   	ParticleSystemManager& particleSystemManager;
 	LaserManager& laserManager;
 	SceneManager sceneManager;
@@ -118,6 +121,10 @@ public:
 	bool shiftPressed;
     bool altPressed;
 	
+    string camera1Address;
+    string camera2Address;
+    string oscDeviceAddress;
+    
 	PyrosRenderer renderer;
 	ofxOscParameterSync sync;
     
