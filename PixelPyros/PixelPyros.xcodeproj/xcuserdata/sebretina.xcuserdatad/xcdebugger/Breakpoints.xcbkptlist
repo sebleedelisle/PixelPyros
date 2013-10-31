@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/SceneData/Vectorizer/SceneVectorizer.cpp"
-         timestampString = "404489630.638517"
+         timestampString = "404843398.686173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "419"
-         endingLineNumber = "419"
+         startingLineNumber = "600"
+         endingLineNumber = "600"
          landmarkName = "SceneVectorizer :: getRocketTronFountain(float hueStartOffset, float hueChange, float speedMultiplier, bool useLaser)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -251,11 +251,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/SceneData/IntroAnim/SceneIntroAnim.cpp"
-         timestampString = "404333867.632322"
+         timestampString = "404849834.039064"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "77"
-         endingLineNumber = "77"
+         startingLineNumber = "78"
+         endingLineNumber = "78"
          landmarkName = "SceneIntroAnim::update(float deltaTime)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -290,11 +290,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/SceneData/IntroAnim/SceneIntroAnim.cpp"
-         timestampString = "404750655.468037"
+         timestampString = "404850543.362746"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "132"
-         endingLineNumber = "132"
+         startingLineNumber = "153"
+         endingLineNumber = "153"
          landmarkName = "SceneIntroAnim::draw()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -446,12 +446,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/SceneData/Retro/SceneRetro.cpp"
-         timestampString = "404820903.853055"
+         timestampString = "404825361.002378"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "295"
-         endingLineNumber = "295"
+         startingLineNumber = "345"
+         endingLineNumber = "345"
          landmarkName = "SceneRetro::getRetroSpinner(float hue, float hueChange)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/SceneData/Space/SceneSpace.cpp"
+         timestampString = "404831861.972888"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "607"
+         endingLineNumber = "607"
+         landmarkName = "SceneSpace :: getSphereRocketWithBitmap(ofImage&amp;image)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/SceneData/Vectorizer/SceneVectorizer.cpp"
+         timestampString = "404843398.686173"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "373"
+         endingLineNumber = "373"
+         landmarkName = "SceneVectorizer :: getGeomRocket(ofMesh&amp; mesh, int minBrightness)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

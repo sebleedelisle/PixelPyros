@@ -4,20 +4,20 @@
 		<status>No devices connected ETHERDREAM_IDLE 0 0</status>
 		<show_warp_points>0</show_warp_points>
 		<intensity>1</intensity>
-		<colour_change_offset>-3</colour_change_offset>
+		<colour_change_offset>-10</colour_change_offset>
 		<show_registration>0</show_registration>
 		<show_move_points>0</show_move_points>
 		<show_sync_test>0</show_sync_test>
 		<render_laser_path>1</render_laser_path>
 		<render_laser_preview>1</render_laser_preview>
-		<move_speed>9.875</move_speed>
+		<move_speed>4.115</move_speed>
 		<move_points_padding>1</move_points_padding>
 		<shape_pre_blank_points>5</shape_pre_blank_points>
 		<shape_post_blank_points>1</shape_post_blank_points>
 		<dot_max_points>5</dot_max_points>
 		<line_acceleration>0.379075</line_acceleration>
 		<line_speed>6.845</line_speed>
-		<eased_line_speed>6.5</eased_line_speed>
+		<eased_line_speed>4.835</eased_line_speed>
 		<eased_line_padding>2</eased_line_padding>
 		<spiral_spacing>3.985</spiral_spacing>
 	<circle_overlap>6.75</circle_overlap>
@@ -25,7 +25,7 @@
 		<points_per_second>77075</points_per_second>
 	<flip_x>1</flip_x>
 		<flip_y>1</flip_y>
-	<laser_move_points>1</laser_move_points>
+	<laser_move_points>0</laser_move_points>
 		<show_laser_path>1</show_laser_path>
 	<circle_acceleration>0.039925</circle_acceleration>
 		<circle_speed>6.845</circle_speed>

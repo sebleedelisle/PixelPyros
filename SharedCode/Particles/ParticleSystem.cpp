@@ -245,6 +245,20 @@ Particle * ParticleSystem::initParticle(Particle * p) {
 	p->rotateAxis = settings.rotateAxis; 
 	
 	settings.initColourModifier(&p->colourModifier, life);
+	
+	if((settings.emitShape!=NULL) && (settings.emitShapeUseHue)) {
+		ofColor c = settings.emitShape->getColor(numParticlesCreated);
+		p->colourModifier.hueStart = p->colourModifier.hueEnd = c.getHue();
+		p->colourModifier.saturationStart =c.getSaturation() * 0.8;
+		p->colourModifier.saturationEnd = c.getSaturation();
+		float brightness = (float)c.getBrightness()/255.0;
+		p->colourModifier.brightnessEnd*=brightness;
+		p->colourModifier.brightnessStart*=brightness;
+		
+		
+		
+	}
+	
 	p->shimmerMin = settings.shimmerMin; 
 	
 	float curvedRandom = ofRandom(1);

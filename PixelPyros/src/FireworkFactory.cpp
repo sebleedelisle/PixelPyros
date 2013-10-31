@@ -232,8 +232,8 @@ ParticleSystemSettings FireworkFactory :: getFlowerTrailParticles(float hue, flo
 	ParticleSystemSettings trails;
 	trails.renderer = new ParticleRendererShape();
 
-	trails.speedMin = 20;
-	trails.speedMax = 50;
+	trails.speedMin = 10;
+	trails.speedMax = 20;
 	trails.directionZ = 0;
 	trails.directionZVar = 90;
 	trails.directionYVar = 180;
@@ -254,7 +254,7 @@ ParticleSystemSettings FireworkFactory :: getFlowerTrailParticles(float hue, flo
 	trails.brightnessEnd = 0;
 	
 	trails.emitInheritVelocity = -0.5;
-	trails.emitCount = 1000;
+	trails.emitCount = 500;
 	
 	
 	//trails.shimmerMin = 0;

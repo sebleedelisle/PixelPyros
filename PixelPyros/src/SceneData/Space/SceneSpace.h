@@ -38,6 +38,7 @@ class SceneSpace : public Scene {
 	
 	TriggerSettingsRocket* getFlowerRocket(float hue = 20, float hueChange = -5);
 	TriggerSettingsRocket* getSphereFlowerRocket(float hue = 20, float hueChange = -5);
+	TriggerSettingsRocket* getSphereRocketWithBitmap(ofImage&image);
 	
 	ParticleSystemSettings getFlowerTrailParticles(float hue = 20, float hueChange = -5);
 	ParticleSystemSettings getFlowerExplosionParticles(float hue = 20, float hueChange = -5);
@@ -45,7 +46,7 @@ class SceneSpace : public Scene {
 	
 	
 	ofImage softWhiteImage;
-
+	ofImage earthImage;
 	
 	
 	

@@ -535,6 +535,8 @@
 		12DBC7B517DDDD280041FA5C /* FireworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireworkFactory.h; sourceTree = "<group>"; };
 		12DDCADC17F55C1200484864 /* LaserLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserLine.h; sourceTree = "<group>"; };
 		12E447891820638F00DFD05F /* ColourStop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColourStop.h; sourceTree = "<group>"; };
+		12E4478A18214F1B00DFD05F /* ParticleRendererMeshLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererMeshLines.h; sourceTree = "<group>"; };
+		12E4478B1821673900DFD05F /* ParticleRendererMeshLinesLaser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererMeshLinesLaser.h; sourceTree = "<group>"; };
 		12EB0A1A17E7D0840045DC0B /* SequenceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequenceCommand.h; sourceTree = "<group>"; };
 		12EB3B6C17E0EB37002D90A0 /* CubicBezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubicBezier.h; sourceTree = "<group>"; };
 		12EB3B6D17E0EB37002D90A0 /* LaserDot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaserDot.h; sourceTree = "<group>"; };
@@ -819,6 +821,8 @@
 				1215867F1809D0700082FCAF /* ParticleRendererGlitchLineLaser.h */,
 				12D174C31820456200CC282B /* ParticleRendererGlitchPolylineLaser.h */,
 				1254506D17BF861C00EF23B7 /* ParticleRendererLine.h */,
+				12E4478A18214F1B00DFD05F /* ParticleRendererMeshLines.h */,
+				12E4478B1821673900DFD05F /* ParticleRendererMeshLinesLaser.h */,
 				12D174C41820480200CC282B /* ParticleRendererLaserLine.h */,
 				1254506E17BF861C00EF23B7 /* ParticleRendererLowRes.h */,
 				1254506F17BF861C00EF23B7 /* ParticleRendererShape.h */,

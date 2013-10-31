@@ -99,8 +99,14 @@ SceneRetro :: SceneRetro(string scenename ) : Scene(scenename) {
 	addTriggerPattern(patternRedMix, "Red fountains + rockets");
 	
 	TriggerPattern spinnersRed;
-	spinnersRed.addTriggerSettings(getRetroSpinner()); 
-	addTriggerPattern(spinnersRed, "Red spinners with fountains"); 
+	spinnersRed.addTriggerSettings(getSmallPixelRocket(30));
+	spinnersRed.addTriggerSettings(getRetroSpinner(0));
+	addTriggerPattern(spinnersRed, "Yellow spinners with cyan fountains");
+	
+	TriggerPattern spinnersCyan;
+	spinnersCyan.addTriggerSettings(getSmallPixelRocket(180));
+	spinnersCyan.addTriggerSettings(getRetroSpinner(180, -70));
+	addTriggerPattern(spinnersCyan, "Cyan spinners with red fountains");
 			
 };
 
@@ -109,10 +115,7 @@ bool SceneRetro::update(float deltaTime) {
 	
 	if(!Scene::update(deltaTime)) return false;
 	
-	
 }
-
-
 
 
 bool SceneRetro :: draw() {
@@ -174,6 +177,53 @@ TriggerSettingsRocket* SceneRetro:: getPixelRocket(float hue) {
 
 
 };
+
+
+
+TriggerSettingsRocket* SceneRetro:: getSmallPixelRocket(float hue) {
+	
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	ParticleSystemSettings pss;
+	//pss.renderer = new ParticleRendererShape();
+	pss.renderer = new ParticleRendererLowRes(pixelSize,1);
+	pss.speedMin = pss.speedMax = 0;
+	pss.emitCount = 100;
+	pss.sizeStartMin = pss.sizeStartMax = pixelSize*2;
+	pss.sizeChangeRatio = 0;
+	pss.saturationEnd =500;
+	pss.hueStartMin = pss.hueStartMax = hue;
+	//pss.brightnessEnd = 128;
+	pss.lifeMin = 0.4;
+	pss.lifeMax = 0.4;
+	
+	pss.emitLifeTime = 1.0;
+	
+	pss.startSound = "RetroLaunchQuiet";
+
+	
+	rocketSettings.addParticleSystemSetting(pss);
+	
+	rocketSettings.startSpeedMin = 800;
+	rocketSettings.startSpeedMax= 900;
+	rocketSettings.directionVar = 5;
+	
+	
+	rocketSettings.timeSpeed = pss.timeSpeed = 0.7;
+	
+	rocketSettings.gravity.set(0,1800);
+	
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	
+	ts->addRocketSettings(&rocketSettings);
+	ts->rechargeSettings = TriggerRechargeSettings::superFastMultiples;
+	ts->rotateMirrorOffset = 30;
+	
+	return ts;
+	
+	
+};
+
 
 TriggerSettingsRocket* SceneRetro:: getRetroFountain(float hueOffset, float hueChange, float minSpeed, float maxSpeed ) {
 	
@@ -258,7 +308,6 @@ TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
 	
 	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = 0.7;
 	
-	
 	ts.rechargeSettings = TriggerRechargeSettings::medium;
 	
 	return &ts;
@@ -275,54 +324,64 @@ TriggerSettingsRocket* SceneRetro::getRetroSpinner(float hue, float hueChange) {
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
-	rocketSettings.startSpeedMin = 1100;
-	rocketSettings.startSpeedMax = 1400;
+	rocketSettings.startSpeedMin = 1300;
+	rocketSettings.startSpeedMax = 1800;
 	rocketSettings.drag = 0.94;
-	
-	
+		
 	ParticleSystemSettings trails;// = getPixelTrailParticles(hue, hueChange);
 	
 	ofMesh* circleMesh = new ofMesh();
-	for(int i = 0; i<50; i++) {
+	int numpoints = 50; 
+	for(int i = 0; i<numpoints; i++) {
 		ofVec3f v(1,0,0);
-		v.rotate(ofMap(i,0,30,0,360), ofVec3f(0,0,1));
+		v.rotate(ofMap(i,0,numpoints,0,360), ofVec3f(0,0,1));
 		circleMesh->addVertex(v);
 	}
 	
 	trails.emitShape = circleMesh;
-	trails.speedMin = 60;
-	trails.speedMax = 60;
-	trails.directionZVar = 0;
+	trails.emitLifeTime = 1;
+	trails.speedMin = 20;
+	trails.speedMax = 70;
+	trails.directionZVar = 3;
 	trails.directionYVar = 0;
-	trails.emitCount = 200;
+	trails.emitCount = 600;
 	trails.emitInheritVelocity = 0.5;
 	trails.drag = 0.9; 
 	trails.renderer = new ParticleRendererLowRes(pixelSize);
 	
-	trails.sizeStartMin = trails.sizeStartMax = 4;
+	trails.sizeStartMin = 2;
+	trails.sizeStartMax = 4;
 	trails.hueStartMin = trails.hueStartMax = hue;
 	trails.hueChange = hueChange;
 	trails.saturationMin = trails.saturationMax = 0;
-	trails.saturationEnd = 500;
+	trails.saturationEnd = 300;
 	trails.brightnessStartMin = trails.brightnessStartMin = trails.brightnessEnd = 255;
 	
 	trails.shimmerMin = 0.1;
-	trails.lifeMin = trails.lifeMax = 0.6;
-	trails.emitSpeedModifier = 1;		// Multiplier
+	trails.lifeMin = 1.0;
+	trails.lifeMax = 2.0;
+	trails.emitSpeedModifier = 0.1;		// Multiplier
+	trails.gravity.y = 300;
 	
+	trails.startSound = "RetroFountain";
 	
 	//ParticleSystemSettings explosion = getPixelExplosionParticles(hue, hueChange);
 	
 	//explosion.emitDelay = trails.emitLifeTime;
+	rocketSettings.setLifeTime(1);
 	
 	rocketSettings.addParticleSystemSetting(trails);
-	//rocketSettings.addParticleSystemSetting(explosion);
+	rocketSettings.timeSpeed = trails.timeSpeed = 0.7;
+	ParticleSystemSettings& head = *rocketSettings.addParticleRenderer(new ParticleRendererLaser());
+
+	head.lifeMin = head.lifeMax = 0.7;
+	head.sizeStartMin = head.sizeStartMax = 6;
 	
+		
 	ts.addRocketSettings(&rocketSettings);
 	
-	rocketSettings.timeSpeed = trails.timeSpeed = 0.7;
 	
-	ts.rechargeSettings = TriggerRechargeSettings::medium;
+	ts.rechargeSettings = TriggerRechargeSettings::fast;
 	
 	return &ts;
 	

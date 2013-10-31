@@ -466,7 +466,7 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 	if(e.key == OF_KEY_ALT){
         altPressed = true;
     }
-	//cout << altPressed << " " << shiftPressed<< endl;
+	cout << altPressed << " " << shiftPressed<< endl;
 	
 	int newPattern = -1; 
 	if(e.key==' ') {

@@ -335,7 +335,7 @@ void ofApp::keyPressed(int key){
         shiftPressed = true;
     }
 
-	cout << "SHIFT PRESSED : "<< shiftPressed << endl;
+	//cout << "SHIFT PRESSED : "<< shiftPressed << endl;
 	if(key == OF_KEY_ALT){
         altPressed = true;
     }
@@ -462,13 +462,11 @@ void ofApp:: setupScenes() {
 	
 	sceneManager.addScene(sceneGame = new SceneGame("Game"));
 	
-	sceneManager.addScene(new SceneNadia("Nadia"));
+	//sceneManager.addScene(new SceneNadia("Nadia"));
 	
 	sceneManager.addScene(new SceneSpace("Space"));
 
-	sceneManager.changeScene("Retro");
-	
-	
+	sceneManager.changeScene("Vectorizer");
 	
 }
 
@@ -489,6 +487,7 @@ void ofApp::initSounds() {
 	soundPlayer.addSound("LaunchTechno", "LaunchTechnoLow", 1, 0.3, 0.2, "aif", 0.01);
 	soundPlayer.addSound("LaunchSweep", "LaunchSweep", 0.2, 2, 0.2, "wav", 0.02);
 	soundPlayer.addSound("RetroLaunch", "RetroLaunch", 0.2, 1, 0.2, "wav", 0.02);
+	soundPlayer.addSound("RetroLaunch", "RetroLaunchQuiet", 0.1, 1, 0.2, "wav", 0.02);
 	soundPlayer.addSound("RetroExplosion", "RetroExplosion", 0.9, 1, 0.2, "aif", 0.02);
 	soundPlayer.addSound("RetroFountain", "RetroFountain", 0.2, 1.5, 0.8, "wav", 0.02);
 

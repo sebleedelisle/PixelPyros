@@ -18,6 +18,7 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	FireworkFactory& fireworkFactory = *FireworkFactory::instance(); 
 	
 	softWhiteImage.loadImage("img/ParticleWhite.png");
+	earthImage.loadImage("img/earthImage.png");
 	
 	TriggerPattern blank;
 	
@@ -150,15 +151,20 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	addTriggerPattern(laserRocketsPattern, "laser rockets"); 
 
-	
+	TriggerPattern earthPlanetPattern;
+	TriggerSettingsRocket* earthTrigger = getSphereRocketWithBitmap(earthImage);
+	earthPlanetPattern.addTriggerSettings(TriggerSettings::blank);
+	earthPlanetPattern.addTriggerSettings(TriggerSettings::blank);
+	earthPlanetPattern.addTriggerSettings(earthTrigger);
+	earthPlanetPattern.addTriggerSettings(TriggerSettings::blank);
+		
+	addTriggerPattern(earthPlanetPattern);
 	
 }
 
 bool SceneSpace::update(float deltaTime) {
 	if(!Scene::update(deltaTime)) return false;
 	starfield.update(deltaTime);
-	
-	
 }
 
 bool SceneSpace::draw() {
@@ -270,6 +276,8 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	rocketSettings.addParticleSystemSetting(stars);
 	rocketSettings.addParticleSystemSetting(ps);
 	
+	rocketSettings.addParticleRenderer(new ParticleRendererLaserLine(50));
+	
 	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);
 	ts->rechargeSettings = TriggerRechargeSettings::fast;
@@ -277,9 +285,6 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	return ts;
 	
 }
-
-
-
 
 
 TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
@@ -480,9 +485,230 @@ TriggerSettingsRocket* SceneSpace::getPlanetRocket() {
 	return ts;
 
 	
-	
-	
 }
+
+
+
+
+TriggerSettingsRocket* SceneSpace :: getSphereRocketWithBitmap(ofImage&image){
+	
+	renderer = new ParticleRendererShape();
+	
+	// ps = trails
+	ParticleSystemSettings ps;
+	// PHYSICS
+	ps.speedMin = 10;
+	ps.speedMax = 20;
+	ps.directionZ = 0;
+	ps.directionZVar = 90;
+	ps.directionYVar = 180;
+	ps.drag = 0.90;
+	ps.gravity.set(0,30);
+	
+	//LIFE
+	ps.lifeMin = 0.5;
+	ps.lifeMax = 0.8;
+	
+	//APPEARANCE
+	
+	ps.sizeStartMin = 2;
+	ps.sizeStartMax = 3;
+	ps.sizeChangeRatio = 0.5;
+	
+	ps.hueStartMin = 0;
+	ps.hueStartMax = 30;
+	ps.hueChange = 0;
+	
+	ps.brightnessStartMin = 150;
+	ps.brightnessStartMax = 255;
+	ps.brightnessEnd = 0;
+	
+	ps.saturationMin = 150;
+	ps.saturationMax = 255;
+	ps.saturationEnd = 255;
+	
+	//ps.shimmerMin = 0.1;
+	
+	// but also :
+	// lifeExpectancy
+	// delay
+	
+	ps.emitMode = PARTICLE_EMIT_CONTINUOUS;
+	ps.emitCount = 1000;
+	
+	ps.emitDelay = 0;
+	ps.emitLifeTime= 1.5;
+	
+	ps.emitStartSizeModifier = 0;
+	ps.emitSpeedModifier = 0;
+	ps.emitHueModifierOffset = 0;
+	
+	//ps.emitAttachedPhysicsObject = &rocket;
+	ps.emitInheritVelocity = -0.5;
+	
+	ps.renderer = renderer;
+	//psystem.init(ps);
+	
+	ps.startSound = "LaunchRocketSharp";
+	
+	
+	// optional colour modifier
+	
+	// PLANET PARTICLES PS2
+	
+	ParticleSystemSettings ps2;
+	// PHYSICS
+	ps2.speedMin = 650;
+	ps2.speedMax = 700;
+	ps2.directionZ = 0;
+	ps2.directionZVar = 3; //90;
+	ps2.directionYVar = 3; //180;
+	ps2.drag = 0.86;
+	ps2.gravity.set(0,30);
+	
+	//LIFE
+	ps2.lifeMin = 2.5;
+	ps2.lifeMax = 3.5;
+	
+	//APPEARANCE
+	
+	ps2.sizeStartMin = 3;
+	ps2.sizeStartMax = 6;
+	ps2.sizeChangeRatio = 0;
+	
+	ps2.hueStartMin = 20;
+	ps2.hueStartMax = 25;
+	ps2.hueChange = -20;
+	
+	ps2.brightnessStartMin = 255;
+	ps2.brightnessStartMax = 255;
+	ps2.brightnessEnd = 0;
+	
+	ps2.saturationMin = 50;
+	ps2.saturationMax = 100;
+	ps2.saturationEnd = 500;
+	
+	ps2.shimmerMin = 0.3;
+	
+	// but also :
+	// lifeExpectancy
+	// delay
+	
+	ps2.emitCount = 20000;
+	
+	ps2.emitDelay = ps.emitLifeTime+0.2;
+	ps2.emitLifeTime= 0.05;
+	
+	
+	ps2.emitMode = PARTICLE_EMIT_BURST;
+	ofMesh& earthMesh = *new ofMesh(ofMesh::icosphere(1,4));
+	ps2.emitShape = &earthMesh;
+	ps2.emitShapeUseHue = true;
+	
+	vector<ofVec3f>& vertices = earthMesh.getVertices();
+	for(int i =0 ; i<vertices.size(); i++) {
+		
+		ofVec3f& v = vertices[i]; 
+		float yaw = atan2(v.x, v.z);
+		float pitch = atan2(v.y, sqrt((v.z * v.z) + (v.x * v.x)));
+		
+		float x = ofMap(yaw, 0, PI*2, 0, image.getWidth());
+		float y = ofMap(pitch, -PI/2, PI/2, 0, image.getHeight());
+		
+		ofColor c = image.getColor(x, y);
+		
+		earthMesh.addColor(c);
+		
+	}
+	
+	ps2.renderer = new ParticleRendererDoubleCircle();
+	
+	
+	// RINGS PS3
+	ParticleSystemSettings ps3;
+	// PHYSICS
+	ps3.speedMin = 650;
+	ps3.speedMax = 750;
+	ps3.directionZ = 0;
+	ps3.directionZVar = 0;
+	ps3.directionYVar = 180;
+	ps3.drag = 0.92;
+	ps3.gravity.set(0,30);
+	
+	//LIFE
+	ps3.lifeMin = 1.5;
+	ps3.lifeMax = 2.5;
+	
+	//APPEARANCE
+	
+	ps3.sizeStartMin = 5;
+	ps3.sizeStartMax = 7;
+	ps3.sizeChangeRatio = 0;
+	
+	ps3.hueStartMin = 10;
+	ps3.hueStartMax = 15;
+	ps3.hueChange = 0;
+	
+	ps3.brightnessStartMin = 200;
+	ps3.brightnessStartMax = 255;
+	ps3.brightnessEnd = 100;
+	
+	ps3.saturationMin = 200;
+	ps3.saturationMax = 200;
+	ps3.saturationEnd = 250;
+	
+	ps3.shimmerMin = 0.9;
+	
+	// but also :
+	// lifeExpectancy
+	// delay
+	
+	//ps3.emitMode = PARTICLE_EMIT_BURST;
+	ps3.emitCount = 20000;
+	
+	ps3.emitDelay = ps2.emitDelay+0.1;
+	ps3.emitLifeTime= 0.05;
+	
+	ps3.startSound = "SoftExplosion";
+	
+	
+	//ps3.startSound = "ExplosionSynth1";
+	
+	ps3.renderer = new ParticleRendererCircle(7, true, 1, ofVec3f(90,0,0));
+	
+	
+	ps2.rotateMin = 20;
+	ps2.rotateMax = 50;
+	ps3.rotateMin = -20;
+	ps3.rotateMax = 20;
+	
+	RocketSettings& rocketSettings = *new RocketSettings();
+	
+	rocketSettings.startSpeedMin = 1100;
+	rocketSettings.startSpeedMax = 1300;
+	rocketSettings.direction = -90;
+	rocketSettings.directionVar = 5;
+	rocketSettings.gravity.y = 400;
+	rocketSettings.drag = 0.97;
+	
+	rocketSettings.timeSpeed = 0.5;
+	
+	//ps.timeSpeed = ps2.timeSpeed = ps3.timeSpeed = 0.8;
+	
+	rocketSettings.addParticleSystemSetting(ps);
+	rocketSettings.addParticleSystemSetting(ps2);
+	//rocketSettings.addParticleSystemSetting(ps3);
+	
+	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
+	ts->addRocketSettings(&rocketSettings);
+	ts->rechargeSettings = TriggerRechargeSettings::slow;
+	
+	return ts;
+	
+
+	
+	
+};
 
 
 TriggerSettingsRocket* SceneSpace :: getFlowerRocket(float hue , float hueChange){
@@ -502,9 +728,9 @@ TriggerSettingsRocket* SceneSpace :: getFlowerRocket(float hue , float hueChange
 	//explosion.drag = 0.88;
 	explosion.emitDelay = explosionLines.emitDelay = trails.emitLifeTime = 2;
 	
-
+	
 	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = explosionLines.timeSpeed = 0.7;
-
+	
 	rocketSettings.addParticleSystemSetting(trails);
 	rocketSettings.addParticleSystemSetting(explosion);
 	rocketSettings.addParticleSystemSetting(explosionLines);
@@ -516,12 +742,10 @@ TriggerSettingsRocket* SceneSpace :: getFlowerRocket(float hue , float hueChange
 	ts->rechargeSettings = TriggerRechargeSettings::slow;
 	
 	return ts;
-
+	
 	
 	
 };
-
-
 
 
 TriggerSettingsRocket* SceneSpace :: getSphereFlowerRocket(float hue , float hueChange ){

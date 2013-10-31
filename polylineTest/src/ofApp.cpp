@@ -52,10 +52,11 @@ void ofApp::draw(){
 	testpoly.draw();
 	ofNoFill();
 	ofCircle(testpoly.getPointAtPercent(0), 20);
-	ofCircle(testpoly.getPointAtPercent(0.99999), 20);
+	ofCircle(testpoly.getPointAtPercent(1), 20);
 	ofCircle(testpoly.getPointAtPercent(ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 1)),10);
-	
-	
+	float length = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, testpoly.getPerimeter());
+	float index = testpoly.getIndexAtLength(length);
+	ofDrawBitmapString(ofToString(index), 20,20);
 	
 	
 	

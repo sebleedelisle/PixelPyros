@@ -506,7 +506,7 @@ void LaserManager:: drawShapes() {
 				reversed = false;
 			}
 			
-			if((shape1->reversable) && (shape1->getEndPos().distanceSquared(shape2->getEndPos()) < shortestDistance)) {
+			if((shape2->reversable) && (shape1->getEndPos().distanceSquared(shape2->getEndPos()) < shortestDistance)) {
 				shortestDistance = shape1->getEndPos().distanceSquared(shape2->getEndPos());
 				nextDotIndex = j;
 				reversed = true;

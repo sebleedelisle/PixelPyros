@@ -23,7 +23,7 @@ class LaserPolyline : public LaserShape{
 		
 		startPos = polyline.getPointAtPercent(0);
 		// to avoid a bug in polyline in open polys
-		endPos = polyline.getPointAtPercent(0.999);
+		endPos = polyline.getPointAtPercent(1);
 		colourSystem = coloursystem;
 		previewMesh.setMode(OF_PRIMITIVE_LINES); 
 		
