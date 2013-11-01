@@ -14,6 +14,10 @@
 
 #include "matrix_funcs.h"
 
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
+
 QuadWarp :: QuadWarp (string saveLabel) {
 	
 	label = saveLabel;
@@ -211,10 +215,24 @@ void QuadWarp :: draw(bool lockAxis) {
         drawMarker(point, pointColour, pointRadius);
 	
         if( useBarrelingCorrection ){
+            int j = (i+1)%dstPoints.size();
             ofVec3f hControlPoint = dstControlPoints[i*2]+point;
             ofVec3f vControlPoint = dstControlPoints[i*2+1]+point;
+            ofVec3f nextPoint =  dstPoints[j];
+            ofVec3f nextHControlPoint =  dstControlPoints[j*2]+nextPoint;
+            ofVec3f nextVControlPoint =  dstControlPoints[j*2+1]+nextPoint;
+            
             drawMarker(hControlPoint,pointColour,controlPointRadius);
             drawMarker(vControlPoint,pointColour,controlPointRadius);
+            
+            ofPolyline curve;
+            curve.addVertex(point);
+            if( i&1 )
+                curve.bezierTo( vControlPoint, nextVControlPoint, nextPoint );
+            else
+                curve.bezierTo( hControlPoint, nextHControlPoint, nextPoint );
+            
+            curve.draw();
         }
         
 		if(i == curDragPointIndex){
@@ -384,8 +402,6 @@ ofVec3f QuadWarp::getWarpedPoint(ofVec3f point){
 	
 	vector<cv::Point2f> pre, post;
 	
-    //if( useBarrelingCorrection ) point = barrelCorrection(point);
-	
 	pre.push_back(cv::Point2f(point.x, point.y));
 	post.push_back(cv::Point2f());
 	
@@ -399,11 +415,22 @@ ofVec3f QuadWarp::getWarpedPoint(ofVec3f point){
 	
 //	return point;s
     
-    return ofxCv::toOf(post[0]);
+    point = ofxCv::toOf(post[0]);
+    if( useBarrelingCorrection ) point = barrelCorrection( point );
+    
+    return point;
 
 }
 
 ofVec3f QuadWarp::barrelCorrection(ofVec3f point){
+    return barrelCorrection(point,false);
+}
+
+ofVec3f QuadWarp::barrelUncorrection(ofVec3f point){
+    return barrelCorrection(point,true);
+}
+
+ofVec3f QuadWarp::barrelCorrection(ofVec3f point,bool inverse){
     
     /*
     float aspectRatio = srcRangeRect / srcRangeRect.height;
@@ -414,21 +441,182 @@ ofVec3f QuadWarp::barrelCorrection(ofVec3f point){
     
     point = point.normalize() * ( point.length() + barrellingAmount * ( radius - point.length() ) );
     
-    point.x = ofMap( point.x, 0.0f, 1.0f, srcRangeRect.getMinX(), srcRangeRect.getMaxX());
-    point.y = ofMap( point.x, 0.0f, 1.0f, srcRangeRect.getMinY(), srcRangeRect.getMaxY());
+     ofVec3f normPoint(
+     ofMap( point.x, srcRangeRect.getMinX(), srcRangeRect.getMaxX(), 0.0f, 1.0f),
+     ofMap( point.x, srcRangeRect.getMinY(), srcRangeRect.getMaxY(), 0.0f, 1.0f)
+     );
+     
+     srcRangeRect.set(srcPoints[0], 0.0f, 0.0f);
+     srcRangeRect.growToInclude(srcPoints[1]);
+     srcRangeRect.growToInclude(srcPoints[2]);
+     srcRangeRect.growToInclude(srcPoints[3]);
+     
+     
      */
     
+    ofVec3f center = getCenter();
     
+    /* 
+        Find the first quad side that intersects with the ray cast from the quad center through our point.
+     
+        Then find the distance of that intersection, and the distance of intersection with the bezier of that quad side.
+     
+        Finally scale the points distance from the center to the ratio of these two distances.
+     */
+    for(int i=0;i<dstPoints.size();i++){
+        
+        int j = (i+1)%dstPoints.size();
+        int cpI = ( i*2+(i&1) );
+        int cpJ = ( j*2+(~i&1) );
+        
+        ofVec3f dstStartPoint = dstPoints[i];
+        ofVec3f dstEndPoint = dstPoints[j];
+        ofVec3f cp1 = dstControlPoints[cpI] + dstStartPoint;
+        ofVec3f cp2 = dstControlPoints[cpJ] + dstEndPoint;
+        
+        ofVec3f ray = (point-center).normalize();
+        ofVec3f intersection;
+        
+        if( rayInterectionWithLine( center, ray, dstPoints[i], dstPoints[j], intersection ) ){
+            cout << "Intersection: " << intersection << endl;
+            float lineDistance = intersection.distance(center);
+            
+            if( rayIntersectionWithBezier( center, ray, dstStartPoint, dstEndPoint, cp1, cp2, intersection ) ){
+                float intersectionDistance = intersection.distance( center );
+                
+                return ( point - center ).normalize() * ( intersectionDistance / lineDistance ) + center;
+            }
+            
+            
+        }
+        
+        
+    }
     
+    return point;
+        
 }
 
-bool QuadWarp::lineIntersectionWithCurve(ofPoint lp1, ofPoint lp2,ofPoint bp1,ofPoint bp2,ofPoint cp1, ofPoint cp2, ofPoint& closestIntersection){
+/* Does the line p1-p2 intersect with p3-p4 */
+bool QuadWarp::rayInterectionWithLine(ofVec3f p1, ofVec3f r1, ofVec3f p3, ofVec3f p4, ofVec3f& intersection ){
     
-    return false;
+    ofVec3f p2 = p1 + r1;
+    ofVec3f u = p4-p3;
+    ofVec3f v = p2-p1;
+    ofVec3f normalV = v.perpendicular(ofVec3f(0,0,1));
+    ofVec3f normalU = u.perpendicular(ofVec3f(0,0,1));
+    
+    ofVec3f w = p1 - p3;
+    
+    float normalVDotW = -normalV.dot(w);
+    float normalVDotU = normalV.dot(u);
+    float normalUDotW = normalU.dot(w);
+    float normalUDotV = normalU.dot(v);
+    if( normalVDotU == 0.0f ) return false;
+    
+    float s = normalVDotW / normalVDotU;
+    float t = normalUDotW / normalUDotV;
+    
+    if( s < 0.0f || s > 1.0f ) return false;
+    if( t < 0.0f ) return false;
+    
+    intersection = s*u+p3;
+    return true;
 }
 
-ofPoint QuadWarp::pointOnBeizer(){
+bool QuadWarp::rayIntersectionWithBezier(ofVec3f lp1, ofVec3f r1,ofVec3f bp1,ofVec3f bp2,ofVec3f cp1, ofVec3f cp2, ofVec3f& closestIntersection){
     
+    ofVec3f lp2 = lp1+r1;
+    float A = lp2.y - lp1.y;
+    float B = lp1.x - lp2.x;
+    float C = lp1.x * ( lp1.y - lp2.y ) + lp1.y * ( lp2.x - lp1.x );
+    
+    vector<float> bx = bezierCoeffs(bp1.x, cp1.x, cp2.x, bp2.x);
+    vector<float> by = bezierCoeffs(bp1.y, cp1.y, cp2.y, bp2.y);
+    
+    
+    float a = A*bx[0]+B*by[0];
+    float b = A*bx[1]+B*by[1];	
+    float c = A*bx[2]+B*by[2];	
+    float d = A*bx[3]+B*by[3] + C;
+    
+    vector<float> roots = cubicRoots(a, b, c, d);
+    
+    float lowestS = MAXFLOAT;
+    for( int i=0; i<roots.size(); i++){
+        float t=roots[i];
+        float s;
+        ofPoint intersection( bx[0]*t*t*t+bx[1]*t*t+bx[2]*t+bx[3], by[0]*t*t*t+by[1]*t*t+by[2]*t+by[3] );
+        
+        /* check to see if line is vertical */
+        if( lp2.x - lp1.x != 0 ){
+            s=intersection.x-lp1.x/(lp2.x-lp1.x);
+        }
+        else{
+            s=intersection.y-lp1.y/(lp2.y-lp1.y);
+        }
+        
+        if( s < 0 || t < 0 || t > 1 ) continue;
+        
+        if( s < lowestS ){
+            closestIntersection = intersection;
+            lowestS = s;
+        }
+        
+    }
+    
+    return ( lowestS != MAXFLOAT );
+}
+
+vector <float> QuadWarp::bezierCoeffs(float P0,float P1,float P2,float P3)
+{
+	vector <float> Z(4);
+	Z[0] = -P0 + 3*P1 + -3*P2 + P3;
+    Z[1] = 3*P0 - 6*P1 + 3*P2;
+    Z[2] = -3*P0 + 3*P1;
+    Z[3] = P0;
+	return Z;
+}
+
+ /*
+  * Finds the roots of the curve equation, returns between 0 and 3 values
+  */
+ vector<float> QuadWarp::cubicRoots(float a, float b, float c, float d){
+    float A = a/b;
+    float B = b/c;
+    float C = c/d;
+    float Q = ( 3*B - A*A ) / 9;
+    float R = (9*A*B - 27*C - 2*A*A*A)/54;
+    float D = Q*Q*Q + R*R;
+    float Im;
+    float t0, t1, t2;
+     
+    vector<float> t(0);
+    
+     if( D>=0 ){
+        float S = sgn( R + sqrt( D ) ) * pow( abs( R + sqrt( D ) ), 1/3 );
+        float T = sgn( R - sqrt( D ) ) * pow( abs( R - sqrt( D ) ), 1/3 );
+         float t0 = -A/3 + ( S + T );
+         
+         Im = abs( sqrt(3) * (S-T)/2 );
+         if( Im==0 ){
+             float t1 = -A/3 - ( S + T )/2;
+             float t2 = -A/3 - ( S + T )/2;
+         }
+     }
+     else
+     {
+         float th = acos(R/sqrt(-pow(Q, 3)));
+         t0 = 2 * sqrt(-Q) * cos(th/3) - A/3;
+         t1 = 2 * sqrt(-Q) * cos((th + TWO_PI)/3) - A/3;
+         t2 = 2 * sqrt(-Q) * cos((th + FOUR_PI)/3) - A/3;
+     }
+     
+     if( 0.0f<=t0 && t0<=1.0f ) t.push_back( t0 );
+     if( 0.0f<=t1 && t1<=1.0f ) t.push_back( t1 );
+     if( 0.0f<=t2 && t2<=1.0f ) t.push_back( t2 );
+    
+    return t;
 }
 
 ofVec3f QuadWarp::getUnWarpedPoint(ofVec3f point){
@@ -444,11 +632,16 @@ ofVec3f QuadWarp::getUnWarpedPoint(ofVec3f point){
 	cv::perspectiveTransform(pre, post, inverseHomography);
 	//cout << "warped" << post[0] << endl;
 	
-	return ofxCv::toOf(post[0]);
+	point = ofxCv::toOf(post[0]);
 	//	return ofxCv::toOf(pre[0]);
 	
 	//	return point;
 	
+    if( useBarrelingCorrection ){
+        point = barrelUncorrection( point );
+    }
+    
+    return point;
 }
 
 void QuadWarp :: mousePressed(ofMouseEventArgs &e) {
@@ -573,6 +766,11 @@ bool QuadWarp::loadSettings() {
 	
     //cout << "Loading Warp: " << filename << " " << dstPoints[0].x << ", " << dstPoints[0].y << endl;
     
+    if( useBarrelingCorrection ){
+        //TODO Load control points for barrelling correction
+    }
+
+    
     updateHomography();
     
 	return true;
@@ -610,6 +808,10 @@ void QuadWarp::saveSettings() {
 	xml.addValue("x", dstPoints[3].x);
 	xml.addValue("y", dstPoints[3].y);
 	xml.popTag();
+    
+    if( useBarrelingCorrection ){
+        //TODO Store control points for barrelling correction
+    }
 	
 	xml.saveFile(filename);
     
@@ -642,4 +844,5 @@ std::istream& operator>> (std::istream& stream, QuadWarp& warp){
     
     return stream;
 }
+
 

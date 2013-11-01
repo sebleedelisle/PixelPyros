@@ -38,11 +38,17 @@ class QuadWarp {
 	ofVec3f getCenter();
 	ofVec3f getWarpedPoint(ofVec3f point);
     ofVec3f barrelCorrection(ofVec3f point);
+    ofVec3f barrelUncorrection(ofVec3f point);
     ofVec3f getUnWarpedPoint(ofVec3f point);
-    ofVec3f barrelCorrection();
+    ofVec3f barrelCorrection(ofVec3f point,bool inverse);
     
-    bool lineIntersectionWithCurve(ofPoint lp1, ofPoint lp2,ofPoint bp1,ofPoint bp2,ofPoint cp1, ofPoint cp2, ofPoint& closestIntersection);
-    ofPoint pointOnBeizer();
+    bool rayIntersectionWithBezier(ofVec3f lp1, ofVec3f r1,ofVec3f bp1,ofVec3f bp2,ofVec3f cp1, ofVec3f cp2, ofVec3f& closestIntersection);
+    
+    bool rayInterectionWithLine(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4, ofPoint& intersection);
+    
+    vector <float> bezierCoeffs(float P0,float P1,float P2,float P3);
+    
+     vector<float> cubicRoots(float a, float b, float c, float d);
     
     void clampPoints();
 	void updateHomography();
@@ -67,7 +73,7 @@ class QuadWarp {
 	//vector <ofVec3f> defaultDstPoints;
     
     ofRectangle srcRangeRect;
-	
+    
 	cv::Mat homography;
 	cv::Mat inverseHomography;
 	
