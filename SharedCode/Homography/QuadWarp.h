@@ -37,7 +37,20 @@ class QuadWarp {
 	void setSrcPoint(int index, ofVec3f point);
 	ofVec3f getCenter();
 	ofVec3f getWarpedPoint(ofVec3f point);
-	ofVec3f getUnWarpedPoint(ofVec3f point);
+    ofVec3f barrelCorrection(ofVec3f point);
+    ofVec3f barrelUncorrection(ofVec3f point);
+    ofVec3f getUnWarpedPoint(ofVec3f point);
+    ofVec3f barrelCorrection(ofVec3f point,bool inverse);
+    
+    bool rayIntersectionWithBezier(ofVec3f lp1, ofVec3f r1,ofVec3f bp1,ofVec3f bp2,ofVec3f cp1, ofVec3f cp2, ofVec3f& closestIntersection);
+    
+    bool rayInterectionWithLine(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4, ofPoint& intersection);
+    
+    vector <float> bezierCoeffs(float P0,float P1,float P2,float P3);
+    
+     vector<float> cubicRoots(float a, float b, float c, float d);
+    
+    void clampPoints();
 	void updateHomography();
 	
 	// applies the distortion matrix to the current draw state
@@ -55,9 +68,12 @@ class QuadWarp {
 	
 	vector <ofVec3f> srcPoints;
 	vector <ofVec3f> dstPoints;
+	vector <ofVec3f> dstControlPoints;
     vector <ofVec3f> dstPointsStartDrag;
 	//vector <ofVec3f> defaultDstPoints;
-	
+    
+    ofRectangle srcRangeRect;
+    
 	cv::Mat homography;
 	cv::Mat inverseHomography;
 	
@@ -66,6 +82,7 @@ class QuadWarp {
 	GLfloat _glWarpMatrix[16];
 	double _warpMatrix[3][3];
 	
+    float barrellingAmount;
 	
 	//ofVec3f *curPoint;
 	int curDragPointIndex;
@@ -73,13 +90,15 @@ class QuadWarp {
 	ofVec3f clickOffset;
 	ofVec3f dragStartPoint;
     ofVec3f dragCenterStart;
+
     bool dragAltPressed;
     bool cornerScalingMode=true;
-	
+	bool useBarrelingCorrection=false;
 	
 	ofRectangle bounds;
 	string label;
 	float pointRadius;
+    float controlPointRadius;
     ofVec2f offset;
 	   
 };

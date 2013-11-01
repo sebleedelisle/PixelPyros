@@ -92,7 +92,9 @@ void LaserManager:: setup (int width, int height) {
 	warp.setSrcPoint(1, ofVec2f(x2,y1));
 	warp.setSrcPoint(2, ofVec2f(x2,y2));
 	warp.setSrcPoint(3, ofVec2f(x1,y2));
-	
+
+	warp.useBarrelingCorrection = true;
+    
     warp.loadSettings();
     
 	intensity = 1;
@@ -979,7 +981,7 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity)
 	pathMesh.addVertex(p);
 	//pathMesh.addColor(c);
 	
-	ofPoint warpedpoint = warp.getWarpedPoint(p);;
+	ofPoint warpedpoint = warp.getWarpedPoint(p);
 	
 	//ofPoints.push_back(warpedpoint);
 
