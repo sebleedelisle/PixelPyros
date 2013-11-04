@@ -136,6 +136,7 @@ class LaserManager {
 	ofParameter<bool> showSyncTest;
 	ofParameter<bool> showLaserPath;
 	ofParameter<bool> renderLaserPreview;
+	ofParameter<bool> showPostTransformPreview; 
 	
 	// overall brightness applied to any laser colour
 	ofParameter<float> intensity;

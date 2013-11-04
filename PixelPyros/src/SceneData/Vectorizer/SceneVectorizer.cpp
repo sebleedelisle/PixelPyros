@@ -12,7 +12,9 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	loadMusicFile("LightsKlaypex.aif");
 	
-	ofMesh tempsphere = ofMesh::icosphere(1.3,1);
+	//ofMesh tempsphere = ofMesh::icosphere(1.3,1);
+	ofMesh tempsphere = ofMesh::icosahedron(1.3);
+	
 	vector<ofVec3f>& vertices1 = tempsphere.getVertices();
 	vector<ofIndexType>& indices = tempsphere.getIndices();
 	
