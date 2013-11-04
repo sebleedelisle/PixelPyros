@@ -121,6 +121,7 @@ void LaserManager:: setup (int width, int height) {
 	parameters.add(showSyncTest.set("show sync test", false));
 	parameters.add(showLaserPath.set("show laser path", true));
 	parameters.add(renderLaserPreview.set("render laser preview", true));
+	parameters.add(showPostTransformPreview.set("show post transform preview", false));
 
 	parameters.add(moveSpeed.set("move speed", 3,2,20));
 	parameters.add(movePointsPadding.set("move points padding", 1,0,20));
@@ -978,7 +979,8 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity)
 	//previewMesh.addVertex(p);
 	//previewMesh.addColor(c);
 	
-	pathMesh.addVertex(p);
+	
+	if(!showPostTransformPreview) pathMesh.addVertex(p);
 	//pathMesh.addColor(c);
 	
 	ofPoint warpedpoint = warp.getWarpedPoint(p);
@@ -989,7 +991,16 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity)
 	c.g*=intensity*pointIntensity * ((float)colourCorrection->g/255.0f);
 	c.b*=intensity*pointIntensity * ((float)colourCorrection->b/255.0f);
 	
-	ildaPoints.push_back(ofPointToIldaPoint(warpedpoint, c));
+	ofxIlda::Point ildapoint = ofPointToIldaPoint(warpedpoint, c);
+	ildaPoints.push_back(ildapoint);
+	
+	if(showPostTransformPreview){
+		ofPoint previewpoint;
+		previewpoint.x = ofMap(ildapoint.x, kIldaMinPoint, kIldaMaxPoint, 0, appWidth);
+		previewpoint.y = ofMap(ildapoint.y, kIldaMinPoint, kIldaMaxPoint, 0, appHeight);
+		pathMesh.addVertex(previewpoint);
+	
+	}
 	
 	currentPosition = p;
 	
