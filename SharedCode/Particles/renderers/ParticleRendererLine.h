@@ -20,8 +20,13 @@ class ParticleRendererLine : public ParticleRendererBase {
 		historyCount = historycount;
 	}
 	
-	virtual void renderParticles(Particle* firstParticle){
+	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
        
+		
+		ofPushMatrix();
+		applyScaleMatrix(scale, scaleCentreX, scaleCentreY);
+		
+		
         // BASIC TRIANGLE RENDERER
 		/*
 		if(smooth) ofEnableSmoothing();
@@ -82,7 +87,7 @@ class ParticleRendererLine : public ParticleRendererBase {
 		
 		mesh.draw();
 		ofPopStyle();
-		
+		ofPopMatrix(); 
         
     }
 	

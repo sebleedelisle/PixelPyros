@@ -59,6 +59,7 @@ class Scene {
 	
 	bool playing;
 	bool recording;
+	bool finished; 
 	bool overwriteMode; 
 	bool togglePlayPause();
 	bool toggleRecord();

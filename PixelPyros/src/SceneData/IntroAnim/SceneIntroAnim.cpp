@@ -19,12 +19,10 @@ SceneIntroAnim::SceneIntroAnim(string scenename) : Scene(scenename){
 	video.setLoopState(OF_LOOP_NONE);
 	textWriter.lineRandomness = 0;
 	textWriter.colourFlickerMin = 1;
-	vector<string> textlines;
-	//textlines.push_back("PIXELPYROS");
-	textlines.push_back("LASERS");
+	
 	textWriter.colour = ofColor::cyan;
-	laserWordMesh = textWriter.getMesh(textlines, ofPoint(768, 300), 20, true);
-	laserWordMesh.setMode(OF_PRIMITIVE_LINES);
+	//laserWordMesh = textWriter.getMesh(textlines, ofPoint(768, 500), 20, true);
+	//laserWordMesh.setMode(OF_PRIMITIVE_LINES);
 	
 	logo.load("img/logo.svg");
 	
@@ -58,7 +56,7 @@ void SceneIntroAnim::start() {
 	
 	Scene::start();
 	video.play();
-	video.setPosition(0.5);
+	video.setPosition(0.65);
 
 	starBrightness = 0; 
 
@@ -76,14 +74,15 @@ bool SceneIntroAnim::update(float deltaTime) {
 	starfield.update(deltaTime);
 	video.update();
 	
-	float vidPosition = video.getPosition();
+	vidPosition = video.getPosition();
 		
 	if(vidPosition > 0.90) starBrightness = ofMap(vidPosition, 0.90,0.92,1,0, true);
+	if(vidPosition > 0.95) finished = true;
 	if(starBrightness<1.0) starBrightness+=0.005;
 	
 	//if(vidPosition > 0.98) next();
-	//cout << starBrightness << endl;
-	//cout << video.getPosition() << endl;
+	//cout << starBrightness << ;;
+	cout << video.getPosition() << endl;
 }
 
 bool SceneIntroAnim::draw() {
@@ -100,46 +99,25 @@ bool SceneIntroAnim::draw() {
 	
 	ofSetColor(ofFloatColor(ofMap(video.getPosition(), 0.90,0.92,1,0, true)));
 	
-	
 	video.draw(0,0, APP_WIDTH, APP_HEIGHT);
 	ofPopMatrix();
 	
-	/*
-	for(int i = 0; i<4; i++) {
-		
-		ofPushMatrix();
-		ofTranslate(APP_WIDTH/8 * ((i*2)+1), APP_HEIGHT/8*7);
-		ofScale(0.2,0.2);
-		ofTranslate(-APP_WIDTH/2, -APP_HEIGHT/2);
-		
-		ofSetColor(ofFloatColor(ofMap(video.getPosition(), 0.90,0.92,1,0, true)));
-		video.getTextureReference().setTextureMinMagFilter(GL_LINEAR,GL_LINEAR);
-		video.draw(0,0, APP_WIDTH, APP_HEIGHT);
-		//ofRect(0,0,APP_WIDTH, APP_HEIGHT);
-		ofPopMatrix();
-		
-	}*/
-	
-	
 	ofPopStyle();
 	
-	//textWriter.draw(ofRectangle(APP_WIDTH*0.2, APP_HEIGHT*0.2, APP_WIDTH*0.6,APP_HEIGHT*0.2), "LASERS", true);
-	//laserWordMesh.draw();
-	
-	LaserManager& lm = *LaserManager::instance();
-	
-	
-	
-	vector<ofVec3f>& vertices = laserWordMesh.getVertices();
-	
-	for(int i = 0; i<vertices.size(); i+=2) {
-		if(i+1>=vertices.size()) break;
+	if((vidPosition > 0.73) && (vidPosition<0.79)) {
+		LaserManager& lm = *LaserManager::instance();
 		
-		lm.addLaserLineEased(vertices[i], vertices[i+1], laserWordMesh.getColors()[i]);
+		laserWordMesh = textWriter.getMesh("LASERS", ofPoint(768, 500), ofMap(vidPosition, 0.73, 0.79, 20, 23), true);;
+		vector<ofVec3f>& vertices = laserWordMesh.getVertices();
 		
-		
+		for(int i = 0; i<vertices.size(); i+=2) {
+			if(i+1>=vertices.size()) break;
+			
+			lm.addLaserLineEased(vertices[i], vertices[i+1], laserWordMesh.getColors()[i]);
+		}
 	}
-	
+	// LASER LOGO
+	/*
 	ofSetColor(255);
 	
 	int pathnum = ofClamp(floor(ofMap(ofGetMouseX(), 0, APP_WIDTH, 0, logo.getNumPath(), true)), 0, logo.getNumPath()-1);
@@ -154,16 +132,12 @@ bool SceneIntroAnim::draw() {
 		vector<ofPolyline>& lines = logo.getPathAt(i).getOutline();
 		for(int j=0; j<lines.size(); j++) {
 			ofPolyline& line = lines[j];
-			/*
-			vector <ofVec3f>& vertices = line.getVertices(); 
-			for(int k = 0; k<vertices.size(); k++) {
-				vertices[k]*=2;
-			}*/
+	
 			
 			lm.addLaserPolyline(line);
 		}
 	}
-	
+	*/
 	
 	return true;
 	

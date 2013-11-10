@@ -25,11 +25,11 @@ class ParticleSystem {
 	ParticleSystem(SoundPlayer& soundPlayer);
 	
 	void reset();
-	void init(ParticleSystemSettings& pes); 
+	void init(ParticleSystemSettings& pes);
 	
 	bool update(float deltaTime) ;
 	
-	void draw();
+	void draw(float scale);
 	
 	void addParticles(int count);
 	
@@ -41,7 +41,8 @@ class ParticleSystem {
 	Particle * firstParticle;
 	Particle * lastParticle;
 	
-	ofVec3f pos ; 
+	ofVec3f pos ;
+	ofVec3f scaleCentre; 
 	int numParticlesCreated; 
 	
 	bool finished; 

@@ -17,7 +17,15 @@ class ParticleRendererBase {
 	public:
 	
     
-    virtual void renderParticles(Particle* firstParticle) = 0;
+    virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0) = 0;
+	
+	void applyScaleMatrix(float scale, float scaleCentreX, float scaleCentreY) {
+		ofTranslate(scaleCentreX, scaleCentreY);
+		ofScale(scale, scale, scale);
+		ofTranslate(-scaleCentreX, -scaleCentreY);
+	}
+	
+	
 	
 	int historyCount=0;
 

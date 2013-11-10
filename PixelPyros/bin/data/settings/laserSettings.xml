@@ -1,36 +1,40 @@
 <Laser>
 	<Laser_Manager>
 		<Etherdream_connect>0</Etherdream_connect>
-		<status>No devices connected ETHERDREAM_IDLE 0 0</status>
+		<status>Running ETHERDREAM_RUNNING 1 0</status>
 		<show_warp_points>0</show_warp_points>
 		<intensity>1</intensity>
 		<colour_change_offset>-10</colour_change_offset>
-		<show_registration>1</show_registration>
+		<show_registration>0</show_registration>
 		<show_move_points>0</show_move_points>
 		<show_sync_test>0</show_sync_test>
 		<render_laser_path>1</render_laser_path>
-		<render_laser_preview>1</render_laser_preview>
-		<move_speed>4.115</move_speed>
+		<render_laser_preview>0</render_laser_preview>
+		<move_speed>4.925</move_speed>
 		<move_points_padding>1</move_points_padding>
 		<shape_pre_blank_points>5</shape_pre_blank_points>
 		<shape_post_blank_points>1</shape_post_blank_points>
-		<dot_max_points>5</dot_max_points>
+		<dot_max_points>11</dot_max_points>
 		<line_acceleration>0.379075</line_acceleration>
 		<line_speed>6.845</line_speed>
-		<eased_line_speed>4.835</eased_line_speed>
+		<eased_line_speed>7.265</eased_line_speed>
 		<eased_line_padding>2</eased_line_padding>
 		<spiral_spacing>3.985</spiral_spacing>
 	<circle_overlap>6.75</circle_overlap>
-	<show_mask_rect>0</show_mask_rect>
+	<show_mask_rect>1</show_mask_rect>
 		<points_per_second>77075</points_per_second>
 	<flip_x>1</flip_x>
 		<flip_y>1</flip_y>
 	<laser_move_points>0</laser_move_points>
-		<show_laser_path>1</show_laser_path>
-	<circle_acceleration>0.039925</circle_acceleration>
-		<circle_speed>6.845</circle_speed>
+		<show_laser_path>0</show_laser_path>
+	<circle_acceleration>0.219475</circle_acceleration>
+		<circle_speed>7.32</circle_speed>
 	<colour_correction>255, 255, 255, 255</colour_correction>
-	<show_post_transform_preview>1</show_post_transform_preview>
+	<show_post_transform_preview>0</show_post_transform_preview>
+	<mask_margin_top>0</mask_margin_top>
+		<mask_margin_bottom>268.8</mask_margin_bottom>
+		<mask_margin_left>0</mask_margin_left>
+		<mask_margin_right>0</mask_margin_right>
 	</Laser_Manager>
 <Laser/>
 </Laser>

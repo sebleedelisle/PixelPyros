@@ -14,9 +14,11 @@ class ParticleRendererLaser : public ParticleRendererShape {
 
 		
 
-	virtual void renderParticles(Particle* firstParticle){
+	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
      
-
+		ofVec3f scaleCentre(scaleCentreX, scaleCentreY) ;
+		ofVec3f pos;
+		
 		LaserManager& lm = *LaserManager::instance();
 	
 		Particle* particle = firstParticle;
@@ -28,10 +30,16 @@ class ParticleRendererLaser : public ParticleRendererShape {
 			
 			if((!p.enabled) || (p.size<0.1)) continue;			
 			
-			if(p.size>2) {
-				lm.addLaserCircle(p.pos, p.getColour(), p.size);
+			pos = p.pos;
+			pos -= scaleCentre;
+			pos *= scale;
+			pos += scaleCentre;
+			
+			
+			if(p.size * scale>2) {
+				lm.addLaserCircle(pos, p.getColour(), p.size * scale);
 			} else {
-				lm.addLaserDot(p.pos, p.getColour(), 1);
+				lm.addLaserDot(pos, p.getColour(), 1);
 			}
 			
 			

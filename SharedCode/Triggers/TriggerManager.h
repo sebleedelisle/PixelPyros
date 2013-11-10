@@ -64,7 +64,7 @@ class TriggerManager {
 	int triggerPatternOffset;
 	
 	float minimumSpacing;
-	int triggerCount; // keeps track of the number of triggers - needed? 
+	int triggerCount; // keeps track of the number of triggers 
 
 		
 	float rectanglePreviewBrightness; 

@@ -21,8 +21,10 @@ public:
 		
 	}
 	
-	virtual void renderParticles(Particle* firstParticle){
-      
+	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
+      	ofPushMatrix();
+		applyScaleMatrix(scale, scaleCentreX, scaleCentreY);
+		
 		ofPushStyle();
 		
 		ofSetLineWidth(lineWidth);
@@ -54,6 +56,7 @@ public:
 		mesh.draw();
 		
 		ofPopStyle();
+		ofPopMatrix(); 
         
     }
 	

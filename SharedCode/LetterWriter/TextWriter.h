@@ -36,11 +36,11 @@ public:
 private:
     
     int findBestBreak(string, int, int);
-    int calculateBlockWidth(string, int, int);
+    float calculateBlockWidth(string, float, float);
     void drawGlyph(Letter&, ofRectangle);
-    void renderGlyph(Letter&, int, int);
+    void renderGlyph(Letter&, float, float);
 
-    int glyphWidth, glyphHeight;
+    float glyphWidth, glyphHeight;
     float glyphRatio;
     VectorFont font;
 };

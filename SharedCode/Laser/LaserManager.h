@@ -114,6 +114,9 @@ class LaserManager {
 	void sendPointsTCP(vector<ofxIlda::Point>& points); 
 	string ildaPointToString(ofxIlda::Point& p);
 	
+	void updateMaskRectangleParam(float& value);
+	void updateMaskRectangle();
+	
 	vector <LaserShape*> shapes;
 	
 	ofxEtherdream etherdream;
@@ -132,7 +135,13 @@ class LaserManager {
 	ofParameter<bool> flipX;
 	ofParameter<bool> flipY;
 	ofParameter<bool> showRegistration;
-	ofParameter<bool> showMaskRectangle;
+	//ofParameter<bool> showMaskRectangle;
+	ofParameter<float> maskMarginBottom;
+	ofParameter<float> maskMarginTop;
+	ofParameter<float> maskMarginLeft;
+	ofParameter<float> maskMarginRight;
+
+	
 	ofParameter<bool> showSyncTest;
 	ofParameter<bool> showLaserPath;
 	ofParameter<bool> renderLaserPreview;
@@ -170,7 +179,10 @@ class LaserManager {
 	ofParameter<float> speedEasedLine;
 	ofParameter<int> paddingEasedLine;
 	
-	ofParameter<float>spiralSpacing; 
+	ofParameter<float>spiralSpacing;
+	
+	float maskRectangleBrightness; 
+
 	
 	ofxTCPServer TCP;
 	bool useTCP; 
@@ -184,7 +196,8 @@ class LaserManager {
 	bool shouldBeConnected;
 	string lastState; 
 	
-	RectangleUI maskRectangle; 
+	//ofParameter<RectangleUI> maskRectangleParam;
+	ofRectangle maskRectangle;
 	
 	//ofMesh previewMesh;
 	ofMesh pathMesh;

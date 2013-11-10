@@ -22,13 +22,12 @@ public:
 		
 	}
 	
-	virtual void renderParticles(Particle* firstParticle){
-	    //cout << "STAR RENDERER"<< endl;
-        // BASIC TRIANGLE RENDERER
-		//		ofDisableSmoothing();
+	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
+
 		
+		ofPushMatrix();
+		applyScaleMatrix(scale, scaleCentreX, scaleCentreY);
 		
-		//ofMatrix4x4 mat;
 		
 		mesh.clear();
 		Particle* particle = firstParticle;
@@ -77,7 +76,7 @@ public:
 		
 		mesh.draw();
 			
-		
+		ofPopMatrix(); 
         
     }
 	

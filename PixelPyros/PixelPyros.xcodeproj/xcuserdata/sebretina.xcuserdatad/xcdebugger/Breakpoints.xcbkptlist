@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Particles/ParticleSystem.cpp"
-         timestampString = "403625696.161574"
+         timestampString = "405362735.616426"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "178"
-         endingLineNumber = "178"
+         startingLineNumber = "179"
+         endingLineNumber = "179"
          landmarkName = "ParticleSystem :: addParticle()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Particles/ParticleSystemManager.cpp"
-         timestampString = "403176153.031139"
+         timestampString = "405362735.616426"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "73"
-         endingLineNumber = "73"
+         startingLineNumber = "75"
+         endingLineNumber = "75"
          landmarkName = "ParticleSystemManager :: update(float deltaTime)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Particles/ParticleSystem.cpp"
-         timestampString = "403625696.161574"
+         timestampString = "405362735.616426"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "95"
-         endingLineNumber = "95"
+         startingLineNumber = "96"
+         endingLineNumber = "96"
          landmarkName = "ParticleSystem::update(float deltaTime)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,12 +99,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Particles/renderers/ParticleRendererLaserFlash.h"
-         timestampString = "403378294.358026"
+         timestampString = "405368455.784216"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "34"
-         endingLineNumber = "34"
-         landmarkName = "renderParticles(Particle* firstParticle)"
+         startingLineNumber = "41"
+         endingLineNumber = "41"
+         landmarkName = "renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1191"
-         endingLineNumber = "1191"
+         startingLineNumber = "1228"
+         endingLineNumber = "1228"
          landmarkName = "LaserManager :: renderPreview()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,22 +138,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "367"
-         endingLineNumber = "367">
+         startingLineNumber = "404"
+         endingLineNumber = "404">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "318"
-         endingLineNumber = "318"
+         startingLineNumber = "349"
+         endingLineNumber = "349"
          landmarkName = "LaserManager::draw()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -162,11 +162,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "317"
-         endingLineNumber = "317"
+         startingLineNumber = "348"
+         endingLineNumber = "348"
          landmarkName = "LaserManager::draw()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -175,11 +175,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "377"
-         endingLineNumber = "377"
+         startingLineNumber = "414"
+         endingLineNumber = "414"
          landmarkName = "LaserManager::sendPointsTCP(vector&lt;ofxIlda::Point&gt;&amp; points)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -225,22 +225,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ofApp.cpp"
-         timestampString = "404497659.123139"
+         timestampString = "405377755.565332"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "139"
-         endingLineNumber = "139">
+         startingLineNumber = "142"
+         endingLineNumber = "142"
+         landmarkName = "ofApp::update()"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ofApp.cpp"
-         timestampString = "404497659.123139"
+         timestampString = "405377755.565332"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "171"
-         endingLineNumber = "171"
+         startingLineNumber = "174"
+         endingLineNumber = "174"
          landmarkName = "ofApp::update()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -249,11 +251,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/SceneData/IntroAnim/SceneIntroAnim.cpp"
-         timestampString = "404849834.039064"
+         timestampString = "405370334.978354"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "78"
-         endingLineNumber = "78"
+         startingLineNumber = "76"
+         endingLineNumber = "76"
          landmarkName = "SceneIntroAnim::update(float deltaTime)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -267,7 +269,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "64"
          endingLineNumber = "64"
-         landmarkName = "QuadWarp :: draw(bool lockAxis)"
+         landmarkName = "QuadWarp :: ~QuadWarp()"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -288,11 +290,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/SceneData/IntroAnim/SceneIntroAnim.cpp"
-         timestampString = "404850543.362746"
+         timestampString = "405419650.388137"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "153"
-         endingLineNumber = "153"
+         startingLineNumber = "131"
+         endingLineNumber = "131"
          landmarkName = "SceneIntroAnim::draw()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -301,11 +303,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "850"
-         endingLineNumber = "850"
+         startingLineNumber = "887"
+         endingLineNumber = "887"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -314,11 +316,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "885"
-         endingLineNumber = "885"
+         startingLineNumber = "922"
+         endingLineNumber = "922"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -327,11 +329,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "892"
-         endingLineNumber = "892"
+         startingLineNumber = "929"
+         endingLineNumber = "929"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -340,11 +342,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "895"
-         endingLineNumber = "895"
+         startingLineNumber = "932"
+         endingLineNumber = "932"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -353,11 +355,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "894"
-         endingLineNumber = "894"
+         startingLineNumber = "931"
+         endingLineNumber = "931"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -397,7 +399,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "155"
          endingLineNumber = "155"
-         landmarkName = "QuadWarp ::setDstPoint(int index, ofVec3f point)"
+         landmarkName = "QuadWarp :: draw(bool lockAxis)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -405,11 +407,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "476"
-         endingLineNumber = "476"
+         startingLineNumber = "513"
+         endingLineNumber = "513"
          landmarkName = "LaserManager:: drawShapes()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -418,11 +420,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "517"
-         endingLineNumber = "517"
+         startingLineNumber = "554"
+         endingLineNumber = "554"
          landmarkName = "LaserManager:: drawShapes()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -431,11 +433,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405271391.185027"
+         timestampString = "405419398.025351"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "542"
-         endingLineNumber = "542"
+         startingLineNumber = "579"
+         endingLineNumber = "579"
          landmarkName = "LaserManager:: drawShapes()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -476,6 +478,32 @@
          startingLineNumber = "375"
          endingLineNumber = "375"
          landmarkName = "SceneVectorizer :: getGeomRocket(ofMesh&amp; mesh, int minBrightness)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/SceneData/Game/SceneGame.cpp"
+         timestampString = "405386650.811896"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "238"
+         endingLineNumber = "238"
+         landmarkName = "SceneGame::update(float deltaTime)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/SceneData/Game/SceneGame.cpp"
+         timestampString = "405386650.811896"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "217"
+         endingLineNumber = "217"
+         landmarkName = "SceneGame::update(float deltaTime)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

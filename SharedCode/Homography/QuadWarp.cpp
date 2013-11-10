@@ -478,7 +478,7 @@ ofVec3f QuadWarp::barrelCorrection(ofVec3f point,bool inverse){
         ofVec3f intersection;
         
         if( rayInterectionWithLine( center, ray, dstPoints[i], dstPoints[j], intersection ) ){
-            cout << "Intersection: " << intersection << endl;
+            //cout << "Intersection: " << intersection << endl;
             float lineDistance = intersection.distance(center);
             
             if( rayIntersectionWithBezier( center, ray, dstStartPoint, dstEndPoint, cp1, cp2, intersection ) ){

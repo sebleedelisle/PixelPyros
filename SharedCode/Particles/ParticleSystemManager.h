@@ -52,7 +52,8 @@ public:
 	int activePhysicsObjectCount;
 	int activeParticleSystemCount;
 	int spareParticleCount;
-	int allParticleCount; 
+	int allParticleCount;
+	ofParameter<float> particleScale;
 	
 	SoundPlayer& soundPlayer;
 

@@ -28,9 +28,11 @@ public:
 		
 	}
 	
-   	virtual void renderParticles(Particle* firstParticle){
+   	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
       
         // BASIC TRIANGLE RENDERER
+		ofPushMatrix();
+		applyScaleMatrix(scale, scaleCentreX, scaleCentreY);
 		
 		mesh.clear();
 
@@ -63,7 +65,7 @@ public:
 		}
 		
 		mesh.draw();
-		
+		ofPopMatrix(); 
         
     }
 

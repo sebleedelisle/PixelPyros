@@ -12,8 +12,8 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	
 	loadMusicFile("LightsKlaypex.aif");
 	
-	//ofMesh tempsphere = ofMesh::icosphere(1.3,1);
-	ofMesh tempsphere = ofMesh::icosahedron(1.3);
+	ofMesh tempsphere = ofMesh::icosphere(2,2);
+	//ofMesh tempsphere = ofMesh::icosahedron(1.3);
 	
 	vector<ofVec3f>& vertices1 = tempsphere.getVertices();
 	vector<ofIndexType>& indices = tempsphere.getIndices();
@@ -372,7 +372,7 @@ TriggerSettingsRocketOrb* SceneVectorizer :: getGeomRocket(ofMesh& mesh, int min
 	glitchRocket.head.emitInheritVelocity  =0.0;
 	glitchRocket.head.emitLifeTime= 3.0;
 	
-	glitchRocket.explosion.renderer = new ParticleRendererMeshLinesLaser(1, 0.6);
+	glitchRocket.explosion.renderer = new ParticleRendererMeshLinesLaser(1, 0.5);
 	glitchRocket.explosion.sizeStartMin = glitchRocket.explosion.sizeStartMax =2;
 	
 	glitchRocket.explosion.brightnessStartMin = minBrightness;
