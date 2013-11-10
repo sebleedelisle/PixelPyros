@@ -104,7 +104,6 @@ void ParticleSystemManager ::draw() {
 		
 		ParticleSystem* ps = particleSystems[i];
 		if(ps->finished) continue;
-		
 		ps->draw(particleScale);
 	}
 	
@@ -122,7 +121,7 @@ void ParticleSystemManager ::draw() {
 }
 
 
-void ParticleSystemManager::killPhysicsObject(PhysicsObject * po){
+void ParticleSystemManager::killPhysicsObject(PhysicsObject * po, bool killParticles){
 	
 	po->life.end();
 	for(int i = 0; i<particleSystems.size(); i++) {
@@ -132,6 +131,7 @@ void ParticleSystemManager::killPhysicsObject(PhysicsObject * po){
 		
 		if(ps.attachedPhysicsObject == po) {
 			ps.life.end();
+			if(killParticles) ps.killParticles();
 		}
 		
 	}

@@ -249,20 +249,27 @@ void Trigger :: draw(ofRectangle area, int motionTargetThreshold) {
 		ofPopMatrix();
 		
 		
-		for(int i = 0; i<vertMotionSamples.size(); i++) {
-			float sample = vertMotionSamples[i];
-			ofSetColor(ofMap(sample, 0, 255,0,255,true));
-			if(sample<motionTargetThreshold) ofSetColor(50,0,0);
-			ofNoFill();
-			float ypos = ofMap(i, 0, vertMotionSamples.size(), area.getTop(), area.getBottom());
-			ofCircle(pos.x, ypos, 3);
-			
-		}
+		
 		
 		ofPopStyle();
 
 		
 	}
+	
+	
+	ofPushStyle();
+	
+	for(int i = 0; i<vertMotionSamples.size(); i++) {
+		float sample = vertMotionSamples[i];
+		ofSetColor(ofMap(sample, 0, 255,0,255,true));
+		if(sample<motionTargetThreshold) ofSetColor(50,0,0);
+		ofNoFill();
+		float ypos = ofMap(i, 0, vertMotionSamples.size(), area.getTop(), area.getBottom());
+		ofCircle(pos.x, ypos, 3);
+		
+	}
+	
+	ofPopStyle();
 	
 }
 

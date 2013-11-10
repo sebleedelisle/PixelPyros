@@ -1,7 +1,7 @@
 <Laser>
 	<Laser_Manager>
 		<Etherdream_connect>0</Etherdream_connect>
-		<status>Running ETHERDREAM_RUNNING 1 0</status>
+		<status>No devices connected ETHERDREAM_IDLE 0 0</status>
 		<show_warp_points>0</show_warp_points>
 		<intensity>1</intensity>
 		<colour_change_offset>-10</colour_change_offset>
@@ -9,7 +9,7 @@
 		<show_move_points>0</show_move_points>
 		<show_sync_test>0</show_sync_test>
 		<render_laser_path>1</render_laser_path>
-		<render_laser_preview>0</render_laser_preview>
+		<render_laser_preview>1</render_laser_preview>
 		<move_speed>4.925</move_speed>
 		<move_points_padding>1</move_points_padding>
 		<shape_pre_blank_points>5</shape_pre_blank_points>
@@ -35,6 +35,7 @@
 		<mask_margin_bottom>268.8</mask_margin_bottom>
 		<mask_margin_left>0</mask_margin_left>
 		<mask_margin_right>0</mask_margin_right>
+	<sync_delay>2</sync_delay>
 	</Laser_Manager>
 <Laser/>
 </Laser>

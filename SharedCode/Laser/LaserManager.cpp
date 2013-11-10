@@ -120,6 +120,7 @@ void LaserManager:: setup (int width, int height) {
 	
 	parameters.add(pps.set("points per second", 80000, 30000, 100000));
 	parameters.add(intensity.set("intensity", 1, 0, 1));
+	parameters.add(delay.set("sync delay", 0, 0, 10));
 	parameters.add(colourCorrection.set("colour correction", ofColor(255,255,255),ofColor(200,200,200), ofColor(255,255,255)));
 	parameters.add(colourChangeDelay.set("colour change offset", -6, -15, 15));
 	
@@ -205,59 +206,22 @@ void LaserManager:: connectButtonPressed(){
 
 void LaserManager:: update() {
 	
-	/*
-	 I got this when it disconnects - maybe related to PPS? 
-	 -----------------------------------------------
-	 ETHERDREAM CHECK CONNECTION -----------------------------------------------
-	 [397.180691] a3f459 write timed out
-	 [397.180712] a3f459 !! socket error in send: 35: Resource temporarily unavailable
-	 [397.180717] a3f459 L: Shutting down.
-	 ETHERDREAM CHECK CONNECTION -----------------------------------------------
-	 
-	 */
-	
-	
-	//etherdream.update();
-	
+
 	resetIldaPoints();
-	//previewMesh.clear();
+
 	pathMesh.clear();
 	
 	string etherdreamstate = etherdream.getStateString();
 	
-	//etherdreamStatus = etherdream.stateIsFound() ? "connected" : "disconnected";
 	etherdreamStatus = etherdream.getDeviceStateString() + " " + (etherdreamstate) + " "+ ofToString(shouldBeConnected)+" " +ofToString(restartCount);
-	//etherdreamStatus = (etherdream.stateIsFound() ? " FOUND " : " NOT FOUND ") + ofToString(isConnected);
-	
-	//connectButton.se(etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready");
-	
-	// we need to know if we were originally waiting... 
-	//if(etherdream.getStateString() == "FOUND") shouldBeConnected = true;
-	
+		
 	if(etherdream.state==ETHERDREAM_DISCONNECTED){
 	
-		//shouldBeConnected = false;
 		restartCount++;
 		disconnectFromEtherdream();
 		beep.play();
 		connectToEtherdream();
 	}
-	/*
-	if(shouldBeConnected && (etherdreamstate!="WAITING")) {
-	
-		// if(!etherdream.checkConnection(true);
-		 
-		// if(!etherdream.checkConnection(false)) {
-			 restartCount++; 
-			 disconnectFromEtherdream();
-			 beep.play();
-			 // auto reconnect
-			 // as this sets isConnected dependent on whether it works, it should only retry once. 
-			 connectToEtherdream();
-			 // isConnected = etherdream.getDeviceStateString()
-		//}
-	 }
-	*/
 	
 			
 	if(showSyncTest) {
@@ -314,6 +278,33 @@ void LaserManager:: update() {
 }
 
 void LaserManager::draw() {
+	
+	if(delay > 0) {
+		shapesHistory.push_back(shapes);
+		
+		if(shapesHistory.size()>delay) {
+			
+			// if we have too many, we have to delete some!
+			
+			while(shapesHistory.size()>delay+1) {
+				shapes = shapesHistory.front();
+				shapesHistory.pop_front();
+				resetIldaPoints();
+				
+				
+			}
+			shapes = shapesHistory.front();
+			shapesHistory.pop_front();
+		
+		} else {
+			// need to do this otherwise the shapes get deleted
+			// more than once
+			shapes.clear();
+		}
+		
+	} else if(shapesHistory.size()!=0) {
+		shapesHistory.clear();
+	}
 	
 	drawShapes();
 	
@@ -499,7 +490,7 @@ void LaserManager::addLaserPolyline(const ofPolyline& line, ColourSystem* colour
 	
 	if((line.getVertices().size()==0)||(line.getPerimeter()<0.1)) return;
 	
-	shapes.push_back(new LaserPolyline(line, coloursystem));
+	shapes.push_back(new LaserPolyline(line, coloursystem, intens));
 	
 	
 }
@@ -860,8 +851,8 @@ void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly) {
 				if(i>0) {
 					laserpoly.previewMesh.addVertex(lastpoint);
 					laserpoly.previewMesh.addVertex(p);
-					laserpoly.previewMesh.addColor(pointcolour);
-					laserpoly.previewMesh.addColor(pointcolour);
+					laserpoly.previewMesh.addColor(pointcolour*laserpoly.intensity);
+					laserpoly.previewMesh.addColor(pointcolour*laserpoly.intensity);
 					
 				}
 				lastpoint = p; 

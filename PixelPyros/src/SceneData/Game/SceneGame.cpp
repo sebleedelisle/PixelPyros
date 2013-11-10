@@ -454,7 +454,7 @@ void SceneGame :: checkAsteroidCollisions() {
 					asteroids.push_back(newasteroid);
 				}
 					
-				psm.killPhysicsObject(&rocket);
+				psm.killPhysicsObject(&rocket, true);
 				
 				break;
 			}
@@ -650,6 +650,7 @@ void SceneGame::makeInvaderExplosion(Invader &invader){
 	pss.brightnessStartMin = pss.brightnessStartMax =pss.brightnessEnd = 255;
 	pss.lifeMin = pss.lifeMax = 0.3;
 	pss.startSound = "RetroExplosion";
+	pss.doNotScale = true; 
 	
 	ps.pos = invader.getRect().getCenter();
 	ps.init(pss);
@@ -679,7 +680,7 @@ void SceneGame::makeAsteroidExplosion(Asteroid &asteroid){
 	pss.startSound = "RetroExplosion";
 	//pss.shimmerMin = 0;
 	pss.timeSpeed = 0.7;
-	
+	pss.doNotScale = true; 
 	
 	ps.pos = asteroid.pos; 
 	ps.init(pss);
@@ -723,6 +724,7 @@ TriggerSettingsRocket* SceneGame:: getInvaderBulletRocket(float hue) {
 	pss.sizeChangeRatio = 1;
 	pss.sizeStartMax = pss.sizeStartMin = 1;
 	pss.emitLifeTime = rocketSettings.getLifeTime();
+	pss.doNotScale = true; 
 	
 	rocketSettings.addParticleSystemSetting(pss);
 	
@@ -758,6 +760,7 @@ TriggerSettingsRocket* SceneGame:: getAsteroidsBulletRocket() {
 	pss.lifeMax = 0.2;
 	pss.emitInheritVelocity = 1;
 	pss.drag = 0.95;
+	pss.doNotScale = true; 
 	
 	rocketSettings.startSpeedMin = 400;
 	rocketSettings.startSpeedMax = 400;
@@ -776,7 +779,8 @@ TriggerSettingsRocket* SceneGame:: getAsteroidsBulletRocket() {
 	
 	ParticleSystemSettings& pss2 = *rocketSettings.addParticleRenderer(new ParticleRendererLaser());
 	pss2.sizeStartMax = pss2.sizeStartMin = 4;
-	pss2.sizeChangeRatio = 1; 
+	pss2.sizeChangeRatio = 1;
+	pss2.doNotScale = true;
 
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsAsteroids();
@@ -794,6 +798,8 @@ TriggerSettingsRocket* SceneGame:: getAsteroidsBulletRocket() {
 }
 
 // ---------------- OLD ROCKETS
+
+/*
 
 TriggerSettingsRocket* SceneGame:: getRetroFountain(float hueOffset, float hueChange, float minSpeed, float maxSpeed ) {
 	
@@ -853,8 +859,6 @@ TriggerSettingsRocket* SceneGame:: getRetroFountain(float hueOffset, float hueCh
 };
 
 
-
-
 TriggerSettingsRocket* SceneGame::getRetroRocket(float hue, float hueChange) {
 	
 	TriggerSettingsRocket& ts = *new TriggerSettingsRocketOrb();
@@ -912,7 +916,7 @@ ParticleSystemSettings SceneGame::  getPixelTrailParticles(float hue, float hueC
 	return trails;
 	
 };
-
+*/
 ParticleSystemSettings SceneGame::  getPixelExplosionParticles(float hue, float hueChange){
 	
 	ParticleSystemSettings explosion;
@@ -948,6 +952,7 @@ ParticleSystemSettings SceneGame::  getPixelExplosionParticles(float hue, float 
 	explosion.emitShape = circleMesh; 
 	explosion.emitCount = 1200;
 	explosion.startSound = "RetroExplosion";
+	explosion.doNotScale = true; 
 
 	
 	return explosion;

@@ -133,7 +133,7 @@ bool ParticleSystem::update(float deltaTime) {
 void ParticleSystem::draw(float scale) {
 	
 	//ofDrawBitmapString(ofToString(life.elapsedTime/settings.timeSpeed), pos);
-	
+	if(settings.doNotScale) scale = 1;
 	if(settings.renderer!=NULL)
 		settings.renderer->renderParticles(firstParticle, scale, scaleCentre.x, scaleCentre.y);
 	else
@@ -141,6 +141,16 @@ void ParticleSystem::draw(float scale) {
 	
 }
 
+void ParticleSystem::killParticles() {
+	Particle *p = firstParticle;
+	while(p!=NULL) {
+		
+				
+		p->life.end();
+		p = p->next;
+	}
+	
+}
 
 Particle * ParticleSystem:: removeParticle(Particle * p) {
 	
