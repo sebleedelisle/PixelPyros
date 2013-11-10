@@ -15,10 +15,10 @@ class LaserPolyline : public LaserShape{
 	
 	public :
 	
-	LaserPolyline(const ofPolyline& sourcepoly, ColourSystem* coloursystem = NULL){
+	LaserPolyline(const ofPolyline& sourcepoly, ColourSystem* coloursystem = NULL, float intens = 1){
 		
 		reversable = false;
-		
+		intensity = intens;
 		polyline = sourcepoly; // makes a copy
 		
 		startPos = polyline.getPointAtPercent(0);

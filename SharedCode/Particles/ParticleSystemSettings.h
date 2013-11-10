@@ -80,7 +80,8 @@ class ParticleSystemSettings{
 		velocityModifierSettings = NULL;
 		
 		renderer = NULL;
-		emitShape = NULL; 
+		emitShape = NULL;
+		doNotScale = false;
 		
 	};
 
@@ -116,6 +117,7 @@ class ParticleSystemSettings{
 		
 	}
 	
+	bool doNotScale; 
 	// PHYSICS
 	float speedMin; 
 	float speedMax; 

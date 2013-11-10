@@ -32,6 +32,7 @@ class ParticleSystem {
 	void draw(float scale);
 	
 	void addParticles(int count);
+	void killParticles(); 
 	
 	Particle * addParticle() ;
 	Particle * removeParticle(Particle * p); 

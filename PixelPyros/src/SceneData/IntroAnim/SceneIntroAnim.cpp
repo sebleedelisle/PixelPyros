@@ -56,7 +56,7 @@ void SceneIntroAnim::start() {
 	
 	Scene::start();
 	video.play();
-	video.setPosition(0.65);
+	video.setPosition(0.4);
 
 	starBrightness = 0; 
 
@@ -77,7 +77,7 @@ bool SceneIntroAnim::update(float deltaTime) {
 	vidPosition = video.getPosition();
 		
 	if(vidPosition > 0.90) starBrightness = ofMap(vidPosition, 0.90,0.92,1,0, true);
-	if(vidPosition > 0.95) finished = true;
+	if(vidPosition > 0.97) finished = true;
 	if(starBrightness<1.0) starBrightness+=0.005;
 	
 	//if(vidPosition > 0.98) next();
@@ -90,6 +90,9 @@ bool SceneIntroAnim::draw() {
 	if(!Scene::draw()) return false;
 	starfield.draw(starBrightness);
 	
+	LaserManager& lm = *LaserManager::instance();
+	
+
 	ofPushStyle();
 	
 	ofPushMatrix();
@@ -105,7 +108,6 @@ bool SceneIntroAnim::draw() {
 	ofPopStyle();
 	
 	if((vidPosition > 0.73) && (vidPosition<0.79)) {
-		LaserManager& lm = *LaserManager::instance();
 		
 		laserWordMesh = textWriter.getMesh("LASERS", ofPoint(768, 500), ofMap(vidPosition, 0.73, 0.79, 20, 23), true);;
 		vector<ofVec3f>& vertices = laserWordMesh.getVertices();
@@ -117,27 +119,37 @@ bool SceneIntroAnim::draw() {
 		}
 	}
 	// LASER LOGO
-	/*
-	ofSetColor(255);
 	
-	int pathnum = ofClamp(floor(ofMap(ofGetMouseX(), 0, APP_WIDTH, 0, logo.getNumPath(), true)), 0, logo.getNumPath()-1);
-	
-	logo.getPathAt(pathnum).draw(); 
-	
-	//logo.draw();
-	
-	
-	for(int i=0; i<logo.getNumPath(); i++ ) {
+	if((vidPosition>0.455) && ( vidPosition<0.5)) {
 		
-		vector<ofPolyline>& lines = logo.getPathAt(i).getOutline();
-		for(int j=0; j<lines.size(); j++) {
-			ofPolyline& line = lines[j];
-	
+		float progress = ofMap(vidPosition, 0.455,0.5,0,1,true);
+		float scale = ofMap(progress,0,1,1.2,1.4,true);
+		float brightness = 1;
+		if(progress<0.2) brightness = ofMap(progress, 0, 0.2, 0,1);
+		else if(progress>0.8) brightness = ofMap(progress, 0.8, 1, 1,0);
+		
+		ofVec3f centrePoint = ofVec3f(logo.getWidth()/2, logo.getHeight()/2); 
+		
+		for(int i=0; i<logo.getNumPath(); i++ ) {
 			
-			lm.addLaserPolyline(line);
+			vector<ofPolyline>& lines = logo.getPathAt(i).getOutline();
+			for(int j=0; j<lines.size(); j++) {
+				ofPolyline line = lines[j];
+				vector<ofVec3f>& vertices = line.getVertices();
+				for(int i = 0; i<vertices.size(); i++) {
+					ofVec3f& v = vertices[i];
+					v-=centrePoint;
+					v*=scale;
+					v.x+=APP_WIDTH/2;
+					v.y +=APP_HEIGHT*0.4;
+					
+					
+				}
+				//cout << "brightness : " << brightness << endl;
+				lm.addLaserPolyline(line,NULL, brightness);
+			}
 		}
 	}
-	*/
 	
 	return true;
 	

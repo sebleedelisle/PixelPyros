@@ -34,7 +34,7 @@ public:
 	void killAllParticles ();
 	ParticleSystem * getParticleSystem();
 	PhysicsObject * getPhysicsObject() ;
-	void killPhysicsObject(PhysicsObject * po); 
+	void killPhysicsObject(PhysicsObject * po, bool killParticles = false);
 	
 	PhysicsObject * addRocket(RocketSettings& rs, ofVec3f& pos);
 	vector <ParticleSystem*> particleSystems; 

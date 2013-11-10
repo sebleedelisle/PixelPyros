@@ -118,6 +118,7 @@ class LaserManager {
 	void updateMaskRectangle();
 	
 	vector <LaserShape*> shapes;
+	deque <vector <LaserShape*> > shapesHistory;
 	
 	ofxEtherdream etherdream;
 	
@@ -149,6 +150,7 @@ class LaserManager {
 	
 	// overall brightness applied to any laser colour
 	ofParameter<float> intensity;
+	ofParameter<int> delay; 
 	// speaks for itself : 
 	ofParameter<ofColor> colourCorrection;
 	// allows you to shift the colour changes back or
