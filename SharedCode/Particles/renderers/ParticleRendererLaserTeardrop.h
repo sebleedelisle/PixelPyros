@@ -17,9 +17,12 @@ class ParticleRendererLaserTeardrop : public ParticleRendererBase {
 		historyCount = 20;
 	}
 	
-	virtual void renderParticles(Particle* firstParticle){
+	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
       
 
+		ofVec3f scaleCentre(scaleCentreX, scaleCentreY) ;
+		ofVec3f pos;
+		
 		LaserManager& lm = *LaserManager::instance();
 		
 	
@@ -33,15 +36,20 @@ class ParticleRendererLaserTeardrop : public ParticleRendererBase {
 			
 			if((!p.enabled) || (p.size<0.1)) continue;			
 			
+			pos = p.pos;
+			pos -= scaleCentre;
+			pos *= scale;
+			pos += scaleCentre;
 			
-			lm.addLaserCircle(p.pos, p.getColour(), p.size);
+			lm.addLaserCircle(pos, p.getColour(), p.size * scale);
 			
-			
+			// Need to replace this with a polyline really....
+			/*
 			for(int j = 0; j< (int)p.historyPositions.size()-1; j++) {
 				
 				lm.addLaserLineEased(p.historyPositions[j], p.historyPositions[j+1], p.getColour());
 				
-			}
+			} */
 			
 			
 

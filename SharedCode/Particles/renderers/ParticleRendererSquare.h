@@ -33,12 +33,13 @@ public:
 
 	}
 
-	virtual void renderParticles(Particle* firstParticle){
+	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
 		
         // BASIC TRIANGLE RENDERER
-		/*if(smooth)	ofEnableSmoothing();
-		else ofDisableSmoothing();*/
-	
+		
+		ofPushMatrix();
+		applyScaleMatrix(scale, scaleCentreX, scaleCentreY);
+		
 		mesh.clear();
 		
 		Particle* particle = firstParticle;
@@ -66,7 +67,7 @@ public:
 		
 		mesh.draw();
 
-        
+        ofPopMatrix(); 
     }
 	
 	

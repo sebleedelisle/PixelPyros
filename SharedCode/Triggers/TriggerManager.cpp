@@ -264,6 +264,7 @@ void TriggerManager :: updateLayout() {
 	float midX = triggerArea.x+ triggerArea.width/2;
 	
 	int triggerIndex = 0;
+	
 	triggerCount = 0;
 	
 	// if it's a blank arrangement then disable all the triggers and quit
@@ -303,6 +304,8 @@ void TriggerManager :: updateLayout() {
 		numOfTriggers = triggerPattern.triggers.size();
 		//spacing = triggerArea.width/(numOfTriggers-1);
 		xPos = triggerArea.getLeft(); 
+	} else {
+		triggerIndex = triggerPatternOffset % triggerPattern.triggers.size();
 	}
 	
 	while (triggerCount<numOfTriggers ) {

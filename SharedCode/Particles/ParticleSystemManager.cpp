@@ -28,6 +28,8 @@ ParticleSystemManager :: ParticleSystemManager() : soundPlayer(*SoundPlayer::ins
     parameters.setName("Particle Manager");
     parameters.add( killAllParticlesParam.set("KILL ALL PARTICLES",false) );
 	killAllParticlesFlag = false;
+	
+	particleScale = 1;
 }
 
 
@@ -103,7 +105,7 @@ void ParticleSystemManager ::draw() {
 		ParticleSystem* ps = particleSystems[i];
 		if(ps->finished) continue;
 		
-		ps->draw();
+		ps->draw(particleScale);
 	}
 	
 	/*
@@ -228,6 +230,8 @@ PhysicsObject * ParticleSystemManager ::addRocket(RocketSettings& rs, ofVec3f& p
 		ps->init(pss);
 		ps->attachedPhysicsObject = rocket;
 		ps->power = power;
+		ps->scaleCentre = pos;
+		
 	}
 	
 	

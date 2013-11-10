@@ -93,10 +93,12 @@ void ofApp::setup(){
 	
 	appParams.add(sceneInterstitial->foreground.set("interstitial foreground", 200,0,255));
 	appParams.add(sceneInterstitial->background.set("interstitial background", 40,0,255));
+	appParams.add(particleSystemManager.particleScale.set("Scale", 1,0,2));
 	
 	appParams.add(sceneManager.musicVolume);
 	appParams.add(soundPlayer.globalVolume);
-	
+	appParams.add(sceneManager.autoPlayNext.set("Auto play next scene", true));
+
 
 	
 	motionManager.parameters.add(cameraPreviewBrightness.set("camera preview brightness", 128,0,255));
@@ -119,6 +121,7 @@ void ofApp::setup(){
     //controlPanels.laserWarp = & laserManager.warp;
 	controlPanels.setup( &parameterManager);
 	timeSpeed = 1;
+
 	
 	updateScreenSizes();
 	

@@ -20,8 +20,11 @@ public:
 		
 	}
 	
-	virtual void renderParticles(Particle* firstParticle){
+	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
       
+		ofVec3f scaleCentre(scaleCentreX, scaleCentreY) ;
+		ofVec3f pos;
+		
 		LaserManager& lm = *LaserManager::instance();
 		
 		if((!firstParticle ) || (!firstParticle->next)) return;
@@ -38,7 +41,12 @@ public:
 			Particle& p = *particle;
 			
 			if(p.enabled) {
-				polyline.addVertex(p.pos);
+				pos = p.pos;
+				pos -= scaleCentre;
+				pos *= scale;
+				pos += scaleCentre;
+				
+				polyline.addVertex(pos);
 				grad.addColourStop(polyline.getPerimiter(), p.getColour();
 				
 			}

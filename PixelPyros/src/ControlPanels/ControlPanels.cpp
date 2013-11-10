@@ -216,25 +216,29 @@ ofRectangle ControlPanels::getPreviewScreenRect(){
 
 
 void ControlPanels::exit(){
-	//laserCalibration.save();
+
+	saveSettings();
 	
-	// Where is this getting set up? Anywhere? I think this is
-	// where it was crashing? 
-	//projectorCalibration.save();
-    
-    appGui.save();
+}
+
+void ControlPanels::saveSettings() {
+	
+	appGui.save();
     laserGui.save();
     rendererGui.save();
     triggerGui.save();
     //motionGui.save();
 	cameraGui.save();
-	
 
 	
 }
 
 void ControlPanels::keyPressed(int key){
     if( key == OF_KEY_TAB ){
+		
+		// NOW AUTOSAVES WHENEVER YOU SWITCH TABS
+		// is there anything else that needs to save?
+		saveSettings();
 		
 		for(int i = 0; i<panels.size(); i++) {
 			panels[i]->setVisible(false);

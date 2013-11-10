@@ -9,8 +9,8 @@
 	</Trigger_Positioning>
 <Triggers/>
 <width>0.8525</width>
-	<top>0.796</top>
-	<bottom>0.847</bottom>
+	<top>0.784</top>
+	<bottom>0.91</bottom>
 	<number_of_triggers>28</number_of_triggers>
 	<vertical_oscillation>2.55</vertical_oscillation>
 	<Debug_Mode>0</Debug_Mode>
@@ -24,5 +24,5 @@
 <UnknownName>AUTO</UnknownName>
 <motion_reset_speed>0.979499</motion_reset_speed>
 <trigger_sample_size>20.85</trigger_sample_size>
-	<samples_sample_size>5</samples_sample_size>
+	<samples_sample_size>8.09</samples_sample_size>
 </Triggers>

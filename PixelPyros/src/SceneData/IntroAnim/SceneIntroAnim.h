@@ -32,5 +32,6 @@ class SceneIntroAnim : public Scene {
 	TextWriter textWriter;
 	ofMesh laserWordMesh;
 	ofxSVG logo;
+	float vidPosition; 
 	
 };

@@ -49,10 +49,6 @@ SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSyste
 	
 	addTriggerPattern(bulletsPatternAsteroids, "asteroid ships active");
 	
-	
-	
-	
-	
 	explodeMesh.addVertex(ofPoint(1,0));
 	explodeMesh.addVertex(ofPoint(0,1));
 	explodeMesh.addVertex(ofPoint(-1,0));
@@ -174,8 +170,9 @@ void SceneGame::killInvadersAndAsteroids() {
 bool SceneGame::update(float deltaTime) {
 	
 	if(!Scene::update(deltaTime)) return false;
+	finished = false; 
 	
-	if(!playing) lastStateChangeTime+=deltaTime;
+	//if(!playing) lastStateChangeTime+=deltaTime;
 	timeSinceLastStateChange = ofGetElapsedTimef() - lastStateChangeTime; 
 
 	if(currentGame == GAME_INVADERS) {
@@ -228,11 +225,17 @@ bool SceneGame::update(float deltaTime) {
 				level++;
 				if(positionSeconds>lengthSeconds-20) {
 					changeState(STATE_GAMEOVER) ;
+					
 				} else {
 					changeState(STATE_WAITING);
 				}
 			} else {
 				checkAsteroidCollisions();
+			}
+		} else if(gameState == STATE_GAMEOVER) {
+			
+			if((!playing) && (timeSinceLastStateChange>5)) {
+				finished = true;
 			}
 		}
 	}
@@ -369,9 +372,9 @@ bool SceneGame :: draw() {
 	}
 	
 	
-	//ofDrawBitmapString("GAME: " + ofToString(currentGame), 10,500);
-	//ofDrawBitmapString("STATE: " + ofToString(gameState), 10,550);
-	//ofDrawBitmapString("TIME SINCE CHANGE: " + ofToString(timeSinceLastStateChange), 10,600);
+//	ofDrawBitmapString("GAME: " + ofToString(currentGame), 10,500);
+//	ofDrawBitmapString("STATE: " + ofToString(gameState), 10,550);
+//	ofDrawBitmapString("TIME SINCE CHANGE: " + ofToString(timeSinceLastStateChange), 10,600);
 	
 	ofPopStyle();
 			
@@ -769,10 +772,10 @@ TriggerSettingsRocket* SceneGame:: getAsteroidsBulletRocket() {
 
 	pss.emitLifeTime = rocketSettings.getLifeTime();
 	
-	rocketSettings.addParticleSystemSetting(pss);
+	//rocketSettings.addParticleSystemSetting(pss);
 	
 	ParticleSystemSettings& pss2 = *rocketSettings.addParticleRenderer(new ParticleRendererLaser());
-	pss2.sizeStartMax = pss2.sizeStartMin = 2;
+	pss2.sizeStartMax = pss2.sizeStartMin = 4;
 	pss2.sizeChangeRatio = 1; 
 
 	

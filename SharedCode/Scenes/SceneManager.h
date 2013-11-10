@@ -68,6 +68,7 @@ public :
 	TriggerManager & triggerManager;
 	
 	ofParameter<float> musicVolume;
+	ofParameter<bool> autoPlayNext; 
 	ofParameterGroup parameters;
 	
 	

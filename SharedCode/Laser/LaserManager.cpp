@@ -21,7 +21,7 @@ LaserManager * LaserManager::instance() {
 
 LaserManager:: LaserManager() {
 	pointPreviewImage.loadImage("img/LaserPointPreview.png");
-	
+
 	useTCP = false;
 	//etherdream.setWaitBeforeSend(true);
 	
@@ -79,8 +79,12 @@ void LaserManager:: setup (int width, int height) {
     float y1 = APP_HEIGHT * 0.2;
     float y2 = APP_HEIGHT * 0.8;
 	
-	maskRectangle.set(0, 0, APP_WIDTH, APP_HEIGHT/4*3);
-	maskRectangle.initUI(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT));
+	//RectangleUI* maskRectangle = &(RectangleUI)maskRectangleParam;
+	
+	//maskRectangle.set(0, 0, APP_WIDTH, APP_HEIGHT/4*3);
+	//maskRectangle.initUI(ofRectangle(0,0,APP_WIDTH, APP_HEIGHT));
+	
+	//maskRectangleBrightness = 1;
 
     warp.label = "laserWarp";
 	warp.setDstPoint(0, ofVec2f(x1,y1));
@@ -106,8 +110,14 @@ void LaserManager:: setup (int width, int height) {
 	//parameters.add(&connectButton);
 	parameters.add(etherdreamStatus.set("status", "test"));
 	parameters.add(showWarpPoints.set("show warp points", false));
-	parameters.add(showMaskRectangle.set("show mask rect", false));
-
+	//parameters.add(showMaskRectangle.set("show mask rect", false));
+	parameters.add(maskMarginTop.set("mask margin top", 0, 0, appHeight));
+	parameters.add(maskMarginBottom.set("mask margin bottom", appHeight*0.7, 0, appHeight));
+	parameters.add(maskMarginLeft.set("mask margin left", 0, 0, appWidth));
+	parameters.add(maskMarginRight.set("mask margin right", appWidth, 0, appWidth));
+	
+	
+	
 	parameters.add(pps.set("points per second", 80000, 30000, 100000));
 	parameters.add(intensity.set("intensity", 1, 0, 1));
 	parameters.add(colourCorrection.set("colour correction", ofColor(255,255,255),ofColor(200,200,200), ofColor(255,255,255)));
@@ -156,7 +166,28 @@ void LaserManager:: setup (int width, int height) {
 		TCP.setup(11999);
 		//TCP.setMessageDelimiter("\0");
 	}
+	
+	maskMarginTop.addListener(this, &LaserManager::updateMaskRectangleParam);
+	maskMarginBottom.addListener(this, &LaserManager::updateMaskRectangleParam);
+	maskMarginLeft.addListener(this, &LaserManager::updateMaskRectangleParam);
+	maskMarginRight.addListener(this, &LaserManager::updateMaskRectangleParam);
+	
+	updateMaskRectangle();
 }
+
+void LaserManager :: updateMaskRectangle() {
+	maskRectangle.x = maskMarginLeft;
+	maskRectangle.y = maskMarginTop;
+	maskRectangle.width = appWidth-maskMarginRight - maskMarginLeft;
+	maskRectangle.height = appHeight - maskMarginBottom- maskMarginTop;
+	maskRectangleBrightness = 1;
+	
+}
+void LaserManager :: updateMaskRectangleParam(float& value) {
+	updateMaskRectangle();
+	
+}
+
 
 void LaserManager:: connectButtonPressed(){
 	
@@ -240,7 +271,7 @@ void LaserManager:: update() {
 		addLaserLineEased(maskRectangle.getTopLeft(), maskRectangle.getBottomRight(), white);
 		addLaserLineEased(maskRectangle.getTopRight(), maskRectangle.getBottomLeft(), white);
 		
-		ofPoint v = maskRectangle.getBottomRight() - maskRectangle.getTopLeft(); 
+		ofPoint v = maskRectangle.getBottomRight() - maskRectangle.getTopLeft();
 		
 		for(float x =0 ; x<=1; x+=0.2) {
 
@@ -332,10 +363,16 @@ void LaserManager::draw() {
 	}
 	
 	
-  	ofNoFill();
+  	
 	
-	if(showMaskRectangle) maskRectangle.draw();
-	
+	if(maskRectangleBrightness>0) {
+		ofNoFill();
+		ofSetColor(maskRectangleBrightness * 255);
+		
+		ofRect(maskRectangle);
+		maskRectangleBrightness-=0.01;
+		
+	}
 	
 	
 	ofPopStyle();

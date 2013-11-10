@@ -25,6 +25,7 @@ Scene::Scene(string scenename) {
 	overwriteMode = false; 
 	positionSeconds = 0;
 	lengthSeconds = 1;
+	finished = false; 
 
     _addCommand(0, SEQ_PATTERN_CHANGE, 0);
 }
@@ -56,6 +57,7 @@ void Scene :: start() {
 		//playing = true;
 	}
 	active = true;
+	finished = false; 
 }
 
 void Scene :: stop() { 
@@ -111,6 +113,8 @@ bool Scene :: update(float deltaTime) {
 	playing= music.getIsPlaying();
 	
 	if(playing) positionSeconds = (float)music.getPositionMS()/1000.0f;
+	
+	if(lengthSeconds - positionSeconds < 0.1) finished = true;
 	
 	vector<int> deleteIndices; 
 	

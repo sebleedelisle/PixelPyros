@@ -18,9 +18,12 @@ class ParticleRendererLaserFlash : public ParticleRendererShape {
 		spiralThickness = spiralthickness;
 	}
 	
-	virtual void renderParticles(Particle* firstParticle){
+	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
      
-
+		
+		ofVec3f scaleCentre(scaleCentreX, scaleCentreY) ;
+		ofVec3f pos;
+		
 		LaserManager& lm = *LaserManager::instance();
 	
 		Particle* particle = firstParticle;
@@ -30,9 +33,17 @@ class ParticleRendererLaserFlash : public ParticleRendererShape {
 			Particle& p = *particle;
 			particle = particle->next;
 			
-			if((!p.enabled) || (p.size<0.1)) continue;			
 			
-			lm.addLaserSpiral(p.pos, p.getColour(), (p.size<spiralThickness) ? 0 : (p.size-spiralThickness), p.size);
+			float size = p.size*scale;
+			
+			if((!p.enabled) || (size<0.1)) continue;
+			
+			pos = p.pos;
+			pos-=scaleCentre;
+			pos*=scale;
+			pos+=scaleCentre;
+			
+			lm.addLaserSpiral(pos, p.getColour(), (size<spiralThickness) ? 0 : (size-spiralThickness), size);
 		}
 	}
 	

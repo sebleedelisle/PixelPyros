@@ -106,7 +106,7 @@ void SceneIntro :: start() {
 	
 	Scene::start();
 	
-	togglePlayPause();
+	//togglePlayPause();
 	elapsedTime = 0;
 	//music.play();
 	

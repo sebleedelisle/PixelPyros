@@ -612,9 +612,9 @@ TriggerSettingsRocket* SceneSpace :: getSphereRocketWithBitmap(ofImage&image){
 		float yaw = atan2(v.x, v.z);
 		float pitch = atan2(v.y, sqrt((v.z * v.z) + (v.x * v.x)));
 		
-		float x = ofMap(yaw, 0, PI*2, 0, image.getWidth());
-		float y = ofMap(pitch, -PI/2, PI/2, 0, image.getHeight());
-		
+		float x = ofMap(yaw, 0, PI*2, 0, image.getWidth()-1);
+		float y = ofMap(pitch, -PI/2, PI/2, 0, image.getHeight()-1);
+		// todo : check bounds! Should be 0 to width-1
 		ofColor c = image.getColor(x, y);
 		
 		earthMesh.addColor(c);

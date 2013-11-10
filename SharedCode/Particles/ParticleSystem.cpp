@@ -20,8 +20,9 @@ ParticleSystem::ParticleSystem (SoundPlayer& sp) : soundPlayer(sp){
 	
 }
 
-void ParticleSystem::reset(){ 
+void ParticleSystem::reset(){
 	
+	scaleCentre.set(0,0);
 	life.reset(); 
 	numParticlesCreated = 0; 
 	finished = false;
@@ -129,14 +130,14 @@ bool ParticleSystem::update(float deltaTime) {
 
 
 
-void ParticleSystem::draw() {
+void ParticleSystem::draw(float scale) {
 	
 	//ofDrawBitmapString(ofToString(life.elapsedTime/settings.timeSpeed), pos);
 	
 	if(settings.renderer!=NULL)
-		settings.renderer->renderParticles(firstParticle);
+		settings.renderer->renderParticles(firstParticle, scale, scaleCentre.x, scaleCentre.y);
 	else
-		defaultRenderer.renderParticles(firstParticle);
+		defaultRenderer.renderParticles(firstParticle, scale, scaleCentre.x, scaleCentre.y);
 	
 }
 
@@ -289,7 +290,7 @@ void ParticleSystem :: addParticles(int count) {
 
 void ParticleSystem:: init(ParticleSystemSettings& pes) {
 
-	reset(); 
+	reset();
 	
 	life.delay = pes.emitDelay; 
 	life.lifeTime = pes.emitLifeTime; 

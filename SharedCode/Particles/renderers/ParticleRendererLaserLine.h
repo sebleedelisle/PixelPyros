@@ -19,9 +19,12 @@ class ParticleRendererLaserLine : public ParticleRendererBase {
 		historyCount = historycount;
 	}
 	
-	virtual void renderParticles(Particle* firstParticle){
+	virtual void renderParticles(Particle* firstParticle, float scale = 1, float scaleCentreX = 0, float scaleCentreY = 0){
        
-			polyline.setClosed(false); 
+		ofVec3f scaleCentre(scaleCentreX, scaleCentreY) ;
+		ofVec3f pos;
+		
+		polyline.setClosed(false);
 		LaserManager& lm = *LaserManager::instance();
 		
 		
@@ -42,8 +45,13 @@ class ParticleRendererLaserLine : public ParticleRendererBase {
 		
 			ofColor colour = p.getColour();//	
 			for(int i =0; i<size; i++) {
+				pos = p.historyPositions[i];
+				pos -= scaleCentre;
+				pos *= scale;
+				pos += scaleCentre;
+				
 				grad->addColourStop(p.historyColours[(size-1)-i], polyline.getPerimeter());
-				polyline.addVertex(p.historyPositions[i]);
+				polyline.addVertex(pos);
 				
 			}
 			grad->setLength(polyline.getPerimeter());

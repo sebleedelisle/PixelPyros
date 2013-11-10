@@ -50,10 +50,20 @@ bool SceneManager ::update(float deltaTime){
 	if(previousFlag) prevScene();
 	
 	if(currentScene!=NULL) {
+		
+		if(dragPlayHead) currentScene->finished = false;
+			
 		if(nextPatternFlag) nextPattern();
 		if(previousPatternFlag) previousPattern();
 		
 		currentSceneArrangement = ofToString ( currentScene->currentTriggerPatternIndex + 1 ) ;
+		if((currentScene->finished) && (autoPlayNext) ) {
+			if(nextScene()) {
+				currentScene->togglePlayPause();
+			}
+			
+			
+		}
 	}
 	nextPatternFlag = previousPatternFlag = false;
 	
@@ -143,6 +153,7 @@ void SceneManager :: drawGUI() {
 	
 	ofSetColor(255);
 	if((currentScene) && (currentScene->recording)) ofSetColor(ofColor::red);
+	else if((currentScene) && (currentScene->finished)) ofSetColor(ofColor::gray);
 	
 	ofRect(playHeadRect);
 	ofLine(playHeadRect.getCenter().x, timeBarRect.getTop()-1,playHeadRect.getCenter().x, timeBarRect.getTop()+4);
@@ -355,6 +366,7 @@ void SceneManager :: mouseDragged(ofMouseEventArgs &e) {
 		
 		currentScene->goToTime(getTimeForPosition(e.x+ dragClickOffset.x) );
 		
+		
 	} else if(dragCommandIndex>-1){
 		
 		currentScene->commands[dragCommandIndex].time = getTimeForPosition(e.x+dragClickOffset.x);
@@ -470,7 +482,13 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 	
 	int newPattern = -1; 
 	if(e.key==' ') {
-		togglePlayPause();
+		if(currentScene!=NULL) {
+			if(currentScene->finished) {
+				nextScene();
+			}
+			
+			togglePlayPause();
+		}
 	} else if(e.key=='r') {
 		toggleRecord();
 	} 

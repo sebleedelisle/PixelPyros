@@ -60,6 +60,8 @@ class ControlPanels {
    // void layoutPanels(vector<ofxPanel> panels,ofRectangle space );
    // vector<ofxPanel> getVisiblePanels();
 	void updatePreviewScreenSize();
+	
+	void saveSettings(); 
    
     ParameterManager& parameterManager;
     
