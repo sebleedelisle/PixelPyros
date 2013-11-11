@@ -149,7 +149,7 @@ bool SceneSlideshow::draw() {
     
     float xScale = APP_WIDTH / slide->background->getWidth();
     float yScale = APP_HEIGHT / slide->background->getHeight();
-    float scale = min(xScale, yScale);
+    float scale = min(xScale*0.7, yScale*0.7);
     
     if( scale < 1.0 ) {
         ofScale(xScale, yScale);
