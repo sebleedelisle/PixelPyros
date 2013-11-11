@@ -8,21 +8,21 @@
 		<Debug_Mode>0</Debug_Mode>
 	</Trigger_Positioning>
 <Triggers/>
-<width>0.9275</width>
-	<top>0.784</top>
-	<bottom>0.91</bottom>
-	<number_of_triggers>20</number_of_triggers>
+<width>0.8525</width>
+	<top>0.5775</top>
+	<bottom>0.66625</bottom>
+	<number_of_triggers>24</number_of_triggers>
 	<vertical_oscillation>2.55</vertical_oscillation>
-	<Debug_Mode>0</Debug_Mode>
+	<Debug_Mode>1</Debug_Mode>
 	<mode>1</mode>
-<vertical_sample_num>9</vertical_sample_num>
+<vertical_sample_num>12</vertical_sample_num>
 	<motion_multiplier>0.110009</motion_multiplier>
 	<reset_speed>0.993999</reset_speed>
 	<target_threshold>59</target_threshold>
 	<move_speed>0.0263725</move_speed>
 	<move_home_speed>14.365</move_home_speed>
 <UnknownName>AUTO</UnknownName>
-<motion_reset_speed>0.979499</motion_reset_speed>
-<trigger_sample_size>20.85</trigger_sample_size>
-	<samples_sample_size>8.09</samples_sample_size>
+<motion_reset_speed>0.945999</motion_reset_speed>
+<trigger_sample_size>33.61</trigger_sample_size>
+	<samples_sample_size>10.7</samples_sample_size>
 </Triggers>
