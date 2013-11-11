@@ -15,8 +15,9 @@ SceneIntroAnim::SceneIntroAnim(string scenename) : Scene(scenename){
 	starfield.speed = 100;
 	addEmptyTriggerPattern();
 	
-	video.loadMovie("../../../Music/pp titles v01.mov");
+	video.loadMovie("../../../Music/pp titles v05 NOLOGO.mov");
 	video.setLoopState(OF_LOOP_NONE);
+	video.setVolume(0.5); 
 	textWriter.lineRandomness = 0;
 	textWriter.colourFlickerMin = 1;
 	
@@ -107,7 +108,19 @@ bool SceneIntroAnim::draw() {
 	
 	ofPopStyle();
 	
-	if((vidPosition > 0.73) && (vidPosition<0.79)) {
+	float laserstart = 0.76;
+	float laserend = 0.80;
+	
+	if((vidPosition > laserstart) && (vidPosition<laserend)) {
+		
+		
+		float progress = ofMap(vidPosition, laserstart,laserend,0,1,true);
+		
+		float brightness = 1;
+		if(progress<0.2) brightness = ofMap(progress, 0, 0.2, 0,1);
+		else if(progress>0.8) brightness = ofMap(progress, 0.8, 1, 1,0);
+		
+		textWriter.colour = ofColor::cyan * brightness;
 		
 		laserWordMesh = textWriter.getMesh("LASERS", ofPoint(768, 500), ofMap(vidPosition, 0.73, 0.79, 20, 23), true);;
 		vector<ofVec3f>& vertices = laserWordMesh.getVertices();
@@ -120,9 +133,13 @@ bool SceneIntroAnim::draw() {
 	}
 	// LASER LOGO
 	
-	if((vidPosition>0.455) && ( vidPosition<0.5)) {
+	
+	float logostart = 0.49;
+	float logoend = 0.53;
+	
+	if((vidPosition>logostart) && ( vidPosition<logoend)) {
 		
-		float progress = ofMap(vidPosition, 0.455,0.5,0,1,true);
+		float progress = ofMap(vidPosition, logostart,logoend,0,1,true);
 		float scale = ofMap(progress,0,1,1.2,1.4,true);
 		float brightness = 1;
 		if(progress<0.2) brightness = ofMap(progress, 0, 0.2, 0,1);

@@ -48,7 +48,7 @@ class SceneSpace : public Scene {
 	ofImage softWhiteImage;
 	ofImage earthImage;
 	ofImage jupiterImage;
-	
+	ofImage creditsImage; 
 	
 	
 	ParticleRendererShape* renderer;
