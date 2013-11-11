@@ -59,8 +59,8 @@ class SceneCalibration : public Scene {
 					int xpos = x + round((float)x/(float)numCols);
 					if((xpos+y)%2==0)
 						ofNoFill();
-						ofSetColor(255);
-					ofSetLineWidth(10);
+                        ofSetColor(64);
+                        ofSetLineWidth(10);
 						ofRect(x*128, y*128, 128, 128);
 				
 				
