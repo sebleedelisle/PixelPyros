@@ -12,7 +12,7 @@
 SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	loadMusicFile("StarlightFull.aif");
-	
+	creditsImage.loadImage("slideshow/credits.png");
 	starfield.speed = 100;
 	
 	FireworkFactory& fireworkFactory = *FireworkFactory::instance(); 
@@ -139,8 +139,8 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	TriggerSettingsRocket* laserRocketRed = fireworkFactory.getLaserRocket(0, 0);
 	TriggerSettingsRocket* laserRocketYellow = fireworkFactory.getLaserRocket(30, 0);
 	TriggerSettingsRocket* laserRocketBlue = fireworkFactory.getLaserRocket(140, 0);
-	//laserRocketsPattern.addTriggerSettings(laserRocketRed);
-	laserRocketsPattern.addTriggerSettings(laserRocketYellow);
+	laserRocketsPattern.addTriggerSettings(laserRocketRed);
+	//laserRocketsPattern.addTriggerSettings(laserRocketYellow);
 	laserRocketsPattern.addTriggerSettings(laserRocketBlue);
 	
 	addTriggerPattern(laserRocketsPattern, "laser rockets"); 
@@ -172,7 +172,9 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	addTriggerPattern(textPattern, "Goodnight text");//, true );
 	
-
+	
+	TriggerPattern credits("credits");
+	addTriggerPattern(credits, "credits");
 	
 }
 
@@ -185,6 +187,16 @@ bool SceneSpace::draw() {
 	
 	if(!Scene::draw()) return false;
 	starfield.draw();
+	
+	if(getCurrentTriggerPattern().name == "credits") {
+		ofPushMatrix();
+		ofTranslate(APP_WIDTH/2, APP_HEIGHT/2);
+		ofScale(0.7, 0.7);
+		ofTranslate(-APP_WIDTH/2, -APP_HEIGHT/2);
+		creditsImage.draw(0,0);
+		ofPopMatrix();
+		
+	}
 	
 	return true;
 	
