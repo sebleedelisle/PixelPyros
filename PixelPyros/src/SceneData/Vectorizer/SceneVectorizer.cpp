@@ -285,6 +285,8 @@ SceneVectorizer :: SceneVectorizer  (string scenename) : Scene(scenename), parti
 	TriggerPattern geomPattern2;
 	
 	geomPattern2.addTriggerSettings(rocketFountainBlue);
+	geomPattern2.addTriggerSettings(rocketFountainPink);
+	geomPattern2.addTriggerSettings(rocketFountainBlue);
 	geomPattern2.addTriggerSettings(getGeomRocket(sphere, 100));
 	
 	addTriggerPattern(geomPattern2, "Geom geospheres");

@@ -28,10 +28,8 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
     foreground = 200;
 	background = 20;
                                        
-    defaultBackground.loadImage(ofToDataPath("slideshow/Interstitial-Nottingham.png"));
+    defaultBackground.loadImage(ofToDataPath("slideshow/Interstitial-Brighton"));
 
-	
-	
 	
 //    Do you want your box guides back to layout the text? Uncomment lines 80-82 in TextWriter.cpp and big blue boxes will return
     

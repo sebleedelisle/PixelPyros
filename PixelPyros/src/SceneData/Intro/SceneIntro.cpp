@@ -41,11 +41,11 @@ SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 	// JUST WHITE ROCKETS
 	TriggerPattern pattern3;
 	// white rocket
-	TriggerSettings* whiteRocket = fireworkFactory.getSimpleRocket(700,220,0,0.05,1);
-	whiteRocket->rechargeSettings = TriggerRechargeSettings::fast;
+	TriggerSettings* whiteRocket = fireworkFactory.getSimpleLaserRocket(700,220,0,0.05,1);
+	whiteRocket->rechargeSettings = TriggerRechargeSettings::mediumMultiples;
 	whiteRocket->numTriggers = 2;
 	pattern3.addTriggerSettings(whiteRocket);
-	addTriggerPattern(pattern3, "Simple rockets white tall");
+	addTriggerPattern(pattern3, "Laser rockets white tall");
 
 	// SIMPLE FOUNTAINS
 	TriggerPattern pattern;
