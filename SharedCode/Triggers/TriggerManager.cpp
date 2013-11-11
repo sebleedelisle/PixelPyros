@@ -33,8 +33,8 @@ TriggerManager::TriggerManager () {
 void TriggerManager::initParams(){
     parameters.setName("Triggers");
     parameters.add( triggerAreaWidthParam.set("width", 0.9125, 0, 1 ) );
-    parameters.add( triggerAreaTopParam.set("top", 0.8, 0.7, 1 ) );
-	parameters.add( triggerAreaBottomParam.set("bottom", 0.9, 0.7, 1 ) );
+    parameters.add( triggerAreaTopParam.set("top", 0.8, 0.5, 1 ) );
+	parameters.add( triggerAreaBottomParam.set("bottom", 0.9, 0.5, 1 ) );
 	parameters.add( triggerNumParam.set("number of triggers", 28, 1, 40 ) );
 	
 	parameters.add( triggerSampleSizeParam.set("trigger sample size", 10,2,60) );
