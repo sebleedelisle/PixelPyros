@@ -41,6 +41,7 @@ Trigger :: Trigger(){
 	angle = 0;
 	triggerCount = 0;
 	
+	sampleBrightness = 1;
 	
 	
 		
@@ -74,7 +75,15 @@ bool Trigger::update(float deltaTime, ofRectangle& triggerArea) {
 	this->deltaTime = deltaTime;
 	
 	elapsedTime+=deltaTime;
+	
+	if((elapsedTime-lastTriggerTime > 4)&& (rechargeSettings->restoreSpeed>0) && !disabled && (unitPower>=rechargeSettings->triggerPower) ) {
+		sampleBrightness += deltaTime;
 		
+	} else {
+		sampleBrightness-=deltaTime*2;
+	}
+	sampleBrightness = ofClamp(sampleBrightness, 0, 1);
+	
 	if(lastSettings!=NULL) {
 		lastScale-=deltaTime*5;
 		if(lastScale<=0.0) {
@@ -249,28 +258,49 @@ void Trigger :: draw(ofRectangle area, int motionTargetThreshold) {
 		ofPopMatrix();
 		
 		
+		for(int i = 0; i<vertMotionSamples.size(); i++) {
+			float sample = vertMotionSamples[i];
+			ofSetColor(ofMap(sample, 0, 255,0,255,true));
+			if(sample<motionTargetThreshold) ofSetColor(50,0,0);
+			ofNoFill();
+			float ypos = ofMap(i, 0, vertMotionSamples.size(), area.getTop(), area.getBottom());
+			ofCircle(pos.x, ypos, 3);
+			
+		}
+		
 		
 		
 		ofPopStyle();
 
 		
-	}
+	} else if(sampleBrightness>0) {
 	
-	
-	ofPushStyle();
-	
-	for(int i = 0; i<vertMotionSamples.size(); i++) {
-		float sample = vertMotionSamples[i];
-		ofSetColor(ofMap(sample, 0, 255,0,255,true));
-		if(sample<motionTargetThreshold) ofSetColor(50,0,0);
-		ofNoFill();
-		float ypos = ofMap(i, 0, vertMotionSamples.size(), area.getTop(), area.getBottom());
-		ofCircle(pos.x, ypos, 3);
+		ofPushStyle();
 		
+		for(int i = 0; i<vertMotionSamples.size(); i++) {
+			//			ofSetColor(ofMap(sample, 0, 255,0,255,true));
+			//if(sample<motionTargetThreshold) ofSetColor(50,0,0);
+			ofNoFill();
+			float ypos = ofMap(i, 0, vertMotionSamples.size(), area.getTop(), area.getBottom());
+			if(ypos > pos.y) {
+				float sample = vertMotionSamples[i];
+				ofSetColor(sampleBrightness * 100 );
+				ofSetLineWidth(1* scale);
+				ofCircle(pos.x, ypos, 3* scale);
+				if(i<vertMotionSamples.size()-1) {
+					
+					ofLine(pos.x, ypos+(3* scale), pos.x, ofMap(i+1, 0, vertMotionSamples.size(), area.getTop(), area.getBottom())-(3* scale));
+				}
+				
+				ofSetColor(ofMap(sample, 0, 255,0,80,true) * sampleBrightness);
+				ofFill();
+				ofCircle(pos.x, ypos, 2* scale);
+				
+			}
+		}
+		
+		ofPopStyle();
 	}
-	
-	ofPopStyle();
-	
 }
 
 
@@ -284,6 +314,8 @@ void Trigger :: registerMotion(float unitValue) {
 }
 
 bool Trigger::doTrigger() {
+	
+
 	if(settings!=NULL) {
 		settings->doTrigger(pos,1,angle, values);
 		lastTriggerTime = ofGetElapsedTimef(); 

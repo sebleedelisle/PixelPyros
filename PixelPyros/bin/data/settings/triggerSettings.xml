@@ -8,10 +8,10 @@
 		<Debug_Mode>0</Debug_Mode>
 	</Trigger_Positioning>
 <Triggers/>
-<width>0.8525</width>
+<width>0.9275</width>
 	<top>0.784</top>
 	<bottom>0.91</bottom>
-	<number_of_triggers>28</number_of_triggers>
+	<number_of_triggers>20</number_of_triggers>
 	<vertical_oscillation>2.55</vertical_oscillation>
 	<Debug_Mode>0</Debug_Mode>
 	<mode>1</mode>

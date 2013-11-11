@@ -32,6 +32,7 @@ class FireworkFactory {
 	FireworkFactory();
 
 	TriggerSettingsRocket* getSimpleRocket(float speed = 500, float hue = 20, float saturation = 255, float speedVar = 0.2, float directionVar = 4 );
+	TriggerSettingsRocket* getSimpleLaserRocket(float speed = 500, float hue = 20, float saturation = 255, float speedVar = 0.2, float directionVar = 4 );
 	TriggerSettingsRocket* getRotatingRocket(float speed = 500, float hue = 20, float saturation = 255, float speedVar = 0.2, float directionVar = 4 );
 	TriggerSettingsRocket* getBasicRocket(float hue = 20, float hueChange = -5, float flightTime = 2);
 	TriggerSettingsRocket* getSimpleFountain(float hueStartOffset = 150, float hueChange = 0);

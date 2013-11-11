@@ -19,7 +19,8 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	softWhiteImage.loadImage("img/ParticleWhite.png");
 	earthImage.loadImage("img/earthImage.png");
-	
+	jupiterImage.loadImage("img/jupitermap.jpg");
+
 	TriggerPattern blank;
 	
 	addTriggerPattern(blank);
@@ -133,13 +134,6 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	
 	
-	ofMesh letterMesh;
-	LetterWritingPatternMaker patternMaker;
-	ParticleSystemManager& psm = *ParticleSystemManager::instance();
-	TriggerPattern textPattern = patternMaker.getPattern(psm, "Goodnight!", 15, 0.2, 350, APP_WIDTH/2, 15, 5, 48, 1, APP_WIDTH*0.5, letterMesh);
-
-	addTriggerPattern(textPattern, "Goodnight text");//, true );
-
 	
 	TriggerPattern laserRocketsPattern;
 	TriggerSettingsRocket* laserRocketRed = fireworkFactory.getLaserRocket(0, 0);
@@ -153,12 +147,32 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 
 	TriggerPattern earthPlanetPattern;
 	TriggerSettingsRocket* earthTrigger = getSphereRocketWithBitmap(earthImage);
-	earthPlanetPattern.addTriggerSettings(TriggerSettings::blank);
-	earthPlanetPattern.addTriggerSettings(TriggerSettings::blank);
+	earthPlanetPattern.addTriggerSettings(triggerFountain);
+	earthPlanetPattern.addTriggerSettings(triggerFountain);
 	earthPlanetPattern.addTriggerSettings(earthTrigger);
-	earthPlanetPattern.addTriggerSettings(TriggerSettings::blank);
-		
+	earthPlanetPattern.addTriggerSettings(triggerFountain);
+	earthPlanetPattern.addTriggerSettings(triggerFountain);
+	
 	addTriggerPattern(earthPlanetPattern);
+	
+	TriggerPattern jupiterPlanetPattern;
+	TriggerSettingsRocket* jupiterTrigger = getSphereRocketWithBitmap(jupiterImage);
+	jupiterPlanetPattern.addTriggerSettings(triggerFountain);
+	jupiterPlanetPattern.addTriggerSettings(triggerFountain);
+	jupiterPlanetPattern.addTriggerSettings(jupiterTrigger);
+	jupiterPlanetPattern.addTriggerSettings(triggerFountain);
+	jupiterPlanetPattern.addTriggerSettings(triggerFountain);
+	
+	addTriggerPattern(jupiterPlanetPattern);
+	
+	ofMesh letterMesh;
+	LetterWritingPatternMaker patternMaker;
+	ParticleSystemManager& psm = *ParticleSystemManager::instance();
+	TriggerPattern textPattern = patternMaker.getPattern(psm, "Goodnight!", 15, 0.2, 350, APP_WIDTH/2, 15, 5, 48, 1, APP_WIDTH*0.5, letterMesh);
+	
+	addTriggerPattern(textPattern, "Goodnight text");//, true );
+	
+
 	
 }
 
@@ -584,9 +598,9 @@ TriggerSettingsRocket* SceneSpace :: getSphereRocketWithBitmap(ofImage&image){
 	ps2.brightnessStartMax = 255;
 	ps2.brightnessEnd = 0;
 	
-	ps2.saturationMin = 50;
-	ps2.saturationMax = 100;
-	ps2.saturationEnd = 500;
+	ps2.saturationMin = 0;
+	ps2.saturationMax = 0;
+	ps2.saturationEnd = 0;
 	
 	ps2.shimmerMin = 0.3;
 	
