@@ -12,7 +12,8 @@ SceneRealistic :: SceneRealistic(string scenename) : Scene(scenename) {
 
 	FireworkFactory& fireworkFactory = *FireworkFactory::instance();
 	
-	loadMusicFile("03 Ufo.aif");
+	//loadMusicFile("03 Ufo.aif");
+	loadMusicFile("LightsEllie.aif");
 	softWhiteImage.loadImage("img/ParticleWhite.png");
 	//bangerFlashImage.loadImage("img/ParticleBangerFlash.png");
 	

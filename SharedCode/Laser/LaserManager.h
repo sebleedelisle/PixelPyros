@@ -76,7 +76,7 @@ class LaserManager {
 	void drawLaserSpiral(LaserSpiral& spiral);
 	
 	void resetIldaPoints();
-	void addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity = 1);
+	void addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity = 1, bool useCalibration = true);
 	
 	ofxIlda::Point ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour);
 	ofPoint ildaPointToOfPoint(const ofxIlda::Point& ildapoint);
@@ -117,6 +117,8 @@ class LaserManager {
 	void updateMaskRectangleParam(float& value);
 	void updateMaskRectangle();
 	
+	float calculateCalibratedBrightness(float value, float intensity, float level100, float level75, float level50, float level25, float level0);
+	
 	vector <LaserShape*> shapes;
 	deque <vector <LaserShape*> > shapesHistory;
 	
@@ -135,7 +137,8 @@ class LaserManager {
 	ofParameter<bool> showWarpPoints;
 	ofParameter<bool> flipX;
 	ofParameter<bool> flipY;
-	ofParameter<bool> showRegistration;
+	ofParameter<int> testPattern;
+	int numTestPatterns; 
 	//ofParameter<bool> showMaskRectangle;
 	ofParameter<float> maskMarginBottom;
 	ofParameter<float> maskMarginTop;
@@ -183,15 +186,38 @@ class LaserManager {
 	
 	ofParameter<float>spiralSpacing;
 	
+	
+	
+	ofParameter<float>red100;
+	ofParameter<float>red75;
+	ofParameter<float>red50;
+	ofParameter<float>red25;
+	ofParameter<float>red0;
+
+	ofParameter<float>green100;
+	ofParameter<float>green75;
+	ofParameter<float>green50;
+	ofParameter<float>green25;
+	ofParameter<float>green0;
+	
+	ofParameter<float>blue100;
+	ofParameter<float>blue75;
+	ofParameter<float>blue50;
+	ofParameter<float>blue25;
+	ofParameter<float>blue0;
+
+	bool showColourPoints = false;
+	
+	
 	float maskRectangleBrightness; 
 
 	
 	ofxTCPServer TCP;
 	bool useTCP; 
 
-	ofParameterGroup p1, p2, p3;
+	ofParameterGroup redParams, greenParams, blueParams;
 	ofParameterGroup parameters;
-    ofParameterGroup calibrationParameters;
+    ofParameterGroup homographyParameters;
 
     QuadWarp warp;
 	

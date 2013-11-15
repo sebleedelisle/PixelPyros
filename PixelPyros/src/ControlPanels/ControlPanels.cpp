@@ -32,11 +32,27 @@ void ControlPanels::setup(ParameterManager * parameterManager) { // , vector<ofR
 	appGui.load();
 	
     setupPanel( "Laser", "laserSettings.xml", ofRectangle( 0, 0, 400, heightSmall ), laserGui );
+	setupPanel( "Laser Red", "laserSettingsred.xml", ofRectangle( 0, 0, 400, heightSmall ), laserRedGui );
+	setupPanel( "Laser Green", "laserSettingsgreen.xml", ofRectangle( 0, 0, 400, heightSmall ), laserGreenGui );
+	setupPanel( "Laser Blue", "laserSettingsblue.xml", ofRectangle( 0, 0, 400, heightSmall ), laserBlueGui );
+	
 	
 	laserGui.add(&(LaserManager::instance()->connectButton));
+	laserRedGui.add( *parameterManager->getParameterGroup("laser red") );
+	laserGreenGui.add( *parameterManager->getParameterGroup("laser green") );
+	laserBlueGui.add( *parameterManager->getParameterGroup("laser blue") );
     laserGui.add( *parameterManager->getParameterGroup("laser") );
 
     laserGui.load();
+	laserRedGui.load();
+	laserGreenGui.load();
+	laserBlueGui.load();
+	
+	laserRedGui.minimizeAll();
+	laserGreenGui.minimizeAll();
+	laserBlueGui.minimizeAll();
+
+	
     laserGui.getGroup("Laser Manager").getToggle("Etherdream connect") = false;
     laserGui.getGroup("Laser Manager").getLabel("status") = "";
     
@@ -86,7 +102,6 @@ void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 	position.y = screen.getTop() + padding.y;
 	rendererGui.setPosition(position);
 	
-	
 	// -----------------------
 	
 	position.x = screen.getRight() - padding.x*3 - cameraGui.getWidth() - motionGui.getWidth() - triggerGui.getWidth();
@@ -97,17 +112,22 @@ void ControlPanels :: updatePositions(vector<ofRectangle> screens){
 	position.y = screen.getTop() + padding.y;
 	cameraGui.setPosition(position);
 	
-	
 	position.x = screen.getRight() - padding.x - triggerGui.getWidth();
 	position.y = screen.getTop() + padding.y;
 	triggerGui.setPosition(position);
 
-	
-	
 	// ---------------------------
 	position.x = screen.getRight() - padding.x - laserGui.getWidth();
 	position.y = screen.getTop() + padding.y;
 	laserGui.setPosition(position);
+	
+	position.x -= laserGui.getWidth() + padding.x;
+	laserBlueGui.setPosition(position);
+	position.x -= laserBlueGui.getWidth() + 10;
+	laserGreenGui.setPosition(position);
+	position.x -= laserGreenGui.getWidth() + 10;
+	laserRedGui.setPosition(position);
+	
 	
    // cout << screen.x << ", " << screen.y;
 }
@@ -225,6 +245,9 @@ void ControlPanels::saveSettings() {
 	
 	appGui.save();
     laserGui.save();
+	laserRedGui.save();
+	laserGreenGui.save();
+	laserBlueGui.save();
     rendererGui.save();
     triggerGui.save();
     //motionGui.save();
@@ -259,6 +282,10 @@ void ControlPanels::keyPressed(int key){
 			
 		} else if(panelMode == PANEL_MODE_LASER) {
 			laserGui.setVisible(true);
+			laserRedGui.setVisible(true);
+			laserGreenGui.setVisible(true);
+			laserBlueGui.setVisible(true);
+	
         }
 		
 		updatePreviewScreenSize(); 

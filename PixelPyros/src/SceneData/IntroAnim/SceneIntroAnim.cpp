@@ -57,9 +57,9 @@ void SceneIntroAnim::start() {
 	
 	Scene::start();
 	video.play();
-	video.setPosition(0.4);
+	video.setPosition(0);
 
-	starBrightness = 0; 
+	starBrightness = 0;		
 
 }
 
@@ -103,7 +103,7 @@ bool SceneIntroAnim::draw() {
 	
 	ofSetColor(ofFloatColor(ofMap(video.getPosition(), 0.90,0.92,1,0, true)));
 	
-	video.draw(0,0, APP_WIDTH, APP_HEIGHT);
+	video.draw(0,-200, APP_WIDTH, APP_HEIGHT);
 	ofPopMatrix();
 	
 	ofPopStyle();
@@ -122,7 +122,7 @@ bool SceneIntroAnim::draw() {
 		
 		textWriter.colour = ofColor::cyan * brightness;
 		
-		laserWordMesh = textWriter.getMesh("LASERS", ofPoint(768, 500), ofMap(vidPosition, 0.73, 0.79, 20, 23), true);;
+		laserWordMesh = textWriter.getMesh("LASERS", ofPoint(768, 400), ofMap(vidPosition, 0.73, 0.79, 20, 23), true);;
 		vector<ofVec3f>& vertices = laserWordMesh.getVertices();
 		
 		for(int i = 0; i<vertices.size(); i+=2) {
@@ -158,7 +158,7 @@ bool SceneIntroAnim::draw() {
 					v-=centrePoint;
 					v*=scale;
 					v.x+=APP_WIDTH/2;
-					v.y +=APP_HEIGHT*0.4;
+					v.y +=APP_HEIGHT*0.3;
 					
 					
 				}

@@ -12,7 +12,7 @@
 
 #include "QuadWarp.h"
 
-#include "matrix_funcs.h"
+
 
 template <typename T> int sgn(T val) {
     return (T(0) < val) - (val < T(0));
@@ -275,13 +275,23 @@ void QuadWarp::clampPoints(){
 }
 
 void QuadWarp::drawMarker(ofVec3f& point, const ofColor & color, float radius){
+	
+	
     ofSetColor(ofColor::black);
-    ofSetLineWidth(3);
+    ofSetLineWidth(4);
     ofCircle(point, 1);
-    ofSetColor(color);
-    ofSetLineWidth(1);
-    ofCircle(point, radius);
-    ofCircle(point, 1);
+	ofCircle(point, radius);
+	
+	
+	if((point.distance(ofVec3f(ofGetMouseX(), ofGetMouseY())) > radius) || (fmod(ofGetElapsedTimef(),0.2f) < 0.1)){
+		ofSetColor(color);
+		
+	} else {
+		ofSetColor(color*0.5);
+	}
+	ofSetLineWidth(2);
+	ofCircle(point, radius);
+	ofCircle(point, 1);
 }
 
 void QuadWarp::setOffset(float x,float y){
@@ -355,7 +365,7 @@ void QuadWarp ::apply(ofRectangle sourceRect){
 	}
 	
 	// perform the warp calculation
-	mapQuadToQuad(src, dest, _warpMatrix);
+	MatrixFuncs::mapQuadToQuad(src, dest, _warpMatrix);
 	
 	// copy the values
 	_glWarpMatrix[0]	= _warpMatrix[0][0];

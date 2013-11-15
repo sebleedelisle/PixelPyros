@@ -7,6 +7,8 @@
 #include "glut/glut.h"
 #include "ofxXMLSettings.h"
 #include "ofxCv.h"
+#include "matrix_funcs.h"
+
 
 using namespace ofxCv;
 using namespace cv;

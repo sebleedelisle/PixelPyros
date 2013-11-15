@@ -62,10 +62,14 @@ class Trigger {
 	float elapsedTime;
 	float deltaTime;
 	
+	
 	// for the debug data
 	deque <float> motionValues;
 	int motionValueCount;
 	float lastUpdate;
+
+	float triggerSampleSize;
+	float multiSampleSize;
 	
 	// angle
 	float angle;

@@ -26,6 +26,10 @@ Trigger :: Trigger(){
 	// the power level for the trigger
 	unitPower =1;
 	
+	// passed in by manager
+	triggerSampleSize = 0;
+	multiSampleSize = 0; 
+	
 	// SETTINGS :
 	
 	lastSettings = NULL;
@@ -76,7 +80,7 @@ bool Trigger::update(float deltaTime, ofRectangle& triggerArea) {
 	
 	elapsedTime+=deltaTime;
 	
-	if((elapsedTime-lastTriggerTime > 4)&& (rechargeSettings->restoreSpeed>0) && !disabled && (unitPower>=rechargeSettings->triggerPower) ) {
+	if( (elapsedTime-lastTriggerTime > 4) && (rechargeSettings->restoreSpeed>0) && !disabled && (unitPower>=rechargeSettings->triggerPower) ) {
 		sampleBrightness += deltaTime;
 		
 	} else {
@@ -190,7 +194,6 @@ void Trigger :: draw(ofRectangle area, int motionTargetThreshold) {
 		settings->update(deltaTime, values);
 		settings->draw(elapsedTime, pos,  unitPower, active, scale, angle);
 		
-		
 		if(elapsedTime-lastTriggerTime<0.15) {
 			ofPushMatrix();
 			ofPushStyle();
@@ -223,8 +226,11 @@ void Trigger :: draw(ofRectangle area, int motionTargetThreshold) {
 		ofPushStyle();
 		ofTranslate(pos);
       
-		ofTranslate(0, motionValueCount*-2);
 		ofSetColor(100,0,0);
+		ofNoFill();
+		ofRect(-triggerSampleSize/2, -triggerSampleSize/2, triggerSampleSize, triggerSampleSize);
+		ofTranslate(0, motionValueCount*-2);
+		
 		ofFill();
 		 
         for(float i = -0.5; i<=0.5 ; i++){
@@ -265,6 +271,7 @@ void Trigger :: draw(ofRectangle area, int motionTargetThreshold) {
 			ofNoFill();
 			float ypos = ofMap(i, 0, vertMotionSamples.size(), area.getTop(), area.getBottom());
 			ofCircle(pos.x, ypos, 3);
+			ofRect(pos.x - (multiSampleSize/2), ypos-(multiSampleSize/2), multiSampleSize, multiSampleSize);
 			
 		}
 		

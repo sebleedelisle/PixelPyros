@@ -27,6 +27,7 @@ class CameraManagerWarped : public CameraManager {
 		
 		CameraManager::init(); 
 		warper.init(getWidth(), getHeight(), APP_WIDTH, APP_HEIGHT, camera->name);
+		
 	};
 	
 	bool update()  {
@@ -53,7 +54,8 @@ class CameraManagerWarped : public CameraManager {
 	}
 	
 	void draw()  { 
-		if(warper.guiVisible) warper.draw(camera->getPixelsRef());
+		if(warper.guiVisible)
+			warper.draw();
 		
 		if(capturing) {
 			ofPushStyle();
@@ -70,7 +72,8 @@ class CameraManagerWarped : public CameraManager {
 	};
 	
 	
-	Warper warper; 
+	Warper warper;
+	ofImage* warpSource; 
 	
 
 };

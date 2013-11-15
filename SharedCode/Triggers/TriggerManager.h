@@ -13,6 +13,9 @@
 #include "MotionManager.h"
 #include "constants.h"
 
+using namespace ofxCv;
+using namespace cv;
+
 class TriggerManager {
 	
 	public :
@@ -35,7 +38,7 @@ class TriggerManager {
     void setDisplaySize( float width, float height );
 	void toggleDebug(); 
 	
-	void updateMotion(MotionManager& motionManager, cv::Mat homography);
+	void updateMotion(MotionManager& motionManager, cv::Mat homography, cv::Mat invhomography);
 	
 	void updateLayout();
 	void setPattern(TriggerPattern tp);
@@ -64,8 +67,10 @@ class TriggerManager {
 	int triggerPatternOffset;
 	
 	float minimumSpacing;
-	int triggerCount; // keeps track of the number of triggers 
-
+	int triggerCount; // keeps track of the number of triggers
+	
+	ofImage* diff;
+	//cv::Mat translatedHomography;
 		
 	float rectanglePreviewBrightness; 
 	
@@ -92,7 +97,9 @@ class TriggerManager {
 	ofParameter<float> motionSamplesResetSpeed;  // 0.99; 
 	// a scalar to adjust the amount of motion to add to the samples
 	ofParameter<float> motionMultiplier; // 0.1
-	ofParameter<float> multiSampleSize; 
+	// size of the sample in pixels - bigger samples more
+	ofParameter<float> multiSampleSize;
+	ofParameter<float> motionVerticalTargetOffset;
 	
 	
     ofParameterGroup parameters;

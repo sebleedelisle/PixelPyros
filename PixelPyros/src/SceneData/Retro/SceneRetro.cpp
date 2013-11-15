@@ -308,7 +308,7 @@ TriggerSettingsRocket* SceneRetro::getRetroRocket(float hue, float hueChange) {
 	
 	rocketSettings.timeSpeed = trails.timeSpeed = explosion.timeSpeed = 0.7;
 	
-	ts.rechargeSettings = TriggerRechargeSettings::medium;
+	ts.rechargeSettings = TriggerRechargeSettings::fast;
 	
 	return &ts;
 	

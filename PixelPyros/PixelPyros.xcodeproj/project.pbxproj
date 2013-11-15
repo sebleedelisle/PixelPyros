@@ -120,6 +120,7 @@
 		12F1987E18183CD9004E7045 /* svgtiny_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F1987718183CD9004E7045 /* svgtiny_list.cpp */; };
 		12F1987F18183CD9004E7045 /* ofxSvg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F1987918183CD9004E7045 /* ofxSvg.cpp */; };
 		12F257031811760100CB3742 /* SceneIntroAnim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F257011811760100CB3742 /* SceneIntroAnim.cpp */; };
+		12F8F6451836A3B5003F1AEE /* matrix_funcs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F8F6441836A3B5003F1AEE /* matrix_funcs.cpp */; };
 		12F92A4317FB47D000835BBE /* Invader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F92A3F17FB47D000835BBE /* Invader.cpp */; };
 		12F92A4417FB47D000835BBE /* SceneGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F92A4117FB47D000835BBE /* SceneGame.cpp */; };
 		9E16CA5D17E1CE2D009867E9 /* ControlPanels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E16CA5B17E1CE2D009867E9 /* ControlPanels.cpp */; };
@@ -592,6 +593,7 @@
 		12F257011811760100CB3742 /* SceneIntroAnim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneIntroAnim.cpp; sourceTree = "<group>"; };
 		12F257021811760100CB3742 /* SceneIntroAnim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneIntroAnim.h; sourceTree = "<group>"; };
 		12F4141517F9843B007941F2 /* ParticleRendererDoubleCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleRendererDoubleCircle.h; sourceTree = "<group>"; };
+		12F8F6441836A3B5003F1AEE /* matrix_funcs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = matrix_funcs.cpp; sourceTree = "<group>"; };
 		12F92A3F17FB47D000835BBE /* Invader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Invader.cpp; sourceTree = "<group>"; };
 		12F92A4017FB47D000835BBE /* Invader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Invader.h; sourceTree = "<group>"; };
 		12F92A4117FB47D000835BBE /* SceneGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneGame.cpp; sourceTree = "<group>"; };
@@ -766,6 +768,7 @@
 			isa = PBXGroup;
 			children = (
 				1254505417BF861C00EF23B7 /* matrix_funcs.h */,
+				12F8F6441836A3B5003F1AEE /* matrix_funcs.cpp */,
 				1254505517BF861C00EF23B7 /* QuadWarp.cpp */,
 				1254505617BF861C00EF23B7 /* QuadWarp.h */,
 				1254505717BF861C00EF23B7 /* Warper.cpp */,
@@ -2145,6 +2148,7 @@
 				12F1987D18183CD9004E7045 /* svgtiny_gradient.cpp in Sources */,
 				12F1987E18183CD9004E7045 /* svgtiny_list.cpp in Sources */,
 				12F1987F18183CD9004E7045 /* ofxSvg.cpp in Sources */,
+				12F8F6451836A3B5003F1AEE /* matrix_funcs.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,10 @@
+<Laser_Red>
+	<Laser_red_calibration>
+		<red_100>1</red_100>
+		<red_75>0.76</red_75>
+		<red_50>0.4975</red_50>
+		<red_25>0.2725</red_25>
+		<red_0>0</red_0>
+	</Laser_red_calibration>
+<Laser_Red/>
+</Laser_Red>

@@ -48,6 +48,9 @@ class ControlPanels {
     ofxPanel appGui;
     ofxPanel cameraCalibration;
     ofxPanel laserGui;
+	ofxPanel laserRedGui;
+	ofxPanel laserGreenGui;
+	ofxPanel laserBlueGui;
     ofxPanel rendererGui;
     ofxPanel triggerGui;
     ofxPanel motionGui;

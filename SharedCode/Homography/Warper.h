@@ -11,6 +11,7 @@
 #include "ofMain.h"
 #include "ofxCv.h"
 #include "ofxXmlSettings.h"
+#include "matrix_funcs.h"
 
 using namespace ofxCv;
 using namespace cv;
@@ -26,9 +27,11 @@ class Warper {
 	bool update(ofPixels& sourcePixels);
 	
 	
+	void updateWarpedImage(ofPixelsRef sourcePixels);
+	
 	//void setSourceImage(ofImage& img) ;
 	
-	void draw(ofPixels& pix);
+	void draw();
 	
 	void mousePressed(ofMouseEventArgs &e);
 	void mouseDragged(ofMouseEventArgs &e);
@@ -36,13 +39,14 @@ class Warper {
 	
 	bool hitTestPoints(vector<ofVec2f>& points, ofVec2f& point); 
 	void drawPoints(vector<ofVec2f>& points, ofColor colour = ofColor::white);
-	
-	bool loadSettings(); 
+	void apply();
+
+	bool loadSettings();
 	bool saveSettings(); 
 	
-	void showGui(); 
-	void hideGui(); 
-	bool toggleGui(); 
+	void showGui();
+	void hideGui();
+	bool toggleGui();
 		
 	//ofImage* srcImage; 
 	ofImage warpedImage; 
@@ -67,6 +71,11 @@ class Warper {
 	ofVec2f *curPoint;
 	ofVec2f clickOffset;
 	ofVec2f dragStartPoint;
+	
+	GLfloat _glWarpMatrix[16];
+	double _warpMatrix[3][3];
+
+
 	
 	bool verbose;
 	

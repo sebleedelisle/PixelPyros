@@ -84,23 +84,7 @@ bool Warper :: update(ofPixels& sourcePixels) {
 	
 	
 	if(guiVisible) { 
-		
-		if(sourcePixels.getImageType()!=warpedImage.getPixelsRef().getImageType()){
-			warpedImage.allocate(dstWidth* dstPreviewScale, dstHeight* dstPreviewScale, sourcePixels.getImageType());
-		}
-		vector<Point2f> srcPoints, dstPoints;
-		
-		for(int i = 0; i < srcVecs.size(); i++) {
-			srcPoints.push_back(Point2f(srcVecs[i].x *srcWidth/dstWidth, srcVecs[i].y * srcHeight/dstHeight));
-			dstPoints.push_back(Point2f(dstVecs[i].x*dstPreviewScale, dstVecs[i].y*dstPreviewScale));
-		}		
-		Mat previewHomography = findHomography(Mat(srcPoints), Mat(dstPoints)); 
-		
-		// I guess for a moving image we need to warp the pixels every time.
-		// but we could do it with a similar function to "apply" in QuadWarper
-		
-		warpPerspective(sourcePixels, warpedImage, previewHomography, CV_INTER_NN);
-		warpedImage.update();
+		updateWarpedImage(sourcePixels);
 		
 	}
 		
@@ -111,6 +95,28 @@ bool Warper :: update(ofPixels& sourcePixels) {
 		return false; 
 	}
 };
+
+void Warper :: updateWarpedImage(ofPixelsRef sourcePixels) {
+	
+	if(sourcePixels.getImageType()!=warpedImage.getPixelsRef().getImageType()){
+		warpedImage.allocate(dstWidth* dstPreviewScale, dstHeight* dstPreviewScale, sourcePixels.getImageType());
+	}
+	vector<Point2f> srcPoints, dstPoints;
+	
+	for(int i = 0; i < srcVecs.size(); i++) {
+		srcPoints.push_back(Point2f(srcVecs[i].x *srcWidth/dstWidth, srcVecs[i].y * srcHeight/dstHeight));
+		dstPoints.push_back(Point2f(dstVecs[i].x*dstPreviewScale, dstVecs[i].y*dstPreviewScale));
+	}
+	Mat previewHomography = findHomography(Mat(srcPoints), Mat(dstPoints));
+	
+	// I guess for a moving image we need to warp the pixels every time.
+	// but we could do it with a similar function to "apply" in QuadWarper
+	
+	warpPerspective(sourcePixels, warpedImage, previewHomography, CV_INTER_NN);
+	warpedImage.update();
+
+	
+}
 
 void Warper :: drawPoints(vector<ofVec2f>& points, ofColor colour) {
 	
@@ -141,15 +147,15 @@ void Warper :: drawPoints(vector<ofVec2f>& points, ofColor colour) {
 
 
 
-void Warper :: draw(ofPixels& pix) { 
-	if(!guiVisible) return; 
+void Warper :: draw() { 
+	//if(!guiVisible) return;
 	
 	// draw GUI
 	
 	//ofSetColor(255);
 	
 	warpedImage.draw(0,0, dstWidth, dstHeight);
-	
+	if(!guiVisible) return; 
 	/*
 	ofPushMatrix();
 	
@@ -172,6 +178,56 @@ void Warper :: draw(ofPixels& pix) {
 };
 
 
+
+
+void Warper ::apply(){
+	
+	// doesn't seem to work - not sure why. Maybe point order? 
+	
+	// we set it to the default - 0 translation
+	// and 1.0 scale for x y z and w
+	for(int i = 0; i < 16; i++) {
+		if(i % 5 != 0) _glWarpMatrix[i] = 0.0;
+		else _glWarpMatrix[i] = 1.0;
+	}
+	
+	// source and destination points
+	double src[srcVecs.size()][2];
+	double dest[dstVecs.size()][2];
+	
+	// we set the warp coordinates
+	// source coordinates as the dimensions of our window
+	
+	for(int i = 0; i<srcVecs.size(); i++) {
+		src[i][0] = srcVecs[i].x;
+		src[i][1] = srcVecs[i].y;
+	}
+	
+	for(int i = 0; i < dstVecs.size(); i++){
+		dest[i][0] = dstVecs[i].x;
+		dest[i][1] = dstVecs[i].y;
+	}
+	
+	// perform the warp calculation
+	MatrixFuncs::mapQuadToQuad(src, dest, _warpMatrix);
+	
+	// copy the values
+	_glWarpMatrix[0]	= _warpMatrix[0][0];
+	_glWarpMatrix[1]	= _warpMatrix[0][1];
+	_glWarpMatrix[3]	= _warpMatrix[0][2];
+	
+	_glWarpMatrix[4]	= _warpMatrix[1][0];
+	_glWarpMatrix[5]	= _warpMatrix[1][1];
+	_glWarpMatrix[7]	= _warpMatrix[1][2];
+	
+	_glWarpMatrix[12]	= _warpMatrix[2][0];
+	_glWarpMatrix[13]	= _warpMatrix[2][1];
+	_glWarpMatrix[15]	= _warpMatrix[2][2];
+	
+	// finally lets multiply our matrix
+	glMultMatrixf(_glWarpMatrix);
+	
+};
 bool Warper:: loadSettings() { 
 	
 	ofxXmlSettings settings;

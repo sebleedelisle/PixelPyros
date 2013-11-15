@@ -23,6 +23,7 @@ TriggerManager::TriggerManager () {
 	
 	triggersDisabled = false;
 	triggerDebugMode = false;
+	diff = NULL; 
     
 	rectanglePreviewBrightness = 1;
 	
@@ -33,8 +34,8 @@ TriggerManager::TriggerManager () {
 void TriggerManager::initParams(){
     parameters.setName("Triggers");
     parameters.add( triggerAreaWidthParam.set("width", 0.9125, 0, 1 ) );
-    parameters.add( triggerAreaTopParam.set("top", 0.8, 0.7, 1 ) );
-	parameters.add( triggerAreaBottomParam.set("bottom", 0.9, 0.7, 1 ) );
+    parameters.add( triggerAreaTopParam.set("top", 0.8, 0.5, 1 ) );
+	parameters.add( triggerAreaBottomParam.set("bottom", 0.9, 0.5, 1 ) );
 	parameters.add( triggerNumParam.set("number of triggers", 28, 1, 40 ) );
 	
 	parameters.add( triggerSampleSizeParam.set("trigger sample size", 10,2,60) );
@@ -49,6 +50,7 @@ void TriggerManager::initParams(){
 	parameters.add( motionMultiplier.set("motion multiplier", 0.1, 0.00001, 1));
 	parameters.add( motionSamplesResetSpeed.set("motion reset speed", 0.99, 0.8,0.999999));
 	parameters.add( motionTargetThreshold.set("target threshold", 50, 1, 200));
+	parameters.add( motionVerticalTargetOffset.set("vertical target offset", 0, -30, 30));
 	parameters.add( moveTowardMotionSpeed.set("move speed", 0.05, 0.001, 0.2));
 	parameters.add( moveHomeSpeed.set("move home speed", 20, 1,100)); 
 	parameters.add( multiSampleSize.set("samples sample size", 5,2,60) );
@@ -85,7 +87,7 @@ bool TriggerManager :: update(float deltaTime) {
 	triggerModeString = (triggerMode==0)? "MANUAL" : "AUTO";
 	
 	
-
+	
 	
 	if(triggerMode==TRIGGER_MODE_AUTO) {
 		for(int i=0; i<triggers.size(); i++) {
@@ -116,7 +118,7 @@ bool TriggerManager :: update(float deltaTime) {
 				if(trigger.pos.y < triggerArea.getTop()) trigger.pos.y = triggerArea.getTop();
 				
 			} else {
-				float targety = ofMap(topposition, 0, numVertSamples, triggerArea.getTop(), triggerArea.getBottom());
+				float targety = ofMap(topposition, 0, numVertSamples, triggerArea.getTop(), triggerArea.getBottom()) + motionVerticalTargetOffset;
 				trigger.pos.y += (targety-trigger.pos.y) * moveTowardMotionSpeed;
 			}
 			
@@ -129,15 +131,37 @@ bool TriggerManager :: update(float deltaTime) {
 		
 }
 
-void TriggerManager :: updateMotion(MotionManager& motionManager, cv::Mat homography){
+void TriggerManager :: updateMotion(MotionManager& motionManager, cv::Mat homography, cv::Mat inverseHomography){
 	
+	/*
+	if((diff.width!=floor(triggerArea.getWidth())) || (diff.height!=floor(triggerArea.getHeight()))) {
+		diff.allocate(floor(triggerArea.getWidth()), floor(triggerArea.getWidth()), OF_IMAGE_GRAYSCALE);
+	}
+	
+	
+	//if((diff.width!=APP_WIDTH) || (diff.height!=APP_HEIGHT)) {
+	//	diff.allocate(APP_WIDTH, APP_HEIGHT, OF_IMAGE_GRAYSCALE);
+	//}
+
+	
+	translatedHomography = homography.clone();
+	translatedHomography.at<double>(0,2) -= triggerArea.getLeft();
+	translatedHomography.at<double>(1,2) -= triggerArea.getTop();
+	warpPerspective(motionManager.diff.getPixelsRef(), diff, translatedHomography, CV_INTER_NN);
+	diff.update();
+	*/
+	
+	
+	diff = &motionManager.diff;
 	for(int i=0; i<triggers.size(); i++) {
 		
 		Trigger* trigger = triggers[i];
 		if(!trigger->active) continue;
 		
+		trigger->triggerSampleSize = triggerSampleSizeParam;
+		trigger->multiSampleSize = multiSampleSize; 
 		// Fixed motion size! 10 pixels radius
-		float motion = motionManager.getMotionAtPosition(trigger->pos, triggerSampleSizeParam, homography);
+		float motion = motionManager.getMotionAtPosition(trigger->pos, triggerSampleSizeParam, inverseHomography);
 		trigger->registerMotion(motion/255);
 	}
 		
@@ -159,7 +183,7 @@ void TriggerManager :: updateMotion(MotionManager& motionManager, cv::Mat homogr
 			}
 			
 			
-			trigger.vertMotionSamples[j] += motionManager.getMotionAtPosition(ofVec2f(trigger.pos.x, ypos), multiSampleSize, homography)*motionMultiplier;
+			trigger.vertMotionSamples[j] += motionManager.getMotionAtPosition(ofVec2f(trigger.pos.x, ypos), multiSampleSize, inverseHomography)*motionMultiplier;
 			if(trigger.vertMotionSamples[j]>255) trigger.vertMotionSamples[j] = 255;
 		}
 	}
@@ -169,6 +193,7 @@ void TriggerManager :: updateMotion(MotionManager& motionManager, cv::Mat homogr
 void TriggerManager :: draw() {
 	
 	//if(!active) return;
+	//if(diff!=NULL) diff->draw(0,0);
 	
 	for(int i=0; i<triggers.size(); i++) {
 		triggers[i]->draw(triggerArea, motionTargetThreshold);

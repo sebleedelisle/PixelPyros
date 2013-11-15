@@ -106,11 +106,14 @@ void ofApp::setup(){
 	
 	parameterManager.registerParameterGroup("app", &appParams );
     parameterManager.registerParameterGroup("laser", &laserManager.parameters );
+    parameterManager.registerParameterGroup("laser red", &laserManager.redParams );
+    parameterManager.registerParameterGroup("laser green", &laserManager.greenParams );
+    parameterManager.registerParameterGroup("laser blue", &laserManager.blueParams );
     parameterManager.registerParameterGroup("renderer", &renderer.paramters );
     parameterManager.registerParameterGroup("triggers", &triggerManager.parameters);
     parameterManager.registerParameterGroup("motion", &motionManager.parameters);
     parameterManager.registerParameterGroup("particles", &particleSystemManager.parameters);
-    parameterManager.registerParameterGroup("laser calibration", &laserManager.calibrationParameters );
+    parameterManager.registerParameterGroup("laser homography", &laserManager.homographyParameters );
     parameterManager.registerParameterGroup("camera", &cameraManager.parameters );
        
     // Now that all of the parameters should be registered with the
@@ -156,7 +159,15 @@ void ofApp::update(){
 
 		motionManager.update(cameraManager.getPixelsRef(), cameraManager.getCameraLabel());
 		
-		triggerManager.updateMotion(motionManager, cameraManager.warper.inverseHomography );
+		triggerManager.updateMotion(motionManager, cameraManager.warper.homography, cameraManager.warper.inverseHomography );
+		
+		/*
+		// this would put the diff image into the warper so we can 
+		// see the diff in the output
+		if(!cameraManager.warper.guiVisible) {
+			cameraManager.warper.updateWarpedImage(motionManager.diff.getPixelsRef());
+		}
+		 */
 	
 	}
 	
@@ -216,19 +227,23 @@ void ofApp::draw(){
 	sceneManager.draw();
 
 	triggerManager.draw();
-
+	
+//	ofPushMatrix();
+//	cameraManager.warper.apply();
+//	motionManager.diff.draw(0,0);
+//	ofPopMatrix();
+	
 	laserManager.draw();
 
 	
 	if(useFbo) {
 		fbo.end();
-        
-			
 		renderer.draw(fbo, fboWarper1, fboWarper2, edgeBlendSize);
 	}
 	
 	ofDisableBlendMode();
 	ofDisableAlphaBlending();
+	
 	
 	// draw the warper UIs if necessary
 	fboWarper1.draw();
@@ -457,15 +472,15 @@ void ofApp:: setupScenes() {
 
 	sceneManager.addScene(new SceneVectorizer("Vectorizer"));
 	
-	sceneManager.addScene(new SceneRealistic("Realistic - UFO"));
+	sceneManager.addScene(new SceneRealistic("Realistic"));
 	
-	sceneManager.addScene(new SceneRetro("Retro"));
+	sceneManager.addScene(new SceneRetro("Retro2"));
 	
 	sceneManager.addScene(sceneGame = new SceneGame("Game"));
 	
 	//sceneManager.addScene(new SceneNadia("Nadia"));
 	
-	sceneManager.addScene(new SceneSpace("Space"));
+	sceneManager.addScene(new SceneSpace("Space2"));
 
 	sceneManager.changeScene("Vectorizer");
 	

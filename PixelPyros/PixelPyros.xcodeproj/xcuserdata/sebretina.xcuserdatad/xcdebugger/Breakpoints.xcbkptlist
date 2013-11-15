@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Triggers/Trigger.cpp"
-         timestampString = "405849865.989684"
+         timestampString = "406243754.767332"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "244"
-         endingLineNumber = "244"
+         startingLineNumber = "250"
+         endingLineNumber = "250"
          landmarkName = "Trigger :: draw(ofRectangle area, int motionTargetThreshold)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Triggers/Trigger.cpp"
-         timestampString = "405849865.989684"
+         timestampString = "406243754.767332"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "238"
-         endingLineNumber = "238"
+         startingLineNumber = "244"
+         endingLineNumber = "244"
          landmarkName = "Trigger :: draw(ofRectangle area, int motionTargetThreshold)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1219"
-         endingLineNumber = "1219"
+         startingLineNumber = "1362"
+         endingLineNumber = "1362"
          landmarkName = "LaserManager :: renderPreview()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ControlPanels/ControlPanels.cpp"
-         timestampString = "404755077.162245"
+         timestampString = "406137345.172677"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "175"
-         endingLineNumber = "175"
+         startingLineNumber = "195"
+         endingLineNumber = "195"
          landmarkName = "ControlPanels::drawPreviewScreen(MotionManager&amp; motionManager, CameraManagerWarped&amp; cameraManager)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,22 +138,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "395"
-         endingLineNumber = "395">
+         startingLineNumber = "511"
+         endingLineNumber = "511">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "340"
-         endingLineNumber = "340"
+         startingLineNumber = "462"
+         endingLineNumber = "462"
          landmarkName = "LaserManager::draw()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -162,11 +162,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "339"
-         endingLineNumber = "339"
+         startingLineNumber = "461"
+         endingLineNumber = "461"
          landmarkName = "LaserManager::draw()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -175,11 +175,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "405"
-         endingLineNumber = "405"
+         startingLineNumber = "521"
+         endingLineNumber = "521"
          landmarkName = "LaserManager::sendPointsTCP(vector&lt;ofxIlda::Point&gt;&amp; points)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -212,11 +212,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ControlPanels/ControlPanels.cpp"
-         timestampString = "404755077.162245"
+         timestampString = "406137345.172677"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "168"
-         endingLineNumber = "168"
+         startingLineNumber = "188"
+         endingLineNumber = "188"
          landmarkName = "ControlPanels::drawPreviewScreen(MotionManager&amp; motionManager, CameraManagerWarped&amp; cameraManager)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -225,11 +225,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ofApp.cpp"
-         timestampString = "405377755.565332"
+         timestampString = "406136474.822536"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "142"
-         endingLineNumber = "142"
+         startingLineNumber = "145"
+         endingLineNumber = "145"
          landmarkName = "ofApp::update()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -238,11 +238,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ofApp.cpp"
-         timestampString = "405377755.565332"
+         timestampString = "406243029.298233"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "174"
-         endingLineNumber = "174"
+         startingLineNumber = "185"
+         endingLineNumber = "185"
          landmarkName = "ofApp::update()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -290,11 +290,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "878"
-         endingLineNumber = "878"
+         startingLineNumber = "994"
+         endingLineNumber = "994"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -303,11 +303,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "913"
-         endingLineNumber = "913"
+         startingLineNumber = "1029"
+         endingLineNumber = "1029"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -316,11 +316,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "920"
-         endingLineNumber = "920"
+         startingLineNumber = "1036"
+         endingLineNumber = "1036"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -329,11 +329,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "923"
-         endingLineNumber = "923"
+         startingLineNumber = "1039"
+         endingLineNumber = "1039"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -342,11 +342,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "922"
-         endingLineNumber = "922"
+         startingLineNumber = "1038"
+         endingLineNumber = "1038"
          landmarkName = "LaserManager::drawLaserSpiral(LaserSpiral&amp; spiral)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -355,12 +355,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Triggers/TriggerManager.cpp"
-         timestampString = "404431069.218543"
+         timestampString = "406246543.828898"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "165"
-         endingLineNumber = "165"
-         landmarkName = "TriggerManager :: updateMotion(MotionManager&amp; motionManager, cv::Mat homography)"
+         startingLineNumber = "189"
+         endingLineNumber = "189"
+         landmarkName = "TriggerManager :: updateMotion(MotionManager&amp; motionManager, cv::Mat homography, cv::Mat inverseHomography)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -394,11 +394,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "504"
-         endingLineNumber = "504"
+         startingLineNumber = "620"
+         endingLineNumber = "620"
          landmarkName = "LaserManager:: drawShapes()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -407,11 +407,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "545"
-         endingLineNumber = "545"
+         startingLineNumber = "661"
+         endingLineNumber = "661"
          landmarkName = "LaserManager:: drawShapes()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -420,11 +420,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405786529.497565"
+         timestampString = "406214973.56867"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "570"
-         endingLineNumber = "570"
+         startingLineNumber = "686"
+         endingLineNumber = "686"
          landmarkName = "LaserManager:: drawShapes()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -497,13 +497,13 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "../SharedCode/Laser/LaserManager.cpp"
-         timestampString = "405785664.501127"
+         filePath = "../SharedCode/Triggers/TriggerManager.cpp"
+         timestampString = "406246543.828898"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "284"
-         endingLineNumber = "284"
-         landmarkName = "LaserManager::draw()"
+         startingLineNumber = "143"
+         endingLineNumber = "143"
+         landmarkName = "TriggerManager :: updateMotion(MotionManager&amp; motionManager, cv::Mat homography, cv::Mat inverseHomography)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

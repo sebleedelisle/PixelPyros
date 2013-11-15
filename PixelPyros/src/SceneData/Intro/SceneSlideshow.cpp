@@ -158,7 +158,7 @@ bool SceneSlideshow::draw() {
 	ofFill(); 
 	ofRect(0,0,APP_WIDTH, APP_HEIGHT);
 	ofSetColor(foreground);
-    slide->background->draw(0, 0);
+    slide->background->draw(0, -80);
     
     ofPopStyle();
     ofPopMatrix();

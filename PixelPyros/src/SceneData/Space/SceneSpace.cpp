@@ -153,7 +153,7 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	earthPlanetPattern.addTriggerSettings(triggerFountain);
 	earthPlanetPattern.addTriggerSettings(triggerFountain);
 	
-	addTriggerPattern(earthPlanetPattern);
+	addTriggerPattern(earthPlanetPattern, "earth pattern");
 	
 	TriggerPattern jupiterPlanetPattern;
 	TriggerSettingsRocket* jupiterTrigger = getSphereRocketWithBitmap(jupiterImage);
@@ -163,7 +163,7 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	jupiterPlanetPattern.addTriggerSettings(triggerFountain);
 	jupiterPlanetPattern.addTriggerSettings(triggerFountain);
 	
-	addTriggerPattern(jupiterPlanetPattern);
+	addTriggerPattern(jupiterPlanetPattern, "jupiter pattern");
 	
 	ofMesh letterMesh;
 	LetterWritingPatternMaker patternMaker;

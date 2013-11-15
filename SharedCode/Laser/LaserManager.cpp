@@ -26,7 +26,7 @@ LaserManager:: LaserManager() {
 	//etherdream.setWaitBeforeSend(true);
 	
 	beep.loadSound("beep.aif");
-	
+	beep.setVolume(0.01);
 	lastState = ""; 
 }
 
@@ -69,7 +69,8 @@ void LaserManager:: setup (int width, int height) {
 	pmin.set(0,0);
 	pmax.set(appWidth, appHeight);
 	
-	showRegistration = true;
+	testPattern = 0;
+	numTestPatterns = 5;
 	showMovePoints = false;
 	showLaserPath = true;
 	intensity = 1;
@@ -109,22 +110,25 @@ void LaserManager:: setup (int width, int height) {
 	connectButton.addListener(this, &LaserManager::connectButtonPressed);
 	//parameters.add(&connectButton);
 	parameters.add(etherdreamStatus.set("status", "test"));
-	parameters.add(showWarpPoints.set("show warp points", false));
-	//parameters.add(showMaskRectangle.set("show mask rect", false));
+	
+	parameters.add(intensity.set("intensity", 1, 0, 1));
+
+	parameters.add(testPattern.set("test pattern", 0, 0, numTestPatterns));
+	parameters.add(delay.set("sync delay", 0, 0, 100));
+	parameters.add(pps.set("points per second", 80000, 30000, 100000));
+
+	
 	parameters.add(maskMarginTop.set("mask margin top", 0, 0, appHeight));
 	parameters.add(maskMarginBottom.set("mask margin bottom", appHeight*0.7, 0, appHeight));
 	parameters.add(maskMarginLeft.set("mask margin left", 0, 0, appWidth));
 	parameters.add(maskMarginRight.set("mask margin right", appWidth, 0, appWidth));
 	
-	
-	
-	parameters.add(pps.set("points per second", 80000, 30000, 100000));
-	parameters.add(intensity.set("intensity", 1, 0, 1));
-	parameters.add(delay.set("sync delay", 0, 0, 10));
-	parameters.add(colourCorrection.set("colour correction", ofColor(255,255,255),ofColor(200,200,200), ofColor(255,255,255)));
+	parameters.add(showWarpPoints.set("show warp points", false));
+
+
+	//parameters.add(colourCorrection.set("colour correction", ofColor(255,255,255),ofColor(200,200,200), ofColor(255,255,255)));
 	parameters.add(colourChangeDelay.set("colour change offset", -6, -15, 15));
 	
-	parameters.add(showRegistration.set("show registration", false));
 	parameters.add(flipX.set("flip x", true));
 	parameters.add(flipY.set("flip y", true));
 	
@@ -153,7 +157,30 @@ void LaserManager:: setup (int width, int height) {
   	parameters.add(spiralSpacing.set("spiral spacing", 10,1, 20));
     
     // where is this getting set up? 
-	calibrationParameters.setName("Laser Calibration");
+	homographyParameters.setName("Laser Homography");
+	
+	
+	redParams.add(red100.set("red 100", 1,0,1));
+	redParams.add(red75.set("red 75", 0.75,0,1));
+	redParams.add(red50.set("red 50", 0.5,0,1));
+	redParams.add(red25.set("red 25", 0.25,0,1));
+	redParams.add(red0.set("red 0", 0,0,0.5));
+	
+	greenParams.add(green100.set("green 100", 1,0,1));
+	greenParams.add(green75.set("green 75", 0.75,0,1));
+	greenParams.add(green50.set("green 50", 0.5,0,1));
+	greenParams.add(green25.set("green 25", 0.25,0,1));
+	greenParams.add(green0.set("green 0", 0,0,0.5));
+	
+	blueParams.add(blue100.set("blue 100", 1,0,1));
+	blueParams.add(blue75.set("blue 75", 0.75,0,1));
+	blueParams.add(blue50.set("blue 50", 0.5,0,1));
+	blueParams.add(blue25.set("blue 25", 0.25,0,1));
+	blueParams.add(blue0.set("blue 0", 0,0,0.5));
+	
+	redParams.setName("Laser red calibration");
+	greenParams.setName("Laser green calibration");
+	blueParams.setName("Laser blue calibration");
 	
 	colourChangeDelay = -6;
 	
@@ -229,41 +256,6 @@ void LaserManager:: update() {
 	}
 	
 	
-	if(showRegistration) {
-		
-		//addLaserRectEased(pmin, pmax, white);
-		addLaserLineEased(maskRectangle.getTopLeft(), maskRectangle.getBottomRight(), white);
-		addLaserLineEased(maskRectangle.getTopRight(), maskRectangle.getBottomLeft(), white);
-		
-		ofPoint v = maskRectangle.getBottomRight() - maskRectangle.getTopLeft();
-		
-		for(float x =0 ; x<=1; x+=0.2) {
-
-			for(float y = 0; y<=1; y+=0.2) {
-				addLaserDot(ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*y)), white, 1);
-			
-				if(x ==0) {
-					addLaserLineEased(ofPoint(maskRectangle.getLeft(), maskRectangle.getTop()+v.y*y),ofPoint(maskRectangle.getRight(), maskRectangle.getTop()+v.y*y), ofColor::red );
-				}
-			}
-			
-			addLaserLineEased(ofPoint(maskRectangle.x + v.x*x, maskRectangle.getTop()),ofPoint(maskRectangle.x + v.x*x, maskRectangle.getBottom()), ofColor::red );
-			
-		}
-		
-		addLaserCircle(maskRectangle.getCenter(), white, 10);
-		addLaserCircle(maskRectangle.getCenter(), ofFloatColor(1,0,0), 50);
-			
-		
-		/*
-		addLaserDot(pmin, white, 1);
-		addLaserDot(ofPoint(pmax.x, pmin.y), white, 1);
-		addLaserDot(pmax, white, 1);
-		addLaserDot(ofPoint(pmin.x, pmax.y), white, 1);
-		*/
-		
-		
-	}
 	
 	//addLaserSpiral(ofPoint(200,200), ofFloatColor::white, 100, 200);
 	
@@ -279,6 +271,135 @@ void LaserManager:: update() {
 
 void LaserManager::draw() {
 	
+
+	if(testPattern==1) {
+		
+		//addLaserRectEased(pmin, pmax, white);
+		//addLaserLineEased(maskRectangle.getTopLeft(), maskRectangle.getBottomRight(), white);
+		//addLaserLineEased(maskRectangle.getTopRight(), maskRectangle.getBottomLeft(), white);
+		
+		ofPoint v = maskRectangle.getBottomRight() - maskRectangle.getTopLeft();
+		
+		for(float x =0 ; x<=1; x+=0.2) {
+			
+			for(float y = 0; y<=1; y+=0.2) {
+				//addLaserDot(ofPoint(maskRectangle.x + (v.x*x), maskRectangle.y + (v.y*y)), white, 1);
+				
+				if(x ==0) {
+					addLaserLineEased(ofPoint(maskRectangle.getLeft(), maskRectangle.getTop()+v.y*y),ofPoint(maskRectangle.getRight(), maskRectangle.getTop()+v.y*y), ofColor::white );
+				}
+			}
+			
+			addLaserLineEased(ofPoint(maskRectangle.x + v.x*x, maskRectangle.getTop()),ofPoint(maskRectangle.x + v.x*x, maskRectangle.getBottom()), ofColor::red );
+			
+		}
+		
+		addLaserCircle(maskRectangle.getCenter(), white, 10);
+		addLaserCircle(maskRectangle.getCenter(), ofFloatColor(1,0,0), 50);
+		
+		
+		/*
+		 addLaserDot(pmin, white, 1);
+		 addLaserDot(ofPoint(pmax.x, pmin.y), white, 1);
+		 addLaserDot(pmax, white, 1);
+		 addLaserDot(ofPoint(pmin.x, pmax.y), white, 1);
+		 */
+		
+		
+	} else if((testPattern>=2) && (testPattern<=5)) {
+		ofColor c;
+			
+		ofRectangle rect(appWidth*0.3, appHeight*0.3, appWidth*0.3, appHeight*0.3);
+		
+		for(int row = 0; row<5; row ++ ) {
+			
+			
+			float y = rect.getTop() + (rect.getHeight()*row/4);
+			
+			ofPoint left = ofPoint(rect.getLeft(), y);
+			
+			ofPoint right = ofPoint(rect.getRight(), y);
+			
+			
+			moveLaser(left);
+			
+			for(int i = 0; i<shapePreBlank; i++) {
+				addIldaPoint(left, black, 1);
+			}
+			
+			if(testPattern == 2) c.set(255,0,0);
+			else if(testPattern == 3) c.set(0,255,0);
+			else if(testPattern == 4) c.set(0,0,255);
+			else if(testPattern == 5) c.set(255,255,255);
+
+			switch (row) {
+				case 0 :
+					c.r *= red100;
+					c.g *= green100;
+					c.b *= blue100;
+					break;
+				case 1 :
+					c.r *= red75;
+					c.g *= green75;
+					c.b *= blue75;
+					break;
+				case 2 :
+					c.r *= red50;
+					c.g *= green50;
+					c.b *= blue50;
+					break;
+				case 3 :
+					c.r *= red25;
+					c.g *= green25;
+					c.b *= blue25;
+					break;
+				case 4 :
+					c.r *= red0;
+					c.g *= green0;
+					c.b *= blue0;
+					break;
+			}
+			
+			
+			float speed = 20 * ( 1- (row*0.25));
+			if(speed<5) speed = 5;
+			
+			for(float x = rect.getLeft(); x<=rect.getRight(); x+=speed) {
+				addIldaPoint(ofPoint(x,y),c,1, false); 
+				
+			}
+			for(int i = 0; i<shapePostBlank; i++) {
+				addIldaPoint(right, black, 1);
+			}
+
+		
+			// 0 = normalspeed;
+			// 1 = normalspeed * 0.75
+			// 2 = normalspeed * 0.5
+			// 3 = normalspeed * 0.25
+
+			
+			// 0 = 1;
+			// 1 = 0.75
+			// 2 = 0.5;
+			// 3 = 0.25
+			//float brightness = 1 - (row*0.25);
+			
+			//if(brightness < 0) brightness =
+	
+		}
+		
+	}
+
+	
+	
+	
+	if(renderLaserPreview) {
+		
+		renderPreview();
+		
+	}
+
 	if(delay > 0) {
 		shapesHistory.push_back(shapes);
 		
@@ -290,12 +411,11 @@ void LaserManager::draw() {
 				shapes = shapesHistory.front();
 				shapesHistory.pop_front();
 				resetIldaPoints();
-				
-				
 			}
+			
 			shapes = shapesHistory.front();
 			shapesHistory.pop_front();
-		
+			
 		} else {
 			// need to do this otherwise the shapes get deleted
 			// more than once
@@ -305,6 +425,8 @@ void LaserManager::draw() {
 	} else if(shapesHistory.size()!=0) {
 		shapesHistory.clear();
 	}
+	
+	//ofDrawBitmapString(ofToString(shapesHistory.size()), 200,200);
 	
 	drawShapes();
 	
@@ -346,13 +468,7 @@ void LaserManager::draw() {
 	
 	ofPushStyle();
 	
-	
-	if(renderLaserPreview) {
 		
-		renderPreview();
-		
-	}
-	
 	
   	
 	
@@ -977,7 +1093,7 @@ ofPoint LaserManager::ildaPointToOfPoint(const ofxIlda::Point& ildapoint){
 	return  warp.getUnWarpedPoint(ofVec3f(p.x, p.y));;
 }
 
-void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity){
+void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity, bool useCalibration){
 	
 	bool offScreen = false;
 
@@ -1015,9 +1131,15 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity)
 	
 	//ofPoints.push_back(warpedpoint);
 
-	c.r*=intensity*pointIntensity * ((float)colourCorrection->r/255.0f);
-	c.g*=intensity*pointIntensity * ((float)colourCorrection->g/255.0f);
-	c.b*=intensity*pointIntensity * ((float)colourCorrection->b/255.0f);
+	c.r*=pointIntensity; //* ((float)colourCorrection->r/255.0f);
+	c.g*=pointIntensity; //* ((float)colourCorrection->g/255.0f);
+	c.b*=pointIntensity; //* ((float)colourCorrection->b/255.0f);
+	
+	if(useCalibration) {
+		c.r = calculateCalibratedBrightness(c.r, intensity, red100, red75, red50, red25, red0);
+		c.g = calculateCalibratedBrightness(c.g, intensity, green100, green75, green50, green25, green0);
+		c.b = calculateCalibratedBrightness(c.b, intensity, blue100, blue75, blue50, blue25, blue0);
+	}
 	
 	ofxIlda::Point ildapoint = ofPointToIldaPoint(warpedpoint, c);
 	ildaPoints.push_back(ildapoint);
@@ -1027,12 +1149,31 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity)
 		previewpoint.x = ofMap(ildapoint.x, kIldaMinPoint, kIldaMaxPoint, 0, appWidth);
 		previewpoint.y = ofMap(ildapoint.y, kIldaMinPoint, kIldaMaxPoint, 0, appHeight);
 		pathMesh.addVertex(previewpoint);
-	
+				
 	}
 	
+	if (showColourPoints) pathMesh.addColor(c);
+
 	currentPosition = p;
 	
 }
+
+
+float LaserManager::calculateCalibratedBrightness(float value, float intensity, float level100, float level75, float level50, float level25, float level0){
+	
+	value *=intensity;
+	if(value<0.25) {
+		return ofMap(value, 0, 0.25, level0, level25);
+	} else if(value<0.5) {
+		return ofMap(value, 0.25, 0.5,level25, level50); 
+	} else if(value<0.75) {
+		return ofMap(value, 0.5, 0.75,level50, level75);
+	} else {
+		return ofMap(value, 0.75, 1,level75, level100);
+	}
+	
+}
+
 
 void LaserManager::resetIldaPoints() {
 	
@@ -1088,7 +1229,8 @@ void LaserManager::addDelayTest() {
 
 bool LaserManager:: toggleRegistration() {
 	
-	showRegistration = !showRegistration;
+	testPattern++;
+	if(testPattern>numTestPatterns) testPattern = 0; 
 	
 }
 
@@ -1116,11 +1258,12 @@ void LaserManager :: renderPreview() {
 	
 	
 	mesh.setMode(OF_PRIMITIVE_TRIANGLES);
-
 	
-	for(int i = 0; i<shapes.size(); i++) {
+	vector<LaserShape*>& newshapes = shapes;//(shapesHistory.size()>0) ? shapesHistory.back() : shapes;
+	
+	for(int i = 0; i<newshapes.size(); i++) {
 		
-		LaserShape* shape = shapes[i];
+		LaserShape* shape = newshapes[i];
 
 			
 		// Is it a dot?

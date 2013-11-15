@@ -492,53 +492,55 @@ void SceneManager :: keyPressed(ofKeyEventArgs &e) {
 	} else if(e.key=='r') {
 		toggleRecord();
 	} 
-
-	if(!altPressed) {
-		if(e.key=='0') {
-			currentScene->changeTriggerPattern(newPattern = 0);
-		} else if(e.key=='1') {
-			currentScene->changeTriggerPattern(newPattern = 1);
-		} else if(e.key=='2') {
-			currentScene->changeTriggerPattern(newPattern = 2);
-		} else if(e.key=='3') {
-			currentScene->changeTriggerPattern(newPattern = 3);
-		}else if(e.key=='4') {
-			currentScene->changeTriggerPattern(newPattern = 4);
-		}else if(e.key=='5') {
-			currentScene->changeTriggerPattern(newPattern = 5);
-		}else if(e.key=='6') {
-			currentScene->changeTriggerPattern(newPattern = 6);
-		}else if(e.key=='7') {
-			currentScene->changeTriggerPattern(newPattern = 7);
-		}else if(e.key=='8') {
-			currentScene->changeTriggerPattern(newPattern = 8);
-		}else if(e.key=='9') {
-			currentScene->changeTriggerPattern(newPattern = 9);
+	
+	if(!shiftPressed) {
+		if(!altPressed) {
+			if(e.key=='0') {
+				currentScene->changeTriggerPattern(newPattern = 0);
+			} else if(e.key=='1') {
+				currentScene->changeTriggerPattern(newPattern = 1);
+			} else if(e.key=='2') {
+				currentScene->changeTriggerPattern(newPattern = 2);
+			} else if(e.key=='3') {
+				currentScene->changeTriggerPattern(newPattern = 3);
+			}else if(e.key=='4') {
+				currentScene->changeTriggerPattern(newPattern = 4);
+			}else if(e.key=='5') {
+				currentScene->changeTriggerPattern(newPattern = 5);
+			}else if(e.key=='6') {
+				currentScene->changeTriggerPattern(newPattern = 6);
+			}else if(e.key=='7') {
+				currentScene->changeTriggerPattern(newPattern = 7);
+			}else if(e.key=='8') {
+				currentScene->changeTriggerPattern(newPattern = 8);
+			}else if(e.key=='9') {
+				currentScene->changeTriggerPattern(newPattern = 9);
+			}
+		} else {
+			if(e.key=='0') {
+				currentScene->changeTriggerPattern(newPattern = 10);
+			} else if(e.key=='1') {
+				currentScene->changeTriggerPattern(newPattern = 11);
+			} else if(e.key=='2') {
+				currentScene->changeTriggerPattern(newPattern = 12);
+			} else if(e.key=='3') {
+				currentScene->changeTriggerPattern(newPattern = 13);
+			}else if(e.key=='4') {
+				currentScene->changeTriggerPattern(newPattern = 14);
+			}else if(e.key=='5') {
+				currentScene->changeTriggerPattern(newPattern = 15);
+			}else if(e.key=='6') {
+				currentScene->changeTriggerPattern(newPattern = 16);
+			}else if(e.key=='7') {
+				currentScene->changeTriggerPattern(newPattern = 17);
+			}else if(e.key=='8') {
+				currentScene->changeTriggerPattern(newPattern = 18);
+			}else if(e.key=='9') {
+				currentScene->changeTriggerPattern(newPattern = 19);
+			}
+			
+			
 		}
-	} else {
-		if(e.key=='0') {
-			currentScene->changeTriggerPattern(newPattern = 10);
-		} else if(e.key=='1') {
-			currentScene->changeTriggerPattern(newPattern = 11);
-		} else if(e.key=='2') {
-			currentScene->changeTriggerPattern(newPattern = 12);
-		} else if(e.key=='3') {
-			currentScene->changeTriggerPattern(newPattern = 13);
-		}else if(e.key=='4') {
-			currentScene->changeTriggerPattern(newPattern = 14);
-		}else if(e.key=='5') {
-			currentScene->changeTriggerPattern(newPattern = 15);
-		}else if(e.key=='6') {
-			currentScene->changeTriggerPattern(newPattern = 16);
-		}else if(e.key=='7') {
-			currentScene->changeTriggerPattern(newPattern = 17);
-		}else if(e.key=='8') {
-			currentScene->changeTriggerPattern(newPattern = 18);
-		}else if(e.key=='9') {
-			currentScene->changeTriggerPattern(newPattern = 19);
-		}
-		
-		
 	}
 	
 	if((currentScene->recording) && (newPattern>=0) ){
