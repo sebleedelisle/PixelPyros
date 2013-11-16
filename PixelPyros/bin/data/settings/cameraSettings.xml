@@ -1,9 +1,9 @@
 <Camera>
 	<Camera_Manager>
-		<gain>974</gain>
+		<gain>469</gain>
 		<gamma>15</gamma>
-		<shutter_speed>28</shutter_speed>
-		<brightness>32</brightness>
+		<shutter_speed>23</shutter_speed>
+		<brightness>96</brightness>
 	</Camera_Manager>
 <Camera/>
 </Camera>

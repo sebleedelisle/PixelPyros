@@ -332,6 +332,10 @@ void LaserManager::draw() {
 			else if(testPattern == 4) c.set(0,0,255);
 			else if(testPattern == 5) c.set(255,255,255);
 
+			
+			
+			
+			
 			switch (row) {
 				case 0 :
 					c.r *= red100;
@@ -360,6 +364,9 @@ void LaserManager::draw() {
 					break;
 			}
 			
+			for(int i = 0; i<shapePreBlank; i++) {
+				addIldaPoint(left, c, 1, true);
+			}
 			
 			float speed = 20 * ( 1- (row*0.25));
 			if(speed<5) speed = 5;
@@ -368,6 +375,11 @@ void LaserManager::draw() {
 				addIldaPoint(ofPoint(x,y),c,1, false); 
 				
 			}
+			
+			for(int i = 0; i<shapePostBlank; i++) {
+				addIldaPoint(right, c, 1, false);
+			}
+
 			for(int i = 0; i<shapePostBlank; i++) {
 				addIldaPoint(right, black, 1);
 			}
@@ -1131,9 +1143,9 @@ void LaserManager::addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity,
 	
 	//ofPoints.push_back(warpedpoint);
 
-	c.r*=pointIntensity; //* ((float)colourCorrection->r/255.0f);
-	c.g*=pointIntensity; //* ((float)colourCorrection->g/255.0f);
-	c.b*=pointIntensity; //* ((float)colourCorrection->b/255.0f);
+	c.r*=pointIntensity; // ((float)colourCorrection->r/255.0f);
+	c.g*=pointIntensity; // ((float)colourCorrection->g/255.0f);
+	c.b*=pointIntensity; // ((float)colourCorrection->b/255.0f);
 	
 	if(useCalibration) {
 		c.r = calculateCalibratedBrightness(c.r, intensity, red100, red75, red50, red25, red0);

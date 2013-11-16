@@ -21,7 +21,7 @@ void MotionManager::init(int w, int h, ofImageType type) {
 	// TODO - this is a bug - init gets called multiple times
     parameters.setName("Motion Detection");
     parameters.add( thresholdLevelParam.set("threshold", 1, 0, 50   ) );
-    parameters.add( motionSensitivityParam.set("motion sensitivity", 1, 1, 5) );
+    parameters.add( motionSensitivityParam.set("motion sensitivity", 1, 1, 20) );
 	
 	if(current.isAllocated()) current.clear(); 
 	if(previous.isAllocated()) previous.clear(); 
