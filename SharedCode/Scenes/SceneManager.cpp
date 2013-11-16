@@ -133,11 +133,13 @@ bool SceneManager:: autoSave() {
 }
 
 void SceneManager:: resumeAutoSave(){
-        
-    currentSceneIndex = autoSaveXml.getValue("sceneIndex", 0);
-    currentScene->positionSeconds = autoSaveXml.getValue("position", 0.0);
     
-    
+
+    changeScene(autoSaveXml.getValue("sceneIndex", 0));
+	if(currentScene!=NULL) {
+		currentScene->positionSeconds = autoSaveXml.getValue("position", 0.0);
+		currentScene->togglePlayPause();
+    }
 }
 
 bool SceneManager :: checkAutoSave() {

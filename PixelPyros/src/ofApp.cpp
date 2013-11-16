@@ -409,7 +409,7 @@ void ofApp::keyPressed(int key){
 			particleSystemManager.killAllParticles();
 			sceneGame->killInvadersAndAsteroids();
         }
-        else if ( key == 'q' ){
+        else if ( key == 'H' ){
             sceneManager.changeScene("SlideShow");
         }
         else if ( key == 's' ){
@@ -482,7 +482,7 @@ void ofApp:: setupScenes() {
 	
 	sceneManager.addScene(new SceneSpace("Space2"));
 
-	sceneManager.changeScene("Vectorizer");
+	sceneManager.changeScene("SlideShow");
     
 	if( sceneManager.checkAutoSave() ){
         sceneManager.resumeAutoSave();
