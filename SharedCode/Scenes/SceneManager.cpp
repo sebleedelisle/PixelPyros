@@ -105,25 +105,43 @@ bool SceneManager:: autoSave() {
 			// position is currentScene->positionSeconds
 			// scene index is currentSceneIndex
 			
-			
+            
 			lastAutoSave = ofGetElapsedTimef();
 			
+            autoSaveXml.clear();
+            autoSaveXml.addTag("sceneIndex");
+            autoSaveXml.setValue("sceneIndex", currentSceneIndex);
+            
+            autoSaveXml.addTag("position");
+            autoSaveXml.setValue("position", currentScene->positionSeconds);
+            
+            autoSaveXml.saveFile("autosave.xml");
+            
 			return true;
 		
 		}
 		
 	} else {
 		
+        ofFile autoSaveFile("autosave.xml");
+        autoSaveFile.remove();
+        
 		// delete file
 	}
 	return false;
 	
 }
 
-bool checkAutoSave() {
-	
-	
-	return true; 
+void SceneManager:: resumeAutoSave(){
+        
+    currentSceneIndex = autoSaveXml.getValue("sceneIndex", 0);
+    currentScene->positionSeconds = autoSaveXml.getValue("position", 0.0);
+    
+    
+}
+
+bool SceneManager :: checkAutoSave() {
+    return autoSaveXml.loadFile("autosave.xml");
 }
 
 

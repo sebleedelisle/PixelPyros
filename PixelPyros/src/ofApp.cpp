@@ -201,7 +201,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    
 	ofBackground(0);
 	
 	ofSetColor(cameraPreviewBrightness);
@@ -483,7 +483,10 @@ void ofApp:: setupScenes() {
 	sceneManager.addScene(new SceneSpace("Space2"));
 
 	sceneManager.changeScene("Vectorizer");
-	
+    
+	if( sceneManager.checkAutoSave() ){
+        sceneManager.resumeAutoSave();
+    }
 }
 
 void ofApp::initSounds() {
