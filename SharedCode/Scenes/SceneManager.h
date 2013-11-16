@@ -34,7 +34,8 @@ public :
 	bool toggleRecord();
 	
 	bool autoSave();
-	bool checkAutoSave(); 
+	bool checkAutoSave();
+    void resumeAutoSave();
 	
 	void mousePressed(ofMouseEventArgs &e);
 	void mouseDragged(ofMouseEventArgs &e);
@@ -74,6 +75,7 @@ public :
 	ofParameter<bool> autoPlayNext; 
 	ofParameterGroup parameters;
 	
+    ofxXmlSettings autoSaveXml;
 	
 	bool showInterface;
 	
@@ -85,7 +87,7 @@ public :
 	int mouseOverCommandIndex; 
 	ofPoint dragClickOffset;
 	
-	float lastAutoSave; 
+	float lastAutoSave = 0;
 	
 	
 	ofRectangle playHeadRect;

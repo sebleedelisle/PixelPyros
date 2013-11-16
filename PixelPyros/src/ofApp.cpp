@@ -201,7 +201,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    
 	ofBackground(0);
 	
 	ofSetColor(cameraPreviewBrightness);
@@ -357,77 +357,77 @@ void ofApp::keyPressed(int key){
     }
 
    // if( shiftPressed ) {
-	if(key=='w') {
-		cameraManager.toggleWarperGui();
-	}else if(key=='e') {
-		drawCameraIntoFBO = !drawCameraIntoFBO;
-	} else if ((shiftPressed) && (key=='1')) {
-		cout << "SHIFT 1" << endl;
-		
-		fboWarper1.visible = !fboWarper1.visible;
-		cout << "FBO WARPER VISIBLE " << fboWarper1.visible << endl;
-	} else if ((shiftPressed) && (key=='2')) {
-		fboWarper2.visible = !fboWarper2.visible;
-	}
+        if(key=='w') {
+            cameraManager.toggleWarperGui();
+        }else if(key=='e') {
+            drawCameraIntoFBO = !drawCameraIntoFBO;
+        } else if ((shiftPressed) && (key=='1')) {
+			cout << "SHIFT 1" << endl;
+			
+            fboWarper1.visible = !fboWarper1.visible;
+			cout << "FBO WARPER VISIBLE " << fboWarper1.visible << endl;
+        } else if ((shiftPressed) && (key=='2')) {
+            fboWarper2.visible = !fboWarper2.visible;
+        }
 
-	//if(!cameraManager.warper.guiVisible) {
+        //if(!cameraManager.warper.guiVisible) {
 
-	if(key==OF_KEY_LEFT) {
-		if(altPressed)
-			sceneManager.prevScene();
-		else
-			sceneManager.previousPattern();
-	} else if(key==OF_KEY_RIGHT) {
-		if(altPressed)
-			sceneManager.nextScene();
-		else
-			sceneManager.nextPattern();
-	}
+        if(key==OF_KEY_LEFT) {
+            if(altPressed)
+                sceneManager.prevScene();
+            else
+                sceneManager.previousPattern();
+        } else if(key==OF_KEY_RIGHT) {
+            if(altPressed)
+                sceneManager.nextScene();
+            else
+                sceneManager.nextPattern();
+        }
 
-	//}
-	if(key=='c') {
-		cameraManager.next();
-	} else if( key == 'R' ) {
-		if(!cameraManager.capturing)
-			cameraManager.beginCapture();
-		else
-			cameraManager.endCapture();
-		
-	} else if( key == 'P' ) {
-		paused = !paused;
-	}
-	else if ( key == 't' )
-	{
-		triggersDisabled = !triggersDisabled ;
-	}
-	else if ( key == 'd' )
-	{
-		triggerManager.toggleDebug();//triggerShowDebug = !triggerShowDebug ;
-	}
-	else if ( key == 'k' )
-	{
-		particleSystemManager.killAllParticles();
-		sceneGame->killInvadersAndAsteroids();
-	}
-	else if ( key == 'H' ){
-		sceneManager.changeScene("SlideShow");
-	}
-	else if ( key == 's' ){
-		sync.parameterChanged(*oscParams);
-	}
-	else if(key == 'F') {
-		ofToggleFullscreen();
-		updateScreenSizes();
-	} else if(key == 'f') {
-		spanAll = !spanAll;
-		int monitorCount;
-		glfwGetMonitors(&monitorCount);
-		ofGetWindowPtr()->setMonitorSpan(spanAll?monitorCount:monitorCount-1);
-
-		updateScreenSizes();
-	
-	}    // }
-
+        //}
+        if(key=='c') {
+            cameraManager.next();
+        } else if( key == 'R' ) {
+            if(!cameraManager.capturing)
+                cameraManager.beginCapture();
+            else
+                cameraManager.endCapture();
+            
+        } else if( key == 'P' ) {
+            paused = !paused;
+        }
+        else if ( key == 't' )
+        {
+            triggersDisabled = !triggersDisabled ;
+        }
+        else if ( key == 'd' )
+        {
+            triggerManager.toggleDebug();//triggerShowDebug = !triggerShowDebug ;
+        }
+        else if ( key == 'k' )
+        {
+			particleSystemManager.killAllParticles();
+			sceneGame->killInvadersAndAsteroids();
+        }
+        else if ( key == 'q' ){
+            sceneManager.changeScene("SlideShow");
+        }
+        else if ( key == 's' ){
+            sync.parameterChanged(*oscParams);
+        }
+        else if(key == 'F') {
+			ofToggleFullscreen();
+			updateScreenSizes();
+		} else if(key == 'f') {
+			spanAll = !spanAll;
+			int monitorCount;
+			glfwGetMonitors(&monitorCount);
+			ofGetWindowPtr()->setMonitorSpan(spanAll?monitorCount:monitorCount-1);
+    
+			updateScreenSizes();
+		}
+   // }
+    
     controlPanels.keyPressed(key);
 	
 	
@@ -482,8 +482,11 @@ void ofApp:: setupScenes() {
 	
 	sceneManager.addScene(new SceneSpace("Space2"));
 
-	sceneManager.changeScene("SlideShow");
-	
+	sceneManager.changeScene("Vectorizer");
+    
+	if( sceneManager.checkAutoSave() ){
+        sceneManager.resumeAutoSave();
+    }
 }
 
 void ofApp::initSounds() {
