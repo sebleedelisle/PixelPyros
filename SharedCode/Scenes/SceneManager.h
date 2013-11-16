@@ -33,6 +33,9 @@ public :
 	bool toggleShowInterface();
 	bool toggleRecord();
 	
+	bool autoSave();
+	bool checkAutoSave(); 
+	
 	void mousePressed(ofMouseEventArgs &e);
 	void mouseDragged(ofMouseEventArgs &e);
 	void mouseReleased(ofMouseEventArgs &e);
@@ -81,6 +84,8 @@ public :
 	int dragCommandIndex;
 	int mouseOverCommandIndex; 
 	ofPoint dragClickOffset;
+	
+	float lastAutoSave; 
 	
 	
 	ofRectangle playHeadRect;

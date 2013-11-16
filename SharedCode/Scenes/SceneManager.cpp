@@ -61,10 +61,15 @@ bool SceneManager ::update(float deltaTime){
 			if(nextScene()) {
 				currentScene->togglePlayPause();
 			}
-			
-			
+
 		}
+		
+		
+		
 	}
+
+	autoSave(); 
+	
 	nextPatternFlag = previousPatternFlag = false;
 	
 	for(int i = 0; i<scenes.size(); i++) {
@@ -89,6 +94,38 @@ void SceneManager::draw() {
 	}
 	
 }
+
+
+bool SceneManager:: autoSave() {
+	// save
+	
+	if((currentScene!=NULL) && (currentScene->playing)) {
+		if (ofGetElapsedTimef() - lastAutoSave > 1.0f){
+			// save position ***
+			// position is currentScene->positionSeconds
+			// scene index is currentSceneIndex
+			
+			
+			lastAutoSave = ofGetElapsedTimef();
+			
+			return true;
+		
+		}
+		
+	} else {
+		
+		// delete file
+	}
+	return false;
+	
+}
+
+bool checkAutoSave() {
+	
+	
+	return true; 
+}
+
 
 void SceneManager :: drawGUI() {
 	
