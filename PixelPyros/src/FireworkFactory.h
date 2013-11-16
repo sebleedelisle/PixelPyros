@@ -46,11 +46,11 @@ class FireworkFactory {
 	
 	TriggerSettingsRocket* getFluffyRocket();
 	
-	TriggerSettingsRocket* getBangerRocket();
+	TriggerSettingsRocket* getBangerRocket(float intensity = 0.3);
 	ParticleSystemSettings getBangerTrails();
 	ParticleSystemSettings getBangerBang();
 	ParticleSystemSettings getBangerLaserBang();
-	ParticleSystemSettings getBangerCrackles();
+	ParticleSystemSettings getBangerCrackles(float intensity = 0.3);
 	ParticleSystemSettings getSmoke();
 	ParticleSystemSettings getLaserFlashParticles(float hue = 0, float saturation = 0);
 	

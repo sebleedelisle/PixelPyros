@@ -254,10 +254,12 @@ public:
     
     virtual bool draw();
 	virtual bool update(float deltaTime);
-
+	virtual void stop();
+	virtual void start(); 
+	
 	virtual bool changeTriggerPattern(int);
 	//Starfield starfield;
-   
+    bool stopping; 
             
     SlideShow slideShow;
     
@@ -267,6 +269,8 @@ public:
 	
 	ofParameter<int> foreground;
 	ofParameter<int> background;
+	
+	float currentBrightness; 
     
     int currentSlide;
     float lastUpdateTime;

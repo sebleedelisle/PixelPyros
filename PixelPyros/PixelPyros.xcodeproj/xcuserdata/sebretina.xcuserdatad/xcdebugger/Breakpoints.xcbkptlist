@@ -373,7 +373,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "640"
          endingLineNumber = "640"
-         landmarkName = "FireworkFactory:: getBangerRocket()"
+         landmarkName = "FireworkFactory:: getBangerRocket(float intensity)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -446,11 +446,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/SceneData/Space/SceneSpace.cpp"
-         timestampString = "405880464.800107"
+         timestampString = "406295827.876908"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "633"
-         endingLineNumber = "633"
+         startingLineNumber = "634"
+         endingLineNumber = "634"
          landmarkName = "SceneSpace :: getSphereRocketWithBitmap(ofImage&amp;image)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -504,6 +504,32 @@
          startingLineNumber = "143"
          endingLineNumber = "143"
          landmarkName = "TriggerManager :: updateMotion(MotionManager&amp; motionManager, cv::Mat homography, cv::Mat inverseHomography)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/SceneData/Intro/SceneSlideshow.cpp"
+         timestampString = "406297107.016759"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "206"
+         endingLineNumber = "206"
+         landmarkName = "SceneSlideshow:: stop()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/SceneData/Intro/SceneSlideshow.cpp"
+         timestampString = "406297126.085087"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "123"
+         endingLineNumber = "123"
+         landmarkName = "SceneSlideshow::update(float deltaTime)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

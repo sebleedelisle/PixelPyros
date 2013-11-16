@@ -28,7 +28,7 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
     foreground = 200;
 	background = 20;
                                        
-    defaultBackground.loadImage(ofToDataPath("slideshow/Interstitial-Brighton.png"));
+    defaultBackground.loadImage(ofToDataPath("slideshow/Interstitial-Leicester.png"));
 
 	
 //    Do you want your box guides back to layout the text? Uncomment lines 80-82 in TextWriter.cpp and big blue boxes will return
@@ -120,12 +120,19 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
 
 
 bool SceneSlideshow::update(float deltaTime) {
-	if(Scene::update(deltaTime)) {
-		//starfield.update(deltaTime);
-		return true;
-	} else {
-		return false;
-	}
+	Scene::update(deltaTime);
+	
+		if(!stopping) {
+			currentBrightness += (1 - currentBrightness) *0.05;
+		} else {
+			currentBrightness *=0.99;
+			if(currentBrightness < 0.01) active = false;
+			
+			
+		}
+		
+		return active;
+
 }
 
 bool SceneSlideshow::draw() {
@@ -136,6 +143,8 @@ bool SceneSlideshow::draw() {
     if( (slides.size() == 0) || (currentSlide >= slides.size()) ) {
         return false;
     }
+	
+	
     
 	//starfield.draw();
 	
@@ -157,7 +166,7 @@ bool SceneSlideshow::draw() {
     ofSetColor(background);
 	ofFill(); 
 	ofRect(0,0,APP_WIDTH, APP_HEIGHT);
-	ofSetColor(foreground);
+	ofSetColor(foreground * currentBrightness);
     slide->background->draw(0, -80);
     
     ofPopStyle();
@@ -185,5 +194,18 @@ bool SceneSlideshow::changeTriggerPattern(int i) {
 	Scene::changeTriggerPattern(i);
     currentSlide = 0;
     return true;
+}
+
+void SceneSlideshow :: start() {
+	Scene::start(); 
+	currentBrightness = 0;
+	stopping = false; 
+}
+
+void SceneSlideshow:: stop() {
+	Scene::stop();
+	stopping = true;
+	active = true; 
+	
 }
 

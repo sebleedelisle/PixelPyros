@@ -12,7 +12,7 @@
 SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	
 	loadMusicFile("StarlightFull.aif");
-	creditsImage.loadImage("slideshow/credits.png");
+	creditsImage.loadImage("slideshow/credits-leicester.png");
 	starfield.speed = 100;
 	
 	FireworkFactory& fireworkFactory = *FireworkFactory::instance(); 
@@ -124,10 +124,11 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	bigCyanFlower->saturation = 200;
 	bigCyanFlower->radius= 10;
 	
-	
+	TriggerSettingsRocket* triggerBangerIntense = fireworkFactory.getBangerRocket(1);
+
 	endPattern.addTriggerSettings(redFlower);
 	endPattern.addTriggerSettings(bigCyanFlower);
-	endPattern.addTriggerSettings(triggerBanger);
+	endPattern.addTriggerSettings(triggerBangerIntense);
 	endPattern.addTriggerSettings(triggerFountain);
 	
 	addTriggerPattern(endPattern, "Red flower, big cyan flower, bangs");

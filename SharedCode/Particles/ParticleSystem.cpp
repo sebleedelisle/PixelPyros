@@ -274,7 +274,7 @@ Particle * ParticleSystem::initParticle(Particle * p) {
 	
 	float curvedRandom = ofRandom(1);
 	curvedRandom*=curvedRandom;
-	curvedRandom*=curvedRandom;
+	//curvedRandom*=curvedRandom;
 
 	p->renderDelay = ofMap(curvedRandom, 0, 1, settings.renderDelayMin, settings.renderDelayMax);
 	p->velocityModifier.reset();

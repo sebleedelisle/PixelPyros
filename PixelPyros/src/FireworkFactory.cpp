@@ -609,7 +609,7 @@ TriggerSettingsRocket* FireworkFactory :: getFluffyRocket(){
 
 
 
-TriggerSettingsRocket* FireworkFactory:: getBangerRocket() {
+TriggerSettingsRocket* FireworkFactory:: getBangerRocket(float intensity) {
 	
 	RocketSettings& rocketSettings = *new RocketSettings();
 	
@@ -622,7 +622,7 @@ TriggerSettingsRocket* FireworkFactory:: getBangerRocket() {
 	ParticleSystemSettings trails = getBangerTrails();
 	ParticleSystemSettings bang = getBangerBang();
 	ParticleSystemSettings laserBang = getBangerLaserBang();
-	ParticleSystemSettings bangCrackles = getBangerCrackles();
+	ParticleSystemSettings bangCrackles = getBangerCrackles(intensity);
 	ParticleSystemSettings smoke1 = getSmoke();
 	ParticleSystemSettings smoke2 = getSmoke();
 	
@@ -775,7 +775,7 @@ ParticleSystemSettings FireworkFactory:: getBangerLaserBang() {
 
 
 
-ParticleSystemSettings FireworkFactory:: getBangerCrackles() {
+ParticleSystemSettings FireworkFactory:: getBangerCrackles(float intensity) {
 	
 	ParticleSystemSettings explosion;
 	//explosion.renderer = new ParticleRendererCircle();
@@ -784,7 +784,7 @@ ParticleSystemSettings FireworkFactory:: getBangerCrackles() {
 	
 	explosion.directionYVar= 90;
 	explosion.speedMin = 300;
-	explosion.speedMax = 400;
+	explosion.speedMax = 500;
 	explosion.drag = 0.93;
 	
 	explosion.sizeStartMin = 5;
@@ -802,10 +802,10 @@ ParticleSystemSettings FireworkFactory:: getBangerCrackles() {
 	
 	explosion.emitMode = PARTICLE_EMIT_BURST;
 	//explosion.emitLifeTime = 0.1;
-	explosion.emitCount = 200;
+	explosion.emitCount = 800 * intensity;
 	
 	explosion.renderDelayMin = 0.5;
-	explosion.renderDelayMax = 3;
+	explosion.renderDelayMax = 2.5;
 	
 	
 	explosion.startSound = "Crackle";
