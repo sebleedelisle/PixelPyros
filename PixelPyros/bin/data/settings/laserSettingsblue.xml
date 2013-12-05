@@ -3,8 +3,8 @@
 		<blue_100>1</blue_100>
 		<blue_75>0.8775</blue_75>
 		<blue_50>0.7525</blue_50>
-		<blue_25>0.5475</blue_25>
-		<blue_0>0.17375</blue_0>
+		<blue_25>0.47</blue_25>
+		<blue_0>0.1625</blue_0>
 	</Laser_blue_calibration>
 <Laser_Blue/>
 </Laser_Blue>

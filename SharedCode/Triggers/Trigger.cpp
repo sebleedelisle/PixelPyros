@@ -80,13 +80,15 @@ bool Trigger::update(float deltaTime, ofRectangle& triggerArea) {
 	
 	elapsedTime+=deltaTime;
 	
-	if( (elapsedTime-lastTriggerTime > 4) && (rechargeSettings->restoreSpeed>0) && !disabled && (unitPower>=rechargeSettings->triggerPower) ) {
+	if((moving) || ( (elapsedTime-lastTriggerTime > 4) && (rechargeSettings->restoreSpeed>0) && !disabled && (unitPower>=rechargeSettings->triggerPower) )) {
 		sampleBrightness += deltaTime;
 		
 	} else {
 		sampleBrightness-=deltaTime*2;
 	}
 	sampleBrightness = ofClamp(sampleBrightness, 0, 1);
+	
+	moving = false;
 	
 	if(lastSettings!=NULL) {
 		lastScale-=deltaTime*5;

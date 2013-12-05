@@ -10,7 +10,7 @@
 <Triggers/>
 <width>0.9</width>
 	<top>0.79</top>
-	<bottom>0.895</bottom>
+	<bottom>0.915</bottom>
 	<number_of_triggers>26</number_of_triggers>
 	<vertical_oscillation>2.55</vertical_oscillation>
 	<Debug_Mode>0</Debug_Mode>

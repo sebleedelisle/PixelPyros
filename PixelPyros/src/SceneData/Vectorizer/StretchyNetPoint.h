@@ -19,7 +19,7 @@ class StretchyNetPoint : public ofVec3f{
 		set(x,y, z);
 		target.set(x,y, z);
 		speed = 0.1;
-		dampening = 0.8;
+		dampening = 0.7;
 	}
 
 	bool update() {

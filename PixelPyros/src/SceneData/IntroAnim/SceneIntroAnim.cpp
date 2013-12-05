@@ -14,6 +14,9 @@ SceneIntroAnim::SceneIntroAnim(string scenename) : Scene(scenename){
 	
 	starfield.speed = 100;
 	addEmptyTriggerPattern();
+	addEmptyTriggerPattern();
+	addEmptyTriggerPattern();
+	addEmptyTriggerPattern();
 	
 	video.loadMovie("../../../Music/pp titles v05 NOLOGO.mov");
 	video.setLoopState(OF_LOOP_NONE);
@@ -49,7 +52,7 @@ SceneIntroAnim::SceneIntroAnim(string scenename) : Scene(scenename){
 	//	}
 	//}
 
-	
+	ambientModeAllowed = false; 
 	
 }
 
@@ -111,7 +114,7 @@ bool SceneIntroAnim::draw() {
 	float laserstart = 0.76;
 	float laserend = 0.80;
 	
-	if((vidPosition > laserstart) && (vidPosition<laserend)) {
+	if((currentTriggerPatternIndex == 2) || ((vidPosition > laserstart) && (vidPosition<laserend))) {
 		
 		
 		float progress = ofMap(vidPosition, laserstart,laserend,0,1,true);
@@ -119,10 +122,12 @@ bool SceneIntroAnim::draw() {
 		float brightness = 1;
 		if(progress<0.2) brightness = ofMap(progress, 0, 0.2, 0,1);
 		else if(progress>0.8) brightness = ofMap(progress, 0.8, 1, 1,0);
+		if(currentTriggerPatternIndex == 2) brightness = 1;
+		
 		
 		textWriter.colour = ofColor::cyan * brightness;
 		
-		laserWordMesh = textWriter.getMesh("LASERS", ofPoint(768, 400), ofMap(vidPosition, 0.73, 0.79, 20, 23), true);;
+		laserWordMesh = textWriter.getMesh("LASERS", ofPoint(768, 400), ofMap(progress, 0, 1, 20, 23), true);;
 		vector<ofVec3f>& vertices = laserWordMesh.getVertices();
 		
 		for(int i = 0; i<vertices.size(); i+=2) {
@@ -137,13 +142,15 @@ bool SceneIntroAnim::draw() {
 	float logostart = 0.49;
 	float logoend = 0.53;
 	
-	if((vidPosition>logostart) && ( vidPosition<logoend)) {
+	if((currentTriggerPatternIndex == 1) || ((vidPosition>logostart) && ( vidPosition<logoend))) {
 		
 		float progress = ofMap(vidPosition, logostart,logoend,0,1,true);
 		float scale = ofMap(progress,0,1,1.2,1.4,true);
 		float brightness = 1;
 		if(progress<0.2) brightness = ofMap(progress, 0, 0.2, 0,1);
 		else if(progress>0.8) brightness = ofMap(progress, 0.8, 1, 1,0);
+		
+		if(currentTriggerPatternIndex == 1) brightness = 1;
 		
 		ofVec3f centrePoint = ofVec3f(logo.getWidth()/2, logo.getHeight()/2); 
 		
@@ -167,6 +174,21 @@ bool SceneIntroAnim::draw() {
 			}
 		}
 	}
+	
+	
+	if(currentTriggerPatternIndex == 3)  {	
+		
+		
+		laserWordMesh = textWriter.getMesh("HAPPY BIRTHDAY BEN!", ofPoint(768, 400), 10, true);;
+		vector<ofVec3f>& vertices = laserWordMesh.getVertices();
+		
+		for(int i = 0; i<vertices.size(); i+=2) {
+			if(i+1>=vertices.size()) break;
+			
+			lm.addLaserLineEased(vertices[i], vertices[i+1], ofColor::cyan);
+		}
+	}
+	
 	
 	return true;
 	

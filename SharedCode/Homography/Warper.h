@@ -37,8 +37,10 @@ class Warper {
 	void mouseDragged(ofMouseEventArgs &e);
 	void mouseReleased(ofMouseEventArgs &e);
 	
-	bool hitTestPoints(vector<ofVec2f>& points, ofVec2f& point); 
+	bool hitTestPoints(vector<ofVec2f>& points, ofVec2f& checkpoint);
+	bool hitTestPoint(ofVec2f& points, ofVec2f& checkpoint);
 	void drawPoints(vector<ofVec2f>& points, ofColor colour = ofColor::white);
+	void drawPoint(ofVec2f& point, ofColor colour = ofColor::white);
 	void apply();
 
 	bool loadSettings();
@@ -59,7 +61,8 @@ class Warper {
 	
 	float dstPreviewScale; 
 	
-	vector <ofVec2f> srcVecs, dstVecs; 
+	vector <ofVec2f> srcVecs, dstVecs;
+	ofVec2f dstCenterPoint;
 
 	cv::Mat homography;
 	cv::Mat inverseHomography;

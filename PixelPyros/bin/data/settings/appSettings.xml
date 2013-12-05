@@ -7,12 +7,13 @@
 		<App_Settings>
 			<time_speed>1</time_speed>
 			<edge_blend_size>0</edge_blend_size>
-			<music_volume>0.7</music_volume>
-			<sfx_volume>0.64</sfx_volume>
-		<interstitial_foreground>247</interstitial_foreground>
+			<music_volume>0.4025</music_volume>
+			<sfx_volume>1</sfx_volume>
+		<interstitial_foreground>159</interstitial_foreground>
 			<interstitial_background>0</interstitial_background>
 		<Scale>0.995</Scale>
 		<Auto_play_next_scene>1</Auto_play_next_scene>
+		<Ambient_Mode>1</Ambient_Mode>
 		</App_Settings>
 	<App_settings>
 			<time_speed>1</time_speed>

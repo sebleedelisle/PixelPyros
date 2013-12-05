@@ -6,7 +6,8 @@
 SceneGame :: SceneGame(string scenename ) : Scene(scenename), psm(*ParticleSystemManager::instance())
 {
 
-	
+	ambientModeAllowed = false;
+
 
 	pixelSize = 1;
 	loadMusicFile("FireCrackerEdit.aif");

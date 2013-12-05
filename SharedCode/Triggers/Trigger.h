@@ -39,7 +39,8 @@ class Trigger {
 	
 	// a vector of motion levels across the height of the trigger
 	vector<float>vertMotionSamples;
-	float sampleBrightness; 
+	float sampleBrightness;
+	bool moving;
 	
 	float lastTriggerTime;
 	

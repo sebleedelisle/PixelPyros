@@ -1,7 +1,7 @@
 <Renderer>
 	<Levels>
 		<bloom>0</bloom>
-		<gamma>4.175</gamma>
+		<gamma>1.05</gamma>
 		<black_point>0</black_point>
 		<white_point>1</white_point>
 	</Levels>

@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Trigger.h"
 #include "RocketBasic.h"
+#include "LaserManager.h"
 
 #include "ofMain.h"
 
@@ -32,13 +33,23 @@ class SceneCalibration : public Scene {
 		pattern2.addTriggerSettings(new TriggerSettingsRocket());
 		addTriggerPattern(pattern2, "Trigger test");
 		
+		addEmptyTriggerPattern("laser lines");
+		addEmptyTriggerPattern("laser circles");
+		addEmptyTriggerPattern("laser spirals");
+		addEmptyTriggerPattern("laser dots");
+		
 		
 	}
+	
+	
 	
 	virtual bool draw() {
 		
 		
 		if(!active) return false;
+		
+		LaserManager& lm = *LaserManager :: instance();
+		
 		
 		if(currentTriggerPatternIndex == 0) {
 			ofPushStyle();
@@ -59,7 +70,7 @@ class SceneCalibration : public Scene {
 					int xpos = x + round((float)x/(float)numCols);
 					if((xpos+y)%2==0)
 						ofNoFill();
-                        ofSetColor(64);
+                        ofSetColor(255);
                         ofSetLineWidth(10);
 						ofRect(x*128, y*128, 128, 128);
 				
@@ -94,6 +105,75 @@ class SceneCalibration : public Scene {
 				ofPopStyle(); 
 			
 			}
+		} else if(currentTriggerPatternIndex == 3) {
+			//LASER LINES
+			
+			for(int i = 0; i<=12; i++) {
+				
+				ofColor c;
+				c.setSaturation(255);
+				c.setBrightness(255);
+				c.setHue(ofMap(i, 0, 12,0,255));
+				
+				float x = ofMap(i,0,12,APP_WIDTH *0.2, APP_WIDTH*0.8);
+				
+				lm.addLaserLineEased(ofPoint(x,100), ofPoint(x,200), c);
+				
+				c.setSaturation(128);
+				lm.addLaserLineEased(ofPoint(x,250), ofPoint(x,350), c);
+				
+				lm.addLaserLineEased(ofPoint(x,400), ofPoint(x,500), ofColor(ofMap(i, 0, 12, 0,255)));
+				
+			}
+			
+		} else if(currentTriggerPatternIndex == 4) {
+			//LASER CIRCLES
+			
+			for(int i = 0; i<=5; i++) {
+				
+				ofColor c;
+				c.setSaturation(255);
+				c.setBrightness(255);
+				c.setHue(ofMap(i, 0, 5,0,255));
+				
+				float x = ofMap(i,0,5,APP_WIDTH *0.2, APP_WIDTH*0.8);
+				
+				float scale = ofMap(sin(ofGetElapsedTimef() + i), -1, 1, 0.2,1);
+				
+				
+				lm.addLaserCircle(ofPoint(x,150), c, 30*scale);
+				
+				lm.addLaserDot(ofPoint(x,450), c);
+				
+				c.setSaturation(128);
+				lm.addLaserCircle(ofPoint(x,250), c, 30);
+				
+				
+				scale = ofMap(sin(ofGetElapsedTimef() + i), -1, 1, 2,20);
+				lm.addLaserCircle(ofPoint(x,350), ofColor(255), scale);
+				
+				
+			}
+			
+		} else if(currentTriggerPatternIndex == 5) {
+			//LASER SPIRALS
+			
+			for(int i = 0; i<=5; i++) {
+				
+				ofColor c;
+				c.setSaturation(255);
+				c.setBrightness(255);
+				c.setHue(ofMap(i, 0, 5,0,255));
+				
+				float scale = ofMap(sin(ofGetElapsedTimef() + i), -1, 1, 0.2,1);
+				
+				
+				float x = ofMap(i,0,5,APP_WIDTH *0.2, APP_WIDTH*0.8);
+				lm.addLaserSpiral(ofPoint(x,300), ofColor(255), ofMap(i,0,5,0,20)*scale, ofMap(i,0,5,10,50) *scale);
+				
+				
+			}
+			
 		}
 	}
 	

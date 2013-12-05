@@ -116,10 +116,17 @@ bool TriggerManager :: update(float deltaTime) {
 			if(topposition == -1) {
 				trigger.pos.y -= deltaTime * moveHomeSpeed;
 				if(trigger.pos.y < triggerArea.getTop()) trigger.pos.y = triggerArea.getTop();
-				
+				trigger.moving = true;
+								
 			} else {
 				float targety = ofMap(topposition, 0, numVertSamples, triggerArea.getTop(), triggerArea.getBottom()) + motionVerticalTargetOffset;
+				
 				trigger.pos.y += (targety-trigger.pos.y) * moveTowardMotionSpeed;
+				
+				if(abs(targety - trigger.pos.y)>5) {
+					trigger.moving = true;
+				}
+					
 			}
 			
 			

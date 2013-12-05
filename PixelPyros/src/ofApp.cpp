@@ -99,6 +99,7 @@ void ofApp::setup(){
 	appParams.add(soundPlayer.globalVolume);
 	appParams.add(sceneManager.autoPlayNext.set("Auto play next scene", true));
 
+	appParams.add(sceneManager.ambientMode.set("Ambient Mode", false));
 
 	
 	motionManager.parameters.add(cameraPreviewBrightness.set("camera preview brightness", 128,0,255));
@@ -215,9 +216,14 @@ void ofApp::draw(){
 		ofClear(0);
 	}
 	
-	if(drawCameraIntoFBO)
+	if(drawCameraIntoFBO) {
 		cameraManager.draw();
 	
+		if(cameraManager.warper.guiVisible) {
+			ofCircle(ofGetMouseX(), ofGetMouseY(), 10);
+			
+		}
+	}
 	ofSetColor(255);
 	
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
@@ -291,6 +297,11 @@ void ofApp::draw(){
 	ofDrawBitmapString("Current Arrangement : "+sceneManager.getCurrentTriggerPatternName(),0,0);
 	
 	ofTranslate(0,20);
+	ofDrawBitmapString("laser points : "+ofToString(laserManager.ildaPoints.size()),0,0);
+	
+	
+	/*
+	ofTranslate(0,20);
 	ofDrawBitmapString("particle systems : "+ofToString(particleSystemManager.particleSystems.size()),0,0);
 	
 	ofTranslate(0,20);
@@ -316,6 +327,8 @@ void ofApp::draw(){
 
 	ofTranslate(0,20);
 	ofDrawBitmapString("active physics objs: " +ofToString(particleSystemManager.activePhysicsObjectCount),0,0);
+	 
+	 */
 
 	ofPopMatrix();
 	
@@ -398,7 +411,7 @@ void ofApp::keyPressed(int key){
         }
         else if ( key == 't' )
         {
-            triggersDisabled = !triggersDisabled ;
+            //triggersDisabled = !triggersDisabled ;
         }
         else if ( key == 'd' )
         {

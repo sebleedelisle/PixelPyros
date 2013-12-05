@@ -25,7 +25,16 @@ Scene::Scene(string scenename) {
 	overwriteMode = false; 
 	positionSeconds = 0;
 	lengthSeconds = 1;
-	finished = false; 
+	finished = false;
+	
+	ambientModeAllowed = true;
+	ambientMode = false;
+	ambientModeLastResetTime = 0;
+	ambientModeResetCount = 0;
+	ambientModeResetInterval = 3;
+	ambientModeResetNumBeforeChange = 4;
+	ambientModeCurrentPatternIndex = 0; 
+	
 
     _addCommand(0, SEQ_PATTERN_CHANGE, 0);
 }
@@ -122,15 +131,44 @@ bool Scene :: update(float deltaTime) {
 		
 		SequenceCommand& command = commands[i];
 		if((command.time>lastUpdate) && (command.time<=positionSeconds)) {
-			
+			// delete the command if we're recording in overwrite mode
 			if(recording && overwriteMode) {
 				command.enabled = false;
                 save();
+			// otherwise process the command
 			} else if(command.enabled){
 				processCommand(command);
 			}
 		}
 	}
+	
+	
+	// if not playing and we're in ambient mode
+	if(!playing && ambientMode) {
+		// check the last arrangement reset time
+		
+		if(ofGetElapsedTimef() - ambientModeLastResetTime > ambientModeResetInterval) {
+			
+			ambientModeLastResetTime = ofGetElapsedTimef();
+			ambientModeResetCount++;
+			
+			if(ambientModeResetCount>ambientModeResetNumBeforeChange) {
+			
+				ambientModeCurrentPatternIndex++;
+				ambientModeResetCount = 0;
+				
+				if(ambientModeCurrentPatternIndex >= ambientModePatternList.size()) ambientModeCurrentPatternIndex = 0;
+			}
+			
+			if(ambientModeCurrentPatternIndex<ambientModePatternList.size()) {
+				changeTriggerPattern(ambientModePatternList[ambientModeCurrentPatternIndex]);
+			}
+		}
+	}
+			
+	
+	// move on to next arrangement in ambient arrangement list
+	// go to current arrangement (or reset)
 	
 	lastUpdate = positionSeconds;
 
@@ -358,9 +396,9 @@ string Scene :: getTriggerPatternName() {
 
 
 
-void Scene ::addEmptyTriggerPattern() {
+void Scene ::addEmptyTriggerPattern(string name) {
 	
-	TriggerPattern empty("Empty");
+	TriggerPattern empty(name);
 	addTriggerPattern(empty);
 	
 }
@@ -374,6 +412,9 @@ void Scene ::addTriggerPattern(TriggerPattern& pattern, string label) {
 	triggerPatterns.push_back(pattern);
 	triggerPatterns.back().name = label;
 	
+	if(triggerPatterns.size()>1) {
+		ambientModePatternList.push_back(triggerPatterns.size()-1);
+	}
 	//triggerPatternChangeTriggers.push_back(new bool(false));
 }
 

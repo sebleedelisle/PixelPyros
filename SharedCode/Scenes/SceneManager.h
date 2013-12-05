@@ -72,7 +72,9 @@ public :
 	TriggerManager & triggerManager;
 	
 	ofParameter<float> musicVolume;
-	ofParameter<bool> autoPlayNext; 
+	ofParameter<bool> autoPlayNext;
+	
+	ofParameter<bool> ambientMode; 
 	ofParameterGroup parameters;
 	
     ofxXmlSettings autoSaveXml;

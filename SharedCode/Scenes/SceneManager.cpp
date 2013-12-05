@@ -57,14 +57,17 @@ bool SceneManager ::update(float deltaTime){
 		if(previousPatternFlag) previousPattern();
 		
 		currentSceneArrangement = ofToString ( currentScene->currentTriggerPatternIndex + 1 ) ;
+		
+		// add check for ambient mode?
+		// if ambientmode and scene is finished then
+		// don't auto move on - just slip into
+		// ambient mode
 		if((currentScene->finished) && (autoPlayNext) ) {
 			if(nextScene()) {
 				currentScene->togglePlayPause();
 			}
 
 		}
-		
-		
 		
 	}
 
@@ -73,8 +76,13 @@ bool SceneManager ::update(float deltaTime){
 	nextPatternFlag = previousPatternFlag = false;
 	
 	for(int i = 0; i<scenes.size(); i++) {
-		scenes[i]->update(deltaTime);
-		scenes[i]->setMusicVolume(musicVolume);
+		Scene * scene = scenes[i]; 
+		scene->update(deltaTime);
+		scene->setMusicVolume(musicVolume);
+		// set scene ambient mode
+		scene->ambientMode = ambientMode && scene->ambientModeAllowed; 
+		//cout << scene->name << " " << scene-ambientMode;
+		
 	}
 	
 	
@@ -124,7 +132,7 @@ bool SceneManager:: autoSave() {
 	} else {
 		
         ofFile autoSaveFile("autosave.xml");
-        autoSaveFile.remove();
+        if(autoSaveFile.exists()) autoSaveFile.remove();
         
 		// delete file
 	}

@@ -70,12 +70,12 @@ class LaserManager {
 	void drawShapes();
 	
 	void drawLaserLine(LaserLine& line);
-	void drawLaserPolyline(LaserPolyline& laserPolyline);
+	void drawLaserPolyline(LaserPolyline& laserPolyline, bool onlyUpdatePreviewMesh = false);
 	void drawLaserCircle(LaserCircle& circle);
 	void drawLaserDot(LaserDot& dot);
 	void drawLaserSpiral(LaserSpiral& spiral);
 	
-	void resetIldaPoints();
+	//void resetIldaPoints();
 	void addIldaPoint(ofPoint p, ofFloatColor c, float pointIntensity = 1, bool useCalibration = true);
 	
 	ofxIlda::Point ofPointToIldaPoint(const ofPoint& ofpoint, ofFloatColor colour);
@@ -120,7 +120,9 @@ class LaserManager {
 	float calculateCalibratedBrightness(float value, float intensity, float level100, float level75, float level50, float level25, float level0);
 	
 	vector <LaserShape*> shapes;
+	// to store previous frames
 	deque <vector <LaserShape*> > shapesHistory;
+	deque <float> frameTimes;
 	
 	ofxEtherdream etherdream;
 	
@@ -153,7 +155,7 @@ class LaserManager {
 	
 	// overall brightness applied to any laser colour
 	ofParameter<float> intensity;
-	ofParameter<int> delay; 
+	ofParameter<float> delay;
 	// speaks for itself : 
 	ofParameter<ofColor> colourCorrection;
 	// allows you to shift the colour changes back or

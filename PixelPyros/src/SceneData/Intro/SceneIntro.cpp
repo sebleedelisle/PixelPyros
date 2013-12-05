@@ -13,7 +13,7 @@
 SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 	
 	FireworkFactory& fireworkFactory = *FireworkFactory::instance();
-	
+
 	barLengthSeconds = 1.9;
 	
 	softWhiteImage.loadImage("img/ParticleWhite.png");
@@ -84,6 +84,13 @@ SceneIntro :: SceneIntro(string scenename) : Scene(scenename) {
 	texts.push_back("Move your arms in front of them to light the fireworks");
 	texts.push_back("Making fireworks uses up energy");
 	texts.push_back("If the trigger flashes, wait for it to recharge");
+	texts.push_back("");
+	texts.push_back("");
+	texts.push_back("");
+	texts.push_back("");
+	texts.push_back("");
+	texts.push_back("");
+	texts.push_back("");
 	
 	textWriter.colour = ofColor(240,255,255);
 	textWriter.colourFlickerMin = 0.6;

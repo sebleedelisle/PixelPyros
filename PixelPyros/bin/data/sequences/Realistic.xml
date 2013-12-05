@@ -19,11 +19,19 @@
     <arg1>3</arg1>
 </command>
 <command>
-    <time>69.976997375</time>
+    <time>65.883003235</time>
+    <arg1>2</arg1>
+</command>
+<command>
+    <time>68.587463379</time>
+    <arg1>0</arg1>
+</command>
+<command>
+    <time>71.862182617</time>
     <arg1>4</arg1>
 </command>
 <command>
-    <time>86.080001831</time>
+    <time>85.636428833</time>
     <arg1>5</arg1>
 </command>
 <command>

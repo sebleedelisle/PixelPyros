@@ -19,7 +19,8 @@ SceneSlideshow::SceneSlideshow(string scenename ): Scene(scenename) {
 	
 	//starfield = Starfield(500);
 	//starfield.speed = 50;
-  
+	ambientModeAllowed = false;
+
     currentSlide = 0;
     lastUpdateTime = 0;
     defaultFontSize = 4.0;

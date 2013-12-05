@@ -753,13 +753,14 @@ ParticleSystemSettings FireworkFactory:: getBangerLaserBang() {
 	explosion.brightnessStartMin = explosion.brightnessStartMin = 255;
 	explosion.brightnessEnd = 0;
 	
-	explosion.shimmerMin = 1;
+	explosion.shimmerMin = 0.2;
 	explosion.lifeMin = 0.1;
 	explosion.lifeMax = 0.1;
 	
 	explosion.emitMode = PARTICLE_EMIT_BURST;
 	explosion.emitLifeTime = 0.1;
 	explosion.emitCount = 1;
+	
 	
 	
 	
@@ -904,9 +905,9 @@ ParticleSystemSettings FireworkFactory :: getLaserExplosionParticles(float hue, 
 	explosion.brightnessStartMax = 255;
 	explosion.brightnessEnd = 0;
 	
-	explosion.shimmerMin = 1;
-	explosion.lifeMin = 0.2;
-	explosion.lifeMax = 0.2;
+	explosion.shimmerMin = 0.2;
+	explosion.lifeMin = 0.3;
+	explosion.lifeMax = 0.3;
 	
 	explosion.emitMode = PARTICLE_EMIT_BURST;
 	explosion.emitLifeTime = 0.1;

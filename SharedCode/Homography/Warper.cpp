@@ -56,6 +56,12 @@ bool Warper :: init (float srcwidth, float srcheight, float dstwidth, float dsth
 		}
 	}
 	
+	dstCenterPoint.set(0,0); 
+	for(int i = 0; i<4;i++) {
+		dstCenterPoint+=dstVecs[i];
+	}
+	dstCenterPoint/=4; 
+	
 	if(warpedImage.isAllocated()) warpedImage.clear();
 	
 	warpedImage.allocate(dstwidth * dstPreviewScale, dstheight * dstPreviewScale, OF_IMAGE_COLOR);
@@ -121,28 +127,31 @@ void Warper :: updateWarpedImage(ofPixelsRef sourcePixels) {
 void Warper :: drawPoints(vector<ofVec2f>& points, ofColor colour) {
 	
 	
+	for(int i = 0; i < points.size(); i++) {
+		drawPoint(points[i], colour);
+	}
+	
+	
+}
+
+
+
+void Warper :: drawPoint(ofVec2f& point, ofColor colour) {
+	
 	ofPushStyle();
 	ofNoFill();
-	ofPushMatrix(); 
-
-	//ofEnableSmoothing();
-	//ofScale(1024, 768); 
-	for(int i = 0; i < points.size(); i++) {
-		ofSetColor(ofColor::black); 
-		ofSetLineWidth(6);
-		
-		ofCircle(points[i], 1);
-		ofSetColor(colour); 
-		ofSetLineWidth(2);
-		ofCircle(points[i], 20);
-		ofCircle(points[i], 1);
-		
-		
-		
-	}
-	ofPopMatrix(); 
+	
+	ofSetColor(ofColor::black);
+	ofSetLineWidth(6);
+	
+	ofCircle(point, 1);
+	ofSetColor(colour);
+	ofSetLineWidth(2);
+	ofCircle(point, 20);
+	ofCircle(point, 1);
+	
 	ofPopStyle();
-
+	
 }
 
 
@@ -172,7 +181,8 @@ void Warper :: draw() {
 	 */
 	drawPoints(srcVecs, ofColor::cyan);
 	
-	drawPoints(dstVecs); 
+	drawPoints(dstVecs);
+	drawPoint(dstCenterPoint, ofColor::red);
 	
 	
 };
@@ -351,20 +361,30 @@ bool Warper:: saveSettings() {
 	
 }
 
-bool Warper :: hitTestPoints ( vector<ofVec2f>& points, ofVec2f& point) {
+bool Warper :: hitTestPoints ( vector<ofVec2f>& points, ofVec2f& mousepoint) {
 	
 	for(int i = 0; i < points.size(); i++) {
-		if(points[i].distance(point) < 40) {
-			movingPoint = true;
-			
-			curPoint = &points[i];
-			clickOffset.set(curPoint->x  - point.x, curPoint->y - point.y);
-			dragStartPoint = point;
-			return true;
-		}
+		if(hitTestPoint(points[i], mousepoint)) return true;
 	}
+	return false; 
 	
 }
+
+bool Warper :: hitTestPoint (ofVec2f& point, ofVec2f& mousepoint) {
+	
+	if(point.distance(mousepoint) < 40) {
+		movingPoint = true;
+		
+		curPoint = &point;
+		clickOffset.set(curPoint->x  - mousepoint.x, curPoint->y - mousepoint.y);
+		dragStartPoint = mousepoint;
+		return true;
+	}
+	else return false;
+	
+}
+
+
 
 
 void Warper :: showGui() { 
@@ -398,10 +418,13 @@ void Warper :: mousePressed(ofMouseEventArgs &e) {
 
 	if(!guiVisible) return; 
 	
-	ofVec2f cur(e.x, e.y);
+	ofVec2f mousepos(e.x, e.y);
 	
-	hitTestPoints(dstVecs, cur); 
-	hitTestPoints(srcVecs, cur); 
+	hitTestPoints(dstVecs, mousepos); 
+	hitTestPoints(srcVecs, mousepos);
+	hitTestPoint(dstCenterPoint, mousepos);
+	
+	
 	
 };
 
@@ -412,14 +435,25 @@ void Warper :: mouseDragged(ofMouseEventArgs &e) {
 	
 	if(movingPoint) { 
 
-		ofVec2f diff(e.x, e.y);
-		diff-=dragStartPoint;
-		diff*=0.3; 
+		ofVec2f newpos(e.x, e.y);
+		newpos-=dragStartPoint;
+		newpos*=0.3; 
+		newpos +=dragStartPoint+clickOffset;
+		
+		ofVec2f diff = newpos - *curPoint; 
+		*curPoint = newpos;
 		
 		
-		*curPoint = dragStartPoint+diff+clickOffset;
-		//*curPoint+=clickOffset;
-	
+		if(curPoint == &dstCenterPoint){
+			
+			for(int i = 0; i<dstVecs.size(); i++) {
+				
+				dstVecs[i]+=diff;
+				
+			}
+			
+		}
+		
 		changed = true;
 	
 	}

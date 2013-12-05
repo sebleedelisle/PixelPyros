@@ -34,7 +34,7 @@ class Scene {
     
 	virtual bool changeTriggerPattern(int num);
 	
-	void addEmptyTriggerPattern();
+	void addEmptyTriggerPattern(string name = "empty");
 	void addTriggerPattern(TriggerPattern& pattern);
 	void addTriggerPattern(TriggerPattern& pattern, string label);
 	TriggerPattern getCurrentTriggerPattern();
@@ -60,7 +60,17 @@ class Scene {
 	bool playing;
 	bool recording;
 	bool finished; 
-	bool overwriteMode; 
+	bool overwriteMode;
+	// autoplays arrangements for longer light installations
+	bool ambientModeAllowed; 
+	bool ambientMode;
+	float ambientModeLastResetTime;
+	int ambientModeResetCount;
+	float ambientModeResetInterval;
+	int ambientModeResetNumBeforeChange;
+	vector<int> ambientModePatternList;
+	int ambientModeCurrentPatternIndex; 
+	
 	bool togglePlayPause();
 	bool toggleRecord();
 	void goToTime(float time);

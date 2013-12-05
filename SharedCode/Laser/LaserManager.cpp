@@ -114,7 +114,7 @@ void LaserManager:: setup (int width, int height) {
 	parameters.add(intensity.set("intensity", 1, 0, 1));
 
 	parameters.add(testPattern.set("test pattern", 0, 0, numTestPatterns));
-	parameters.add(delay.set("sync delay", 0, 0, 100));
+	parameters.add(delay.set("sync delay", 0, 0, 0.4));
 	parameters.add(pps.set("points per second", 80000, 30000, 100000));
 
 	
@@ -234,8 +234,11 @@ void LaserManager:: connectButtonPressed(){
 void LaserManager:: update() {
 	
 
-	resetIldaPoints();
-
+	//resetIldaPoints();
+	
+	// clear all pre-existing points.
+	ildaPoints.clear();
+	// clear the pathMesh - the blue and white laser preview
 	pathMesh.clear();
 	
 	string etherdreamstate = etherdream.getStateString();
@@ -272,6 +275,8 @@ void LaserManager:: update() {
 void LaserManager::draw() {
 	
 
+	
+	
 	if(testPattern==1) {
 		
 		//addLaserRectEased(pmin, pmax, white);
@@ -405,42 +410,96 @@ void LaserManager::draw() {
 
 	
 	
+	// if we're using the clever laser render delay
+	// system
 	
-	if(renderLaserPreview) {
-		
-		renderPreview();
-		
-	}
-
 	if(delay > 0) {
-		shapesHistory.push_back(shapes);
+		float currentTime = ofGetElapsedTimef(); 
+		//cout << "------------pushing history " << shapes.size() << endl;
+		// add the current shapes and time to the
+		// histories
 		
-		if(shapesHistory.size()>delay) {
+		shapesHistory.push_back(shapes);
+		frameTimes.push_back(currentTime);
+		
+		//start from the oldest shapes and while the next set of
+		// shapes are due, delete the oldest
+		int numDeleted = 0; 
+		while((frameTimes.size()>1) && (frameTimes[1]+delay < currentTime)) {
+				
+			shapes = shapesHistory.front();
+			
+			// DELETE ALL SHAPES IN HISTORY.FRONT
+			for(int i = 0; i<shapes.size(); i++) {
+				delete shapes[i];
+			}
+
+			shapesHistory.pop_front();
+			frameTimes.pop_front();
+			//resetIldaPoints();
+			//cout << "deleting oldest " << endl;
+			numDeleted++; 
+			
+		}
+		shapes = shapesHistory.front();
+		if(numDeleted == 0 ) {
+			//cout << "NONE DELETED" << endl;
+			
+		}
+		//cout << "using shapes " << shapesHistory.size() << endl;
+		//cout << "shapes size " << shapes.size() << endl;
+		//cout << "pathMesh vertices " << pathMesh.getVertices().size() << endl;
+		/*
+		if((frameTimes.size()>0) && (frameTimes[0]+delay <= ofGetElapsedTimef())) {
 			
 			// if we have too many, we have to delete some!
 			
-			while(shapesHistory.size()>delay+1) {
+			while((frameTimes.size()>1) && (frameTimes[1]+delay <= ofGetElapsedTimef())) {
 				shapes = shapesHistory.front();
 				shapesHistory.pop_front();
-				resetIldaPoints();
+				frameTimes.pop_front();
+				//resetIldaPoints();
 			}
 			
 			shapes = shapesHistory.front();
 			shapesHistory.pop_front();
+			frameTimes.pop_front();
 			
 		} else {
+			// we're not ready to show the next shapes yet so show
+			// the oldest ones. 
+			
 			// need to do this otherwise the shapes get deleted
 			// more than once
-			shapes.clear();
-		}
+			clearShapes = true;
+			shapes = shapesHistory.front(); 
+			//shapes.clear();
+		}*/
 		
 	} else if(shapesHistory.size()!=0) {
+		// TODO need to also delete shapes otherwise memory leak
+		for(int i = 0; i<shapesHistory.size(); i++) {
+			
+			for(int j = 0; j<shapesHistory[i].size(); j++) {
+				delete shapesHistory[i][j];
+			}
+		}
+		
 		shapesHistory.clear();
+		frameTimes.clear();
 	}
 	
 	//ofDrawBitmapString(ofToString(shapesHistory.size()), 200,200);
 	
 	drawShapes();
+	
+	if(renderLaserPreview) {
+		
+		renderPreview();
+		
+		//ofRect(0,0,100,100);
+		
+	}	
 	
 	while(ildaPoints.size()<minPoints) {
 		addIldaPoint(currentPosition, black);
@@ -467,22 +526,13 @@ void LaserManager::draw() {
 		
 	}
 	if(!useTCP) {
-	//if((etherdream.getDeviceStateString() == "Running")||(etherdream.getDeviceStateString() == "Ready")) {
 		etherdream.setPoints(adjustedPoints);
 		etherdream.setPPS(pps);
-	//}
 	} else {
 		sendPointsTCP(adjustedPoints); 
-		
 	}
 
-	
-	
 	ofPushStyle();
-	
-		
-	
-  	
 	
 	if(maskRectangleBrightness>0) {
 		ofNoFill();
@@ -496,26 +546,19 @@ void LaserManager::draw() {
 	
 	ofPopStyle();
 	
-	// PATH TEST
+	// TODO if we're not using the delay system, let's
+	// delete all the shapes
+	if(delay==0) {
+		for(int i = 0; i<shapes.size(); i++) {
+			delete shapes[i];
+		}
+		
+	}
 	
-	/*
-	 ofPath laserPath;
-	 laserPath.setMode(ofPath::COMMANDS);
-	 laserPath.setStrokeWidth(2);
-	 laserPath.setPolyWindingMode(OF_POLY_WINDING_POSITIVE);
-	 laserPath.circle(100, 100, 100);
-	 laserPath.circle(150, 100, 100);
-	 //
-	 laserPath.draw(300,300);
-	 vector<ofPolyline> outlines = laserPath.getOutline();
-	 
-	 if(outlines.size()>0) {
-	 ofPolyline line = outlines[0];
-		 line.simplify(5);
-		 line.draw();
-	 }
-	*/
+	// clear the shapes vector no matter what
+	shapes.clear();
 	
+//	cout << "pathMesh vertices " << pathMesh.getVertices().size() << " " << ildaPoints.size() << endl;
 	
 	
 }
@@ -610,7 +653,7 @@ void LaserManager::addLaserCircle(const ofPoint& ofpoint, ofFloatColor colour, f
 }
 
 void LaserManager::addLaserSpiral(const ofPoint& position, ofFloatColor col, float rad1,float rad2, float fadeoutpoint,  float intens){
-	shapes.push_back(new LaserSpiral(position, col, rad1, rad2,  fadeoutpoint,intens));
+	shapes.push_back(new LaserSpiral(position, col, rad1, rad2,  spiralSpacing, fadeoutpoint, intens));
 	
 }
 
@@ -630,6 +673,12 @@ void LaserManager:: drawShapes() {
 	
 	if(shapes.size()==0) return; 
 	vector<LaserShape*> sortedShapes;
+	
+	for(int i =0; i<shapes.size(); i++ ) {
+		shapes[i]->tested = false;
+		shapes[i]->reversed = false;
+		
+	}
 	
 	int numberSorted = 0;
 	//int dotNum = shapes.size();
@@ -916,7 +965,7 @@ void LaserManager:: drawLaserLine(LaserLine& line) {
 	
 }
 
-void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly) {
+void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly, bool onlyUpdatePreviewMesh) {
 	
 	ofPolyline& poly = laserpoly.polyline;
 	
@@ -946,7 +995,8 @@ void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly) {
 		
 	}*/
 	
-	laserpoly.previewMesh.clear(); 
+	laserpoly.previewMesh.clear();
+	laserpoly.previewMesh.setMode(OF_PRIMITIVE_LINES);
 	int startpoint = 0;
 	int endpoint = 0;
 	
@@ -974,13 +1024,14 @@ void LaserManager::drawLaserPolyline(LaserPolyline& laserpoly) {
 				ofPoint p = poly.getPointAtLength((unitDistances[i]*0.999* length) + startdistance);
 				pointcolour = laserpoly.getColourForPoint(unitDistances[i], p);
 				
-				addIldaPoint(p, pointcolour, laserpoly.intensity);
+				if(!onlyUpdatePreviewMesh) addIldaPoint(p, pointcolour, laserpoly.intensity);
 				
 				if(i>0) {
 					laserpoly.previewMesh.addVertex(lastpoint);
 					laserpoly.previewMesh.addVertex(p);
 					laserpoly.previewMesh.addColor(pointcolour*laserpoly.intensity);
 					laserpoly.previewMesh.addColor(pointcolour*laserpoly.intensity);
+					//cout << lastpoint << " " << p << " " << pointcolour << endl;
 					
 				}
 				lastpoint = p; 
@@ -1186,7 +1237,7 @@ float LaserManager::calculateCalibratedBrightness(float value, float intensity, 
 	
 }
 
-
+/*
 void LaserManager::resetIldaPoints() {
 	
 	ildaPoints.clear();
@@ -1198,9 +1249,11 @@ void LaserManager::resetIldaPoints() {
 		delete shapes[i];
 	}
 	
+	
+	
 	shapes.clear();
 }
-
+*/
 
 
 void LaserManager::addDelayTest() {
@@ -1271,7 +1324,7 @@ void LaserManager :: renderPreview() {
 	
 	mesh.setMode(OF_PRIMITIVE_TRIANGLES);
 	
-	vector<LaserShape*>& newshapes = shapes;//(shapesHistory.size()>0) ? shapesHistory.back() : shapes;
+	vector<LaserShape*> newshapes = (shapesHistory.size()>0) ? shapesHistory.back() : shapes;
 	
 	for(int i = 0; i<newshapes.size(); i++) {
 		
@@ -1338,9 +1391,9 @@ void LaserManager :: renderPreview() {
 	mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
 	
 	
-	for(int i = 0; i<shapes.size(); i++) {
+	for(int i = 0; i<newshapes.size(); i++) {
 		
-		LaserShape* shape = shapes[i];
+		LaserShape* shape = newshapes[i];
 		
 		
 		// Is it a dot?
@@ -1433,8 +1486,16 @@ void LaserManager :: renderPreview() {
 		
 		LaserPolyline* laserpoly = dynamic_cast<LaserPolyline*>(shape);
 		if(laserpoly) {
-			
+			if(laserpoly->previewMesh.getVertices().size() ==0 ) {
+				drawLaserPolyline(*laserpoly, true);
+			}
+			ofSetColor(255);
+			ofNoFill();
+			ofSetLineWidth(2);
 			laserpoly->previewMesh.draw();
+			
+			//ofSetLineWidth(3);
+			//laserpoly->previewMesh.draw();
 			
 		}
 			
