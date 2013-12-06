@@ -35,7 +35,7 @@ class LetterWritingPatternMaker {
 		
 		float letterspacing = (5*letterscale) + (spacing*(5*letterscale));
 		float lettercount = letters.size();
-		float x = horizontalCentre - ((lettercount + (letters.size() % 2))*letterspacing/2)+15;
+		float x = horizontalCentre - ((lettercount )*letterspacing/2)+15;
 
 		ParticleSystemSettings ps = getLetterSparks();
 		
@@ -81,72 +81,72 @@ class LetterWritingPatternMaker {
 			
 			Letter & letter = letters[j];
 			
-			
-			
-			
-			
-			for(int i = 0; i<letter.points.size(); i+=2) {
-				
-				ofVec3f pos = ofVec3f(x,verticalPosition);
-				
-				backgroundMesh.addVertex(letter.points[i]*letterscale +pos);
-				backgroundMesh.addVertex(letter.points[i+1]*letterscale +pos);
-				
-				
-				ofVec3f v = letter.points[i+1] -letter.points[i];
-				ofVec3f p = letter.points[i];
-				
-				p*=letterscale;
-				p+=pos;
-				v*=letterscale;
+			if(letter.points.size()>0) {
 				
 				
 				
-				float numPoints = floor(v.length()/sparklerspacing);
-				if(numPoints<1) numPoints = 1;
-				
-				for(float t = 0; t<=1; t+=(1.0f/numPoints)) {
+				for(int i = 0; i<letter.points.size(); i+=2) {
 					
-					glyph.addVertex(p+(v*t));
+					ofVec3f pos = ofVec3f(x,verticalPosition);
+					
+					backgroundMesh.addVertex(letter.points[i]*letterscale +pos);
+					backgroundMesh.addVertex(letter.points[i+1]*letterscale +pos);
 					
 					
+					ofVec3f v = letter.points[i+1] -letter.points[i];
+					ofVec3f p = letter.points[i];
+					
+					p*=letterscale;
+					p+=pos;
+					v*=letterscale;
+					
+					
+					
+					float numPoints = floor(v.length()/sparklerspacing);
+					if(numPoints<1) numPoints = 1;
+					
+					for(float t = 0; t<=1; t+=(1.0f/numPoints)) {
+						
+						glyph.addVertex(p+(v*t));
+						
+						
+						
+					}
 					
 				}
 				
+				ParticleSystemSettings sparks(ps);
+				ParticleSystemSettings smokes(smoke);
+				ParticleSystemSettings burst(letterBurst);
+				ps.emitPositionShape =
+				smoke.emitPositionShape =
+				burst.emitPositionShape = new ofMesh(glyph);
+				
+				RocketSettings& rocket = *new RocketSettings(rocketTemplate);
+				rocket.addParticleSystemSetting(ps);
+				rocket.addParticleSystemSetting(smoke);
+				rocket.addParticleSystemSetting(burst);
+				rocket.mode = ROCKET_MODE_TARGET;
+				rocket.targetPos.set(x,verticalPosition);
+				rocket.targetSpeed = fusetime;
+				
+				
+				//TriggerRocket trigger(triggerTemplate);
+				//trigger.pos.x = ((x- (horizontalCentre)) * triggerspacing) + (triggercentre);
+				//trigger.fixedPosition = true;
+				
+				//ofVec3f targetToLetter = ofVec3f(x,450) - trigger.pos;
+				
+				//trigger.addRocketSettings(rocket);
+				
+				TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
+				ts->addRocketSettings(&rocket);
+			
+				ts->rechargeSettings = TriggerRechargeSettings::oneShot;
+				
+				
+				pattern.addTriggerSettings(ts);
 			}
-			
-			ParticleSystemSettings sparks(ps);
-			ParticleSystemSettings smokes(smoke);
-			ParticleSystemSettings burst(letterBurst);
-			ps.emitPositionShape =
-			smoke.emitPositionShape =
-			burst.emitPositionShape = new ofMesh(glyph);
-			
-			RocketSettings& rocket = *new RocketSettings(rocketTemplate);
-			rocket.addParticleSystemSetting(ps);
-			rocket.addParticleSystemSetting(smoke);
-			rocket.addParticleSystemSetting(burst);
-			rocket.mode = ROCKET_MODE_TARGET;
-			rocket.targetPos.set(x,verticalPosition);
-			rocket.targetSpeed = fusetime;
-			
-			
-			//TriggerRocket trigger(triggerTemplate);
-			//trigger.pos.x = ((x- (horizontalCentre)) * triggerspacing) + (triggercentre);
-			//trigger.fixedPosition = true;
-			
-			//ofVec3f targetToLetter = ofVec3f(x,450) - trigger.pos;
-			
-			//trigger.addRocketSettings(rocket);
-			
-			TriggerSettingsRocket* ts = new TriggerSettingsRocketOrb();
-			ts->addRocketSettings(&rocket);
-		
-			ts->rechargeSettings = TriggerRechargeSettings::oneShot;
-			
-			
-			pattern.addTriggerSettings(ts);
-			
 			
 			x+=letterspacing;
 		}

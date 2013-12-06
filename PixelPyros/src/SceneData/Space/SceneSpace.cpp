@@ -169,7 +169,19 @@ SceneSpace::SceneSpace(string scenename) : Scene(scenename){
 	ofMesh letterMesh;
 	LetterWritingPatternMaker patternMaker;
 	ParticleSystemManager& psm = *ParticleSystemManager::instance();
-	TriggerPattern textPattern = patternMaker.getPattern(psm, "Goodnight!", 15, 0.2, 350, APP_WIDTH/2, 15, 5, 48, 1, APP_WIDTH*0.5, letterMesh);
+	//TriggerPattern textPattern = patternMaker.getPattern(psm, "Goodnight!", 15, 0.2, 350, APP_WIDTH/2, 15, 5, 48, 1, APP_WIDTH*0.5, letterMesh);
+	
+	TriggerPattern textPattern = patternMaker.getPattern(psm, "FESTIVAL", 15, 0.2, 200, APP_WIDTH/2, 15, 5, 48, 1, APP_WIDTH*0.5, letterMesh);
+	TriggerPattern textPattern2 = patternMaker.getPattern(psm, "OF", 15, 0.2, 350, APP_WIDTH/2, 15, 5, 48, 1, APP_WIDTH*0.5, letterMesh);
+	TriggerPattern textPattern3 = patternMaker.getPattern(psm, "LIGHT", 15, 0.2, 500, APP_WIDTH/2, 15, 5, 48, 1, APP_WIDTH*0.5, letterMesh);
+	
+	for(int i = 0; i<textPattern2.triggers.size(); i++) {
+		textPattern.addTriggerSettings(textPattern2.triggers[i]);
+	}
+	
+	for(int i = 0; i<textPattern3.triggers.size(); i++) {
+		textPattern.addTriggerSettings(textPattern3.triggers[i]);
+	}
 	
 	addTriggerPattern(textPattern, "Goodnight text");//, true );
 	
@@ -303,7 +315,8 @@ TriggerSettingsRocket* SceneSpace::getStarryFountain() {
 	rocketSettings.addParticleSystemSetting(stars);
 	rocketSettings.addParticleSystemSetting(ps);
 	
-	rocketSettings.addParticleRenderer(new ParticleRendererLaserLine(50));
+	ParticleSystemSettings & pss = *rocketSettings.addParticleRenderer(new ParticleRendererLaserLine(50));
+	pss.brightnessEnd = 0;
 	
 	TriggerSettingsRocket* ts = new TriggerSettingsRocket();
 	ts->addRocketSettings(&rocketSettings);

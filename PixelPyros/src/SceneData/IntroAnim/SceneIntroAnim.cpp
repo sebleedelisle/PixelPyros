@@ -86,7 +86,7 @@ bool SceneIntroAnim::update(float deltaTime) {
 	
 	//if(vidPosition > 0.98) next();
 	//cout << starBrightness << ;;
-	cout << video.getPosition() << endl;
+	//cout << video.getPosition() << endl;
 }
 
 bool SceneIntroAnim::draw() {

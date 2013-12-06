@@ -125,6 +125,7 @@ void ofApp::setup(){
     //controlPanels.laserWarp = & laserManager.warp;
 	controlPanels.setup( &parameterManager);
 	timeSpeed = 1;
+	sceneManager.ambientMode = false; 
 
 	
 	updateScreenSizes();

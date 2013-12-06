@@ -15,6 +15,7 @@ class SceneCalibration : public Scene {
 	SceneCalibration(string scenename) : Scene(scenename){
 		RocketBasic rocketSettings(100,10, 120);
 		
+		ambientModeAllowed = false;
 		//TriggerSettings trigger;
 		
 		//trigger.addRocketSettings(rocketSettings);

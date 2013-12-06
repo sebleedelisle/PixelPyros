@@ -44,6 +44,8 @@ class LaserPolyline : public LaserShape{
 	
 	
 	~LaserPolyline() {
+		// not sure if there's any point clearing the polyline or the
+		// previewMesh - they should just get destroyed, right?
 		polyline.clear();
 		// assumes that this object owns the colourSystem object.
 		// Bit nasty.
