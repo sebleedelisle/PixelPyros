@@ -111,8 +111,8 @@ class CameraWrapper :public ofBaseDraws{
 	virtual int getBrightness(){};
 	virtual void setBrightness(int value){}; 
 
-	bool flipX; 
-	bool flipY; 
+	bool flipX;
+	bool flipY;
 	bool greyScale;
 	
 	int frameNum; 

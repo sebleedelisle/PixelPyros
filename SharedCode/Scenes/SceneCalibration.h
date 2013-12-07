@@ -130,6 +130,8 @@ class SceneCalibration : public Scene {
 		} else if(currentTriggerPatternIndex == 4) {
 			//LASER CIRCLES
 			
+			lm.addLaserCircle(ofPoint(APP_WIDTH/2,APP_HEIGHT/2), ofColor(255), 200);
+			/*
 			for(int i = 0; i<=5; i++) {
 				
 				ofColor c;
@@ -154,7 +156,7 @@ class SceneCalibration : public Scene {
 				lm.addLaserCircle(ofPoint(x,350), ofColor(255), scale);
 				
 				
-			}
+			}*/
 			
 		} else if(currentTriggerPatternIndex == 5) {
 			//LASER SPIRALS

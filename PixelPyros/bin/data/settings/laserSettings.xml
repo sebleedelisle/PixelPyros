@@ -1,16 +1,16 @@
 <Laser>
 	<Laser_Manager>
-		<status>No devices connected ETHERDREAM_IDLE 0 0</status>
+		<status>Shut down ETHERDREAM_CONNECTION_FAILED 1 2</status>
 		<show_warp_points>0</show_warp_points>
-		<mask_margin_top>0</mask_margin_top>
-		<mask_margin_bottom>258.56</mask_margin_bottom>
-		<mask_margin_left>134.4</mask_margin_left>
-		<mask_margin_right>42.24</mask_margin_right>
-		<points_per_second>64125</points_per_second>
-		<intensity>1</intensity>
-		<sync_delay>0.131</sync_delay>
+		<mask_margin_top>30.72</mask_margin_top>
+		<mask_margin_bottom>309.76</mask_margin_bottom>
+		<mask_margin_left>38.4</mask_margin_left>
+		<mask_margin_right>119.04</mask_margin_right>
+		<points_per_second>45400</points_per_second>
+		<intensity>0.885</intensity>
+		<sync_delay>0.014</sync_delay>
 		<colour_correction>255, 255, 255, 255</colour_correction>
-		<colour_change_offset>-8</colour_change_offset>
+		<colour_change_offset>-3</colour_change_offset>
 		<show_registration>1</show_registration>
 		<flip_x>0</flip_x>
 		<flip_y>1</flip_y>
@@ -19,19 +19,19 @@
 		<show_laser_path>1</show_laser_path>
 		<render_laser_preview>1</render_laser_preview>
 		<show_post_transform_preview>0</show_post_transform_preview>
-		<move_speed>3</move_speed>
+		<move_speed>6.05</move_speed>
 		<move_points_padding>1</move_points_padding>
-		<shape_pre_blank_points>1</shape_pre_blank_points>
-		<shape_post_blank_points>1</shape_post_blank_points>
+		<shape_pre_blank_points>4</shape_pre_blank_points>
+		<shape_post_blank_points>4</shape_post_blank_points>
 		<dot_max_points>7</dot_max_points>
-		<line_acceleration>0.8479</line_acceleration>
+		<line_acceleration>0.38905</line_acceleration>
 		<line_speed>7.795</line_speed>
-		<circle_overlap>5.25</circle_overlap>
-		<circle_acceleration>0.937675</circle_acceleration>
-		<circle_speed>6.085</circle_speed>
-		<eased_line_speed>5.33</eased_line_speed>
-		<eased_line_padding>1</eased_line_padding>
-		<spiral_spacing>3.2325</spiral_spacing>
+		<circle_overlap>0</circle_overlap>
+		<circle_acceleration>0.239425</circle_acceleration>
+		<circle_speed>5.23</circle_speed>
+		<eased_line_speed>3.215</eased_line_speed>
+		<eased_line_padding>6</eased_line_padding>
+		<spiral_spacing>2.0925</spiral_spacing>
 		<Etherdream_connect>0</Etherdream_connect>
 	<test_pattern>0</test_pattern>
 	</Laser_Manager>

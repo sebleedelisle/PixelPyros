@@ -1,9 +1,9 @@
 <Renderer>
 	<Levels>
 		<bloom>0</bloom>
-		<gamma>2.575</gamma>
+		<gamma>2.525</gamma>
 		<black_point>0</black_point>
-		<white_point>0.5575</white_point>
+		<white_point>0.71</white_point>
 	</Levels>
 	<Particle_Manager>
 		<KILL_ALL_PARTICLES>0</KILL_ALL_PARTICLES>

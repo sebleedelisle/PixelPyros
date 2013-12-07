@@ -143,10 +143,12 @@ CameraIP * CameraManager:: addIPPlayer(string name, string url, string user, str
 		cameras.push_back(ipPlayer);
 		// last initialised becomes the cameraVidPlayer property
 		//cameraVidPlayer = ipPlayer;
+		return ipPlayer; 
 	} else {
 		delete ipPlayer;
-		
+		return NULL;
 	}
+	
 	
 	
 }

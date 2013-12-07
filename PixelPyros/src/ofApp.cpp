@@ -62,7 +62,10 @@ void ofApp::setup(){
 	//cameraManager.addIPPlayer("network cam1", "http://10.0.1.2/axis-cgi/mjpg/video.cgi?resolution=640x480", "root", "password", 640, 480);
 	//cameraManager.addIPPlayer("network cam2", "http://10.0.1.19/axis-cgi/mjpg/video.cgi?resolution=1280x720", "root", "password", 12, 480);
 	
-	cameraManager.addIPPlayer("network cam1", "http://"+camera1Address+"/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
+	networkCam1 = cameraManager.addIPPlayer("network cam1", "http://"+camera1Address+"/axis-cgi/mjpg/video.cgi?resolution=1280x720", "root", "password", 1280, 720);
+	//networkCam1->flipX = true;
+	//networkCam1->flipY = true;
+	
 	cameraManager.addIPPlayer("network cam2", "http://"+camera2Address+"/axis-cgi/mjpg/video.cgi?resolution=1280x720                         ", "root", "password", 1280, 720);
 
     //motionManager.init(cameraManager.getWidth(), cameraManager.getHeight());
@@ -154,6 +157,8 @@ void ofApp::update(){
 	
 	lastUpdateTime = time;
 
+	//networkCam1->flipX = true;
+	//networkCam1->flipY = true;
 	
 	if(cameraManager.update()){
 		

@@ -127,6 +127,8 @@ public:
     
 	PyrosRenderer renderer;
 	ofxOscParameterSync sync;
+	
+	CameraIP* networkCam1;
     
 private:
     
