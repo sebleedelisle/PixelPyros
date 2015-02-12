@@ -596,11 +596,7 @@ void ofApp::calculateScreenSizes(){
     }
     
 	std::sort( screens.begin(), screens.end(), screenSort );
-	/*
-    for(int i = 0; i < monitorCount; i++){
-		cout << i << " " << screens[i] << endl;
-    }*/
-    
+
 	uiScreenRect = screens.back();
 		
 

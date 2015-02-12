@@ -1,14 +1,14 @@
 <Laser>
 	<Laser_Manager>
-		<status>Shut down ETHERDREAM_CONNECTION_FAILED 1 2</status>
+		<status>No devices connected ETHERDREAM_IDLE 0 0</status>
 		<show_warp_points>0</show_warp_points>
 		<mask_margin_top>30.72</mask_margin_top>
 		<mask_margin_bottom>309.76</mask_margin_bottom>
-		<mask_margin_left>38.4</mask_margin_left>
+		<mask_margin_left>65.28</mask_margin_left>
 		<mask_margin_right>119.04</mask_margin_right>
-		<points_per_second>45400</points_per_second>
-		<intensity>0.885</intensity>
-		<sync_delay>0.014</sync_delay>
+		<points_per_second>43825</points_per_second>
+		<intensity>1</intensity>
+		<sync_delay>0</sync_delay>
 		<colour_correction>255, 255, 255, 255</colour_correction>
 		<colour_change_offset>-3</colour_change_offset>
 		<show_registration>1</show_registration>
@@ -28,7 +28,7 @@
 		<line_speed>7.795</line_speed>
 		<circle_overlap>0</circle_overlap>
 		<circle_acceleration>0.239425</circle_acceleration>
-		<circle_speed>5.23</circle_speed>
+		<circle_speed>7.605</circle_speed>
 		<eased_line_speed>3.215</eased_line_speed>
 		<eased_line_padding>6</eased_line_padding>
 		<spiral_spacing>2.0925</spiral_spacing>
